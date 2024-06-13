@@ -1,0 +1,136 @@
+{
+  "root": true,
+  "plugins": ["@typescript-eslint", "jsx-a11y", "sonarjs", "eslint-plugin-react"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:sonarjs/recommended",
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "@typescript-eslint/no-empty-function": "warn",
+    "max-params": ["error", 7],
+    "curly": ["error"],
+    "no-duplicate-imports": ["error"],
+    "consistent-return": ["error"],
+    "complexity": ["error", 15],
+    "max-lines": ["error", 1000],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-member-accessibility": "error",
+    "eslint-comments/require-description": [
+      "error",
+      {
+        "ignore": []
+      }
+    ],
+    "eslint-comments/no-unused-disable": "off",
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-redux",
+            "importNames": ["useStore"],
+            "message": "Please use connect() instead of hooks to access Redux"
+          },
+          {
+            "name": "react-redux",
+            "importNames": ["useState"],
+            "message": "Please use useSelector() to access Redux state hooks"
+          },
+          {
+            "name": "react-redux",
+            "importNames": ["useEffect"],
+            "message": "Please use useDispatch() to access Redux dispatch hooks"
+          },
+          {
+            "name": "react-redux",
+            "importNames": ["ConnectedProps"],
+            "message": "Please type out your component instead of inferring it from elsewhere."
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["*/distillers", "@src/**/**/distillers"],
+            "message": "Distillers should only be accessed from Selectors, Sagas, and other Distillers"
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.name='useContext']",
+        "message": "Please use Redux instead of the Context API directly"
+      },
+      {
+        "selector": "CallExpression[callee.name='createContext']",
+        "message": "Please use Redux instead of the Context API directly"
+      }
+    ],
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "React",
+        "property": "createContext",
+        "message": "Please use Redux instead of the Context API directly"
+      },
+      {
+        "object": "React",
+        "property": "useContext",
+        "message": "Please use Redux instead of the Context API directly"
+      }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
+  },
+  "overrides": [
+    {
+      "files": ["*selector*.ts", "*sagas*.ts", "*distillers*.ts", "*.config.js"],
+      "rules": {
+        "no-restricted-imports": 0
+      }
+    },
+    {
+      "files": ["setupTests.ts", "*.test.*"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["*"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["scripts/*"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
+}

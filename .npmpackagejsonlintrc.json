@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json.schemastore.org/npmpackagejsonlintrc",
+  "extends": "npm-package-json-lint-config-default",
+  "rules": {
+    "no-caret-version-dependencies": "error",
+    "no-repeated-dependencies": "error",
+    "prefer-absolute-version-dependencies": ["error", {}],
+    "no-file-dependencies": "error",
+    "no-git-dependencies": "error",
+    "no-restricted-dependencies": ["error", ["@types/*", "lodash"]],
+    "no-tilde-version-dependencies": "error",
+    "prefer-absolute-version-devDependencies": ["error", {}],
+    "prefer-alphabetical-scripts": "error",
+    "prefer-no-version-zero-dependencies": [
+      "error",
+      {
+        "exceptions": [
+          "axios",
+          "splunk-logging",
+          "zod"
+        ]
+      }
+    ],
+    "prefer-no-peerDependencies": "error",
+    "prefer-no-optionalDependencies": "error",
+    "prefer-alphabetical-devDependencies": "error"
+  }
+}

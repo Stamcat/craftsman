@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run lint:package 
+npm run type-check:commit --silent 
+npm run check:dependencies:circular
+npm run lint:staged

@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "CommonJS",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "downlevelIteration": true,
+    "sourceMap": true,
+    "rootDir": "src",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "removeComments": true,
+    "types": [
+      "jest",
+      "node",
+    ],
+    "paths": {
+      "@src/*": ["src/*"],
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  // "include": ["**/*.ts", "**/*.tsx", "src/__mocks__/svg.js"],
+  "exclude": ["node_modules", "webpack.config.ts"]
+}

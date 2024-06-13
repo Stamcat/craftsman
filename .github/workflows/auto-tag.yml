@@ -1,0 +1,33 @@
+name: git tagging
+
+on:
+  pull_request:
+    branches:
+        - main
+    types: [closed]
+    # types: [opened, reopened]
+
+jobs:
+  auto-tag:
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - run: echo "Running auto tag"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.11.0
+          registry-url: https://npm.pkg.github.com/
+      
+      - name: install
+        run: npm ci
+        if: ${{ always() }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_PACKAGES_TOKEN }}
+
+      - name: run tag auto
+        run: npm run tag:auto
+        if: ${{ always() }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_PACKAGES_TOKEN }}
