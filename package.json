@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Devin Marra",
   "homepage": "https://github.com/owner/project#readme",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "scripts": {
     "build:local": "npm run clean && npm install && npm run build:precompile && npm run build:src && cd lib && npm pack --pack-destination ~",
