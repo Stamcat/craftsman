@@ -7,10 +7,12 @@ coverage
 node_modules/*
 @mf-types/*
 .history
+next.config.js
 store/store.ts
-build/*
-db-data/*
-jest.config.js
-assetsTransformer.js
-commitlint.config.js
 qualityChecks
+lib/*
+dist/*
+jest.config.js
+jest.setup.js
+commitlint.config.js
+index.js

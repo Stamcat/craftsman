@@ -1,0 +1,4 @@
+[
+  { "Button": "src/components/Button" },
+  { "BtnType": "src/components/Button", "type": true }
+]
