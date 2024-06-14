@@ -26,12 +26,12 @@ const createTag = (version: string) => {
     });
 };
 const checkTagExistence = (version: string) => {
-    exec(`git tag -l v${version}`, (err, stdout, stderr) => {
+    exec(`git tag -l v${version}`, (err: Error, stdout: unknown, stderr: unknown) => {
         if (err) {
-            throw new Error(err);
+            throw new Error(err.message);
         }
         if (stderr) {
-            throw new Error(stderr);
+            throw new Error(stderr.toString());
         }
         console.log(stdout);
         if (stdout === `v${version}`) {
