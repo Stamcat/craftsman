@@ -20,30 +20,3 @@ function suppressDomErrors() {
     };
 }
 suppressDomErrors();
-
-jest.mock("flat", () => {
-    return {
-        flatten: () => jest.fn(),
-        unflatten: () => jest.fn(),
-    };
-});
-
-jest.mock("react", () => {
-    const actual = jest.requireActual("react");
-    return {
-        ...actual,
-        Suspense: jest.fn(),
-        lazy: jest.fn(),
-    };
-});
-
-jest.mock("react-redux", () => {
-    return {
-        connect: (mapStateToProps: any, mapDispatchToProps: any) => (ReactComponent: any) => ({
-            mapStateToProps,
-            mapDispatchToProps,
-            ReactComponent,
-        }),
-        Provider: jest.fn(),
-    };
-});

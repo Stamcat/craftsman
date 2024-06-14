@@ -9,8 +9,10 @@
   "eslint.codeActionsOnSave.mode": "problems",
   "prettier.requireConfig": true,
   "eslint.format.enable": true,
-  "cSpell.words": [],
+  "cSpell.words": ["bizworks", "Downline", "dsid"],
   "editor.tabCompletion": "on",
   "editor.formatOnSave": false,
-  "editor.formatOnSaveMode": "modifications"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSaveMode": "modifications",
+  "conventionalCommits.scopes": ["development"]
 }

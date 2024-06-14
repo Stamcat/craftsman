@@ -1,6 +1,10 @@
 import fse from "fs-extra";
 import path from "path";
 
+// DO NOT DELETE THIS FILE
+// This file is used by build system to build a clean npm package with the
+// compiled js files in the root of the package.
+// It will not be included in the npm package.
 const createPackageJson = () => {
     // copy package file into destination folder
     const pkgSrc = path.join(process.cwd(), "package.json");
@@ -63,7 +67,7 @@ const copyExtension = (filePath: string, arr: string[]) => {
 };
 
 export class PackageBuilder {
-    public static main() {
+    static main() {
         console.log("Beginning Build");
         createPackageJson();
         createIgnoreFile();

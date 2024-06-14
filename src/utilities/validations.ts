@@ -1,4 +1,4 @@
-/** #__PURE__ */
+/* #__PURE__ */
 export function isEmpty(value: unknown): boolean {
     return (
         value === undefined ||

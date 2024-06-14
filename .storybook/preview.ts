@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react';
 // import { withThemeFromJSXProvider } from '@storybook/addon-themes';
-
+// import { GlobalStyles } from "../src/global/globalStyles";
+// import { ThemeProvider } from 'styled-components';
 const preview: Preview = {
     globalTypes: {
         theme: { type: 'string' },
@@ -20,14 +21,14 @@ const preview: Preview = {
         },
         },
     },
-    // Theme implementation for Storybook
+
     decorators: [
-    //     (withThemeFromJSXProvider as any)({
-    //         themes,
-    //         defaultTheme: "public",
-    //         Provider: ThemeProvider,
-    //         GlobalStyles, // Adds your GlobalStyle component to all stories
-    //     }),
+        // (withThemeFromJSXProvider as any)({
+        //     themes,
+        //     defaultTheme: "public",
+        //     Provider: ThemeProvider,
+        //     GlobalStyles, // Adds your GlobalStyle component to all stories
+        // }),
     ],
 };
 

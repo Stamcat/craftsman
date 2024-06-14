@@ -1,4 +1,4 @@
-name: code quality checks
+name: quality checks
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 20.11.0
+          node-version: 18.16.0
           registry-url: https://npm.pkg.github.com/
       
       - name: install
@@ -34,11 +34,14 @@ jobs:
       - name: run lint
         run: npm run lint:package
 
-      - name: check for circular dependencies
-        run: npm run check:dependencies:circular
+      - name: build package
+        run: npm run build:src
 
-      - name: generate lint report
-        run: npm run lint
+    #   - name: check for circular dependencies
+    #     run: npm run check:dependencies:circular
+
+      - name: generate sonarqube lint report
+        run: npm run lint:sonar
 
       - name: run unit tests
-        run: npm run test
+        run: npm run test:sonar

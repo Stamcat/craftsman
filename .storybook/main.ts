@@ -9,7 +9,6 @@ const config: StorybookConfig = {
       '@storybook/addon-styling',
       '@storybook/addon-designs',
       '@storybook/addon-themes',
-      '@storybook/addon-webpack5-compiler-babel'
     ],
   framework: {
     name: "@storybook/react-webpack5",

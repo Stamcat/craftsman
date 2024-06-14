@@ -1,11 +1,7 @@
 const config = {
-    preset: "ts-jest",
-    testEnvironment: "node",
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
     collectCoverageFrom: ["<rootDir>/src/**/*.{js,jsx,ts,tsx}"],
-    coveragePathIgnorePatterns: [
-        "<rootDir>/src/.*/*.d.ts",
-    ],
+    coveragePathIgnorePatterns: [],
     coverageThreshold: {
         global: {
             branches: 0,
@@ -28,14 +24,13 @@ const config = {
     setupFiles: ["<rootDir>/setupTests.ts"],
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/src/**/__tests__/**/*[^i].(js|ts|tsx)", "<rootDir>/src/**/?(*.)+(spec|test).(jsx?|tsx?)"],
-    testPathIgnorePatterns: ["<rootDir>/node_modules/"],
+    testPathIgnorePatterns: ["<rootDir>/lib/", "<rootDir>/node_modules/"],
     testEnvironmentOptions: {
-        url: "https://www.test.env.com",
+        url: "https://www.test.com",
     },
     transform: {
         "^.+\\.tsx?$": "ts-jest",
     },
-    
     verbose: true,
 };
 module.exports = {

@@ -1,55 +1,62 @@
-import { getJSONFromFile } from "./utilities";
 import { isEmpty } from "../src/utilities/validations";
+import { getJSONFromFile } from "./utilities";
 const { exec } = require("node:child_process");
 
 const pushTag = async (version: string) => {
-    console.log("pushing tag");
+    console.log("Pushing Tag");
     await exec(`git push origin v${version}`, (err: Error, stdout: unknown, stderr: unknown) => {
         if (err) {
-            throw new Error(err.message);
+            console.log(err);
         }
         if (stderr) {
-            throw new Error(stderr.toString());
+            console.log(stderr);
         }
         console.log(stdout);
     });
 };
 const createTag = (version: string) => {
+    console.log(`creating tag called v${version}`);
     exec(`git tag v${version}`, (err: Error, stdout: unknown, stderr: unknown) => {
         if (err) {
-            throw new Error(err.message);
+            console.log(err);
         }
         if (stderr) {
-            throw new Error(stderr.toString());
+            console.log(stderr);
         }
         console.log(stdout);
     });
 };
 const checkTagExistence = (version: string) => {
-    exec(`git tag -l v${version}`, (err: Error, stdout: unknown, stderr: unknown) => {
+    // @ts-expect-error -- child process
+    exec(`git tag -l v${version}`, (err, stdout, stderr) => {
         if (err) {
-            throw new Error(err.message);
+            console.log(err);
+            throw new Error(err);
         }
         if (stderr) {
-            throw new Error(stderr.toString());
+            console.log(stderr);
+            throw new Error(stderr);
         }
         console.log(stdout);
         if (stdout === `v${version}`) {
-            console.log("version already exists, nothing to do here");
+            console.log("version tag already exists, nothing to do here");
+            process.exit(0);
         } else if (isEmpty(stdout)) {
+            console.log(`creating tag for version ${version}`);
             AutoTag.create();
         }
+        process.exit(0);
     });
 };
 
 export class AutoTag {
-    public static check() {
-        const ver = getJSONFromFile("./package.json").version;
-        checkTagExistence(ver);
+    static check() {
+        const version = getJSONFromFile("./package.json").version;
+        checkTagExistence(version);
     }
-    public static create() {
-        const ver = getJSONFromFile("./package.json").version;
-        createTag(ver);
-        pushTag(ver);
+    static create() {
+        const version = getJSONFromFile("./package.json").version;
+        createTag(version);
+        pushTag(version);
     }
 }

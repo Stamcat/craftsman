@@ -7,6 +7,8 @@
     "sonarsource.sonarlint-vscode",
     "esbenp.prettier-vscode",
     "hediet.vscode-drawio",
-    "seatonjiang.gitmoji-vscode"
+    "seatonjiang.gitmoji-vscode",
+    "vivaxy.vscode-conventional-commits",
+    "jpoissonnier.vscode-styled-components"
   ]
 }
