@@ -64,13 +64,11 @@ export type TooltipProps = {
  */
 export const Tooltip: React.FC<TooltipProps> = ({ children, visible, $styles, trigger }: TooltipProps) => {
     return (
-        <>
-            <TooltipCard>
-                <TooltipText>{trigger}</TooltipText>
-                <TooltipBox $visible={visible} $styles={$styles}>
-                    {children}
-                </TooltipBox>
-            </TooltipCard>
-        </>
+        <TooltipCard>
+            <TooltipText>{trigger}</TooltipText>
+            <TooltipBox $visible={visible} $styles={$styles}>
+                {children}
+            </TooltipBox>
+        </TooltipCard>
     );
 };

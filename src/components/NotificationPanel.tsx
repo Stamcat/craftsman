@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { breakpoint, container, gutter } from "../utilities/layout";
+import { breakpoint, container, width } from "../utilities/layout";
 import { RuleSet } from "styled-components/dist/types";
 
 type PositionType = "topRight" | "inline";
@@ -16,13 +16,13 @@ const fixedStyles = css`
     ${container(4)};
 `;
 const topRightStypes = css`
-    top: ${gutter(2)};
-    right: ${gutter(2)};
+    top: ${width("gutter", 2)};
+    right: ${width("gutter", 2)};
     ${breakpoint("tablet", fixedStyles)}
 `;
 const Panel = styled.div<{ $position: PositionType; $styles: RuleSet<object> }>`
     > *:nth-child(1n + 2) {
-        margin-top: ${gutter(0.5)};
+        margin-top: ${width("gutter", 0.5)};
     }
     ${(props) => props.$position === "topRight" && topRightStypes}
     ${(props) => props.$styles}

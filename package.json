@@ -13,6 +13,9 @@
   "publishConfig": {
     "@devinmarra:registry": "https://npm.pkg.github.com"
   },
+  "workspaces": [
+    "button"
+  ],
   "scripts": {
     "build:local": "npm run clean && npm install && npm run build:src && cd lib && npm pack --pack-destination ~",
     "build:src": "npm run compile && tsx ./buildPackage.ts",

@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { color } from "../utilities/colors";
-import { gutter } from "../utilities/layout";
+import { width } from "../utilities/layout";
 import { Text } from "../components/Text";
 import { RuleSet } from "styled-components/dist/types";
 import { Button } from "./Button";
@@ -43,7 +43,7 @@ const typeStyles: Record<NotificationType, RuleSet<object>> = {
 };
 
 const NotificationWrapper = styled.div<{ $type: NotificationType; $styles: RuleSet<object> }>`
-    padding: ${gutter()};
+    padding: ${width("gutter")};
     border: 1px solid ${color("grey")};
     background-color: ${color("white")};
     border-radius: 4px;
@@ -92,7 +92,7 @@ const ButtonSet = styled.footer<{ $type: NotificationType }>`
     display: flex;
     justify-content: flex-end;
     button {
-        padding: 0 ${gutter(0.5)};
+        padding: 0 ${width("gutter", 0.5)};
         &:last-child {
             padding-right: 0;
         }
@@ -103,7 +103,7 @@ const ButtonSet = styled.footer<{ $type: NotificationType }>`
     }
 `;
 const IconContainer = styled.div`
-    padding: 0 ${gutter()} 0 0;
+    padding: 0 ${width("gutter")} 0 0;
 `;
 /* #__PURE__ */
 export class Notification extends React.PureComponent<NotificationProps> {

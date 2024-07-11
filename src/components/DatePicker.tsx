@@ -117,7 +117,7 @@ const DatePickerWrapper = styled.div<{
 `;
 /**
  * We use react-date-picker along with our custom styles.
- * You can also pass your own style delcarations using $styles.
+ * You can also pass your own style declarations using $styles.
  * The Styled Component makes use of css specificity to override
  * thanks to the component being nested inside a wrapper. <a href="https://github.com/wojtekmaj/react-date-picker" target="_blank">See the full documentation</a>
  * @param props
@@ -164,7 +164,7 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
             $labelPosition={props.$labelPosition}
             $error={props.$error}>
             {props.$labelPosition !== "bottom" && props.$labelPosition !== "right" && renderLabel()}
-            <ReactDatePicker locale={props.locale || "en-US"} clearIcon={props.clearIcon || null} {...props} />
+            <ReactDatePicker locale={props.locale ?? "en-US"} clearIcon={props.clearIcon || null} {...props} />
             {(props.$labelPosition === "bottom" || props.$labelPosition === "right") && renderLabel()}
             {props.$error && renderError()}
         </DatePickerWrapper>

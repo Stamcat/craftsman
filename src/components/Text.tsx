@@ -116,5 +116,5 @@ const tags = {
  * #__PURE__
  */
 export const Text: React.FC<TextProps> = (props) => {
-    return tags[props.$type || "p"](props);
+    return tags[props.$type ?? "p"](props);
 };

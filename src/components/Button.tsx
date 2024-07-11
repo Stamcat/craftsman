@@ -55,26 +55,12 @@ const iconSizeStyles: Record<BtnSize, RuleSet<object>> = {
 };
 
 const primaryStyles = (size: BtnSize) => {
-    const publicStyles = css`
-        border-radius: 30px;
-        border: 1px solid transparent;
-        &:focus {
-            border: 1px dashed ${color("white")};
-        }
-        &:hover,
-        &:active {
-            background-color: ${color("greenDark")};
-        }
-    `;
-    const dsStyles = css`
+
+    return css`
+        color: ${color("white")};
+        background-color: ${color("garden")};
         border-radius: 6px;
         border: 3px solid transparent;
-        // It's unclear where this double border is actually being used.
-        /* &: {
-            border: 3px solid ${color("black")};
-            box-shadow: inset 0 0 0 2px ${color("white")};
-            background-color: ${color("garden")};
-        } */
         &:hover {
             background-color: ${color("green3")};
         }
@@ -84,11 +70,6 @@ const primaryStyles = (size: BtnSize) => {
         &:focus {
             background-color: ${color("darkgreen")};
         }
-    `;
-    return css`
-        color: ${color("white")};
-        background-color: ${color("garden")};
-        ${(props) => (props.theme.distributor && dsStyles) || publicStyles}
         &:disabled,
         &.disabled {
             color: ${color("white")};
@@ -190,7 +171,7 @@ const IconWrapper = styled.div<{ $size: BtnSize }>`
 `;
 
 /**
- * This is still a work in progress. The button component defined by Dentsu is quite extensive. We currently have over half of their specs in place, we will need to revisit this as we build out features.
+ * This is still a work in progress.
  * @param props
  * @returns
  * #__PURE__
@@ -198,7 +179,7 @@ const IconWrapper = styled.div<{ $size: BtnSize }>`
 export const Button: React.FC<ButtonProps> = (props) => {
     return (
         <StyledButton {...props}>
-            {props.$icon && <IconWrapper $size={props.$size || "medium"}>{props.$icon}</IconWrapper>}
+            {props.$icon && <IconWrapper $size={props.$size ?? "medium"}>{props.$icon}</IconWrapper>}
             {props.$label && <span>{props.$label}</span>}
             {props.children}
         </StyledButton>

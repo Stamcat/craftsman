@@ -9,6 +9,10 @@
     "./storybook-static/**/*",
     "./jest*",
     ".npmignore",
-    "/.gihub/**/*"
+    "/.github/**/*",
+    "commitlint.config.js",
+    "autoTag.ts",
+    "./scripts/preCompile.ts",
+    "./scripts/buildPackage.ts"
   ]
 }
