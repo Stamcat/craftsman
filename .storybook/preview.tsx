@@ -1,20 +1,15 @@
 import type { Preview } from "@storybook/react-vite";
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
-import { Global, css } from '@emotion/react';
+import { Global } from '@emotion/react';
 import { globalStyles } from "../src/styles/global/globalStyles";
-import { themes, type Theme } from "../src/styles/themes";
-
-function buildThemeOverride(theme: Theme) {
-    const vars = Object.entries(theme).map(([k, v]) => k + ": " + v + ";").join(" ");
-    return css(":root { " + vars + " }");
-}
+import { buildThemeOverride, CraftsmanThemeProvider } from "../src/styles/theme/theme";
+import { appThemes } from "./themes/themes";
 
 // eslint-disable-next-line react-refresh/only-export-components
-const GlobalStyles = ({ theme }: { theme?: Theme }) => (
-  <>
-    <Global styles={globalStyles} />
-    {theme && <Global styles={buildThemeOverride(theme)} />}
-  </>
+const GlobalStyles = () => (
+    <Global
+        styles={(theme) => [globalStyles, buildThemeOverride(theme)]}
+    />
 );
 
 const preview: Preview = {
@@ -35,8 +30,9 @@ const preview: Preview = {
     },
     decorators: [
         withThemeFromJSXProvider({
-            themes,
+            themes: appThemes,
             defaultTheme: "default",
+            Provider: CraftsmanThemeProvider,
             GlobalStyles,
         }),
     ],
