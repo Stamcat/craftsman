@@ -24,12 +24,6 @@
     "storybook": "storybook dev -p 6006",
     "type-check": "tsc --noEmit"
   },
-  "exports": {
-    "./Button": {
-      "types": "./Button.d.ts",
-      "default": "./Button.es.js"
-    }
-  },
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",

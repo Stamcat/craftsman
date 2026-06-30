@@ -6,7 +6,54 @@ import path from "path";
 // This file is used by build system to build a clean npm package with the
 // compiled js files in the root of the package.
 // It will not be included in the npm package.
+const getComponentIndexPath = () => {
+    const exportsConfigPath = path.join(process.cwd(), "exports.ts");
+
+    if (!fse.existsSync(exportsConfigPath)) {
+        return undefined;
+    }
+
+    const exportsConfig = fse.readFileSync(exportsConfigPath, "utf-8");
+    const componentFolderMatch = exportsConfig.match(/Components\s*:\s*["']([^"']+)["']/);
+
+    if (!componentFolderMatch?.[1]) {
+        return undefined;
+    }
+
+    return path.join(process.cwd(), "src", componentFolderMatch[1], "index.ts");
+};
+
+const getComponentExports = () => {
+    const componentIndexPath = getComponentIndexPath();
+
+    if (!componentIndexPath || !fse.existsSync(componentIndexPath)) {
+        return [] as string[];
+    }
+
+    const indexSource = fse.readFileSync(componentIndexPath, "utf-8");
+    const exportRegex = /^\s*export\s*\{\s*([A-Za-z0-9_]+)\s*\}\s*from\s*["'][^"']+["'];?\s*$/gm;
+    const exports: string[] = [];
+    let match: RegExpExecArray | null = exportRegex.exec(indexSource);
+
+    while (match) {
+        exports.push(match[1]);
+        match = exportRegex.exec(indexSource);
+    }
+    return exports;
+};
+
+
 const createPackageJson = () => {
+    const buildExportsMap = (componentNames: string[]) => {
+        return componentNames.reduce<Record<string, { types: string; default: string }>>((acc, componentName) => {
+            acc[`./${componentName}`] = {
+                types: `./${componentName}.d.ts`,
+                default: `./${componentName}.es.js`,
+            };
+            return acc;
+        }, {});
+    };
+
     // copy package file into destination folder
     const pkgSrc = path.join(process.cwd(), "package.json");
     const source = fse.readFileSync(pkgSrc).toString("utf-8");
@@ -16,6 +63,12 @@ const createPackageJson = () => {
     const prepublishOnly = sourceObj?.scripts?.prepublishOnly;
     sourceObj.scripts = prepublishOnly ? { prepublishOnly } : {};
     sourceObj.devDependencies = {};
+    const componentExports = getComponentExports();
+    if (componentExports.length > 0) {
+        sourceObj.exports = buildExportsMap(componentExports);
+    } else {
+        delete sourceObj.exports;
+    }
 
     const pkgDest = path.join(process.cwd(), "dist", "package.json");
     console.log(`writing ${pkgSrc} to ${pkgDest}`);
