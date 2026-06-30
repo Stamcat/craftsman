@@ -1,6 +1,6 @@
 import React from "react";
 /* #__PURE__ */
-export function IconX(props: React.SVGProps<SVGSVGElement>) {
+export function IconX(props: Readonly<React.SVGProps<SVGSVGElement>>) {
     return (
         <svg id="a" viewBox="0 0 16 16" width="24" {...props}>
             <g id="b">

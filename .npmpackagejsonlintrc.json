@@ -7,14 +7,16 @@
     "prefer-absolute-version-dependencies": ["error", {}],
     "no-file-dependencies": "error",
     "no-git-dependencies": "error",
-    "no-restricted-dependencies": ["error", ["lodash"]],
+    "no-restricted-dependencies": ["error", ["@types/*", "react-native-svg-transformer", "lodash"]],
     "no-tilde-version-dependencies": "error",
     "prefer-absolute-version-devDependencies": ["error", {}],
     "prefer-alphabetical-scripts": "error",
     "prefer-no-version-zero-dependencies": [
       "error",
       {
-        "exceptions": ["axios", "splunk-logging", "zod"]
+        "exceptions": [
+          "splunk-logging"
+        ]
       }
     ],
     "prefer-no-peerDependencies": "error",

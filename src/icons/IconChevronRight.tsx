@@ -1,14 +1,18 @@
 import React from "react";
 /* #__PURE__ */
-export function IconChevronRight(props: React.SVGProps<SVGSVGElement>) {
+export function IconChevronRight(props: Readonly<React.SVGProps<SVGSVGElement>>) {
     return (
-        <svg id="a" viewBox="0 0 10 18" width="24" {...props}>
-            <g id="b">
-                <path
-                    id="c"
-                    d="M.29,17.72c-.19-.19-.29-.39-.29-.62s.1-.44,.29-.62l7.73-7.47L.29,1.53c-.19-.19-.29-.39-.29-.62S.1,.47,.29,.28c.19-.19,.41-.28,.64-.28s.45,.09,.64,.28l7.99,7.72c.16,.15,.27,.31,.33,.47,.06,.16,.1,.34,.1,.52s-.03,.36-.1,.52c-.06,.16-.18,.32-.33,.47L1.58,17.72c-.19,.19-.41,.28-.64,.28s-.45-.09-.64-.28Z"
-                />
-            </g>
+        <svg
+            stroke="currentColor"
+            fill="currentColor"
+            strokeWidth="0"
+            viewBox="0 0 24 24"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path fill="none" d="M0 0h24v24H0V0z"></path>
+            <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
         </svg>
     );
 }

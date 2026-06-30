@@ -1,7 +1,0 @@
-module.export = function transformOptions(options) {
-    // make any personal changes you want
-    // we will not allow checkin of the file
-
-
-    return options;
-}
