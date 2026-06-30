@@ -1,7 +1,7 @@
 import { ThemeProvider as EmotionThemeProvider, css, type CSSObject } from "@emotion/react";
 import React, { createElement } from "react";
 import type { ColorVariableName, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
-import { componentSelectors } from "./constants";
+import { componentSelectors } from "./components";
 
 function themeToCssVariables(theme: Theme): Partial<Record<ColorVariableName, string>> {
     const colorVariables = theme.colors ? { ...theme.colors } : {};
@@ -26,6 +26,7 @@ function buildComponentThemeOverrides(theme: Theme): Record<string, CSSObject> {
 
     return componentOverrides;
 }
+
 export function CraftsmanThemeProvider({ theme, children }: ThemeProviderProps) {
     return createElement(
         EmotionThemeProvider as React.ComponentType<{ theme: Theme; children?: React.ReactNode }>,
