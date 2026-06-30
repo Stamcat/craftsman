@@ -1,6 +1,6 @@
 import type { CSSObject } from "@emotion/react";
 import type { ColorKey } from "../../utilities/color";
-import type { componentSelectors } from "./constants";
+import type { componentSelectors } from "./components";
 
 export type ColorVariableName = `--${ColorKey}`;
 
