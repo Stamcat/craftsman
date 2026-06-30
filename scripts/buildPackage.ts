@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fse from "fs-extra";
 import path from "path";
 
@@ -11,20 +12,35 @@ const createPackageJson = () => {
     const source = fse.readFileSync(pkgSrc).toString("utf-8");
     const sourceObj = JSON.parse(source);
 
-    // remove scripts and devdependencies
-    sourceObj.scripts = {};
+    // keep only publish guard script in dist package
+    const prepublishOnly = sourceObj?.scripts?.prepublishOnly;
+    sourceObj.scripts = prepublishOnly ? { prepublishOnly } : {};
     sourceObj.devDependencies = {};
 
-    const pkgDest = path.join(process.cwd(), "lib", "package.json");
+    const pkgDest = path.join(process.cwd(), "dist", "package.json");
     console.log(`writing ${pkgSrc} to ${pkgDest}`);
     const pkgSrcBuffer = Buffer.from(JSON.stringify(sourceObj, null, 2), "utf-8");
     fse.writeFileSync(pkgDest, pkgSrcBuffer);
 
     console.log("package.json file created");
 };
+const copyPrepublishScript = () => {
+    const scriptSrc = path.join(process.cwd(), "scripts", "prepublishCheck.js");
+    const scriptDest = path.join(process.cwd(), "dist", "scripts", "prepublishCheck.js");
+
+    if (!fse.existsSync(scriptSrc)) {
+        console.log(`publish guard script not found: ${scriptSrc}`);
+        return;
+    }
+
+    console.log(`writing ${scriptSrc} to ${scriptDest}`);
+    fse.ensureDirSync(path.dirname(scriptDest));
+    fse.copyFileSync(scriptSrc, scriptDest);
+    console.log("publish guard script copied");
+};
 const createIgnoreFile = () => {
     const ignoreSrc = path.join(process.cwd(), ".npmignore");
-    const ignoreDest = path.join(process.cwd(), "lib", ".npmignore");
+    const ignoreDest = path.join(process.cwd(), "dist", ".npmignore");
     console.log(`writing ${ignoreSrc} to ${ignoreDest}`);
 
     const ignoreFile = fse.readFileSync(ignoreSrc).toString("utf-8");
@@ -49,9 +65,9 @@ const fromDir = (startPath: string, filter: string) => {
             fromDir(filename, filter); //recurse
         } else if (filename.indexOf(filter) >= 0) {
             console.log("-- found: ", filename);
-            const newPath = path.join(process.cwd(), "lib", filename);
+            const newPath = path.join(process.cwd(), "dist", filename);
 
-            fse.copy(filename, newPath, (err) => {
+            fse.copy(filename, newPath, (err: unknown) => {
                 if (err) {
                     console.log("an error");
                     console.log(err);
@@ -70,6 +86,7 @@ export class PackageBuilder {
     static main() {
         console.log("Beginning Build");
         createPackageJson();
+        copyPrepublishScript();
         createIgnoreFile();
         copyExtension("src", [".scss", ".css", ".png", ".jpg", ".ttf", ".bin"]);
     }

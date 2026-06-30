@@ -1,1 +1,3 @@
-# Craftsman Storybook
+# @stamcat/craftsman
+
+# Craftsman Design System Framework
