@@ -3,8 +3,6 @@ import React, { createElement } from "react";
 import type { ColorVariableName, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
 import { componentSelectors } from "./constants";
 
-
-
 function themeToCssVariables(theme: Theme): Partial<Record<ColorVariableName, string>> {
     const colorVariables = theme.colors ? { ...theme.colors } : {};
 

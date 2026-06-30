@@ -3,12 +3,13 @@ import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { Global } from '@emotion/react';
 import { globalStyles } from "../src/styles/global/globalStyles";
 import { buildThemeOverride, CraftsmanThemeProvider } from "../src/styles/theme/theme";
+import type { Theme } from "../src/styles/theme/types";
 import { appThemes } from "./themes/themes";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const GlobalStyles = () => (
     <Global
-        styles={(theme) => [globalStyles, buildThemeOverride(theme)]}
+        styles={(theme) => [globalStyles, buildThemeOverride(theme as Theme)]}
     />
 );
 
