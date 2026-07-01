@@ -2,33 +2,104 @@ name: publish-package
 
 on:
   release:
-    types: released
+    types: [published, prereleased]
 
 jobs:
-  publish-gpr:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
+    outputs:
+      prerelease: ${{ steps.meta.outputs.prerelease }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+
+      - name: Detect prerelease
+        id: meta
+        run: echo "prerelease=${{ github.event.release.prerelease }}" >> $GITHUB_OUTPUT
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22.15.0
-          registry-url: https://npm.pkg.github.com/
-      
-      - name: install
-        run: npm install
-        if: ${{ always() }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_PACKAGES_TOKEN }}
+          node-version: 24
 
-      - name: build package
-        run: npm run build
+      - name: Install dependencies
+        run: npm ci
 
-      - name: publish package
-        working-directory: ./dist
-        run: npm publish
-        if: ${{ always() }}
+      - name: Build package
+        run: npm run build:src
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: lib/
+    
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: lib
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Remove rogue npmrc files
+        run: |
+            rm -f ~/.npmrc
+            rm -f .npmrc
+            rm -f lib/.npmrc
+
+      - name: Debug npmrc
+        run: |
+            echo "---- root .npmrc ----"
+            cat ~/.npmrc || echo "(none)"
+            echo "---- workspace .npmrc ----"
+            cat .npmrc || echo "(none)"
+            echo "---- lib .npmrc ----"
+            cat lib/.npmrc || echo "(none)"
+
+      - name: Publish to npm
+        run: |
+          cd lib
+          if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then
+            npm publish --access public --tag next --provenance
+          else
+            npm publish --access public --provenance
+          fi
+
+  publish-github:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: lib
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://npm.pkg.github.com
+          scope: '@stamcat'
+
+      - name: Publish to GitHub Packages
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.SOME_STUPID_SECRET }}
+        run: |
+          cd lib
+          if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then
+            npm publish --tag next
+          else
+            npm publish
+          fi
