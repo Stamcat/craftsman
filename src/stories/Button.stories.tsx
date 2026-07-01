@@ -7,7 +7,6 @@ const meta: Meta<typeof Button> = {
     tags: ["autodocs"],
     args: {
         children: "Click me",
-        type: "button",
     },
     parameters: {
         layout: "centered",
