@@ -63,6 +63,7 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.3",
     "@vitest/browser": "4.1.9",
+    "@vitest/browser-playwright": "4.1.9",
     "@vitest/coverage-v8": "4.1.9",
     "commit-and-tag-version": "11.2.2",
     "eslint": "9.35.0",
