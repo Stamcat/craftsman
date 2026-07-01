@@ -1,17 +1,19 @@
-import type { CSSObject } from "@emotion/react";
-import type { ColorKey } from "../../utilities/color";
+import type { CSSObject, SerializedStyles } from "@emotion/react";
+import type { ColorKey } from "../utilities/color";
 import type { componentSelectors } from "./components";
 
 export type ColorVariableName = `--${ColorKey}`;
 
 export type RegisteredComponent = keyof typeof componentSelectors;
 
-type ComponentThemeOverrides = {
-    [K in RegisteredComponent]?: CSSObject;
-};
+export type ComponentThemeOverrides = {
+    [K in RegisteredComponent]?: CSSObject | SerializedStyles;
+};;
+export type Colors = Partial<Record<ColorVariableName, string>>;
 
 export type Theme = {
-    colors?: Partial<Record<ColorVariableName, string>>;
+    colors?: Colors;
+    root?: CSSObject | SerializedStyles;
     components?: ComponentThemeOverrides;
 };
 
