@@ -1,27 +1,29 @@
-import { ThemeProvider as EmotionThemeProvider, css, type CSSObject } from "@emotion/react";
+import { ThemeProvider as EmotionThemeProvider, css, type SerializedStyles } from "@emotion/react";
 import React, { createElement } from "react";
-import type { ColorVariableName, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
+import type { ComponentThemeOverrides, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
 import { componentSelectors } from "./components";
+import { defaultAppTheme } from "./constants";
+import { colors } from "../global/colors";
 
-function themeToCssVariables(theme: Theme): Partial<Record<ColorVariableName, string>> {
-    const colorVariables = theme.colors ? { ...theme.colors } : {};
-
-    return {
-        ...colorVariables,
-    };
-}
-
-function buildComponentThemeOverrides(theme: Theme): Record<string, CSSObject> {
-    const componentOverrides: Record<string, CSSObject> = {};
+function buildComponentThemeOverrides(components?: ComponentThemeOverrides): SerializedStyles[] {
+    const componentOverrides: SerializedStyles[] = [];
 
     (Object.keys(componentSelectors) as RegisteredComponent[]).forEach((componentName) => {
-        const componentThemeStyles = theme.components?.[componentName];
+        const defaultThemeStyles = defaultAppTheme.components?.[componentName];
+        const componentThemeStyles = components?.[componentName];
 
-        if (!componentThemeStyles) {
+        if (!defaultThemeStyles && !componentThemeStyles) {
             return;
         }
 
-        componentOverrides[componentSelectors[componentName]] = componentThemeStyles;
+        componentOverrides.push(
+            css({
+                [componentSelectors[componentName]]: css`
+                    ${defaultThemeStyles}
+                    ${componentThemeStyles}
+                `,
+            }),
+        );
     });
 
     return componentOverrides;
@@ -35,10 +37,14 @@ export function CraftsmanThemeProvider({ theme, children }: ThemeProviderProps) 
     );
 }
 
-
-export function buildThemeOverride(theme: Theme) {
-    return css({
-        ":root": themeToCssVariables(theme),
-        ...buildComponentThemeOverrides(theme),
+export function themeBuilder(theme: Theme) {
+    const root = css({
+        ":root": {
+            ...defaultAppTheme.root,
+            ...theme.colors,
+            ...theme.root,
+        },
     });
+
+    return css([colors, root, ...buildComponentThemeOverrides(theme.components)]);
 }

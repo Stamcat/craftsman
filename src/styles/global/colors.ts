@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { colors as jsColors } from "../../utilities/color";
+import { colors as jsColors } from "../utilities/color";
 
 /**
  * This creates CSS variables from our strictly typed dictionary of colors

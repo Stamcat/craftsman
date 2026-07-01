@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/craftsman",
-  "version": "0.0.22",
+  "version": "0.0.23-alpha.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -23,12 +23,6 @@
     "release:patch": "npm run release -- release-as patch",
     "storybook": "storybook dev -p 6006",
     "type-check": "tsc --noEmit"
-  },
-  "exports": {
-    "./Button": {
-      "types": "./Button.d.ts",
-      "default": "./Button.es.js"
-    }
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
