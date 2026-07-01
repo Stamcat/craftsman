@@ -2,10 +2,23 @@
   "name": "@stamcat/craftsman",
   "version": "0.0.23-alpha.0",
   "type": "module",
+  "description": "A powerful, lightweight framework for design systems",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Stamcat/craftsman"
+    "url": "git+https://github.com/Stamcat/craftsman.git"
   },
+  "keywords": [
+    "design system",
+    "reusable components"
+  ],
+  "author": "Devin Marra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Stamcat/craftsman/issues"
+  },
+  "types": "index.d.ts",
+  "main": "index.js",
+  "homepage": "https://github.com/Stamcat/craftsman#readme",
   "scripts": {
     "build": "tsc --p ./tsconfig-build.json && vite build && tsx ./buildPackage.ts",
     "build-storybook": "storybook build",
