@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: lib/
+          path: dist/
     
   publish-npm:
     needs: build
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build
-          path: lib
+          path: dist
 
       - uses: actions/setup-node@v4
         with:
@@ -55,7 +55,7 @@ jobs:
         run: |
             rm -f ~/.npmrc
             rm -f .npmrc
-            rm -f lib/.npmrc
+            rm -f dist/.npmrc
 
       - name: Debug npmrc
         run: |
@@ -63,12 +63,12 @@ jobs:
             cat ~/.npmrc || echo "(none)"
             echo "---- workspace .npmrc ----"
             cat .npmrc || echo "(none)"
-            echo "---- lib .npmrc ----"
-            cat lib/.npmrc || echo "(none)"
+            echo "---- dist .npmrc ----"
+            cat dist/.npmrc || echo "(none)"
 
       - name: Publish to npm
         run: |
-          cd lib
+          cd dist
           if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then
             npm publish --access public --tag next --provenance
           else
@@ -85,7 +85,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build
-          path: lib
+          path: dist
 
       - uses: actions/setup-node@v4
         with:
@@ -97,7 +97,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.SOME_STUPID_SECRET }}
         run: |
-          cd lib
+          cd dist
           if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then
             npm publish --tag next
           else
