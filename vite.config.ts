@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { EXPORTS } from "./exports";
+import { playwright } from "@vitest/browser-playwright";
 
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -37,14 +38,26 @@ export default defineConfig({
         },
         rollupOptions: {
             // Externalize dependencies that should not be bundled
-            external: ["react", "react-dom", "zod", "react/jsx-runtime", "@emotion/react", "@emotion/styled", "emotion", "dompurify", "react-international-phone", "react-date-picker", "react-datetime-picker"],
+            external: [
+                "react",
+                "react-dom",
+                "zod",
+                "react/jsx-runtime",
+                "@emotion/react",
+                "@emotion/styled",
+                "emotion",
+                "dompurify",
+                "react-international-phone",
+                "react-date-picker",
+                "react-datetime-picker",
+            ],
             output: {
                 entryFileNames: "[name].[format].js",
                 preserveModules: true,
                 globals: {
                     react: "React",
                     "react-dom": "ReactDOM",
-                    zod: "zod"
+                    zod: "zod",
                 },
             },
         },
@@ -65,7 +78,7 @@ export default defineConfig({
                     browser: {
                         enabled: true,
                         headless: true,
-                        provider: "playwright",
+                        provider: playwright(),
                         instances: [
                             {
                                 browser: "chromium",

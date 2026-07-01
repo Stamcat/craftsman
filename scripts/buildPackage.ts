@@ -79,7 +79,7 @@ const createPackageJson = () => {
 };
 const copyReadme = () => {
     const readmeSrc = path.join(process.cwd(), "README.md");
-    const readmeDest = path.join(process.cwd(), "lib", "README.md");
+    const readmeDest = path.join(process.cwd(), "dist", "README.md");
     console.log(`writing ${readmeSrc} to ${readmeDest}`);
 
     const ignoreFile = fse.readFileSync(readmeSrc).toString("utf-8");
