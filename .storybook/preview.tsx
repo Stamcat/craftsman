@@ -5,8 +5,18 @@ import { themeBuilder, CraftsmanThemeProvider } from "../src/styles/theme/theme"
 import type { Theme } from "../src/styles/theme/types";
 import { appThemes } from "./themes/themes";
 import { globalStyles } from "../src/styles/global/globalStyles";
+import { setCraftsmanConfig } from "../src/styles/utilities/config";
 
-// TODO: This needs to be included in package 
+/**
+ * css-in-js: Custom configurations will generate new variables at app entry
+ */
+setCraftsmanConfig({
+    widths: {
+        gutter: 16, 
+    }
+})
+
+// TODO: This can probably be included in package 
 // eslint-disable-next-line react-refresh/only-export-components
 const GlobalStyles = () => (
     <Global

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { colors } from "../styles/utilities/color";
 import { width } from "../styles/utilities/layout";
 import { css } from "@emotion/react";
+import { toast, ToastContainer } from "react-toastify";
 
 const meta: Meta = {
     title: "Foundations/Colors",
@@ -43,6 +44,7 @@ const SwatchPreview = styled.div<{ color: string }>`
 const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(e.currentTarget.value);
+        toast(`${e.currentTarget.value} copied to clipboard!`);
     }
 }
 
@@ -80,6 +82,7 @@ export const Palette: Story = {
             {Object.entries(colors).map(([name, value]) => ( 
                 <Swatch key={name} name={name} value={value} />
             ))}
+            <ToastContainer />
         </Page>
     ),
 };

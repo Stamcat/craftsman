@@ -1,49 +1,57 @@
 import { css, type CSSObject, type SerializedStyles } from "@emotion/react";
+import type { Breakpoint, LayoutWidthsType, ResponsiveWidth } from "./types";
+import { getCraftsmanConfig } from "./config";
 
-export type LayoutWidthsType =
-    | "column"
-    | "gutter"
-    | "extDesktop"
-    | "extNav"
-    | "desktop"
-    | "tablet"
-    | "extMobile"
-    | "mobileMax"
-    | "tabletMax"
-    | "desktopMax";
+const widthKeys = [
+    "text",
+    "column",
+    "gutter",
+    "extDesktop",
+    "extNav",
+    "desktop",
+    "tablet",
+    "extMobile",
+    "mobileMax",
+    "tabletMax",
+    "desktopMax",
+] as const satisfies readonly (keyof ResponsiveWidth)[];
 
-export type Breakpoint =
-    | "mobile"
-    | "tablet"
-    | "desktop"
-    | "extDesktop"
-    | "mobileOnly"
-    | "tabletOnly"
-    | "mobileTablet"
-    | "desktopOnly";
+const widthDescriptors = widthKeys.reduce<PropertyDescriptorMap>((acc, key) => {
+    acc[key] = {
+        enumerable: true,
+        get: () => getCraftsmanConfig().widths[key],
+    };
+    return acc;
+}, {});
 
-export const widths = {
-    text: 16,
-    column: 60,
-    gutter: 16,
-    extDesktop: 1320,
-    extNav: 1240,
-    desktop: 1040,
-    tablet: 660,
-    extMobile: 320,
-    mobileMax: 660 - 0.00001,
-    tabletMax: 1040 - 0.00001,
-    desktopMax: 1320 - 0.00001,
-};
+export const widths = Object.defineProperties({} as ResponsiveWidth, widthDescriptors) as ResponsiveWidth;
+
+
 export const media = {
-    mobile: `(min-width: 0px)`,
-    tablet: `(min-width: ${widths.tablet}px)`,
-    desktop: `(min-width: ${widths.desktop}px)`,
-    extDesktop: `(min-width: ${widths.extDesktop}px)`,
-    mobileOnly: `(min-width: 0px) and (max-width: ${widths.mobileMax}px)`,
-    tabletOnly: `(min-width: ${widths.tablet}px) and (max-width: ${widths.tabletMax}px)`,
-    mobileTablet: `(min-width: 0px) and (max-width: ${widths.tabletMax}px)`,
-    desktopOnly: `(min-width: ${widths.desktop}px) and (max-width: ${widths.desktopMax}px)`,
+    get mobile() {
+        return `(min-width: 0px)`;
+    },
+    get tablet() {
+        return `(min-width: ${widths.tablet}px)`;
+    },
+    get desktop() {
+        return `(min-width: ${widths.desktop}px)`;
+    },
+    get extDesktop() {
+        return `(min-width: ${widths.extDesktop}px)`;
+    },
+    get mobileOnly() {
+        return `(min-width: 0px) and (max-width: ${widths.mobileMax}px)`;
+    },
+    get tabletOnly() {
+        return `(min-width: ${widths.tablet}px) and (max-width: ${widths.tabletMax}px)`;
+    },
+    get mobileTablet() {
+        return `(min-width: 0px) and (max-width: ${widths.tabletMax}px)`;
+    },
+    get desktopOnly() {
+        return `(min-width: ${widths.desktop}px) and (max-width: ${widths.desktopMax}px)`;
+    },
 };
 /**
  * Returns width based on key.
@@ -58,7 +66,7 @@ export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean =
         const m = multiplier - 1;
         gutters = widths.gutter * m;
     }
-    return `${widths[w] * multiplier + gutters}${px ? "px" : ""}}`;
+    return `${widths[w] * multiplier + gutters}${px ? "px" : ""}`;
 };
 
 /**

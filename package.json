@@ -46,6 +46,7 @@
     "react-datetime-picker": "7.0.2",
     "react-dom": "19.2.7",
     "react-international-phone": "4.8.0",
+    "react-toastify": "11.1.0",
     "zod": "4.4.3"
   },
   "devDependencies": {
