@@ -44,7 +44,7 @@ const SwatchPreview = styled.div<{ color: string }>`
 const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(e.currentTarget.value);
-        toast(`${e.currentTarget.value} copied to clipboard!`);
+        toast(`"${e.currentTarget.value}" copied to clipboard!`);
     }
 }
 
@@ -69,7 +69,7 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
                     onClick={copyToClipboard}
                     aria-label={`Copy token value ${value}`}
                 >
-                    <code>{value}</code>
+                    {value}
                 </button>
             </footer>
         </Card>

@@ -51,12 +51,10 @@ export const ScaleAndSemantics: Story = {
                 <li>Ordered list item three</li>
             </ol>
 
-            <h3>Code Block</h3>
-            <pre>
-                <code>{`function greet(name: string) {
+            <h3>Code Block HTML</h3>
+            <code><pre>{`function greet(name: string) {
   return \`Hello, \${name}\`;
-}`}</code>
-            </pre>
+}`}</pre></code>
         </article>
     ),
 };

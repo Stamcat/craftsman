@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { button } from "./components/button";
 import { colors, media, widths } from "./variables";
-import { pre } from "./components/pre";
 import { typographyStyles } from "./components/typography";
+import { code } from "./components/code";
 
 export const globalStyles = css`
     :root {
@@ -49,8 +49,8 @@ export const globalStyles = css`
         padding: 0px;
         border: 0px;
     }
-    pre {
-        ${pre}
+    code {
+        ${code}
     }
     button {
         ${button}
