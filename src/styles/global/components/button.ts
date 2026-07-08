@@ -18,17 +18,18 @@ export const button = css`
     border-radius: calc(var(--w-gutter) * 0.75);
     border: 1px solid var(--blue600);
     background-color: var(--white);
-    &:not(:disabled):hover {
+    &:not(:disabled):not(.disabled):hover {
         background-color: var(--blue200);
     }
-    &:disabled {
+    &:disabled,
+    &.disabled {
         cursor: not-allowed;
     }
     &.text {
         padding: 0;
         border: none;
         background: none;
-        &:not(:disabled):hover {
+        &:not(:disabled):not(.disabled):hover {
             color: var(--blue800);
             background-color: transparent;
             text-decoration: underline;
@@ -37,7 +38,7 @@ export const button = css`
     &.primary {
         color: var(--white);
         background-color: var(--blue500);
-        &:not(:disabled):hover {
+        &:not(:disabled):not(.disabled):hover {
             background-color: var(--blue700);
         }
     }

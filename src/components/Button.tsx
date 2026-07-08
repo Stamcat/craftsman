@@ -11,12 +11,11 @@ export type ButtonProps = React.ComponentProps<"button"> & {
     variant?: ButtonType;
     /* Optional Emotion Styles */
     styles?: SerializedStyles;
+
 };
 /**
  * Button supports emotion styled components and regular classNames.
  * Color scheme can be changed both by theme or by globalStyles button html element.
- * @param props 
- * @returns 
  */
 export const Button: React.FC<ButtonProps> = (props) => {
     const { type = "button", variant = "default", className, ...rest } = props;
@@ -24,5 +23,5 @@ export const Button: React.FC<ButtonProps> = (props) => {
         ? className
         : [variant, className].filter(Boolean).join(" ");
 
-    return <StyledButton type={type} className={mergedClassName} {...rest} />;
+    return <StyledButton type={type} className={mergedClassName} {...rest} />
 };

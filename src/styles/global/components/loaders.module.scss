@@ -3,6 +3,7 @@
     border-radius: 50%;
     animation: l5 1s infinite linear alternate;
     width: var(--_l5w);
+    margin: 0 var(--_l5w2);
 }
 @keyframes l5 {
     0% {

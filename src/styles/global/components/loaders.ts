@@ -18,11 +18,11 @@ export type LoaderStyleDefinition = (color: string, width?: number) => Serialize
 
 // box-switch - https://css-loaders.com/shapes/ #5
 export const loaders: Record<LoaderStyle, LoaderStyleDefinition> = {
-    dots: (color: string, width = 15) => css`
+    dots: (color: string, width = 100) => css`
         --_l5c: ${color};
-        --_l5w: ${width}px;
-        --_l5w2: ${Math.round(width * 1.3333)}px;
-        --_l5w3: ${Math.round(width * -1.3333)}px;
+        --_l5w: ${Math.round(width * 0.125)}px;
+        --_l5w2: ${Math.round(width * 0.16666)}px;
+        --_l5w3: ${Math.round(width * -0.16666)}px;
     `,
     "dots-bounce": (color: string, width = 60) => css`
         --_g: no-repeat radial-gradient(circle closest-side, ${color} 90%, #0000);
