@@ -1,0 +1,239 @@
+.dots {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+    width: var(--_l5w);
+}
+@keyframes l5 {
+    0% {
+        box-shadow:
+            var(--_l5w2) 0 var(--_l5c),
+            var(--_l5w3) 0 color-mix(in srgb, var(--_l5c) 80%, white 75%);
+        background: var(--_l5c);
+    }
+    33% {
+        box-shadow:
+            var(--_l5w2) 0 var(--_l5c),
+            var(--_l5w3) 0 color-mix(in srgb, var(--_l5c) 80%, white 75%);
+        background: color-mix(in srgb, var(--_l5c) 80%, white 75%);
+    }
+    66% {
+        box-shadow:
+            var(--_l5w2) 0 color-mix(in srgb, var(--_l5c) 80%, white 75%),
+            var(--_l5w3) 0 var(--_l5c);
+        background: color-mix(in srgb, var(--_l5c) 80%, white 75%);
+    }
+    100% {
+        box-shadow:
+            var(--_l5w2) 0 color-mix(in srgb, var(--_l5c) 80%, white 75%),
+            var(--_l5w3) 0 var(--_l5c);
+        background: var(--_l5c);
+    }
+}
+
+.dots-bounce {
+    width: var(--_gw);
+    aspect-ratio: 2;
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100% / 3) 50%;
+    animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    20% {
+        background-position:
+            0% 0%,
+            50% 50%,
+            100% 50%;
+    }
+    40% {
+        background-position:
+            0% 100%,
+            50% 0%,
+            100% 50%;
+    }
+    60% {
+        background-position:
+            0% 50%,
+            50% 100%,
+            100% 0%;
+    }
+    80% {
+        background-position:
+            0% 50%,
+            50% 50%,
+            100% 100%;
+    }
+}
+
+.dots-trace {
+    width: var(--_dtw);
+    aspect-ratio: 4;
+    background: radial-gradient(circle closest-side, var(--_dtc) 90%, #0000) 0 / calc(100% / 3) 100% space;
+    clip-path: inset(0 100% 0 0);
+    animation: l1 1s steps(4) infinite;
+       
+}
+@keyframes l1 {
+    to {
+        clip-path: inset(0 -34% 0 0);
+    }
+}
+
+.dots-orbit {
+  width: var(--_dow);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--_doc);
+  display: grid;
+  animation: l22-0 2s infinite linear;
+    &:before,
+    &:after {
+        content: "";
+        grid-area: 1/1;
+        margin: 15%;
+        border-radius: 50%;
+        background: inherit;
+        transform: rotate(0deg) translate(150%);
+        animation: l22 1s infinite;
+    }
+    &:after {
+        animation-delay: -.5s
+    }
+}
+
+@keyframes l22-0 {
+  100% {transform: rotate(1turn)}
+}
+@keyframes l22 {
+  100% {transform: rotate(1turn) translate(150%)}
+}
+
+.dashes {
+    width: var(--_dshw);
+    height: calc(var(--_dshw) * 0.3);
+    background:
+        linear-gradient(var(--_dshc) 0 0) left/var(--_dshw2) 4px,
+        linear-gradient(var(--_dshc) 0 0) center/var(--_dshw2) 4px,
+        linear-gradient(var(--_dshc) 0 0) right/var(--_dshw2) 4px;
+    background-repeat: no-repeat;
+    animation: dashes 1s infinite linear;
+        
+}
+@keyframes dashes {
+    0% {
+        background-size:
+            var(--_dshw2) 4px,
+            var(--_dshw2) 4px,
+            var(--_dshw2) 4px;
+        opacity: 1;
+    }
+    33% {
+        background-size:
+            var(--_dshw2) var(--_dshw2),
+            var(--_dshw2) 4px,
+            var(--_dshw2) 4px;
+        opacity: 0.7;
+    }
+    66% {
+        background-size:
+            var(--_dshw2) 4px,
+            var(--_dshw2) var(--_dshw2),
+            var(--_dshw2) 4px;
+        opacity: 0.7;
+    }
+    100% {
+        background-size:
+            var(--_dshw2) 4px,
+            var(--_dshw2) 4px,
+            var(--_dshw2) var(--_dshw2);
+        opacity: 1;
+    }
+}
+
+.spinner {
+  width: var(--_spnw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: var(--_spnw2) solid color-mix(in srgb, var(--_spnc) 20%, transparent);
+  border-right-color: var(--_spnc);
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {to{transform: rotate(1turn)}}
+
+.swirl {
+  width: var(--_swrlw);
+  padding: var(--_swrlw2);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--_swrlc);
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+.ball {
+  width: var(--_ballw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: 
+    radial-gradient(farthest-side,var(--_ballc) 95%,#0000) 50% 1px/var(--_ballw2) var(--_ballw2) no-repeat,
+    radial-gradient(farthest-side,#0000 calc(100% - var(--_ballw2)),#ccc 0);
+  animation: l9 2s infinite linear;
+}
+@keyframes l9 {to{transform: rotate(1turn)}}
+
+.boxy {
+  width: var(--_boxw);
+  height: var(--_boxw2);
+  -webkit-mask: linear-gradient(90deg,#000 70%,#0000 0) left/20% 100%;
+  background:
+   linear-gradient(var(--_boxc) 0 0) left -25% top 0 /20% 100% no-repeat
+   #ddd;
+  animation: l7 1s infinite steps(6);
+}
+@keyframes l7 {
+    100% {background-position: right -25% top 0}
+}
+
+.factory {
+  width: var(--_ftyw);
+  height: var(--_ftyw2);
+  box-shadow: 0 3px 0 var(--_ftyc);
+  position: relative;
+  clip-path: inset(-40px 0 -5px);
+  &:before {
+    content: "";
+    position: absolute;
+    inset: auto calc(50% - 17px) 0;
+    height: var(--_ftyw3);
+    --g:no-repeat linear-gradient(color-mix(in srgb, var(--_ftyc) 30%, white) 0 0);
+    background: var(--g),var(--g),var(--g),var(--g);
+    background-size: var(--_ftyw4) 14px;
+    animation:
+        l7-1 2s infinite linear,
+        l7-2 2s infinite linear;
+    }
+}
+@keyframes l7-1 {
+  0%,
+  100%  {background-position: 0 -var(--_ftyw3),100% -var(--_ftyw3)}
+  17.5% {background-position: 0 100%,100% -var(--_ftyw3),0 -var(--_ftyw3),100% -var(--_ftyw3)}
+  35%   {background-position: 0 100%,100% 100% ,0 -var(--_ftyw3),100% -var(--_ftyw3)}
+  52.5% {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% -var(--_ftyw3)}
+  70%,
+  98%  {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% calc(100% - var(--_ftyw4))}
+}
+@keyframes l7-2 {
+  0%,70% {transform:translate(0)}
+  100%  {transform:translate(200%)}
+}
+

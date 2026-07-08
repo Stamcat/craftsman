@@ -10,8 +10,8 @@ export const appThemes: AppTheme = {
         },
         components: {
             button: {
-                border: "2px solid black",
-                borderRadius: "4px",
+                // border: "1px solid var(--blue800)",
+                // borderRadius: "8px",
             },
         },
     },

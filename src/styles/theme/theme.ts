@@ -2,26 +2,23 @@ import { ThemeProvider as EmotionThemeProvider, css, type SerializedStyles } fro
 import React, { createElement } from "react";
 import type { ComponentThemeOverrides, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
 import { componentSelectors } from "./components";
-import { defaultAppTheme } from "./constants";
-import { colors } from "../global/colors";
+import { toCSSObject } from "./utilities";
+import { colors } from "../global/variables";
 
 function buildComponentThemeOverrides(components?: ComponentThemeOverrides): SerializedStyles[] {
     const componentOverrides: SerializedStyles[] = [];
 
     (Object.keys(componentSelectors) as RegisteredComponent[]).forEach((componentName) => {
-        const defaultThemeStyles = defaultAppTheme.components?.[componentName];
         const componentThemeStyles = components?.[componentName];
 
-        if (!defaultThemeStyles && !componentThemeStyles) {
+        if (!componentThemeStyles) {
             return;
         }
-
         componentOverrides.push(
             css({
-                [componentSelectors[componentName]]: css`
-                    ${defaultThemeStyles}
-                    ${componentThemeStyles}
-                `,
+                [componentSelectors[componentName]]: {
+                    ...(componentThemeStyles ? toCSSObject(componentThemeStyles) : {}),
+                },
             }),
         );
     });
@@ -40,7 +37,6 @@ export function CraftsmanThemeProvider({ theme, children }: ThemeProviderProps) 
 export function themeBuilder(theme: Theme) {
     const root = css({
         ":root": {
-            ...defaultAppTheme.root,
             ...theme.colors,
             ...theme.root,
         },
