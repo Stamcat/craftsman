@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { css } from "@emotion/react";
 import { Button } from "../components/Button";
+import { ButtonType } from "../styles/global/components/button";
 
 const meta: Meta<typeof Button> = {
     title: "Components/Button",
@@ -14,7 +15,7 @@ const meta: Meta<typeof Button> = {
     argTypes: {
         variant: {
             control: "select",
-            options: ["default", "primary", "text"],
+            options: ButtonType.options,
             description: "Call-to-action style variant",
         },
         type: {

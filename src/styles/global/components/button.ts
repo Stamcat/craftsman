@@ -1,5 +1,9 @@
 import { css } from "@emotion/react";
 import { typography } from "./typography";
+import z from "zod";
+
+export const ButtonType = z.enum(["primary", "default", "text"]);
+export type ButtonType = z.infer<typeof ButtonType>;
 
 export const button = css`
     ${typography.body}
@@ -14,7 +18,7 @@ export const button = css`
     border-radius: calc(var(--w-gutter) * 0.75);
     border: 1px solid var(--blue600);
     background-color: var(--white);
-    &:hover {
+    &:not(:disabled):hover {
         background-color: var(--blue200);
     }
     &:disabled {
@@ -24,15 +28,16 @@ export const button = css`
         padding: 0;
         border: none;
         background: none;
-        &:hover {
+        &:not(:disabled):hover {
             color: var(--blue800);
+            background-color: transparent;
             text-decoration: underline;
         }
     }
     &.primary {
         color: var(--white);
         background-color: var(--blue500);
-        &:hover {
+        &:not(:disabled):hover {
             background-color: var(--blue700);
         }
     }

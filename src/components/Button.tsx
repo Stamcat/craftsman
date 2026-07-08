@@ -1,13 +1,14 @@
 import type { SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
+import type { ButtonType } from "../styles/global/components/button";
 
 const StyledButton = styled.button<{ styles?: SerializedStyles }>`
     ${(props) => props.styles}
 `;
 
 export type ButtonProps = React.ComponentProps<"button"> & {
-    /* Call-to-action Styles */
-    variant?: "primary" | "default" | "text";
+    /* Primary - Call-To-Action, Text - use for non-anchored text buttons */
+    variant?: ButtonType;
     /* Optional Emotion Styles */
     styles?: SerializedStyles;
 };

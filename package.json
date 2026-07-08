@@ -47,6 +47,7 @@
     "react-dom": "19.2.7",
     "react-international-phone": "4.8.0",
     "react-toastify": "11.1.0",
+    "sass-embedded": "1.100.0",
     "zod": "4.4.3"
   },
   "devDependencies": {

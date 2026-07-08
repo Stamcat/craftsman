@@ -4,6 +4,7 @@ import { colors } from "../styles/utilities/color";
 import { width } from "../styles/utilities/layout";
 import { css } from "@emotion/react";
 import { toast, ToastContainer } from "react-toastify";
+import { Button } from "../components";
 
 const meta: Meta = {
     title: "Foundations/Colors",
@@ -54,23 +55,23 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
             <SwatchPreview color={value} />
             <footer>
                 <p>
-                    <button
-                        type="button"
+                    <Button
+                        variant="text"
                         onClick={copyToClipboard}
                         value={name}
                         aria-label={`Copy token name ${name}`}
                     >
                         <strong>{name}</strong>
-                    </button>
+                    </Button>
                 </p>
-                <button
-                    type="button"
+                <Button
+                    variant="text"
                     value={value}
                     onClick={copyToClipboard}
                     aria-label={`Copy token value ${value}`}
                 >
                     {value}
-                </button>
+                </Button>
             </footer>
         </Card>
     );
