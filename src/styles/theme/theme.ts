@@ -4,6 +4,7 @@ import type { ComponentThemeOverrides, RegisteredComponent, Theme, ThemeProvider
 import { componentSelectors } from "./components";
 import { toCSSObject } from "./utilities";
 import { colors } from "../global/variables";
+import { isEmpty } from "../../utilities/validations";
 
 function buildComponentThemeOverrides(components?: ComponentThemeOverrides): SerializedStyles[] {
     const componentOverrides: SerializedStyles[] = [];
@@ -11,7 +12,7 @@ function buildComponentThemeOverrides(components?: ComponentThemeOverrides): Ser
     (Object.keys(componentSelectors) as RegisteredComponent[]).forEach((componentName) => {
         const componentThemeStyles = components?.[componentName];
 
-        if (!componentThemeStyles) {
+        if (!componentThemeStyles || typeof componentThemeStyles === "string") {
             return;
         }
         componentOverrides.push(
@@ -27,9 +28,10 @@ function buildComponentThemeOverrides(components?: ComponentThemeOverrides): Ser
 }
 
 export function CraftsmanThemeProvider({ theme, children }: ThemeProviderProps) {
+    const safeTheme = isEmpty(theme) ? {} : theme;
     return createElement(
         EmotionThemeProvider as React.ComponentType<{ theme: Theme; children?: React.ReactNode }>,
-        { theme },
+        { theme: safeTheme },
         children,
     );
 }

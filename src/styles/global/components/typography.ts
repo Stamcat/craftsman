@@ -3,16 +3,11 @@ import { breakpoint } from "../../utilities/layout";
 
 export const typography = {
     body: css`
-        font-family:
-            system-ui,
-            Avenir,
-            Helvetica,
-            Arial,
-            sans-serif;
+        font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
         color: var(--text);
         line-height: 1.5;
         font-weight: 400;
-        font-size: var(--w-text)px;
+        font-size: var(--w-text) px;
     `,
     h1: css`
         font-size: calc(var(--w-text) * 3.125);
@@ -30,6 +25,7 @@ export const typography = {
     h4: css`
         font-size: calc(var(--w-text) * 1.25);
         line-height: 1.1;
+        margin: calc(var(--w-gutter) * 0.5) 0px;
         ${breakpoint(
             "mobileOnly",
             css`
@@ -38,7 +34,7 @@ export const typography = {
         )}
     `,
     h5: css`
-        font-size: var(--w-text)px;
+        font-size: var(--w-text) px;
         line-height: 1.2;
     `,
     h6: css`

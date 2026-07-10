@@ -1,13 +1,12 @@
 import { css } from "@emotion/react";
 import { button } from "./components/button";
-import { colors, media, widths } from "./variables";
+import { colors, widths } from "./variables";
 import { typographyStyles } from "./components/typography";
 import { code } from "./components/code";
 
 export const globalStyles = css`
     :root {
         ${widths}
-        ${media}
         ${colors}
         color-scheme: light dark;
         font-synthesis: none;

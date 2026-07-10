@@ -1,6 +1,7 @@
-import type { SerializedStyles } from "@emotion/react";
+import { useTheme, type SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { ButtonType } from "../styles/global/components/button";
+import type { Theme } from "../styles/theme/types";
 
 const StyledButton = styled.button<{ styles?: SerializedStyles }>`
     ${(props) => props.styles}
@@ -19,9 +20,16 @@ export type ButtonProps = React.ComponentProps<"button"> & {
  */
 export const Button: React.FC<ButtonProps> = (props) => {
     const { type = "button", variant = "default", className, ...rest } = props;
-    const mergedClassName = variant === "default"
-        ? className
-        : [variant, className].filter(Boolean).join(" ");
+    const theme = useTheme() as Theme;
+    const themeClass = typeof theme?.components?.button === 'string'
+        ? theme.components.button
+        : undefined;
+
+    const mergedClassName = [
+        variant !== "default" ? variant : undefined,
+        themeClass,
+        className,
+    ].filter(Boolean).join(" ") || undefined;
 
     return <StyledButton type={type} className={mergedClassName} {...rest} />
 };

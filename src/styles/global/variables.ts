@@ -1,5 +1,5 @@
 import { colors as jsColors } from "../utilities/color";
-import { widths as jsWidths, media as jsMedia } from "../utilities/layout";
+import { widths as jsWidths } from "../utilities/layout";
 
 /**
  * This creates CSS variables from our strictly typed dictionary of colors
@@ -15,6 +15,7 @@ export const widths = Object.entries(jsWidths)
     .map(([key, value]) => `--w-${key}: ${value}px;`)
     .join("\n");
 
-export const media = Object.entries(jsMedia)
-    .map(([key, value]) => `--bp-${key}: ${value};`)
-    .join("\n");
+// this isn't supported by css variables
+// export const media = Object.entries(jsMedia)
+//     .map(([key, value]) => `--bp-${key}: ${value};`)
+//     .join("\n");
