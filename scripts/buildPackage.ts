@@ -77,9 +77,9 @@ const createPackageJson = () => {
 
     console.log("package.json file created");
 };
-const copyReadme = () => {
-    const readmeSrc = path.join(process.cwd(), "README.md");
-    const readmeDest = path.join(process.cwd(), "dist", "README.md");
+const copyFile = (name: string) => {
+    const readmeSrc = path.join(process.cwd(), name);
+    const readmeDest = path.join(process.cwd(), "dist", name);
     console.log(`writing ${readmeSrc} to ${readmeDest}`);
 
     const ignoreFile = fse.readFileSync(readmeSrc).toString("utf-8");
@@ -153,6 +153,7 @@ export class PackageBuilder {
         copyPrepublishScript();
         createIgnoreFile();
         copyExtension("src", [".scss", ".css", ".png", ".jpg", ".ttf", ".bin"]);
-        copyReadme();
+        copyFile("README.md");
+        copyFile("AGENTS.md");
     }
 }

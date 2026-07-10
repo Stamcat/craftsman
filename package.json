@@ -45,6 +45,7 @@
     "react-date-picker": "12.0.2",
     "react-datetime-picker": "7.0.2",
     "react-dom": "19.2.7",
+    "react-icons": "5.7.0",
     "react-international-phone": "4.8.0",
     "react-toastify": "11.1.0",
     "sass-embedded": "1.100.0",

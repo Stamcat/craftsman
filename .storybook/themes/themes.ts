@@ -1,22 +1,16 @@
+import { css } from "@emotion/react";
 import type { AppTheme } from "../../src/styles/theme/types";
-
+import styles from "./theme.module.scss";
 /**
  * This is provided by the consuming application
  */
 export const appThemes: AppTheme = {
     default: {
-        root: {
-            backgroundColor: "#efefef",
-        },
-        components: {
-            button: {
-                // border: "1px solid var(--blue800)",
-                // borderRadius: "8px",
-            },
-        },
+        // you can put your own brand styles here
     },
-    green: {
+    jsStyling: {
         components: {
+            // we can use js styling, emotion styled-components, or css/sass modules
             button: {
                 backgroundColor: "#16a34a",
                 color: "#ffffff",
@@ -25,18 +19,25 @@ export const appThemes: AppTheme = {
             },
         },
     },
-    purple: {
+    emotionStyles: {
         colors: {
-            "--blue500": "#f704cf",
+            "--blue500": "#31198a",
         },
         components: {
-            button: {
-                backgroundColor: "var(--blue500)",
-                color: "#ffffff",
-                borderRadius: "4px",
-                border: "1px solid blue",
-            },
+            button: css`
+                background-color: var(--blue500);
+                color: #fff;
+                border-radius: 4px;
+                border: 1px solid blue;
+            `,
         },
     },
-};;;;
-
+    scssModules: {
+        colors: {
+            "--blue500": "#31198a",
+        },
+        components: {
+            button: styles.button,
+        },
+    },
+};

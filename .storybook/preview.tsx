@@ -8,7 +8,7 @@ import { globalStyles } from "../src/styles/global/globalStyles";
 import { setCraftsmanConfig } from "../src/styles/utilities/config";
 
 /**
- * css-in-js: Custom configurations will generate new variables at app entry
+ * (optional) css-in-js: Custom configurations will generate new variables at app entry
  */
 setCraftsmanConfig({
     widths: {

@@ -42,7 +42,7 @@ const meta: Meta<StoryArgs> = {
         layout: "padded",
         docs: {
             description: {
-                story: "There's no need to re-invent a toast notification. Craftsman implements react-toastify - a simple, lightweight toast notification library.",
+                story: "There's no need to re-invent a toast notification. Craftsman implements react-toastify - a simple, lightweight toast notification library that uses MIT license.",
             },
         },
     },

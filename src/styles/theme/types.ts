@@ -7,7 +7,7 @@ export type ColorVariableName = `--${ColorKey}`;
 export type RegisteredComponent = keyof typeof componentSelectors;
 
 export type ComponentThemeOverrides = {
-    [K in RegisteredComponent]?: CSSObject | SerializedStyles;
+    [K in RegisteredComponent]?: CSSObject | SerializedStyles | string;
 };;
 export type Colors = Partial<Record<ColorVariableName, string>>;
 
