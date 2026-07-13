@@ -22,8 +22,8 @@ const dtsOptions = {
     outDir: "dist",
     insertTypesEntry: true,
     rollupTypes: true,
-    // Ensures .d.ts files are generated for each entry point
-    entryRoot: "src",
+    // entryRoot: "." mirrors the full src/ path into dist/ (e.g. dist/src/components/Button.d.ts)
+    entryRoot: ".",
 };
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({

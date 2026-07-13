@@ -48,7 +48,7 @@ const createPackageJson = () => {
         const subpathExports = componentNames.reduce<Record<string, { types: string; default: string }>>(
             (acc, componentName) => {
                 acc[`./${componentName}`] = {
-                    types: `./components/${componentName}.d.ts`,
+                    types: `./src/components/${componentName}.d.ts`,
                     default: `./src/components/${componentName}.esm.js`,
                 };
                 return acc;
@@ -58,7 +58,7 @@ const createPackageJson = () => {
 
         return {
             ".": {
-                types: "./main.d.ts",
+                types: "./src/components/index.d.ts",
                 default: "./Components.esm.js",
             },
             ...subpathExports,
@@ -75,7 +75,7 @@ const createPackageJson = () => {
     sourceObj.scripts = prepublishOnly ? { prepublishOnly } : {};
     sourceObj.devDependencies = {};
     sourceObj.main = "./Components.esm.js";
-    sourceObj.types = "./main.d.ts";
+    sourceObj.types = "./src/components/index.d.ts";
     const componentExports = getComponentExports();
     if (componentExports.length > 0) {
         sourceObj.exports = buildExportsMap(componentExports);
