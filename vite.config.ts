@@ -18,11 +18,12 @@ export const ENTRIES = Object.fromEntries(
 // Configuration for type declarations
 const dtsOptions = {
     include: ["src"],
+    exclude: ["src/stories/**/*", "src/**/*.stories.*", "src/**/*.mdx", "scripts/**/*"],
     outDir: "dist",
     insertTypesEntry: true,
     rollupTypes: true,
     // Ensures .d.ts files are generated for each entry point
-    entryRoot: "src"
+    entryRoot: "src",
 };
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
