@@ -1,25 +1,34 @@
-import { useTheme, type SerializedStyles } from "@emotion/react";
+import { css, useTheme, type SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { ButtonType } from "../styles/global/components/button";
 import type { Theme } from "../styles/theme/types";
+import { isEmpty } from "../utilities/validations";
 
-const StyledButton = styled.button<{ styles?: SerializedStyles }>`
+const StyledButton = styled.button<{ size?: number; styles?: SerializedStyles }>`
     ${(props) => props.styles}
+    ${(props => props.size && css`
+        border-radius: calc(var(--btn-border-radius) * ${props.size});
+        padding: calc(var(--btn-pad-y) * ${props.size}) calc(var(--btn-pad-x) * ${props.size});
+        font-size: max(10px, calc(var(--w-text) * ${props.size}));
+    `)}
 `;
 
 export type ButtonProps = React.ComponentProps<"button"> & {
-    /* Primary - Call-To-Action, Text - use for non-anchored text buttons */
+    /** Primary - Call-To-Action, Text - use for non-anchored text buttons */
     variant?: ButtonType;
-    /* Optional Emotion Styles */
+    /** Scale multiplier (0.1-10); affects padding, border-radius and font size, maintains font legibility at a minimum of 10px. default = 1 */
+    size?: number;
+    /** Optional Emotion styles override */
     styles?: SerializedStyles;
-
 };
 /**
- * Button supports emotion styled components and regular classNames.
- * Color scheme can be changed both by theme or by globalStyles button html element.
+ * Button supports emotion styled components and regular classNames.<br />
+ * Color scheme can be changed both by theme or by globalStyles button html element.<br />
+ * If button is empty, it will return nothing. This prevents instances of "empty square" which can annoy the end user.
  */
 export const Button: React.FC<ButtonProps> = (props) => {
-    const { type = "button", variant = "default", className, ...rest } = props;
+    const { type = "button", variant = "default", className, size, ...rest } = props;
+    const normalizedSize = typeof size === "number" ? Math.min(10, Math.max(0.1, size)) : undefined;
     const theme = useTheme() as Theme;
     const themeClass = typeof theme?.components?.button === 'string'
         ? theme.components.button
@@ -30,6 +39,8 @@ export const Button: React.FC<ButtonProps> = (props) => {
         themeClass,
         className,
     ].filter(Boolean).join(" ") || undefined;
-
-    return <StyledButton type={type} className={mergedClassName} {...rest} />
+    if (isEmpty(props.children)) {
+        return <></>;
+    }
+    return <StyledButton type={type} size={normalizedSize} className={mergedClassName} {...rest} />
 };

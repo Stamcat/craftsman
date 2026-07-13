@@ -7,7 +7,7 @@ export const typography = {
         color: var(--text);
         line-height: 1.5;
         font-weight: 400;
-        font-size: var(--w-text) px;
+        font-size: var(--w-text);
     `,
     h1: css`
         font-size: calc(var(--w-text) * 3.125);
@@ -34,7 +34,7 @@ export const typography = {
         )}
     `,
     h5: css`
-        font-size: var(--w-text) px;
+        font-size: var(--w-text);
         line-height: 1.2;
     `,
     h6: css`

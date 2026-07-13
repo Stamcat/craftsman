@@ -6,6 +6,9 @@ export const ButtonType = z.enum(["primary", "default", "text"]);
 export type ButtonType = z.infer<typeof ButtonType>;
 
 export const button = css`
+    --btn-pad-y: calc(var(--w-gutter) * 0.5);
+    --btn-pad-x: calc(var(--w-gutter) * 0.75);
+    --btn-border-radius: calc(var(--w-gutter) * 0.75);
     ${typography.body}
     border: none;
     cursor: pointer;
@@ -14,16 +17,12 @@ export const button = css`
     align-items: center;
     font-weight: 500;
     transition: 0.125s;
-    padding: calc(var(--w-gutter) * 0.5) calc(var(--w-gutter) * 0.75);
-    border-radius: calc(var(--w-gutter) * 0.75);
+    padding: var(--btn-pad-y) var(--btn-pad-x);
+    border-radius: var(--btn-border-radius);
     border: 1px solid var(--blue600);
     background-color: var(--white);
     &:not(:disabled):not(.disabled):hover {
         background-color: var(--blue200);
-    }
-    &:disabled,
-    &.disabled {
-        cursor: not-allowed;
     }
     &.text {
         padding: 0;
@@ -33,6 +32,17 @@ export const button = css`
             color: var(--blue800);
             background-color: transparent;
             text-decoration: underline;
+        }
+    }
+    &:disabled,
+    &.disabled {
+        cursor: not-allowed;
+        border-color: var(--grey200);
+        color: var(--grey400);
+        &.primary {
+            border-color: var(--grey200);
+            background-color: var(--grey400);
+            color: var(--grey200);
         }
     }
     &.primary {
