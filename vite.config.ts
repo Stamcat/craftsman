@@ -13,7 +13,7 @@ import { playwright } from "@vitest/browser-playwright";
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export const ENTRIES = Object.fromEntries(
-    Object.entries(EXPORTS).map(([key, value]) => [key, path.resolve(__dirname, `src/${value}`)])
+    Object.entries(EXPORTS).map(([key, value]) => [key, path.resolve(__dirname, `src/${value}/index.ts`)]),
 );
 // Configuration for type declarations
 const dtsOptions = {
