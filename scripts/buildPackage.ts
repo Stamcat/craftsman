@@ -61,6 +61,14 @@ const createPackageJson = () => {
                 types: "./src/components/index.d.ts",
                 default: "./Components.esm.js",
             },
+            "./styles": {
+                types: "./src/styles/index.d.ts",
+                default: "./Styles.esm.js",
+            },
+            "./utilities": {
+                types: "./src/utilities/index.d.ts",
+                default: "./Utilities.esm.js",
+            },
             ...subpathExports,
         };
     };
