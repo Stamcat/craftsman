@@ -71,12 +71,12 @@ export const defaultColors = {
     purple900: "#581c87",
 };
 export const defaultWidths = {
-        text: 16,
-        column: 60,
-        gutter: 16,
-        extDesktop: 1320,
-        extNav: 1240,
-        desktop: 1040,
-        tablet: 660,
-        extMobile: 320,
-    };
+    text: 14,
+    column: 60,
+    gutter: 16,
+    extDesktop: 1320,
+    extNav: 1240,
+    desktop: 1040,
+    tablet: 660,
+    extMobile: 320,
+};
