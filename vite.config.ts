@@ -44,6 +44,7 @@ export default defineConfig({
                 "react-dom",
                 "zod",
                 "react/jsx-runtime",
+                /^react-icons(\/.*)?$/,
                 "@emotion/react",
                 "@emotion/styled",
                 "emotion",
@@ -55,6 +56,7 @@ export default defineConfig({
             output: {
                 entryFileNames: "[name].[format].js",
                 preserveModules: true,
+                preserveModulesRoot: ".",
                 globals: {
                     react: "React",
                     "react-dom": "ReactDOM",
