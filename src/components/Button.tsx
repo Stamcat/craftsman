@@ -1,4 +1,4 @@
-import { css, useTheme, type SerializedStyles } from "@emotion/react";
+import { css, ThemeContext, type SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { ButtonType } from "../styles/global/components/button";
 import type { Theme } from "../styles/theme/types";
@@ -29,18 +29,27 @@ export type ButtonProps = React.ComponentProps<"button"> & {
 export const Button: React.FC<ButtonProps> = (props) => {
     const { type = "button", variant = "default", className, size, ...rest } = props;
     const normalizedSize = typeof size === "number" ? Math.min(10, Math.max(0.1, size)) : undefined;
-    const theme = useTheme() as Theme;
-    const themeClass = typeof theme?.components?.button === 'string'
-        ? theme.components.button
-        : undefined;
 
-    const mergedClassName = [
-        variant !== "default" ? variant : undefined,
-        themeClass,
-        className,
-    ].filter(Boolean).join(" ") || undefined;
     if (isEmpty(props.children)) {
         return <></>;
     }
-    return <StyledButton type={type} size={normalizedSize} className={mergedClassName} {...rest} />
+
+    return (
+        <ThemeContext.Consumer>
+            {(theme) => {
+                const typedTheme = theme as Theme | undefined;
+                const themeClass = typeof typedTheme?.components?.button === "string"
+                    ? typedTheme.components.button
+                    : undefined;
+
+                const mergedClassName = [
+                    variant !== "default" ? variant : undefined,
+                    themeClass,
+                    className,
+                ].filter(Boolean).join(" ") || undefined;
+
+                return <StyledButton type={type} size={normalizedSize} className={mergedClassName} {...rest} />;
+            }}
+        </ThemeContext.Consumer>
+    );
 };
