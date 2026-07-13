@@ -133,7 +133,6 @@ const ModalContent = styled.div<{ type: "dialog" | "panel", isClosing: boolean }
 
 const modalCloseStyles = css`
     text-decoration: none;
-    // padding: 0 calc(var(--w-gutter) * 0.25) 0 var(--w-gutter);
     height: 36px;
     width: 36px;
     border-radius: 50%;
@@ -170,14 +169,14 @@ export class Modal extends React.PureComponent<ModalProps, ModalState> {
         }
     };
     public onClickBackground = () => {
-        const dismissible = this.props.backgroundDismiss;
-        if (dismissible === true || dismissible === undefined) {
+        const dismissible = this.props.backgroundDismiss || true;
+        if (dismissible === true) {
             this.onDismiss();
         }
     }
     public render() {
         if (!this.props.visible) {
-            return null;
+            return <></>;
         }
         return (
             <ModalWrapper styles={this.props.styles}>

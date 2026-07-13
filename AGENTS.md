@@ -12,6 +12,7 @@ Use these imports:
 import { Button } from "@stamcat/craftsman/Button";
 import { Input } from "@stamcat/craftsman/Input";
 import { Loader } from "@stamcat/craftsman/Loader";
+import { Modal } from "@stamcat/craftsman/Modal";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
@@ -37,18 +38,58 @@ Props:
 
 - Inherits all native `<button>` props.
 - `variant?: "primary" | "default" | "text"` (default: `"default"`)
+- `size?: number` (default visual scale is `1`)
 - `styles?: SerializedStyles` (Emotion override)
 
 Behavior notes:
 
 - `type` defaults to `"button"`.
 - For `variant !== "default"`, variant is appended to `className` (for example `"primary"`).
+- Theme class merge: if `theme.components.button` is a string, it is appended to the class list.
+- `className` is preserved and merged after variant/theme classes.
+- If `children` is empty (per `isEmpty`), the component renders nothing.
+- `size` is clamped to `[0.1, 10]` before styling is applied.
+- When `size` is provided, Button scales:
+  - `border-radius: calc(var(--btn-border-radius) * size)`
+  - `padding: calc(var(--btn-pad-y) * size) calc(var(--btn-pad-x) * size)`
+  - `font-size: max(10px, calc(var(--w-text) * size))`
+- There is no dedicated icon/loading prop. Icons, loaders, and mixed content are passed as `children`.
+- Supports both real disable (`disabled={true}`) and style-only disable (`className="disabled"`).
+- Native button modes are supported (`type="button" | "submit" | "reset"`).
+- Accessibility props such as `aria-label` pass through unchanged.
 
 Example:
 
 ```tsx
 <Button variant="primary" onClick={onSave}>Save</Button>
 ```
+
+Story-aligned usage examples:
+
+```tsx
+// Scaled compact button (size is clamped to [0.1, 10])
+<Button variant="primary" size={0.5}>Mini Action</Button>
+
+// Icon content
+<Button variant="primary">
+  <TruckIcon size={20} /> <span>Ship</span>
+</Button>
+
+// Loading content
+<Button aria-label="Saving">
+  <Loader type="boxy" width={32} color="#de13ca" />
+</Button>
+
+// Style-only disabled appearance while still allowing click handlers
+<Button className="disabled" onClick={onClick}>Disabled Look</Button>
+
+// Native submit behavior
+<Button type="submit" aria-label="Save form">Save</Button>
+```
+
+Implementation caution:
+
+- Size scaling depends on CSS variables provided by the package global styles (`--btn-border-radius`, `--btn-pad-y`, `--btn-pad-x`, `--w-text`).
 
 ### Input
 
@@ -66,6 +107,54 @@ Example:
 
 ```tsx
 <Input type="email" placeholder="you@company.com" required />
+```
+
+### Modal
+
+Import:
+
+```tsx
+import { Modal } from "@stamcat/craftsman/Modal";
+```
+
+Props:
+
+- Inherits all native `<div>` props.
+- `visible?: boolean` (when falsy, component renders nothing)
+- `onDismiss?: () => void`
+- `type?: "dialog" | "panel"` (default: `"dialog"`)
+- `header?: string | React.ReactNode`
+- `backgroundDismiss?: boolean` (default behavior: `true`)
+- `hideDismissIcon?: boolean` (default behavior: close icon is shown)
+- `footer?: React.ReactNode`
+- `styles?: SerializedStyles` (applies to outer modal wrapper)
+
+Behavior notes:
+
+- Modal is controlled; parent owns open/close state via `visible` and `onDismiss`.
+- Close icon and background click both dismiss through `onDismiss`.
+- Background dismiss only runs when `backgroundDismiss` is `true` or `undefined`.
+- Dismiss uses a short close animation before calling `onDismiss` (~280ms timeout).
+- `type="dialog"` renders centered responsive dialog sizing; `type="panel"` renders a right-side panel.
+- `footer` is rendered in an action row container below modal content.
+
+Example:
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<>
+  <Button variant="primary" onClick={() => setOpen(true)}>Open</Button>
+  <Modal
+    visible={open}
+    onDismiss={() => setOpen(false)}
+    type="dialog"
+    header="Confirm Action"
+    footer={<><Button onClick={() => setOpen(false)}>Cancel</Button><Button variant="primary">Confirm</Button></>}
+  >
+    <p>Are you sure?</p>
+  </Modal>
+</>
 ```
 
 ### Loader
@@ -151,12 +240,12 @@ if (arr.length === 0) { ... }
 
 1. README is minimal; treat this guide as the source of truth for agent usage.
 2. Theme utilities exist in source but are not guaranteed public package exports.
-3. Additional components in source (for example `Progress`) may not yet be exported.
+3. `Progress` exists in source but is incomplete and intentionally omitted from this guide for now.
 
 ## Safe Fallback Strategy for Agents
 
 If uncertain about available exports:
 
-1. Use only `Button`, `Input`, and `Loader` from their component entry points.
+1. Use only `Button`, `Input`, `Loader`, and `Modal` from their component entry points.
 2. Do not invent package APIs.
 3. Prefer native HTML elements for anything not explicitly exported.
