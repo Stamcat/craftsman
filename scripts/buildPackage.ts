@@ -45,13 +45,24 @@ const getComponentExports = () => {
 
 const createPackageJson = () => {
     const buildExportsMap = (componentNames: string[]) => {
-        return componentNames.reduce<Record<string, { types: string; default: string }>>((acc, componentName) => {
-            acc[`./${componentName}`] = {
-                types: `./${componentName}.d.ts`,
-                default: `./${componentName}.es.js`,
-            };
-            return acc;
-        }, {});
+        const subpathExports = componentNames.reduce<Record<string, { types: string; default: string }>>(
+            (acc, componentName) => {
+                acc[`./${componentName}`] = {
+                    types: `./components/${componentName}.d.ts`,
+                    default: `./src/components/${componentName}.esm.js`,
+                };
+                return acc;
+            },
+            {},
+        );
+
+        return {
+            ".": {
+                types: "./main.d.ts",
+                default: "./Components.esm.js",
+            },
+            ...subpathExports,
+        };
     };
 
     // copy package file into destination folder
@@ -59,10 +70,12 @@ const createPackageJson = () => {
     const source = fse.readFileSync(pkgSrc).toString("utf-8");
     const sourceObj = JSON.parse(source);
 
-    // keep only publish guard script in dist package
+    // keep publish guard script in dist package
     const prepublishOnly = sourceObj?.scripts?.prepublishOnly;
     sourceObj.scripts = prepublishOnly ? { prepublishOnly } : {};
     sourceObj.devDependencies = {};
+    sourceObj.main = "./Components.esm.js";
+    sourceObj.types = "./main.d.ts";
     const componentExports = getComponentExports();
     if (componentExports.length > 0) {
         sourceObj.exports = buildExportsMap(componentExports);

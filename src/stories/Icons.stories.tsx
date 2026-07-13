@@ -27,7 +27,7 @@ const meta: Meta = {
             page: () => (
                 <section>
                     <p>
-                        Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.
+                        Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.<br />
                     </p>
                     <blockquote>
                         <strong>Warning:</strong> These libraries are slow to load on your local machine.
