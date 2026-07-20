@@ -58,7 +58,6 @@ export const media = {
  * @param w - key of the stored width
  * @returns
  */
-/* #__PURE__ */
 export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean = true): string => {
     let gutters = 0;
     // if we're getting width of column, we should add in gutter spacing between columns.
@@ -75,7 +74,6 @@ export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean =
  * @param styles
  * @returns
  */
-/* #__PURE__ */
 export const breakpoint = (bp: Breakpoint, styles: SerializedStyles | CSSObject) => {
     return css`@media ${media[bp]} {
         ${styles}

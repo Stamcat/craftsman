@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Stamcat/craftsman#readme",
   "scripts": {
     "build": "rm -rf dist && tsc --p ./tsconfig-build.json && vite build && tsx ./buildPackage.ts",
-    "build-storybook": "storybook build",
+    "build-storybook": "npm run type-check:storybook && storybook build",
     "dev": "vite",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -34,7 +34,8 @@
     "release:minor": "npm run release -- release-as minor",
     "release:patch": "npm run release -- release-as patch",
     "storybook": "storybook dev -p 6006",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "type-check:storybook": "tsc --p ./tsconfig-storybook.json --noEmit"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
