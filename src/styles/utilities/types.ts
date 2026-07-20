@@ -14,4 +14,4 @@ export type CraftsmanConfig = {
     colors: Colors;
     widths: Width;
 };
-export type SetConfig = Partial<{ colors: Partial<Colors>; widths: Partial<Width> }>;
+export type CraftsmanStyleConfig = Partial<{ colors: Partial<Colors>; widths: Partial<Width> }>;

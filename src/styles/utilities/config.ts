@@ -1,5 +1,5 @@
 import { defaultColors, defaultWidths } from "./constants";
-import type { CraftsmanConfig, ResponsiveWidth, SetConfig, Width } from "./types";
+import type { CraftsmanConfig, ResponsiveWidth, CraftsmanStyleConfig, Width } from "./types";
 
 const defaultConfig: CraftsmanConfig = {
     colors: defaultColors,
@@ -20,7 +20,7 @@ function resolveWidths(widths: Width): ResponsiveWidth {
     };
 }
 
-export function setCraftsmanConfig(config: SetConfig) {
+export function setCraftsmanConfig(config: CraftsmanStyleConfig) {
     const colorOverrides = Object.entries(config.colors ?? {}).reduce<Record<string, string>>((acc, [key, value]) => {
         if (typeof value === "string") {
             acc[key] = value;

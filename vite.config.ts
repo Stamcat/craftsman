@@ -52,6 +52,9 @@ export default defineConfig({
                 "react-international-phone",
                 "react-date-picker",
                 "react-datetime-picker",
+                "react-toastify",
+                "sass-embedded",
+                "next",
             ],
             output: {
                 entryFileNames: "[name].[format].js",
