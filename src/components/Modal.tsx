@@ -154,7 +154,6 @@ type ModalState = {
  * A modal should be simple: Some background element with a fixed element in the center of the screen. 
  * It should show or not show. What goes in the modal, and how it behaves is entirely up to you.
  */
-// #__PURE__
 export class Modal extends React.PureComponent<ModalProps, ModalState> {
     readonly state: ModalState = { isClosing: false }; 
     public onDismiss = () => {

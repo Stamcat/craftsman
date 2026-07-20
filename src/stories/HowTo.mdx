@@ -1,0 +1,107 @@
+# How To Use `ClientProvider` and `NextJSProvider`
+
+This guide shows how to set up both providers and apply:
+
+1. custom theme values
+2. base style configuration overrides (colors and widths)
+
+## What Each Provider Is For
+
+- `ClientProvider`
+	- Use in any regular React app (Vite, CRA, etc.)
+	- Sets global styles
+	- Applies Craftsman theme overrides
+	- Applies base style config overrides
+
+- `NextJSProvider`
+	- Use in Next.js App Router client boundaries
+	- Adds Emotion cache + server-inserted style handling
+	- Also applies Craftsman theme + base style config
+
+## 1. Create Shared Theme + Config Objects
+
+```tsx
+import { css } from "@emotion/react";
+import type { Theme } from "@stamcat/craftsman/styles";
+import type { CraftsmanStyleConfig } from "@stamcat/craftsman/styles";
+
+// These values are declared as Typescript objects to support all frameworks
+export const baseConfig: CraftsmanStyleConfig = {
+	colors: {
+		"--blue500": "#1d4ed8",
+		"--blue700": "#1e40af",
+	},
+	widths: {
+		gutter: 20,
+		text: 16,
+	},
+};
+// Theme config supports raw styles, CSS & SCSS Modules, and emotion styled
+export const appTheme: Theme = {
+	colors: {
+		"--blue500": "#1d4ed8",
+	},
+	root: {
+		backgroundColor: "#ffffff",
+	},
+	components: {
+		button: css`
+			border-radius: 10px;
+			font-weight: 600;
+		`,
+	},
+};
+
+```
+
+## 2. Setup In a Standard React App With `ClientProvider`
+
+```tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ClientProvider } from "@stamcat/craftsman/styles";
+import { Button } from "@stamcat/craftsman/Button";
+import { appTheme, baseConfig } from "./theme";
+
+function App() {
+	return <Button variant="primary">Save</Button>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+	<ClientProvider theme={appTheme} config={baseConfig}>
+		<App />
+	</ClientProvider>,
+);
+```
+
+## 3. Setup In Next.js App Router With `NextJSProvider`
+
+`NextJSProvider` is exported as a dedicated client entry:
+
+```tsx
+import { NextJSProvider } from "@stamcat/craftsman/styles/NextJSProvider";
+```
+
+Example provider wrapper:
+
+```tsx
+"use client";
+
+import { NextJSProvider } from "@stamcat/craftsman/styles/NextJSProvider";
+import { appTheme, baseConfig } from "./theme";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+	return (
+		<NextJSProvider theme={appTheme} config={baseConfig}>
+			{children}
+		</NextJSProvider>
+	);
+}
+```
+
+## 4. Quick Notes
+
+- Put `NextJSProvider` behind a client boundary (`"use client"`).
+- Prefer one provider at app root.
+- Keep `theme` for component/global style overrides.
+- Keep `config` for token-level base values (`colors`, `widths`).

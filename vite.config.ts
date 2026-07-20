@@ -44,6 +44,7 @@ export default defineConfig({
                 "react-dom",
                 "zod",
                 "react/jsx-runtime",
+                /^@emotion\/cache(\/.*)?$/,
                 /^react-icons(\/.*)?$/,
                 "@emotion/react",
                 "@emotion/styled",
@@ -52,6 +53,9 @@ export default defineConfig({
                 "react-international-phone",
                 "react-date-picker",
                 "react-datetime-picker",
+                "react-toastify",
+                "sass-embedded",
+                /^next(\/.*)?$/,
             ],
             output: {
                 entryFileNames: "[name].[format].js",

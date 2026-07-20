@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.23-alpha.23](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.22...v0.0.23-alpha.23) (2026-07-20)
+
+## [0.0.23-alpha.22](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.21...v0.0.23-alpha.22) (2026-07-20)
+
+## [0.0.23-alpha.21](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.20...v0.0.23-alpha.21) (2026-07-20)
+
+## [0.0.23-alpha.20](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.19...v0.0.23-alpha.20) (2026-07-20)
+
+## [0.0.23-alpha.19](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.18...v0.0.23-alpha.19) (2026-07-20)
+
 ## [0.0.23-alpha.18](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.17...v0.0.23-alpha.18) (2026-07-13)
 
 ## [0.0.23-alpha.17](https://github.com/Stamcat/craftsman/compare/v0.0.23-alpha.15...v0.0.23-alpha.17) (2026-07-13)
