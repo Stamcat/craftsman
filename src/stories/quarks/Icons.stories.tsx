@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Global } from "@emotion/react";
 import { width } from "../../styles/utilities/layout";
 import { Button, Modal } from "../../components";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import { globalStyles } from "../../styles/global/globalStyles";
 import { GiBroadsword } from "react-icons/gi";
@@ -22,6 +22,30 @@ export function YourComponent() {
 }`;
 
 const MAX_ICONS_PER_STORY = 200;
+
+type IconRenderBoundaryProps = {
+    children: React.ReactNode;
+};
+
+type IconRenderBoundaryState = {
+    hasError: boolean;
+};
+
+class IconRenderBoundary extends React.PureComponent<IconRenderBoundaryProps, IconRenderBoundaryState> {
+    readonly state: IconRenderBoundaryState = { hasError: false };
+
+    static getDerivedStateFromError(): IconRenderBoundaryState {
+        return { hasError: true };
+    }
+
+    public render() {
+        if (this.state.hasError) {
+            return <span aria-hidden="true">-</span>;
+        }
+
+        return this.props.children;
+    }
+}
 
 const meta: Meta = {
     title: "Quarks/Icons",
@@ -162,7 +186,9 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
                     data-icon-path={importPath}
                     aria-label={`Show import and usage for ${name}`}
                 >
-                    <Icon size={28} aria-label={name} />
+                    <IconRenderBoundary>
+                        <Icon size={28} aria-label={name} />
+                    </IconRenderBoundary>
                 </Button>}
             </SwatchPreview>
             <footer>
@@ -201,7 +227,7 @@ type IconModuleLoader = () => Promise<Record<string, unknown>>;
 
 const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: string): IconLoadResult => {
     const entries = Object.entries(icons)
-        .filter(([name, value]) => name.startsWith(prefix) && typeof value === "function")
+        .filter(([name, value]) => name.startsWith(prefix) && /^[A-Za-z][A-Za-z0-9]+$/.test(name) && typeof value === "function")
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([name, Icon]) => ({
             name,
