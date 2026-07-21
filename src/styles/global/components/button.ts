@@ -37,12 +37,12 @@ export const button = css`
     &:disabled,
     &.disabled {
         cursor: not-allowed;
-        border-color: var(--grey200);
-        color: var(--grey400);
+        border-color: var(--gray200);
+        color: var(--gray400);
         &.primary {
-            border-color: var(--grey200);
-            background-color: var(--grey400);
-            color: var(--grey200);
+            border-color: var(--gray200);
+            background-color: var(--gray400);
+            color: var(--gray200);
         }
     }
     &.primary {

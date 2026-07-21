@@ -1,36 +1,30 @@
 import { css, type CSSObject, type SerializedStyles } from "@emotion/react";
-import type { Breakpoint, LayoutWidthsType } from "./types";
+import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "./types";
 import { defaultWidths } from "./constants";
 
-const widthVar = (key: Exclude<LayoutWidthsType, "mobileMax" | "tabletMax" | "desktopMax"> | "text") =>
-    `var(--w-${key}, ${defaultWidths[key]}px)`;
-
-const maxWidthVar = (baseKey: "tablet" | "desktop" | "extDesktop") => `calc(${widthVar(baseKey)} - 0.00001px)`;
-
-export const widths = {
-    text: widthVar("text"),
-    column: widthVar("column"),
-    gutter: widthVar("gutter"),
-    extDesktop: widthVar("extDesktop"),
-    extNav: widthVar("extNav"),
-    desktop: widthVar("desktop"),
-    tablet: widthVar("tablet"),
-    extMobile: widthVar("extMobile"),
-    mobileMax: maxWidthVar("tablet"),
-    tabletMax: maxWidthVar("desktop"),
-    desktopMax: maxWidthVar("extDesktop"),
-};
+export const widths: Record<LayoutWidthsType, string> = Object.fromEntries(
+    LayoutWidthsSchema.options.map((w) => [w, `var(--w-${w}, ${defaultWidths[w]}px)`]),
+) as Record<LayoutWidthsType, string>;
 
 
 export const media = {
     get mobile() {
         return `(min-width: 0px)`;
     },
+    get mobileMax() {
+        return `(max-width: ${widths.mobileMax}px)`;
+    },
     get tablet() {
         return `(min-width: ${widths.tablet}px)`;
     },
+    get tabletMax() {
+        return `(max-width: ${widths.tabletMax}px)`;
+    },
     get desktop() {
         return `(min-width: ${widths.desktop}px)`;
+    },
+    get desktopMax() {
+        return `(max-width: ${widths.desktopMax}px)`;
     },
     get extDesktop() {
         return `(min-width: ${widths.extDesktop}px)`;

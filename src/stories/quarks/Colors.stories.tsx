@@ -18,9 +18,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Page = styled.div`
+    display: grid;
+    gap: ${width("gutter")};
+`;
+
+const Group = styled.section`
+    display: grid;
+    gap: ${width("gutter", 0.25)};
+`;
+
+const GroupGrid = styled.div`
     display: inline-flex;
     flex-flow: row wrap;
-    gap: ${width("gutter")};
+    gap: ${width("gutter", 0.5)};
 `;
 
 const Card = styled.div`
@@ -28,15 +38,15 @@ const Card = styled.div`
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    width: ${width("column", 2)};
+    width: ${width("column", 1.5)};
 
     footer {
-        padding: ${width("gutter", 0.5)};
+        padding: 0 ${width("gutter", 0.25)};
     }
 `;
 
 const SwatchPreview = styled.div<{ color: string }>`
-    height: 72px;
+    height: ${width("column")};
     ${(props) => css`
         background-color: ${props.color};
     `}
@@ -48,7 +58,6 @@ const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
         toast(`"${e.currentTarget.value}" copied to clipboard!`);
     }
 }
-
 const Swatch = ({ name, value }: { name: string; value: string }) => {
     return (
         <Card>
@@ -61,7 +70,7 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
                         value={name}
                         aria-label={`Copy token name ${name}`}
                     >
-                        <strong>{name}</strong>
+                        <strong><small>{name}</small></strong>
                     </Button>
                 </p>
                 <Button
@@ -70,7 +79,7 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
                     onClick={copyToClipboard}
                     aria-label={`Copy token value ${value}`}
                 >
-                    {value}
+                    <small>{value}</small>
                 </Button>
             </footer>
         </Card>
@@ -78,12 +87,34 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
 }
 
 export const Palette: Story = {
-    render: () => (
-        <Page>
-            {Object.entries(colors).map(([name, value]) => ( 
-                <Swatch key={name} name={name} value={value} />
-            ))}
-            <ToastContainer />
-        </Page>
-    ),
+    render: () => {
+        const grouped = Object.entries(colors).reduce<Array<{ key: string; items: Array<[string, string]> }>>((acc, entry, index, list) => {
+            const [name] = entry;
+            const currentPrefix = name.slice(0, 3);
+            const previousPrefix = index > 0 ? list[index - 1][0].slice(0, 3) : null;
+
+            if (index === 0 || currentPrefix !== previousPrefix) {
+                acc.push({ key: currentPrefix, items: [entry] });
+                return acc;
+            }
+
+            acc[acc.length - 1].items.push(entry);
+            return acc;
+        }, []);
+
+        return (
+            <Page>
+                {grouped.map((group) => (
+                    <Group key={group.key}>
+                        <GroupGrid>
+                            {group.items.map(([name, value]) => (
+                                <Swatch key={name} name={name} value={value} />
+                            ))}
+                        </GroupGrid>
+                    </Group>
+                ))}
+                <ToastContainer />
+            </Page>
+        );
+    },
 };

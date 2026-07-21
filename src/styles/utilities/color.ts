@@ -1,7 +1,7 @@
 import { defaultColors } from "./constants";
 import type { ColorType } from "./types";
 
-export const colors = { ...defaultColors } as Record<string, string>;
+export const colors = { ...defaultColors };
 
 /**
  * Type representing all available color keys in the colors object
