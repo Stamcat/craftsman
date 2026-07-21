@@ -1,18 +1,7 @@
-import { getCraftsmanConfig } from "./config";
 import { defaultColors } from "./constants";
 import type { ColorType } from "./types";
 
-const colorKeys = Object.keys(defaultColors) as Array<keyof typeof defaultColors>;
-
-const colorDescriptors = colorKeys.reduce<PropertyDescriptorMap>((acc, key) => {
-    acc[key] = {
-        enumerable: true,
-        get: () => getCraftsmanConfig().colors[key],
-    };
-    return acc;
-}, {});
-
-export const colors = Object.defineProperties({} as Record<string, string>, colorDescriptors) as Record<string, string>;
+export const colors = { ...defaultColors } as Record<string, string>;
 
 /**
  * Type representing all available color keys in the colors object

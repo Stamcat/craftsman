@@ -1,5 +1,4 @@
 export * from "./utilities/color";
-export * from "./utilities/config";
 export * from "./utilities/constants";
 export * from "./utilities/layout";
 export * from "./utilities/types";

@@ -3,8 +3,6 @@
 import createCache from "@emotion/cache";
 import { CacheProvider, Global } from "@emotion/react";
 import { CraftsmanThemeProvider, themeBuilder } from "../theme/theme";
-import { setCraftsmanConfig } from "../utilities/config";
-import type { CraftsmanStyleConfig } from "../utilities/types";
 import type { Theme } from "../theme/types";
 import { globalStyles } from "../global/globalStyles";
 import { useServerInsertedHTML } from "next/navigation";
@@ -13,8 +11,6 @@ import { useState } from "react";
 type StyleProviderProps = {
     key?: string;
     children?: React.ReactNode;
-    /** Base configuration variables */
-    config?: CraftsmanStyleConfig;
     theme?: Theme;
 };
 
@@ -23,10 +19,7 @@ type StyleProviderState = {
     flush: () => string[];
 };
 
-export function NextJSProvider({ children, key = "app", config, theme }: StyleProviderProps) {
-  if (config) {
-    setCraftsmanConfig(config);
-  }
+export function NextJSProvider({ children, key = "app", theme }: StyleProviderProps) {
   const [{ cache, flush }] = useState<StyleProviderState>(() => {
     const emotionCache = createCache({ key });
     emotionCache.compat = true;

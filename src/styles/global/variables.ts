@@ -1,5 +1,12 @@
 import { colors as jsColors } from "../utilities/color";
-import { widths as jsWidths } from "../utilities/layout";
+import { defaultWidths } from "../utilities/constants";
+
+const widthDefaults = {
+    ...defaultWidths,
+    mobileMax: defaultWidths.tablet - 0.00001,
+    tabletMax: defaultWidths.desktop - 0.00001,
+    desktopMax: defaultWidths.extDesktop - 0.00001,
+};
 
 /**
  * This creates CSS variables from our strictly typed dictionary of colors
@@ -11,7 +18,7 @@ export const colors = Object.entries(jsColors)
 /**
  * This creates CSS variables from our strictly typed dictionary of widths
  */
-export const widths = Object.entries(jsWidths)
+export const widths = Object.entries(widthDefaults)
     .map(([key, value]) => `--w-${key}: ${value}px;`)
     .join("\n");
 
