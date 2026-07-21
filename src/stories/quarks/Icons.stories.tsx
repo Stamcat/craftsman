@@ -21,6 +21,8 @@ export function YourComponent() {
     );
 }`;
 
+const MAX_ICONS_PER_STORY = 200;
+
 const meta: Meta = {
     title: "Quarks/Icons",
     tags: ["autodocs"],
@@ -117,7 +119,7 @@ type IconCardProps = {
 /** Renders nothing until the card enters the viewport, then mounts the icon. */
 const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
     const ref = useRef<HTMLDivElement>(null);
-    const [inView, setInView] = useState(false);
+    const [inView, setInView] = useState(() => typeof IntersectionObserver === "undefined");
 
     const onPressSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
         const selectedName = e.currentTarget.value;
@@ -129,6 +131,10 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
     };
 
     useEffect(() => {
+        if (typeof IntersectionObserver === "undefined") {
+            return undefined;
+        }
+
         const el = ref.current;
         if (!el) {
             return undefined;
@@ -180,6 +186,11 @@ type IconEntry = {
     importPath: string;
 };
 
+type IconLoadResult = {
+    icons: IconEntry[];
+    total: number;
+};
+
 type IconUsageState = {
     name: string;
     iconPath: string;
@@ -188,8 +199,8 @@ type IconUsageState = {
 
 type IconModuleLoader = () => Promise<Record<string, unknown>>;
 
-const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: string): IconEntry[] => {
-    return Object.entries(icons)
+const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: string): IconLoadResult => {
+    const entries = Object.entries(icons)
         .filter(([name, value]) => name.startsWith(prefix) && typeof value === "function")
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([name, Icon]) => ({
@@ -197,18 +208,29 @@ const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: st
             Icon: Icon as IconType,
             importPath,
         }));
+
+    return {
+        total: entries.length,
+        icons: entries.slice(0, MAX_ICONS_PER_STORY),
+    };
 };
 
 type GalleryProps = {
     icons: IconEntry[] | null;
+    total: number;
+    error: string | null;
 };
 
-const IconGallery = ({ icons }: GalleryProps) => {
+const IconGallery = ({ icons, total, error }: GalleryProps) => {
     const [iconUsage, setIconUsage] = useState<IconUsageState>({
         name: "",
         iconPath: "",
         visible: false,
     });
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     if (icons === null) {
         return <p>Loading icons…</p>;
@@ -217,7 +239,7 @@ const IconGallery = ({ icons }: GalleryProps) => {
     return (
         <Page>
             <Toolbar>
-                <span>{icons.length} icons</span>
+                <span>Showing {icons.length} of {total} icons</span>
             </Toolbar>
             <Grid>
                 {icons.map(({ name, Icon, importPath }) => (
@@ -251,12 +273,25 @@ const IconGallery = ({ icons }: GalleryProps) => {
 
 const LazyIconGallery = ({ loader, prefix, importPath }: { loader: IconModuleLoader; prefix: string; importPath: string }) => {
     const [icons, setIcons] = useState<IconEntry[] | null>(null);
+    const [total, setTotal] = useState(0);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        loader().then((mod) => setIcons(getIcons(mod, prefix, importPath)));
+        loader()
+            .then((mod) => {
+                const result = getIcons(mod, prefix, importPath);
+                setIcons(result.icons);
+                setTotal(result.total);
+                setError(null);
+            })
+            .catch(() => {
+                setIcons([]);
+                setTotal(0);
+                setError(`Unable to load icons from ${importPath}.`);
+            });
     }, [loader, prefix, importPath]);
 
-    return <IconGallery icons={icons} />;
+    return <IconGallery icons={icons} total={total} error={error} />;
 };
 
 const createIconSetStory = (loader: IconModuleLoader, prefix: string, importPath: string): Story => ({
