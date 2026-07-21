@@ -6,8 +6,6 @@ import { Button, Modal } from "../../components";
 import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import { globalStyles } from "../../styles/global/globalStyles";
-import { GiBroadsword } from "react-icons/gi";
-import { FaAccessibleIcon } from "react-icons/fa";
 /**
  * This is mostly vibe coded trash. don't look at this file as an example of how to do anything. 
  * Only look at the storybook directly
@@ -22,6 +20,14 @@ export function YourComponent() {
 }`;
 
 const MAX_ICONS_PER_STORY = 200;
+
+const getUsageSnippet = (name: string, iconPath: string) => {
+    if (!name || !iconPath) {
+        return "Select an icon to see its import.";
+    }
+
+    return `import { ${name} } from "${iconPath}";\n\nconst Example = () => React.createElement(${name}, { size: 24 });`;
+};
 
 type IconRenderBoundaryProps = {
     children: React.ReactNode;
@@ -57,7 +63,7 @@ const meta: Meta = {
             page: () => (
                 <section>
                     <Global styles={globalStyles} />
-                    <h1><GiBroadsword /> Icons</h1>
+                    <h1>Icons</h1>
                     <p>
                         Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.<br />
                     </p>
@@ -65,7 +71,7 @@ const meta: Meta = {
                         <strong>Warning:</strong> These libraries may be slow to load on your local machine.
                     </blockquote>
                     <header>
-                        <h4><FaAccessibleIcon size={30} />Icon usage</h4>
+                        <h4>Icon usage</h4>
                     </header>
 
                     <code>
@@ -290,7 +296,7 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
                 onDismiss={() => setIconUsage((prev) => ({ ...prev, visible: false }))}
             >
                 <code>
-                    <pre>{`import { ${iconUsage.name} } from "${iconUsage.iconPath}";\n\n<${iconUsage.name} size={24} />`}</pre>
+                    <pre>{getUsageSnippet(iconUsage.name, iconUsage.iconPath)}</pre>
                 </code>
             </Modal>
         </Page>
