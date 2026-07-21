@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import styled from "@emotion/styled";
+import { Global } from "@emotion/react";
 import { width } from "../../styles/utilities/layout";
 import { Button, Modal } from "../../components";
 import { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
+import { globalStyles } from "../../styles/global/globalStyles";
+import { GiBroadsword } from "react-icons/gi";
+import { FaAccessibleIcon } from "react-icons/fa";
 /**
  * This is mostly vibe coded trash. don't look at this file as an example of how to do anything. 
  * Only look at the storybook directly
@@ -13,7 +17,7 @@ const IMPLEMENTATION_EXAMPLE = `import { FaAccessibleIcon } from "react-icons/fa
 
 export function YourComponent() {
     return (
-        <FaAccessibleIcon />
+        <FaAccessibleIcon size={30} />
     );
 }`;
 
@@ -26,15 +30,24 @@ const meta: Meta = {
         docs: {
             page: () => (
                 <section>
+                    <Global styles={globalStyles} />
+                    <h1><GiBroadsword /> Icons</h1>
                     <p>
                         Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.<br />
                     </p>
                     <blockquote>
-                        <strong>Warning:</strong> These libraries are slow to load on your local machine.
+                        <strong>Warning:</strong> These libraries may be slow to load on your local machine.
                     </blockquote>
-                    <pre>
-                        <code>{IMPLEMENTATION_EXAMPLE}</code>
-                    </pre>
+                    <header>
+                        <h4><FaAccessibleIcon size={30} />Icon usage</h4>
+                    </header>
+
+                    <code>
+                        <pre>
+                            {IMPLEMENTATION_EXAMPLE}
+                        </pre>
+                    </code>
+
                 </section>
             ),
             description: {

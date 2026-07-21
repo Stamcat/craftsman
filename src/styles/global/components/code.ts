@@ -6,6 +6,7 @@ export const code = css`
     padding: calc(var(--w-gutter) * 0.125) calc(var(--w-gutter) * 0.25);
     margin: calc(var(--w-gutter) * 0.125);
     display: inline-block;
+    font-size: var(--w-text);
     &:has(pre) {
         padding: var(--w-gutter);
         border-radius: calc(var(--w-gutter) * 0.5);
