@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import styled from "@emotion/styled";
-import { colors } from "../styles/utilities/color";
-import { width } from "../styles/utilities/layout";
+import { colors } from "../../styles/utilities/color";
+import { width } from "../../styles/utilities/layout";
 import { css } from "@emotion/react";
 import { toast, ToastContainer } from "react-toastify";
-import { Button } from "../components";
+import { Button } from "../../components";
 
 const meta: Meta = {
-    title: "Foundations/Colors",
+    title: "Quarks/Colors",
     tags: ["autodocs"],
     parameters: {
         layout: "padded",

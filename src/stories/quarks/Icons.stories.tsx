@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import styled from "@emotion/styled";
-import { width } from "../styles/utilities/layout";
-import { Button, Modal } from "../components";
+import { width } from "../../styles/utilities/layout";
+import { Button, Modal } from "../../components";
 import { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 /**
@@ -18,7 +18,7 @@ export function YourComponent() {
 }`;
 
 const meta: Meta = {
-    title: "Foundations/Icons",
+    title: "Quarks/Icons",
     tags: ["autodocs"],
 
     parameters: {
