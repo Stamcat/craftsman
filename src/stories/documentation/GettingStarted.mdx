@@ -1,9 +1,13 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting Started" />
+
 # How To Use `ClientProvider` and `NextJSProvider`
 
 This guide shows how to set up both providers and apply:
 
 1. custom theme values
-2. base style configuration overrides (colors and widths)
+2. root-level CSS variable overrides
 
 ## What Each Provider Is For
 
@@ -11,37 +15,26 @@ This guide shows how to set up both providers and apply:
 	- Use in any regular React app (Vite, CRA, etc.)
 	- Sets global styles
 	- Applies Craftsman theme overrides
-	- Applies base style config overrides
 
 - `NextJSProvider`
 	- Use in Next.js App Router client boundaries
 	- Adds Emotion cache + server-inserted style handling
-	- Also applies Craftsman theme + base style config
+	- Also applies Craftsman theme
 
-## 1. Create Shared Theme + Config Objects
+## 1. Create a Shared Theme Object
 
 ```tsx
 import { css } from "@emotion/react";
 import type { Theme } from "@stamcat/craftsman/styles";
-import type { CraftsmanStyleConfig } from "@stamcat/craftsman/styles";
 
-// These values are declared as Typescript objects to support all frameworks
-export const baseConfig: CraftsmanStyleConfig = {
-	colors: {
-		"--blue500": "#1d4ed8",
-		"--blue700": "#1e40af",
-	},
-	widths: {
-		gutter: 20,
-		text: 16,
-	},
-};
 // Theme config supports raw styles, CSS & SCSS Modules, and emotion styled
 export const appTheme: Theme = {
 	colors: {
 		"--blue500": "#1d4ed8",
 	},
 	root: {
+		"--w-gutter": "20px",
+		"--w-text": "16px",
 		backgroundColor: "#ffffff",
 	},
 	components: {
@@ -61,14 +54,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ClientProvider } from "@stamcat/craftsman/styles";
 import { Button } from "@stamcat/craftsman/Button";
-import { appTheme, baseConfig } from "./theme";
+import { appTheme } from "./theme";
 
 function App() {
 	return <Button variant="primary">Save</Button>;
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<ClientProvider theme={appTheme} config={baseConfig}>
+	<ClientProvider theme={appTheme}>
 		<App />
 	</ClientProvider>,
 );
@@ -88,11 +81,11 @@ Example provider wrapper:
 "use client";
 
 import { NextJSProvider } from "@stamcat/craftsman/styles/NextJSProvider";
-import { appTheme, baseConfig } from "./theme";
+import { appTheme } from "./theme";
 
 export function Providers({ children }: { children: React.ReactNode }) {
 	return (
-		<NextJSProvider theme={appTheme} config={baseConfig}>
+		<NextJSProvider theme={appTheme}>
 			{children}
 		</NextJSProvider>
 	);
@@ -104,4 +97,4 @@ export function Providers({ children }: { children: React.ReactNode }) {
 - Put `NextJSProvider` behind a client boundary (`"use client"`).
 - Prefer one provider at app root.
 - Keep `theme` for component/global style overrides.
-- Keep `config` for token-level base values (`colors`, `widths`).
+- Use `theme.root` CSS variables to override base design tokens like widths.

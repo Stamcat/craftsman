@@ -37,10 +37,10 @@
     // "esModuleInterop": true,
     // "resolveJsonModule": true,
     "strictNullChecks": true /* Enable strict null checks. */,
-    "strictFunctionTypes": true /* Enable strict checking of function types. */,
+    "strictFunctionTypes": true /* Enable strict checking of function types. */
     // "paths": {
     //   "@src/*": ["src/*"]
     // }
   },
-  // "include": ["src", "setupTests.ts", "version.txt", "lib"]
+  "include": ["src", ".storybook", "vitest.shims.d.ts", "scss.d.ts"]
 }

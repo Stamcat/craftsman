@@ -1,41 +1,30 @@
 import { css, type CSSObject, type SerializedStyles } from "@emotion/react";
-import type { Breakpoint, LayoutWidthsType, ResponsiveWidth } from "./types";
-import { getCraftsmanConfig } from "./config";
+import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "./types";
+import { defaultWidths } from "./constants";
 
-const widthKeys = [
-    "text",
-    "column",
-    "gutter",
-    "extDesktop",
-    "extNav",
-    "desktop",
-    "tablet",
-    "extMobile",
-    "mobileMax",
-    "tabletMax",
-    "desktopMax",
-] as const satisfies readonly (keyof ResponsiveWidth)[];
-
-const widthDescriptors = widthKeys.reduce<PropertyDescriptorMap>((acc, key) => {
-    acc[key] = {
-        enumerable: true,
-        get: () => getCraftsmanConfig().widths[key],
-    };
-    return acc;
-}, {});
-
-export const widths = Object.defineProperties({} as ResponsiveWidth, widthDescriptors) as ResponsiveWidth;
+export const widths: Record<LayoutWidthsType, string> = Object.fromEntries(
+    LayoutWidthsSchema.options.map((w) => [w, `var(--w-${w}, ${defaultWidths[w]}px)`]),
+) as Record<LayoutWidthsType, string>;
 
 
 export const media = {
     get mobile() {
         return `(min-width: 0px)`;
     },
+    get mobileMax() {
+        return `(max-width: ${widths.mobileMax}px)`;
+    },
     get tablet() {
         return `(min-width: ${widths.tablet}px)`;
     },
+    get tabletMax() {
+        return `(max-width: ${widths.tabletMax}px)`;
+    },
     get desktop() {
         return `(min-width: ${widths.desktop}px)`;
+    },
+    get desktopMax() {
+        return `(max-width: ${widths.desktopMax}px)`;
     },
     get extDesktop() {
         return `(min-width: ${widths.extDesktop}px)`;
@@ -59,13 +48,24 @@ export const media = {
  * @returns
  */
 export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean = true): string => {
-    let gutters = 0;
-    // if we're getting width of column, we should add in gutter spacing between columns.
+    const value = widths[w];
+
     if (w === "column") {
-        const m = multiplier - 1;
-        gutters = widths.gutter * m;
+        const gutterSteps = multiplier - 1;
+        const pxExpr = `calc((${value} * ${multiplier}) + (${widths.gutter} * ${gutterSteps}))`;
+
+        if (px) {
+            return pxExpr;
+        }
+
+        return `calc(((${value} / 1px) * ${multiplier}) + ((${widths.gutter} / 1px) * ${gutterSteps}))`;
     }
-    return `${widths[w] * multiplier + gutters}${px ? "px" : ""}`;
+
+    if (px) {
+        return multiplier === 1 ? value : `calc(${value} * ${multiplier})`;
+    }
+
+    return multiplier === 1 ? `calc(${value} / 1px)` : `calc((${value} / 1px) * ${multiplier})`;
 };
 
 /**

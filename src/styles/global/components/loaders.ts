@@ -4,14 +4,14 @@ import z from "zod";
 export const LoaderStyleSchema = z.enum([
     "dots",
     "dots-trace",
-    "dots-bounce",
+    // "dots-bounce",
     "dots-orbit",
     "dashes",
     "spinner",
     "swirl",
     "ball",
     "boxy",
-    "factory",
+    // "factory",
 ]);
 export type LoaderStyle = z.infer<typeof LoaderStyleSchema>;
 export type LoaderStyleDefinition = (color: string, width?: number) => SerializedStyles;
@@ -24,10 +24,10 @@ export const loaders: Record<LoaderStyle, LoaderStyleDefinition> = {
         --_l5w2: ${Math.round(width * 0.16666)}px;
         --_l5w3: ${Math.round(width * -0.16666)}px;
     `,
-    "dots-bounce": (color: string, width = 60) => css`
-        --_g: no-repeat radial-gradient(circle closest-side, ${color} 90%, #0000);
-        --_gw: ${width}px;
-    `,
+    // "dots-bounce": (color: string, width = 60) => css`
+    //     --_g: no-repeat radial-gradient(circle closest-side, ${color} 90%, #0000);
+    //     --_gw: ${width}px;
+    // `,
     "dots-trace": (color: string, width = 60) => css`
         --_dtc: ${color};
         --_dtw: ${width}px;
@@ -61,8 +61,8 @@ export const loaders: Record<LoaderStyle, LoaderStyleDefinition> = {
         --_boxw: ${width}px;
         --_boxw2: ${Math.round(width * 0.16666)}px;
     `,
-    factory: (color: string, width = 0) => css`
-        --_ftyc: ${color};
-        --_ftyw: ${width};
-    `,
+    // factory: (color: string, width = 0) => css`
+    //     --_ftyc: ${color};
+    //     --_ftyw: ${width};
+    // `,
 };

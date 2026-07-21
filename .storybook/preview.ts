@@ -1,31 +1,28 @@
 import type { Preview } from "@storybook/react-vite";
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { Global } from '@emotion/react';
+import { createElement } from 'react';
 import { themeBuilder, CraftsmanThemeProvider } from "../src/styles/theme/theme";
 import type { Theme } from "../src/styles/theme/types";
 import { appThemes } from "./themes/themes";
 import { globalStyles } from "../src/styles/global/globalStyles";
-import { setCraftsmanConfig } from "../src/styles/utilities/config";
-
-/**
- * (optional) css-in-js: Custom configurations will generate new variables at app entry
- */
-setCraftsmanConfig({
-    widths: {
-        gutter: 16, 
-    }
-})
 
 // TODO: This can probably be included in package 
 // eslint-disable-next-line react-refresh/only-export-components
 const GlobalStyles = () => (
-    <Global
-        styles={(theme) => [globalStyles, themeBuilder(theme as Theme)]}
-    />
+    createElement(Global, {
+        styles: (theme: unknown) => [globalStyles, themeBuilder(theme as Theme)],
+    })
 );
 
 const preview: Preview = {
     parameters: {
+        options: {
+            storySort: {
+                order: ["Introduction", "Getting Started", "Quarks", "Atoms", "Molecules", "Organisms", "Templates", "Utilities", "*", "To Do"],
+                method: "alphabetical",
+            },
+        },
         controls: {
             matchers: {
                 color: /(background|color)$/i,

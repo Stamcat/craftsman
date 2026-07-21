@@ -3,14 +3,17 @@ import type { AppTheme } from "../../src/styles/theme/types";
 import styles from "./theme.module.scss";
 /**
  * This is provided by the consuming application
+ * we can use js styling, emotion styled-components, or css/sass modules
  */
 export const appThemes: AppTheme = {
     default: {
         // you can put your own brand styles here
+        root: {
+            "--w-gutter": "14px",
+        },
     },
     jsStyling: {
         components: {
-            // we can use js styling, emotion styled-components, or css/sass modules
             button: {
                 backgroundColor: "#16a34a",
                 color: "#ffffff",

@@ -3,13 +3,13 @@ import { useRef } from "react";
 import styled from "@emotion/styled";
 import { toast, ToastContainer, type ToastContainerProps } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { width } from "../styles/utilities/layout";
-import { Button } from "../components/Button";
+import { width } from "../../styles/utilities/layout";
+import { Button } from "../../components/Button";
 
 type StoryArgs = Pick<ToastContainerProps, "position" | "autoClose" | "theme" | "closeOnClick" | "pauseOnHover" | "draggable" | "newestOnTop">;
 
 const meta: Meta<StoryArgs> = {
-    title: "Components/Toast",
+    title: "Molecules/Toast",
     tags: ["autodocs"],
     args: {
         position: "bottom-right",

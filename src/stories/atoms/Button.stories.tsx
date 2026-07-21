@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { css } from "@emotion/react";
-import { Button } from "../components/Button";
-import { ButtonType } from "../styles/global/components/button";
-import { Loader } from "../components";
+import { Button } from "../../components/Button";
+import { ButtonType } from "../../styles/global/components/button";
+import { Loader } from "../../components";
 import { GiFlatbed, GiDiceSixFacesFive, GiBatLeth } from "react-icons/gi";
 import { GrBike } from "react-icons/gr";
 import styled from "@emotion/styled";
-import { width } from "../styles/utilities/layout";
+import { width } from "../../styles/utilities/layout";
 import { ImRocket } from "react-icons/im";
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ const rocketStyles = css`
     padding: ${width("gutter", 0.5)} ${width("gutter")};
 `;
 const meta: Meta<typeof Button> = {
-    title: "Components/Button",
+    title: "Atoms/Button",
     component: Button,
     tags: ["autodocs"],
     args: {

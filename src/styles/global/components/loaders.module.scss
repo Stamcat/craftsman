@@ -32,42 +32,48 @@
     }
 }
 
-.dots-bounce {
-    width: var(--_gw);
-    aspect-ratio: 2;
-    background:
-        var(--_g) 0% 50%,
-        var(--_g) 50% 50%,
-        var(--_g) 100% 50%;
-    background-size: calc(100% / 3) 50%;
-    animation: l3 1s infinite linear;
-}
 @keyframes l3 {
-    20% {
-        background-position:
-            0% 0%,
-            50% 50%,
-            100% 50%;
-    }
-    40% {
-        background-position:
-            0% 100%,
-            50% 0%,
-            100% 50%;
-    }
-    60% {
-        background-position:
-            0% 50%,
-            50% 100%,
-            100% 0%;
-    }
-    80% {
-        background-position:
-            0% 50%,
-            50% 50%,
-            100% 100%;
-    }
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
+// .dots-bounce {
+//     width: var(--_gw);
+//     aspect-ratio: 2;
+//     background:
+//         var(--_g) 0% 50%,
+//         var(--_g) 50% 50%,
+//         var(--_g) 100% 50%;
+//     background-size: calc(100% / 3) 50%;
+//     animation: l3 1s infinite linear;
+// }
+// @keyframes l3 {
+//     20% {
+//         background-position:
+//             0% 0%,
+//             50% 50%,
+//             100% 50%;
+//     }
+//     40% {
+//         background-position:
+//             0% 100%,
+//             50% 0%,
+//             100% 50%;
+//     }
+//     60% {
+//         background-position:
+//             0% 50%,
+//             50% 100%,
+//             100% 0%;
+//     }
+//     80% {
+//         background-position:
+//             0% 50%,
+//             50% 50%,
+//             100% 100%;
+//     }
+// }
 
 .dots-trace {
     width: var(--_dtw);
@@ -205,36 +211,36 @@
     100% {background-position: right -25% top 0}
 }
 
-.factory {
-  width: var(--_ftyw);
-  height: var(--_ftyw2);
-  box-shadow: 0 3px 0 var(--_ftyc);
-  position: relative;
-  clip-path: inset(-40px 0 -5px);
-  &:before {
-    content: "";
-    position: absolute;
-    inset: auto calc(50% - 17px) 0;
-    height: var(--_ftyw3);
-    --g:no-repeat linear-gradient(color-mix(in srgb, var(--_ftyc) 30%, white) 0 0);
-    background: var(--g),var(--g),var(--g),var(--g);
-    background-size: var(--_ftyw4) 14px;
-    animation:
-        l7-1 2s infinite linear,
-        l7-2 2s infinite linear;
-    }
-}
-@keyframes l7-1 {
-  0%,
-  100%  {background-position: 0 -var(--_ftyw3),100% -var(--_ftyw3)}
-  17.5% {background-position: 0 100%,100% -var(--_ftyw3),0 -var(--_ftyw3),100% -var(--_ftyw3)}
-  35%   {background-position: 0 100%,100% 100% ,0 -var(--_ftyw3),100% -var(--_ftyw3)}
-  52.5% {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% -var(--_ftyw3)}
-  70%,
-  98%  {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% calc(100% - var(--_ftyw4))}
-}
-@keyframes l7-2 {
-  0%,70% {transform:translate(0)}
-  100%  {transform:translate(200%)}
-}
+// .factory {
+//   width: var(--_ftyw);
+//   height: var(--_ftyw2);
+//   box-shadow: 0 3px 0 var(--_ftyc);
+//   position: relative;
+//   clip-path: inset(-40px 0 -5px);
+//   &:before {
+//     content: "";
+//     position: absolute;
+//     inset: auto calc(50% - 17px) 0;
+//     height: var(--_ftyw3);
+//     --g:no-repeat linear-gradient(color-mix(in srgb, var(--_ftyc) 30%, white) 0 0);
+//     background: var(--g),var(--g),var(--g),var(--g);
+//     background-size: var(--_ftyw4) 14px;
+//     animation:
+//         l7-1 2s infinite linear,
+//         l7-2 2s infinite linear;
+//     }
+// }
+// @keyframes l7-1 {
+//   0%,
+//   100%  {background-position: 0 -var(--_ftyw3),100% -var(--_ftyw3)}
+//   17.5% {background-position: 0 100%,100% -var(--_ftyw3),0 -var(--_ftyw3),100% -var(--_ftyw3)}
+//   35%   {background-position: 0 100%,100% 100% ,0 -var(--_ftyw3),100% -var(--_ftyw3)}
+//   52.5% {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% -var(--_ftyw3)}
+//   70%,
+//   98%  {background-position: 0 100%,100% 100% ,0 calc(100% - var(--_ftyw4)),100% calc(100% - var(--_ftyw4))}
+// }
+// @keyframes l7-2 {
+//   0%,70% {transform:translate(0)}
+//   100%  {transform:translate(200%)}
+// }
 
