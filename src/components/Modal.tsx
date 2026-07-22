@@ -133,9 +133,12 @@ const ModalContent = styled.div<{ type: "dialog" | "panel", isClosing: boolean }
 
 const modalCloseStyles = css`
     text-decoration: none;
-    height: 36px;
-    width: 36px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
 `;
 const ActionContainer = styled.footer`
     margin-top: ${width("gutter", 2)};
@@ -185,7 +188,7 @@ export class Modal extends React.PureComponent<ModalProps, ModalState> {
                             <>{this.props.header}</>
                         )}
                         {!this.props.hideDismissIcon === true && (
-                            <Button variant="primary" styles={modalCloseStyles} onClick={this.onDismiss}><LuX fill={color("white")} viewBox="6 8 14 14" size={24} /></Button>
+                            <Button variant="primary" styles={modalCloseStyles} onClick={this.onDismiss}><LuX fill={color("white")} size={18} /></Button>
                         )}
                     </header>
                     <section>

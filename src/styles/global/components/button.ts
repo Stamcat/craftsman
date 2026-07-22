@@ -7,6 +7,19 @@ import { color } from "../../utilities/color";
 export const ButtonType = z.enum(["primary", "default", "text"]);
 export type ButtonType = z.infer<typeof ButtonType>;
 
+export const textLinkStyles = css`
+    padding: 0;
+    border: none;
+    background: none;
+    color: ${color("blue500")};
+    &:not(:disabled):not(.disabled):hover {
+        color: ${color("teal700")};
+        background-color: transparent;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+`;
+
 export const button = css`
     --btn-pad-y: ${width("gutter", 0.5)};
     --btn-pad-x: ${width("gutter", 0.75)};
@@ -27,14 +40,7 @@ export const button = css`
         background-color: ${color("teal200")};
     }
     &.text {
-        padding: 0;
-        border: none;
-        background: none;
-        &:not(:disabled):not(.disabled):hover {
-            color: ${color("blue500")};
-            background-color: transparent;
-            text-decoration: underline;
-        }
+        ${textLinkStyles}
     }
     &:disabled,
     &.disabled {

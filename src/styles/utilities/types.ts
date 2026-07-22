@@ -28,3 +28,6 @@ export type Width = Record<LayoutWidthsType, number>;
 
 export type Colors = Record<string, string>;
 export type ColorType = "rgba" | "hex";
+
+export const zTextInputExclusions = z.enum(["checkbox", "radio"]);
+export type TextInputExclusions = z.infer<typeof zTextInputExclusions>;

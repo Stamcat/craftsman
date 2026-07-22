@@ -9,6 +9,9 @@ export const typography = {
         line-height: 1.5;
         font-weight: 400;
         font-size: ${width("text")};
+        ::selection {
+            background-color: ${color("blue200")};
+        }
     `,
     h1: css`
         font-size: ${width("text", 3.125)};

@@ -38,6 +38,7 @@ const Spacing = ({ type, multiplier }: SpacingProps) => {
                     {`     gap: ${width(type, multiplier)};`} <br />
                     {"}"}<br /><br />
                 </pre>
+
             </code>
             <Example type={type} multiplier={multiplier} />
         </>
