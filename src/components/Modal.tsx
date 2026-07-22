@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./Button";
 import styled from "@emotion/styled";
 import { css, keyframes, type SerializedStyles } from "@emotion/react";
-import { breakpoint } from "../styles/utilities/layout";
+import { breakpoint, width } from "../styles/utilities/layout";
 import { LuX } from "react-icons/lu";
 import { color } from "../styles/utilities/color";
 
@@ -87,15 +87,15 @@ const mobileOnlyStyles = css`
     height: 100%;
 `;
 const panelTabletStyles = css`
-    width: calc(var(--w-column) * 4);
+    width: ${width("column", 4)};
 `;
 const dialogTabletStyles = css`
-    width: calc(var(--w-column) * 4);
+    width: ${width("column", 4)};
     ${breakpoint("tablet", css`
-        width: calc(var(--w-column) * 6);
+        width: ${width("column", 6)};
     `)}
     ${breakpoint("desktop", css`
-        width: calc(var(--w-column) * 8);
+        width: ${width("column", 8)};
     `)}
 `;
 const panelStyles = css`
@@ -112,9 +112,9 @@ const dialogStyles = css`
     ${breakpoint("tablet", dialogTabletStyles)}
 `;
 const ModalContent = styled.div<{ type: "dialog" | "panel", isClosing: boolean }>`
-    padding: calc(var(--w-gutter));
+    padding: ${width("gutter")};
     z-index: 1002;
-    background-color: var(--white);
+    background-color: ${color("white")};
     max-height: 80vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -127,22 +127,25 @@ const ModalContent = styled.div<{ type: "dialog" | "panel", isClosing: boolean }
         display: inline-flex;
         width: 100%;
         justify-content: space-between;
-        margin-bottom: calc(var(--w-gutter) * 0.5);
+        margin-bottom: ${width("gutter", 0.5)};
     }
 `;
 
 const modalCloseStyles = css`
     text-decoration: none;
-    height: 36px;
-    width: 36px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
 `;
 const ActionContainer = styled.footer`
-    margin-top: calc(var(--w-gutter) * 2);
-    background-color:var(--white);
+    margin-top: ${width("gutter", 2)};
+    background-color: ${color("white")};
     height: fit-content;
     display: flex;
-    gap: var(--w-gutter);
+    gap: ${width("gutter")};
 `;
 
 type ModalState = {
@@ -185,7 +188,7 @@ export class Modal extends React.PureComponent<ModalProps, ModalState> {
                             <>{this.props.header}</>
                         )}
                         {!this.props.hideDismissIcon === true && (
-                            <Button variant="primary" styles={modalCloseStyles} onClick={this.onDismiss}><LuX fill={color("white")} viewBox="6 8 14 14" size={24} /></Button>
+                            <Button variant="primary" styles={modalCloseStyles} onClick={this.onDismiss}><LuX fill={color("white")} size={18} /></Button>
                         )}
                     </header>
                     <section>

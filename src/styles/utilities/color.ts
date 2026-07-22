@@ -49,7 +49,7 @@ export function hexToRgba(hex: string, alpha: number = 1): string {
 
 export const color = (name: ColorKey, type: ColorType = "hex", alpha: number = 1) => {
     if (type === "rgba") {
-        return hexToRgba(colors[name], alpha);
+        return `rgb(from var(--${name}) r g b / ${alpha})`;   
     }
-    return colors[name];
+    return `var(--${name})`;
 };

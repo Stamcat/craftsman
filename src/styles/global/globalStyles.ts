@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
-import { button } from "./components/button";
+import { button, textLinkStyles } from "./components/button";
 import { colors, widths } from "./variables";
 import { typographyStyles } from "./components/typography";
 import { code } from "./components/code";
+import { input } from "./components/input";
 
 export const globalStyles = css`
     :root {
@@ -53,6 +54,12 @@ export const globalStyles = css`
     }
     button {
         ${button}
+    }
+    input {
+        ${input}
+    }
+    a {
+        ${textLinkStyles}
     }
     ul {
         margin: 0;

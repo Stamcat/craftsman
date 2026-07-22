@@ -8,7 +8,7 @@ import { appThemes } from "./themes/themes";
 import { globalStyles } from "../src/styles/global/globalStyles";
 
 // TODO: This can probably be included in package 
-// eslint-disable-next-line react-refresh/only-export-components
+ 
 const GlobalStyles = () => (
     createElement(Global, {
         styles: (theme: unknown) => [globalStyles, themeBuilder(theme as Theme)],
@@ -19,7 +19,19 @@ const preview: Preview = {
     parameters: {
         options: {
             storySort: {
-                order: ["Introduction", "Getting Started", "Quarks", "Atoms", "Molecules", "Organisms", "Templates", "Utilities", "*", "To Do"],
+                order: [
+                    "Introduction",
+                    "Getting Started",
+                    "Themes",
+                    "Quarks",
+                    "Atoms",
+                    "Molecules",
+                    "Organisms",
+                    "Templates",
+                    "Utilities",
+                    "*",
+                    "To Do",
+                ],
                 method: "alphabetical",
             },
         },

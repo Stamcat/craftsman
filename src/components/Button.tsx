@@ -2,13 +2,14 @@ import { css, type SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { ButtonType } from "../styles/global/components/button";
 import { isEmpty } from "../utilities/validations";
+import { width } from "../styles";
 
 const StyledButton = styled.button<{ size?: number; styles?: SerializedStyles }>`
     ${(props) => props.styles}
     ${(props => props.size && css`
         border-radius: calc(var(--btn-border-radius) * ${props.size});
         padding: calc(var(--btn-pad-y) * ${props.size}) calc(var(--btn-pad-x) * ${props.size});
-        font-size: max(10px, calc(var(--w-text) * ${props.size}));
+        font-size: max(10px, calc(${width("text")} * ${props.size}));
     `)}
 `;
 

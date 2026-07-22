@@ -1,0 +1,159 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Themes & Styles" />
+
+# Themes & Styles
+
+Craftsman themes are plain objects that conform to the `Theme` type. You pass them into `ClientProvider` and the framework applies them globally via CSS variables and component selectors.
+
+Craftsman uses emotion styled-components under the hood, but we built it in such a way that you shouldn't need to care. You can write styles in **three different ways** — plain JS objects, Emotion `css` tagged-template strings, or SCSS modules. They are interchangeable and can be mixed within the same theme object.
+
+We encourage you to use HTML5 and take advantage of css nesting wherever possible. When custom styles are required, we intend to make all options available to you, so that you can build the app however works best for your product. Yes, you can even use Failwind.
+---
+
+## Setup
+
+Wrap your app once with `ClientProvider`:
+
+```tsx
+import { ClientProvider } from "@stamcat/craftsman/styles";
+import { myTheme } from "./themes";
+
+export function App() {
+    return (
+        <ClientProvider theme={myTheme}>
+            {/* your app */}
+        </ClientProvider>
+    );
+}
+```
+
+The `Theme` type accepts three optional keys:
+
+| Key | Purpose |
+|---|---|
+| `colors` | Override any named CSS color variable (e.g. `--blue500`) |
+| `root` | Any extra `:root` CSS variables or properties |
+| `components` | Per-component style overrides keyed by component name |
+
+---
+
+## 1. Plain JavaScript object
+
+The simplest approach. Pass a `CSSObject` directly — identical to what you would write in an inline style or an Emotion `css({})` call.
+
+```ts
+import type { Theme } from "@stamcat/craftsman/styles";
+
+export const myTheme: Theme = {
+    root: {
+        "--w-gutter": "14px",
+    },
+    components: {
+        button: {
+            backgroundColor: "#16a34a",
+            color: "#ffffff",
+            border: "2px solid green",
+            borderRadius: "8px",
+        },
+    },
+};
+```
+
+Use this when you want a zero-dependency, no-build-step definition that lives entirely in a `.ts` file.
+
+---
+
+## 2. Emotion `css` template
+
+Use Emotion's `css` tagged-template literal for more expressive, selector-aware CSS. You can also override color CSS variables alongside the component styles.
+
+```ts
+import { css } from "@emotion/react";
+import type { Theme } from "@stamcat/craftsman/styles";
+
+export const myTheme: Theme = {
+    colors: {
+        "--blue500": "#31198a",
+    },
+    components: {
+        button: css`
+            background-color: var(--blue500);
+            color: #fff;
+            border-radius: 4px;
+            border: 1px solid blue;
+        `,
+    },
+};
+```
+
+Use this when you need pseudo-selectors, nested rules, or want to reference CSS variables directly in your theme.
+
+---
+
+## 3. SCSS / CSS Module
+
+Pass the class string exported by a `.module.scss` (or `.module.css`) file. The framework will apply it as the component's className.
+
+```scss
+/* theme.module.scss */
+.button {
+    background-color: var(--blue500);
+    color: #fff;
+    border-radius: 4px;
+    border: 1px solid blue;
+}
+```
+
+```ts
+import type { Theme } from "@stamcat/craftsman/styles";
+import styles from "./theme.module.scss";
+
+export const myTheme: Theme = {
+    colors: {
+        "--blue500": "#31198a",
+    },
+    components: {
+        button: styles.button,
+    },
+};
+```
+
+Use this when your team already manages component styles in a dedicated SCSS layer and you want the theme to simply reference those existing classes.
+
+---
+
+## Defining multiple themes
+
+Export a record of themes and switch between them at runtime.
+
+```ts
+import type { AppTheme } from "@stamcat/craftsman/styles";
+
+export const appThemes: AppTheme = {
+    default: { root: { "--w-gutter": "14px" } },
+    green:   { components: { button: { backgroundColor: "#16a34a" } } },
+    brand:   { colors: { "--blue500": "#31198a" } },
+};
+```
+
+```tsx
+// app.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ClientProvider } from "@stamcat/craftsman/styles";
+import { Button } from "@stamcat/craftsman/Button";
+import { appTheme } from "./theme";
+
+function App() {
+	return <Button variant="primary">Save</Button>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+	<ClientProvider theme={appTheme}>
+		<App />
+	</ClientProvider>,
+);
+```
+
+Switch themes using the **Themes** icon in the Storybook toolbar to see each variant applied live across all stories.
