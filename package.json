@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/craftsman",
-  "version": "0.0.23-alpha.27",
+  "version": "0.0.23-alpha.28",
   "type": "module",
   "description": "A powerful, lightweight framework for design systems",
   "repository": {
@@ -40,7 +40,7 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "dompurify": "3.4.11",
+    "dompurify": "3.4.12",
     "emotion": "11.0.0",
     "react": "19.2.7",
     "react-date-picker": "12.0.2",
@@ -65,9 +65,9 @@
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.3",
-    "@vitest/browser": "4.1.9",
-    "@vitest/browser-playwright": "4.1.9",
-    "@vitest/coverage-v8": "4.1.9",
+    "@vitest/browser": "4.1.10",
+    "@vitest/browser-playwright": "4.1.10",
+    "@vitest/coverage-v8": "4.1.10",
     "brace-expansion": "5.0.7",
     "commit-and-tag-version": "11.2.2",
     "eslint": "9.35.0",
@@ -81,7 +81,7 @@
     "eslint-plugin-storybook": "10.4.6",
     "fs-extra": "11.3.6",
     "globals": "17.7.0",
-    "next": "16.2.10",
+    "next": "16.2.11",
     "playwright": "1.56.1",
     "postcss": "8.5.20",
     "prettier": "3.9.4",
@@ -92,9 +92,10 @@
     "vite": "8.1.2",
     "vite-plugin-dts": "5.0.3",
     "vite-plugin-lib-inject-css": "2.2.2",
-    "vitest": "4.1.9"
+    "vitest": "4.1.10"
   },
   "overrides": {
-    "postcss": "8.5.20"
+    "postcss": "8.5.20",
+    "sharp": "0.35.3"
   }
 }
