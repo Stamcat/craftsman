@@ -31,3 +31,34 @@ export type ColorType = "rgba" | "hex";
 
 export const zTextInputExclusions = z.enum(["checkbox", "radio"]);
 export type TextInputExclusions = z.infer<typeof zTextInputExclusions>;
+
+export const zTextInputTypes = [
+    "color",
+    "date",
+    "datetime-local",
+    "email",
+    "file",
+    "hidden",
+    "image",
+    "month",
+    "number",
+    "password",
+    "range",
+    "reset",
+    "search",
+    "submit",
+    "tel",
+    "text",
+    "time",
+    "url",
+    "week",
+    "radio",
+    "checkbox",
+] as const;
+
+export const zTextInputType = z.enum(zTextInputTypes);
+
+export type TextInputType = z.infer<typeof zTextInputType>;
+
+export const zLabelPosition = z.enum(["top", "left", "bottom", "right", "inside", "hidden"]);
+export type LabelPosition = z.infer<typeof zLabelPosition>;

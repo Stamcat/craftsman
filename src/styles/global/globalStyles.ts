@@ -4,6 +4,8 @@ import { colors, widths } from "./variables";
 import { typographyStyles } from "./components/typography";
 import { code } from "./components/code";
 import { input } from "./components/input";
+import { checkboxStyles } from "./components/checkbox";
+import { radioBtnStyles } from "./components/radioButton";
 
 export const globalStyles = css`
     :root {
@@ -57,6 +59,12 @@ export const globalStyles = css`
     }
     input {
         ${input}
+        &[type="radio"] {
+            ${radioBtnStyles}
+        }
+        &[type="checkbox"] {
+            ${checkboxStyles}
+        }
     }
     a {
         ${textLinkStyles}

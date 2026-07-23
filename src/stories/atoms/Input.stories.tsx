@@ -3,13 +3,21 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { Input } from "../../components/Input";
 import { width } from "../../styles/utilities/layout";
+import { zLabelPosition, zTextInputType } from "../../styles/utilities/types";
 
-const labelPositionOptions = ["top", "left", "bottom", "right", "inside", "hidden"];
 
 const meta: Meta<typeof Input> = {
     title: "Atoms/Input",
 	component: Input,
 	tags: ["autodocs"],
+    parameters: {
+        layout: "padded",
+        docs: {
+            description: {
+                component: "Base text input. For password visibility toggle, use InputPassword.",
+            },
+        },
+    },
 	args: {
 		type: "text",
         id: "testInput",
@@ -19,18 +27,20 @@ const meta: Meta<typeof Input> = {
         required: false,
 	},
     argTypes: {
+        type: {
+            control: "select",
+            options: zTextInputType.options,
+        },
         label: { control: "text" },
         labelPosition: {
             control: "select",
-            options: labelPositionOptions,
+            options: zLabelPosition.options,
         },
         required: { control: "boolean" },
         error: { control: "text" },
         styles: { control: false },
+        endAdornment: { control: false },
     },
-	parameters: {
-		layout: "padded",
-	},
 };
 
 export default meta;
@@ -40,18 +50,18 @@ export const Default: Story = {};
 
 export const Required: Story = {
     args: {
-        label: "Email",
-        type: "email",
-        placeholder: "you@company.com",
+        label: "Last Name",
+        type: "text",
+        placeholder: "Your Last Name",
         required: true,
     },
 };
 
 export const WithErrorMessage: Story = {
     args: {
-        label: "Phone",
-        type: "tel",
-        placeholder: "(555) 123-4567",
+        label: "Email",
+        type: "email",
+        placeholder: "you@email.com",
         error: "Please enter a valid value.",
     },
 };

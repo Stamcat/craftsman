@@ -39,7 +39,8 @@ export const button = css`
     &:not(:disabled):not(.disabled):hover {
         background-color: ${color("teal200")};
     }
-    &.text {
+    &.text,
+    &[data-variant="text"] {
         ${textLinkStyles}
     }
     &:disabled,
@@ -47,13 +48,15 @@ export const button = css`
         cursor: not-allowed;
         border-color: ${color("gray200")};
         color: ${color("gray400")};
-        &.primary {
+        &.primary,
+        &[data-variant="primary"] {
             border-color: ${color("gray200")};
             background-color: ${color("gray400")};
             color: ${color("gray200")};
         }
     }
-    &.primary {
+    &.primary,
+    &[data-variant="primary"] {
         color: ${color("white")};
         background-color: ${color("blue500")};
         &:not(:disabled):not(.disabled):hover {
