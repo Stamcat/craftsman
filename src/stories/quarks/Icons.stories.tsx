@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import styled from "@emotion/styled";
-import { Global } from "@emotion/react";
+import { css, Global } from "@emotion/react";
 import { width } from "../../styles/utilities/layout";
 import { Button, Modal } from "../../components";
 import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import { globalStyles } from "../../styles/global/globalStyles";
+import { color } from "../../styles/utilities/color";
 /**
  * This is mostly vibe coded trash. don't look at this file as an example of how to do anything. 
  * Only look at the storybook directly
@@ -26,7 +27,7 @@ const getUsageSnippet = (name: string, iconPath: string) => {
         return "Select an icon to see its import.";
     }
 
-    return `import { ${name} } from "${iconPath}";\n\nconst Example = () => React.createElement(${name}, { size: 24 });`;
+    return `import { ${name} } from "${iconPath}";\n\n<${name} size={24} />`;
 };
 
 type IconRenderBoundaryProps = {
@@ -189,6 +190,9 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
                     variant="text"
                     onClick={onPressSelect}
                     value={name}
+                    styles={css`
+                        color: ${color("text")};
+                    `}
                     data-icon-path={importPath}
                     aria-label={`Show import and usage for ${name}`}
                 >

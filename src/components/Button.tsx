@@ -5,12 +5,16 @@ import { isEmpty } from "../utilities/validations";
 import { width } from "../styles";
 
 const StyledButton = styled.button<{ size?: number; styles?: SerializedStyles }>`
-    ${(props) => props.styles}
     ${(props => props.size && css`
         border-radius: calc(var(--btn-border-radius) * ${props.size});
         padding: calc(var(--btn-pad-y) * ${props.size}) calc(var(--btn-pad-x) * ${props.size});
         font-size: max(10px, calc(${width("text")} * ${props.size}));
     `)}
+    ${(props) => props.styles && css`
+        && {
+            ${props.styles}
+        }
+    `}
 `;
 
 export type ButtonProps = React.ComponentProps<"button"> & {
@@ -27,15 +31,11 @@ export type ButtonProps = React.ComponentProps<"button"> & {
  * If button is empty, it will return nothing. This prevents instances of "empty square" which can annoy the end user.
  */
 export const Button: React.FC<ButtonProps> = (props) => {
-    const { type = "button", variant = "default", className, size, ...rest } = props;
+    const { type = "button", variant = "default", size, ...rest } = props;
     const normalizedSize = typeof size === "number" ? Math.min(10, Math.max(0.1, size)) : undefined;
 
-    const mergedClassName = [
-        variant !== "default" ? variant : undefined,
-        className,
-    ].filter(Boolean).join(" ") || undefined;
     if (isEmpty(props.children)) {
         return <></>;
     }
-    return <StyledButton type={type} size={normalizedSize} className={mergedClassName} {...rest} />
+    return <StyledButton type={type} size={normalizedSize} data-variant={variant} {...rest} />
 };
