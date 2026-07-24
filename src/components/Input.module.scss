@@ -1,4 +1,4 @@
-@use "../styles/global/components/mixins" as m;
+@use "../styles/global/components/input";
 
 .wrapper {
   label {
@@ -57,7 +57,7 @@
   }
 
   &[data-label-position="inside"] {
-    @include m.inside-input-label-base;
+    @extend %inside-input-label-base;
 
     .inputLabel {
       position: absolute;
@@ -78,7 +78,7 @@
 
     &:focus-within {
       .inputLabel {
-        @include m.inside-input-label-floating;
+        @extend %inside-input-label-floating;
         color: var(--blue500);
       }
 
@@ -95,7 +95,7 @@
     &:has(.input:-webkit-autofill),
     &[data-has-input="true"] {
       .inputLabel {
-        @include m.inside-input-label-floating;
+        @extend %inside-input-label-floating;
       }
     }
 
