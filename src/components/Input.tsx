@@ -46,9 +46,10 @@ const inputWrapperStyles = (hasInput: boolean, required: boolean) => css`
     &[data-label-position="right"] label {
         display: inline-flex;
         flex-direction: row-reverse;
-        align-items: center;
+        align-items: baseline;
         .input-label {
-            margin-left: ${width("gutter", 0.75)};
+            margin-left: ${width("gutter", 0.25)};
+            margin-bottom: 0;
         }
     }
 

@@ -5,7 +5,7 @@ import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../styles/utilities/types";
 
 const meta: Meta<typeof InputPassword> = {
-    title: "Atoms/InputPassword",
+    title: "Atoms/Input/InputPassword",
     component: InputPassword,
     tags: ["autodocs"],
     parameters: {

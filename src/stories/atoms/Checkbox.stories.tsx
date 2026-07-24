@@ -44,7 +44,7 @@ const ThreeOptionsGroup = (args: CheckboxGroupProps) => {
 };
 
 const meta: Meta<typeof Checkbox> = {
-    title: "Atoms/Checkbox",
+    title: "Atoms/Input/Checkbox",
 	component: Checkbox,
     tags: ["autodocs"],
 	args: {

@@ -82,7 +82,7 @@ const singleWithErrorSource = `<RadioButton
 />`;
 
 const meta: Meta<typeof RadioButton> = {
-	title: "Atoms/RadioButton",
+    title: "Atoms/Input/RadioButton",
 	component: RadioButton,
 	tags: ["autodocs"],
 	parameters: {

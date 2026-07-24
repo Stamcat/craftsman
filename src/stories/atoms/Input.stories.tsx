@@ -7,7 +7,7 @@ import { zLabelPosition, zTextInputType } from "../../styles/utilities/types";
 
 
 const meta: Meta<typeof Input> = {
-    title: "Atoms/Input",
+    title: "Atoms/Input/Input",
 	component: Input,
 	tags: ["autodocs"],
     parameters: {
