@@ -1,0 +1,46 @@
+%inside-input-label-base {
+  --react-international-phone-height: 50px;
+  --react-international-phone-border-radius: 8px;
+  --react-international-phone-border-color: #c0c0c0ff;
+  position: relative;
+}
+
+%inside-input-label-floating {
+  top: -0.5rem;
+  left: calc(var(--w-gutter, 16px) * 0.25);
+  font-size: calc(var(--w-text, 14px) * 0.75);
+}
+
+%interactive-focus-reset {
+  &:focus {
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
+%input-base {
+  color: var(--text);
+  border-radius: 3px;
+  border: 1px solid var(--gray400);
+  padding: calc(var(--w-gutter, 16px) * 0.5);
+  background-color: var(--white);
+
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  &:disabled,
+  &.disabled {
+    border-color: var(--gray200);
+    background-color: var(--gray100);
+  }
+
+  @extend %interactive-focus-reset;
+}

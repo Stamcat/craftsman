@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import styled from "@emotion/styled";
 import { InputPassword } from "../../components/InputPassword";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../styles/utilities/types";
 
 const meta: Meta<typeof InputPassword> = {
-    title: "Atoms/InputPassword",
+    title: "Atoms/Input/InputPassword",
     component: InputPassword,
     tags: ["autodocs"],
     parameters: {
@@ -56,21 +55,21 @@ export const WithErrorMessage: Story = {
     },
 };
 
-const PositionsGrid = styled.div`
-    display: grid;
-    gap: ${width("gutter")};
-    max-width: ${width("column", 5)};
-`;
+const positionsGridStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter"),
+    maxWidth: width("column", 5),
+};
 
 export const LabelPositions: Story = {
     render: (args) => (
-        <PositionsGrid>
+        <div style={positionsGridStyle}>
             <InputPassword {...args} label="Top" labelPosition="top" placeholder="Top label" />
             <InputPassword {...args} label="Left" labelPosition="left" placeholder="Left label" />
             <InputPassword {...args} label="Bottom" labelPosition="bottom" placeholder="Bottom label" />
             <InputPassword {...args} label="Right" labelPosition="right" placeholder="Right label" />
             <InputPassword {...args} label="Inside" labelPosition="inside" placeholder="Inside label" />
             <InputPassword {...args} label="Hidden label" labelPosition="hidden" placeholder="Hidden label" />
-        </PositionsGrid>
+        </div>
     ),
 };

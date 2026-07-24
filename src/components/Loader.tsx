@@ -1,18 +1,13 @@
-import styled from "@emotion/styled"
+import clsx from "clsx";
 import { loaders, type LoaderStyle } from "../styles/global/components/loaders";
 import styles from "../styles/global/components/loaders.module.scss";
-import type { SerializedStyles } from "@emotion/react";
-
-const StyledLoader = styled.div<{ type: LoaderStyle, color: string, width?: number, styles?: SerializedStyles }>`
-    ${(props) => loaders[props.type](props.color, props.width)}
-    ${(props) => props.styles}
-`;
+import { isEmpty } from "../utilities/validations";
 
 export type LoaderProps = React.ComponentProps<"div"> & {
     type: LoaderStyle;
     color?: string;
     width?: number;
-    styles?: SerializedStyles;
+    styles?: React.CSSProperties;
 }
 
 /**
@@ -22,9 +17,15 @@ export type LoaderProps = React.ComponentProps<"div"> & {
  * We intend to expand selections in the future
  */
 export const Loader: React.FC<LoaderProps> = (props) => {
-    const { type, color = "black", ...rest } = props; 
-    return (
-        <StyledLoader className={styles[type]} type={type} color={color || "black"} {...rest} />
+    const { type, color = "black", width, styles: styleOverride, className, style, ...rest } = props;
+    const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
+    const loaderStyleVars = loaders[type](color, width);
 
-    )
+    return (
+        <div
+            className={clsx(styles[type], className)}
+            style={{ ...loaderStyleVars, ...resolvedStyleOverride, ...style }}
+            {...rest}
+        />
+    );
 }

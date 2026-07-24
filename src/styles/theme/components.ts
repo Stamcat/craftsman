@@ -9,7 +9,7 @@ function toRegisteredComponentName(componentName: string): RegisteredComponentNa
 }
 
 function toComponentSelector(componentName: RegisteredComponentName) {
-    return htmlTagNames.has(componentName) ? componentName : `.${componentName}`;
+    return htmlTagNames.has(componentName) ? `${componentName}, .${componentName}` : `.${componentName}`;
 }
 
 const componentNames = (Object.keys(exportedComponents) as ExportedComponentName[]).map(toRegisteredComponentName);

@@ -1,0 +1,141 @@
+@use "../styles/global/components/input";
+
+.wrapper {
+  label {
+    .inputLabel {
+      margin-bottom: calc(var(--w-gutter, 16px) * 0.25);
+    }
+  }
+
+  &[data-required="true"] {
+    label {
+      .inputLabel {
+        &::after {
+          content: "*";
+          color: var(--red700);
+        }
+      }
+    }
+  }
+
+  &[data-label-position="left"] {
+    label {
+      display: inline-flex;
+      align-items: center;
+
+      .inputLabel {
+        width: fit-content;
+        margin-right: calc(var(--w-gutter, 16px) * 0.75);
+      }
+    }
+  }
+
+  &[data-label-position="bottom"] {
+    label {
+      display: inline-flex;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+
+      .inputLabel {
+        margin-bottom: 0;
+        margin-top: calc(var(--w-gutter, 16px) * 0.25);
+      }
+    }
+  }
+
+  &[data-label-position="right"] {
+    label {
+      display: inline-flex;
+      flex-direction: row-reverse;
+      align-items: baseline;
+
+      .inputLabel {
+        margin-left: calc(var(--w-gutter, 16px) * 0.25);
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &[data-label-position="inside"] {
+    @extend %inside-input-label-base;
+
+    .inputLabel {
+      position: absolute;
+      background-color: var(--white);
+      z-index: 1;
+      width: fit-content;
+      padding: 0 5px;
+      top: calc(var(--w-gutter, 16px) * 0.25);
+      left: calc(var(--w-gutter, 16px) * 0.25);
+      pointer-events: none;
+      transition: top 150ms ease, left 150ms ease, font-size 150ms ease, color 150ms ease;
+    }
+
+    > label > .inputField > .input,
+    > .input {
+      transition: border-color 200ms ease;
+    }
+
+    &:focus-within {
+      .inputLabel {
+        @extend %inside-input-label-floating;
+        color: var(--blue500);
+      }
+
+      .input {
+        border-color: var(--blue500);
+      }
+
+      .input::placeholder {
+        opacity: 1;
+      }
+    }
+
+    &:has(.input:not(:placeholder-shown)),
+    &:has(.input:-webkit-autofill),
+    &[data-has-input="true"] {
+      .inputLabel {
+        @extend %inside-input-label-floating;
+      }
+    }
+
+    .input[type="tel"] {
+      width: 100%;
+    }
+
+    .input::placeholder {
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+  }
+}
+
+.inputField {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &[data-has-end-adornment="true"] {
+    > .input {
+      width: 100%;
+      padding-right: calc(calc(var(--w-gutter, 16px) * 0.5) + 24px + calc(var(--w-gutter, 16px) * 0.5));
+    }
+  }
+}
+
+.inputAdornment {
+  position: absolute;
+  right: calc(var(--w-gutter, 16px) * 0.5);
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.error {
+  margin-top: calc(var(--w-gutter, 16px) * 0.25);
+  font-size: calc(var(--w-text, 14px) * 0.75);
+  color: var(--red600);
+}

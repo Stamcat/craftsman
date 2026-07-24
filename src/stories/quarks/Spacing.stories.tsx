@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { LayoutWidthsSchema, type LayoutWidthsType } from "../../styles/utilities/types";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 import { width } from "../../styles/utilities/layout";
 import { color } from "../../styles";
 
@@ -11,16 +9,16 @@ type SpacingProps = {
     multiplier?: number;
 };
 
-const Example = styled.div<SpacingProps>`
-    margin-top: ${width("gutter")};
-    height: 50px;
-    background-color: ${color("purple300")};
-    ${(props) =>
-        css`
-            width: ${width(props.type, props.multiplier)};
-        `
-    }
-`;
+const Example = ({ type, multiplier }: SpacingProps) => (
+    <div
+        style={{
+            marginTop: width("gutter"),
+            height: "50px",
+            backgroundColor: color("purple300"),
+            width: width(type, multiplier),
+        }}
+    />
+);
 
 
 const Spacing = ({ type, multiplier }: SpacingProps) => {

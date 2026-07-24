@@ -3,14 +3,13 @@ import type { TextInputType } from "../styles/utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Button } from "./Button";
 import { Input, type InputProps } from "./Input";
-import { css } from "@emotion/react";
 
-const inputPasswordToggleStyles = css`
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    line-height: 1;
-`;
+const inputPasswordToggleStyles: React.CSSProperties = {
+    padding: 0,
+    display: "inline-flex",
+    alignItems: "center",
+    lineHeight: 1,
+};
 
 
 const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () => void }) => (

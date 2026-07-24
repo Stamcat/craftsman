@@ -42,7 +42,7 @@ Props:
 - Inherits all native `<button>` props.
 - `variant?: "primary" | "default" | "text"` (default: `"default"`)
 - `size?: number` (default visual scale is `1`)
-- `styles?: SerializedStyles` (Emotion override)
+- `styles?: React.CSSProperties` (inline style override)
 
 Behavior notes:
 
@@ -109,7 +109,7 @@ Props:
 - `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
 - `error?: string | boolean | ReactNode`
 - `required?: boolean`
-- `styles?: SerializedStyles` (wrapper override)
+- `styles?: React.CSSProperties` (wrapper override)
 - `type?: TextInputType` (checkbox/radio excluded)
 
 Behavior notes:
@@ -248,7 +248,7 @@ Props:
 - `backgroundDismiss?: boolean` (default behavior: `true`)
 - `hideDismissIcon?: boolean` (default behavior: close icon is shown)
 - `footer?: React.ReactNode`
-- `styles?: SerializedStyles` (applies to outer modal wrapper)
+- `styles?: React.CSSProperties` (applies to outer modal wrapper)
 
 Behavior notes:
 
@@ -302,7 +302,7 @@ Props:
   - `"factory"`
 - `color?: string` (default: `"black"`)
 - `width?: number` (optional, variant-dependent default behavior)
-- `styles?: SerializedStyles` (Emotion override)
+- `styles?: React.CSSProperties` (inline style override)
 
 Example:
 
@@ -312,7 +312,7 @@ Example:
 
 ## Styling Expectations
 
-- Components are built with Emotion and class-based variant hooks.
+- Components are built with SCSS modules and class-based variant hooks.
 - If your app does not include this package's global CSS variable setup, visual output may differ.
 - Agents should avoid hard-coding assumptions about token names beyond what the consumer app already defines.
 

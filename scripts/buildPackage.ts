@@ -65,10 +65,6 @@ const createPackageJson = () => {
                 types: "./src/styles/index.d.ts",
                 default: "./Styles.esm.js",
             },
-            "./styles/NextJSProvider": {
-                types: "./src/styles/next/index.d.ts",
-                default: "./NextJSProvider.esm.js",
-            },
             "./utilities": {
                 types: "./src/utilities/index.d.ts",
                 default: "./Utilities.esm.js",

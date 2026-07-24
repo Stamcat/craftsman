@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import styled from "@emotion/styled";
 import { Modal } from "../../components/Modal";
 import { Button } from "../../components/Button";
 import { width } from "../../styles/utilities/layout";
@@ -56,19 +55,11 @@ const meta: Meta<typeof Modal> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const ExampleContent = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: ${width("gutter", 0.5)};
-
-	h3 {
-		margin: 0;
-	}
-
-	p {
-		margin: 0;
-	}
-`;
+const exampleContentStyle: React.CSSProperties = {
+	display: "flex",
+	flexDirection: "column",
+	gap: width("gutter", 0.5),
+};
 
 const ExampleFooter = ({ onClose }: { onClose: () => void }) => {
 	return (
@@ -106,14 +97,14 @@ const ExampleModal = ({
 				hideDismissIcon={hideDismissIcon}
 				footer={<ExampleFooter onClose={() => setVisible(false)} />}
 			>
-				<ExampleContent>
+				<div style={exampleContentStyle}>
 					<p>
 						This is an interactive modal example. Use the close icon, background click (if enabled), or footer actions to dismiss.
 					</p>
 					<p>
 						The modal supports custom children, optional header text, and a footer slot for action buttons.
 					</p>
-				</ExampleContent>
+				</div>
 			</Modal>
 		</>
 	);

@@ -2,32 +2,27 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Getting Started" />
 
-# How To Use `ClientProvider` and `NextJSProvider`
+# How To Use `ThemeProvider`
 
-This guide shows how to set up both providers and apply:
+This guide shows how to set up theming and apply:
 
 1. custom theme values
 2. root-level CSS variable overrides
 
 ## What Each Provider Is For
 
-- `ClientProvider`
-	- Use in any regular React app (Vite, CRA, etc.)
-	- Sets global styles
-	- Applies Craftsman theme overrides
+- `ThemeProvider`
+	- Use in any React app, including Next.js App Router
+	- Injects global theme CSS variables and component override rules
+	- Renders only a `<style>` element (it does not wrap children)
 
-- `NextJSProvider`
-	- Use in Next.js App Router client boundaries
-	- Adds Emotion cache + server-inserted style handling
-	- Also applies Craftsman theme
 
 ## 1. Create a Shared Theme Object
 
 ```tsx
-import { css } from "@emotion/react";
 import type { Theme } from "@stamcat/craftsman/styles";
 
-// Theme config supports raw styles, CSS & SCSS Modules, and emotion styled
+// Theme config supports raw style objects and CSS/SCSS modules
 export const appTheme: Theme = {
 	colors: {
 		"--blue500": "#1d4ed8",
@@ -38,63 +33,60 @@ export const appTheme: Theme = {
 		backgroundColor: "#ffffff",
 	},
 	components: {
-		button: css`
-			border-radius: 10px;
-			font-weight: 600;
-		`,
+		button: {
+			borderRadius: "10px",
+			fontWeight: 600,
+		},
 	},
 };
 
 ```
 
-## 2. Setup In a Standard React App With `ClientProvider`
+## 2. Setup In a Standard React App With `ThemeProvider`
 
 ```tsx
-import React from "react";
+import { ThemeProvider } from "@stamcat/craftsman/styles";
 import ReactDOM from "react-dom/client";
-import { ClientProvider } from "@stamcat/craftsman/styles";
 import { Button } from "@stamcat/craftsman/Button";
 import { appTheme } from "./theme";
 
 function App() {
 	return <Button variant="primary">Save</Button>;
 }
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<ClientProvider theme={appTheme}>
+	<>
+		<ThemeProvider theme={appTheme} />
 		<App />
-	</ClientProvider>,
+	</>,
 );
 ```
 
-## 3. Setup In Next.js App Router With `NextJSProvider`
+## 3. Setup In Next.js App Router
 
-`NextJSProvider` is exported as a dedicated client entry:
-
-```tsx
-import { NextJSProvider } from "@stamcat/craftsman/styles/NextJSProvider";
-```
-
-Example provider wrapper:
+Add `ThemeProvider` in your root layout and pass your theme:
 
 ```tsx
-"use client";
-
-import { NextJSProvider } from "@stamcat/craftsman/styles/NextJSProvider";
+import { ThemeProvider } from "@stamcat/craftsman/styles";
 import { appTheme } from "./theme";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<NextJSProvider theme={appTheme}>
-			{children}
-		</NextJSProvider>
+		<html lang="en">
+			<body>
+				<ThemeProvider theme={appTheme} />
+				{children}
+			</body>
+		</html>
 	);
 }
 ```
 
-## 4. Quick Notes
-
-- Put `NextJSProvider` behind a client boundary (`"use client"`).
 - Prefer one provider at app root.
 - Keep `theme` for component/global style overrides.
 - Use `theme.root` CSS variables to override base design tokens like widths.
+
+## Editor Setup (CSS Modules IntelliSense)
+
+- Install the recommended VS Code extension: `clinyong.vscode-css-modules`.
+- The project already includes `vite-plugin-typed-css-modules` and `typescript-plugin-css-modules` for typed class names and TS language-service support.
+- After installing extensions or pulling config changes, run `TypeScript: Restart TS Server` from the Command Palette.

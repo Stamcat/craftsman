@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import styled from "@emotion/styled";
 import { useState } from "react";
 import { RadioButton } from "../../components/RadioButton";
 import { width } from "../../styles/utilities/layout";
 
-const Container = styled.div`
-	display: grid;
-	gap: ${width("gutter", 0.5)};
-`;
+const containerStyle: React.CSSProperties = {
+	display: "grid",
+	gap: width("gutter", 0.5),
+};
 
 const captainOptions = [
 	{ id: "captain-kirk", value: "Kirk", label: "James Tiberius Kirk" },
@@ -33,7 +32,7 @@ const CaptainRadioGroup = ({
     const [selected, setSelected] = useState<string>(initialValue);
 
     return (
-        <Container>
+		<div style={containerStyle}>
             {captainOptions.map((option) => (
                 <RadioButton
                     {...sharedProps}
@@ -48,7 +47,7 @@ const CaptainRadioGroup = ({
                 />
             ))}
             <small>Selected: {selected}</small>
-        </Container>
+		</div>
     );
 };
 
@@ -82,7 +81,7 @@ const singleWithErrorSource = `<RadioButton
 />`;
 
 const meta: Meta<typeof RadioButton> = {
-	title: "Atoms/RadioButton",
+    title: "Atoms/Input/RadioButton",
 	component: RadioButton,
 	tags: ["autodocs"],
 	parameters: {
@@ -152,8 +151,8 @@ export const SingleWithError: Story = {
 		},
 	},
 	render: (args) => (
-		<Container>
+		<div style={containerStyle}>
 			<RadioButton {...args} />
-		</Container>
+		</div>
 	),
 };

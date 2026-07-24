@@ -1,25 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { css } from "@emotion/react";
 import { Button } from "../../components/Button";
 import { ButtonType } from "../../styles/global/components/button";
 import { Loader } from "../../components";
 import { GiFlatbed, GiDiceSixFacesFive, GiBatLeth } from "react-icons/gi";
 import { GrBike } from "react-icons/gr";
-import styled from "@emotion/styled";
 import { width } from "../../styles/utilities/layout";
 import { ImRocket } from "react-icons/im";
 
-const Wrapper = styled.div`
-    display: inline-flex;
-    gap: ${width("gutter")};
-    width: 100%;
-    margin: ${width("gutter")} 0;
-`;
-const rocketStyles = css`
-    display: inline-flex;
-    flex-flow: column wrap;
-    padding: ${width("gutter", 0.5)} ${width("gutter")};
-`;
+const wrapperStyle: React.CSSProperties = {
+    display: "inline-flex",
+    gap: width("gutter"),
+    width: "100%",
+    margin: `${width("gutter")} 0`,
+};
+
+const rocketStyles: React.CSSProperties = {
+    display: "inline-flex",
+    flexFlow: "column wrap",
+    padding: `${width("gutter", 0.5)} ${width("gutter")}`,
+};
 const meta: Meta<typeof Button> = {
     title: "Atoms/Button",
     component: Button,
@@ -96,20 +95,20 @@ export const WithIcon: Story = {
     },
     render: () => (
         <>
-            <Wrapper>
+            <div style={wrapperStyle}>
                 <Button variant="primary">
                     <GiFlatbed size={30} /><span>&nbsp; Truck</span>
                 </Button>
                 <Button>
                     <span>Bike &nbsp;</span><GrBike size={24} />
                 </Button>
-            </Wrapper>
-            <Wrapper>
+            </div>
+            <div style={wrapperStyle}>
                 <Button styles={rocketStyles}>
                     <ImRocket size={24} />
                     <p>Rocket</p>
                 </Button>
-            </Wrapper>
+            </div>
         </>
     ),
 
@@ -191,17 +190,14 @@ export const WithAriaLabel: Story = {
     },
 };
 
-export const WithEmotionStyles: Story = {
+export const WithCustomStyles: Story = {
     args: {
-        children: "Custom Emotion Style",
+        children: "Custom Style",
         variant: "default",
-        styles: css`
-            border: 1px dashed var(--purple500);
-            background: var(--purple50);
-            color: var(--purple900);
-            &:hover {
-                background: var(--purple100);
-            }
-        `,
+        styles: {
+            border: "1px dashed var(--purple500)",
+            background: "var(--purple50)",
+            color: "var(--purple900)",
+        },
     },
 };

@@ -9,6 +9,7 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { EXPORTS } from "./exports";
 import { playwright } from "@vitest/browser-playwright";
+import typedCssModules from "vite-plugin-typed-css-modules";
 
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,7 +28,13 @@ const dtsOptions = {
 };
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-    plugins: [react(), dts(dtsOptions), libInjectCss()],
+    plugins: [react(), dts(dtsOptions), typedCssModules(), libInjectCss()],
+    css: {
+        modules: {
+            // Formats .my-class-name into styles.myClassName natively
+            localsConvention: "dashesOnly",
+        },
+    },
     build: {
         copyPublicDir: false,
         lib: {
@@ -44,11 +51,7 @@ export default defineConfig({
                 "react-dom",
                 "zod",
                 "react/jsx-runtime",
-                /^@emotion\/cache(\/.*)?$/,
                 /^react-icons(\/.*)?$/,
-                "@emotion/react",
-                "@emotion/styled",
-                "emotion",
                 "dompurify",
                 "react-international-phone",
                 "react-date-picker",
