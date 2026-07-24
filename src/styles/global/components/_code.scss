@@ -1,0 +1,19 @@
+%code {
+    background-color: var(--gray200);
+    color: var(--gray800);
+    padding: calc(var(--w-gutter, 16px) * 0.125) calc(var(--w-gutter, 16px) * 0.25);
+    margin: calc(var(--w-gutter, 16px) * 0.125);
+    display: inline-block;
+    font-size: var(--w-text, 14px);
+
+    &:has(pre) {
+    padding: var(--w-gutter, 16px);
+    border-radius: calc(var(--w-gutter, 16px) * 0.5);
+    background-color: var(--gray800);
+    color: var(--gray200);
+    }
+
+    &:has(pre) pre {
+    margin: 0;
+    }
+}

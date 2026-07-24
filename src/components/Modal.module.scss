@@ -1,0 +1,133 @@
+@use "../styles/global/components/mixins" as m;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.wrapper {
+  @include m.modal-overlay;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background {
+  @include m.modal-overlay;
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-fill-mode: forwards;
+
+  &[data-is-closing="true"] {
+    animation: fadeOut 0.3s ease-in-out;
+  }
+
+  &[data-is-closing="false"] {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+.content {
+  padding: var(--w-gutter, 16px);
+  z-index: 1002;
+  background-color: var(--white);
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  animation-fill-mode: forwards;
+
+  &[data-is-closing="true"] {
+    animation: slideOut 0.3s ease-in-out;
+  }
+
+  &[data-is-closing="false"] {
+    animation: slideIn 0.3s ease-in-out;
+  }
+
+  &[data-type="panel"] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+  }
+
+  &[data-type="dialog"] {
+    border-radius: 8px;
+  }
+
+  > header {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: calc(var(--w-gutter, 16px) * 0.5);
+  }
+}
+
+.actionContainer {
+  margin-top: calc(var(--w-gutter, 16px) * 2);
+  background-color: var(--white);
+  height: fit-content;
+  display: flex;
+  gap: var(--w-gutter, 16px);
+}
+
+@media (min-width: 0px) and (max-width: 659.99999px) {
+  .content[data-type="panel"],
+  .content[data-type="dialog"] {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 660px) {
+  .content[data-type="panel"] {
+    width: calc((var(--w-column, 60px) * 4) + (var(--w-gutter, 16px) * 3));
+  }
+
+  .content[data-type="dialog"] {
+    width: calc((var(--w-column, 60px) * 6) + (var(--w-gutter, 16px) * 5));
+  }
+}
+
+@media (min-width: 1040px) {
+  .content[data-type="dialog"] {
+    width: calc((var(--w-column, 60px) * 8) + (var(--w-gutter, 16px) * 7));
+  }
+}

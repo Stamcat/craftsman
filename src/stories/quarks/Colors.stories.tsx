@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import styled from "@emotion/styled";
 import { color, colors, hexToRgba, type ColorKey } from "../../styles/utilities/color";
 import { width } from "../../styles/utilities/layout";
-import { css } from "@emotion/react";
 import { toast, ToastContainer } from "react-toastify";
 import { Button } from "../../components";
 
@@ -44,55 +42,37 @@ const meta: Meta<StoryArgs> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Page = styled.div`
-    display: grid;
-    gap: ${width("gutter")};
-    section {
-        display: grid;
-        gap: ${width("gutter", 0.25)};
-    }
-`;
+const pageStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter"),
+};
 
+const sectionStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter", 0.25),
+};
 
-const GroupGrid = styled.div`
-    display: inline-flex;
-    flex-flow: row wrap;
-    gap: ${width("gutter", 0.5)};
-`;
+const groupGridStyle: React.CSSProperties = {
+    display: "inline-flex",
+    flexFlow: "row wrap",
+    gap: width("gutter", 0.5),
+};
 
-const Card = styled.div`
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    width: ${width("column", 1.5)};
+const cardStyle: React.CSSProperties = {
+    border: "1px solid #d1d5db",
+    borderRadius: "8px",
+    overflow: "hidden",
+    background: "#fff",
+    width: width("column", 1.5),
+};
 
-    footer {
-        padding: 0 ${width("gutter", 0.25)};
-    }
-`;
-
-const SwatchPreview = styled.div<{ color: string }>`
-    height: ${width("column")};
-    ${(props) => css`
-        background-color: ${props.color};
-    `}
-`;
-
-const UtilityCard = styled.section`
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: ${width("gutter", 0.5)};
-    display: grid;
-    gap: ${width("gutter", 0.5)};
-`;
-
-const UtilitySwatch = styled.div<{ bg: string }>`
-    height: 56px;
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
-    background: ${(props) => props.bg};
-`;
+const utilityCardStyle: React.CSSProperties = {
+    border: "1px solid #d1d5db",
+    borderRadius: "8px",
+    padding: width("gutter", 0.5),
+    display: "grid",
+    gap: width("gutter", 0.5),
+};
 
 const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (navigator.clipboard?.writeText) {
@@ -102,9 +82,9 @@ const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
 }
 const Swatch = ({ name, value }: { name: string; value: string }) => {
     return (
-        <Card>
-            <SwatchPreview color={value} />
-            <footer>
+        <div style={cardStyle}>
+            <div style={{ height: width("column"), backgroundColor: value }} />
+            <footer style={{ padding: `0 ${width("gutter", 0.25)}` }}>
                 <p>
                     <Button
                         variant="text"
@@ -124,7 +104,7 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
                     <small>{value}</small>
                 </Button>
             </footer>
-        </Card>
+        </div>
     );
 }
 export const ColorFunction: Story = {
@@ -141,20 +121,18 @@ export const ColorFunction: Story = {
                     const alpha = context.args?.alpha ?? 0.6;
 
                     if (mode === "hex") {
-                        return `import styled from "@emotion/styled";
-import { color } from "@stamcat/craftsman/styles";
+                        return `import { color } from "@stamcat/craftsman/styles";
 
-const Container = styled.div\`
-    background: \${color("${variable}")};
-\`;`;
+const style = {
+    background: color("${variable}"),
+};`;
                     }
 
-                    return `import styled from "@emotion/styled";
-import { color } from "@stamcat/craftsman/styles";
+                    return `import { color } from "@stamcat/craftsman/styles";
 
-const Container = styled.div\`
-    background: \${color("${variable}", "rgba", ${alpha})};
-\`;`;
+const style = {
+    background: color("${variable}", "rgba", ${alpha}),
+};`;
                 },
             },
         },
@@ -163,11 +141,11 @@ const Container = styled.div\`
         const result = mode === "hex" ? color(variable, "hex") : color(variable, "rgba", alpha);
 
         return (
-            <UtilityCard>
+            <section style={utilityCardStyle}>
                 <h3>color(name, type, alpha)</h3>
                 <code><pre>{`color("${variable}"${mode === "rgba" ? `, ${mode}` : ""}${mode === "rgba" ? `, ${alpha}` : ""}) => ${result}`}</pre></code>
-                <UtilitySwatch bg={result} />
-            </UtilityCard>
+                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
+            </section>
         );
     },
 };
@@ -195,12 +173,11 @@ export const hexToRgbaFunction: Story = {
                     const variable = context.args?.variable ?? "purple500";
                     const alpha = context.args?.alpha ?? 0.35;
 
-                    return `import styled from "@emotion/styled";
-import { colors, hexToRgba } from "@stamcat/craftsman/styles";
+                    return `import { colors, hexToRgba } from "@stamcat/craftsman/styles";
 
-const Container = styled.div\`
-    background: \${hexToRgba(colors.${variable}, ${alpha})};
-\`;`;
+const style = {
+    background: hexToRgba(colors.${variable}, ${alpha}),
+};`;
                 },
             },
         },
@@ -210,11 +187,11 @@ const Container = styled.div\`
         const result = hexToRgba(hexValue, alpha);
 
         return (
-            <UtilityCard>
+            <section style={utilityCardStyle}>
                 <h3>hexToRgba(hex, alpha)</h3>
                 <code><pre>{`hexToRgba(colors.${variable}, ${alpha}) => ${result}`}</pre></code>
-                <UtilitySwatch bg={result} />
-            </UtilityCard>
+                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
+            </section>
         );
     },
 };
@@ -236,18 +213,18 @@ export const Palette: Story = {
         }, []);
 
         return (
-            <Page>
+            <div style={pageStyle}>
                 {grouped.map((group) => (
-                    <section key={group.key}>
-                        <GroupGrid>
+                    <section key={group.key} style={sectionStyle}>
+                        <div style={groupGridStyle}>
                             {group.items.map(([name, value]) => (
                                 <Swatch key={name} name={name} value={value} />
                             ))}
-                        </GroupGrid>
+                        </div>
                     </section>
                 ))}
                 <ToastContainer />
-            </Page>
+            </div>
         );
     },
 };

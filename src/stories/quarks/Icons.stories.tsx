@@ -1,11 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import styled from "@emotion/styled";
-import { css, Global } from "@emotion/react";
 import { width } from "../../styles/utilities/layout";
 import { Button, Modal } from "../../components";
 import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
-import { globalStyles } from "../../styles/global/globalStyles";
 import { color } from "../../styles/utilities/color";
 /**
  * This is mostly vibe coded trash. don't look at this file as an example of how to do anything. 
@@ -63,7 +60,6 @@ const meta: Meta = {
         docs: {
             page: () => (
                 <section>
-                    <Global styles={globalStyles} />
                     <h1>Icons</h1>
                     <p>
                         Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.<br />
@@ -93,53 +89,53 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Page = styled.div`
-    display: flex;
-    flex-flow: column;
-    gap: ${width("gutter")};
-`;
+const pageStyle: React.CSSProperties = {
+    display: "flex",
+    flexFlow: "column",
+    gap: width("gutter"),
+};
 
-const Toolbar = styled.div`
-    display: flex;
-    align-items: center;
-    gap: ${width("gutter", 0.5)};
-    flex-wrap: wrap;
-`;
+const toolbarStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: width("gutter", 0.5),
+    flexWrap: "wrap",
+};
 
-const Grid = styled.div`
-    display: inline-flex;
-    flex-flow: row wrap;
-    gap: ${width("gutter")};
-`;
+const gridStyle: React.CSSProperties = {
+    display: "inline-flex",
+    flexFlow: "row wrap",
+    gap: width("gutter"),
+};
 
-const Card = styled.div`
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    width: 96px;
-    display: flex;
-    flex-direction: column;
+const cardStyle: React.CSSProperties = {
+    border: "1px solid #d1d5db",
+    borderRadius: "8px",
+    overflow: "hidden",
+    background: "#fff",
+    width: "96px",
+    display: "flex",
+    flexDirection: "column",
+};
 
-    footer {
-        width: 100%;
-        display: inline-flex;
-        justify-content: center;
-    }
-`;
+const swatchPreviewStyle: React.CSSProperties = {
+    height: "56px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottom: "1px solid #f3f4f6",
+};
 
-const SwatchPreview = styled.div`
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #f3f4f6;
-`;
+const cardFooterStyle: React.CSSProperties = {
+    width: "100%",
+    display: "inline-flex",
+    justifyContent: "center",
+};
 
-const IconName = styled.small`
-    font-size: 10px;
-    word-break: break-word;
-`;
+const iconNameStyle: React.CSSProperties = {
+    fontSize: "10px",
+    wordBreak: "break-word",
+};
 type IconCardProps = {
     name: string;
     Icon: IconType;
@@ -184,15 +180,13 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
     }, []);
 
     return (
-        <Card>
-            <SwatchPreview ref={ref}>
+        <div style={cardStyle}>
+            <div style={swatchPreviewStyle} ref={ref}>
                 {inView && <Button
                     variant="text"
                     onClick={onPressSelect}
                     value={name}
-                    styles={css`
-                        color: ${color("text")};
-                    `}
+                    styles={{ color: color("text") }}
                     data-icon-path={importPath}
                     aria-label={`Show import and usage for ${name}`}
                 >
@@ -200,8 +194,8 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
                         <Icon size={28} aria-label={name} />
                     </IconRenderBoundary>
                 </Button>}
-            </SwatchPreview>
-            <footer>
+            </div>
+            <footer style={cardFooterStyle}>
                 <Button
                     variant="text"
                     onClick={onPressSelect}
@@ -209,10 +203,10 @@ const IconCard = ({ name, Icon, importPath, onSelect }: IconCardProps) => {
                     data-icon-path={importPath}
                     aria-label={`Show import and usage for ${name}`}
                 >
-                    <IconName>{name}</IconName>
+                    <small style={iconNameStyle}>{name}</small>
                 </Button>
             </footer>
-        </Card>
+        </div>
     );
 };
 
@@ -273,11 +267,11 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
     }
 
     return (
-        <Page>
-            <Toolbar>
+        <div style={pageStyle}>
+            <div style={toolbarStyle}>
                 <span>Showing {icons.length} of {total} icons</span>
-            </Toolbar>
-            <Grid>
+            </div>
+            <div style={gridStyle}>
                 {icons.map(({ name, Icon, importPath }) => (
                     <IconCard
                         key={name}
@@ -293,7 +287,7 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
                         }}
                     />
                 ))}
-            </Grid>
+            </div>
             <Modal
                 header={iconUsage.name || "Icon Usage"}
                 visible={iconUsage.visible}
@@ -303,7 +297,7 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
                     <pre>{getUsageSnippet(iconUsage.name, iconUsage.iconPath)}</pre>
                 </code>
             </Modal>
-        </Page>
+        </div>
     );
 };
 

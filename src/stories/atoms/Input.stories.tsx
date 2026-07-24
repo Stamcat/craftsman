@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 import { Input } from "../../components/Input";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition, zTextInputType } from "../../styles/utilities/types";
@@ -66,31 +64,31 @@ export const WithErrorMessage: Story = {
     },
 };
 
-const PositionsGrid = styled.div`
-	display: grid;
-	gap: ${width("gutter")};
-	max-width: ${width("column", 5)};
-`;
+const positionsGridStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter"),
+    maxWidth: width("column", 5),
+};
 
 export const LabelPositions: Story = {
     render: (args) => (
-        <PositionsGrid>
+        <div style={positionsGridStyle}>
             <Input {...args} label="Top" labelPosition="top" placeholder="Top label" />
             <Input {...args} label="Left" labelPosition="left" placeholder="Left label" />
             <Input {...args} label="Bottom" labelPosition="bottom" placeholder="Bottom label" />
             <Input {...args} label="Right" labelPosition="right" placeholder="Right label" />
             <Input {...args} label="Inside" labelPosition="inside" placeholder="Inside label" />
             <Input {...args} label="Hidden label" labelPosition="hidden" placeholder="Hidden label" />
-        </PositionsGrid>
+        </div>
     ),
 };
 
-const customWrapperStyles = css`
-	background: #f8fafc;
-	border: 1px solid #e2e8f0;
-	border-radius: 10px;
-	padding: ${width("gutter", 0.5)};
-`;
+const customWrapperStyles: React.CSSProperties = {
+    background: "#f8fafc",
+    border: "1px solid #e2e8f0",
+    borderRadius: "10px",
+    padding: width("gutter", 0.5),
+};
 
 export const WrapperStyled: Story = {
     args: {

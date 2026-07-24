@@ -1,77 +1,8 @@
-import { css, type SerializedStyles } from "@emotion/react";
-import styled from "@emotion/styled";
 import { useId } from "react";
+import clsx from "clsx";
 import { isEmpty } from "../utilities/validations";
 import type { LabelPosition, TextInputType } from "../styles/utilities/types";
-import {
-    inputErrorStyles,
-    inputFieldAdornmentStyles,
-    insideLabelStyles,
-} from "../styles/global/components/input";
-import { width } from "../styles/utilities/layout";
-import { color } from "../styles/utilities/color";
-
-const inputWrapperStyles = (hasInput: boolean, required: boolean) => css`
-    label {
-        .input-label {
-            margin-bottom: ${width("gutter", 0.25)};
-            ${required && css`
-                ::after {
-                    content: "*";
-                    color: ${color("red700")};
-                }
-            `}
-        }
-    }
-
-    &[data-label-position="left"] label {
-        display: inline-flex;
-        align-items: center;
-        .input-label {
-            width: fit-content;
-            margin-right: ${width("gutter", 0.75)};
-        }
-    }
-
-    &[data-label-position="bottom"] label {
-        display: inline-flex;
-        flex-direction: column-reverse;
-        align-items: flex-start;
-        .input-label {
-            margin-bottom: 0;
-            margin-top: ${width("gutter", 0.25)};
-        }
-    }
-
-    &[data-label-position="right"] label {
-        display: inline-flex;
-        flex-direction: row-reverse;
-        align-items: baseline;
-        .input-label {
-            margin-left: ${width("gutter", 0.25)};
-            margin-bottom: 0;
-        }
-    }
-
-    &[data-label-position="inside"] {
-        ${insideLabelStyles(hasInput)}
-    }
-`;
-type InputWrapperStyles = {
-    hasInput: boolean;
-    required: boolean;
-    hasEndAdornment: boolean;
-    styles?: SerializedStyles;
-}
-const InputWrapper = styled.div<InputWrapperStyles>`
-    ${(props) => inputWrapperStyles(props.hasInput, props.required)}
-    ${(props) => props.hasEndAdornment && inputFieldAdornmentStyles}
-    ${(props) => props.styles}
-`;
-
-const Error = styled.div`
-    ${inputErrorStyles}
-`;
+import styles from "./Input.module.scss";
 
 export type InputProps = React.ComponentProps<"input"> & {
     /** String is recommended, use ReactNode to for custom elements */
@@ -82,8 +13,8 @@ export type InputProps = React.ComponentProps<"input"> & {
     error?: string | boolean | React.ReactNode;
     /** Shows Required '*' if true */
     required?: boolean;
-    /** Optional Emotion Styles applied to the wrapper, use nesting to access selectors within */
-    styles?: SerializedStyles;
+    /** Optional wrapper styles using React CSSProperties. */
+    styles?: React.CSSProperties;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
     /** Exclude Checkbox and Radio, we have dedicated components for those. */
@@ -101,31 +32,40 @@ export const Input: React.FC<InputProps> = ({
     required = false,
     type = "text",
     error,
-    styles,
+    styles: styleOverride,
+    className,
+    style,
     endAdornment,
     ...props
 }) => {
     const generatedId = useId();
     const inputId = id || generatedId;
     const hasInput = !isEmpty(props.value) || !isEmpty(props.defaultValue);
+    const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
     const inputElement = (
-        <span className="input-field" data-has-end-adornment={!isEmpty(endAdornment)}>
-            <input id={inputId} type={type} {...props} />
-            {!isEmpty(endAdornment) && <span className="input-adornment">{endAdornment}</span>}
+        <span className={styles.inputField} data-has-end-adornment={!isEmpty(endAdornment)}>
+            <input id={inputId} type={type} className={styles.input} {...props} />
+            {!isEmpty(endAdornment) && <span className={styles.inputAdornment}>{endAdornment}</span>}
         </span>
     );
 
     return (
-        <InputWrapper data-label-position={labelPosition} hasEndAdornment={!isEmpty(endAdornment)} required={required} hasInput={hasInput} styles={styles}>
+        <div
+            data-label-position={labelPosition}
+            data-required={required}
+            data-has-input={hasInput}
+            className={clsx(styles.wrapper, className)}
+            style={{ ...resolvedStyleOverride, ...style }}
+        >
             {isEmpty(label) ? (
                 inputElement
             ) : (
                 <label>
-                    {labelPosition !== "hidden" && <div className="input-label">{label}</div>}
+                        {labelPosition !== "hidden" && <div className={styles.inputLabel}>{label}</div>}
                         {inputElement}
                 </label>
             )}
-            {!isEmpty(error) && <Error>{error}</Error>}
-        </InputWrapper>
+            {!isEmpty(error) && <div className={styles.error}>{error}</div>}
+        </div>
     );
 };

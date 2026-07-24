@@ -1,23 +1,23 @@
-import type { CSSObject, SerializedStyles } from "@emotion/react";
+import type { CSSObject, LegacySerializedStyles } from "./types";
 
-function isSerializedStyles(value: CSSObject | SerializedStyles): value is SerializedStyles {
+function isSerializedStyles(value: CSSObject | LegacySerializedStyles): value is LegacySerializedStyles {
     return "styles" in value && "name" in value;
 }
 
 /**
- * Parses a SerializedStyles object into a plain CSSObject by reading the
+ * Parses a legacy serialized style object into a plain CSSObject by reading the
  * compiled CSS string. Supports flat declarations only — nested rules and
- * at-rules are ignored. Traverses the SerializedStyles linked list via `.next`.
+ * at-rules are ignored. Traverses the linked list via `.next`.
  */
-function serializedStylesToCSSObject(serialized: SerializedStyles): CSSObject {
+function serializedStylesToCSSObject(serialized: LegacySerializedStyles): CSSObject {
     const result: Record<string, string> = {};
-    let current: SerializedStyles | undefined = serialized;
+    let current: LegacySerializedStyles | undefined = serialized;
 
     while (current) {
         const declarations = current.styles
             .split(";")
-            .map((d) => d.trim())
-            .filter((d) => d && !d.startsWith("label:"));
+            .map((d: string) => d.trim())
+            .filter((d: string) => d && !d.startsWith("label:"));
 
         for (const declaration of declarations) {
             const colonIndex = declaration.indexOf(":");
@@ -29,7 +29,9 @@ function serializedStylesToCSSObject(serialized: SerializedStyles): CSSObject {
             if (!property || !value) {
                 continue;
             }
-            const camelProperty = property.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
+            const camelProperty = property.replace(/-([a-z])/g, (_match: string, letter: string) =>
+                letter.toUpperCase(),
+            );
             result[camelProperty] = value;
         }
 
@@ -39,6 +41,62 @@ function serializedStylesToCSSObject(serialized: SerializedStyles): CSSObject {
     return result;
 }
 
-export function toCSSObject(value: CSSObject | SerializedStyles): CSSObject {
+export function toCSSObject(value: CSSObject | LegacySerializedStyles): CSSObject {
     return isSerializedStyles(value) ? serializedStylesToCSSObject(value) : value;
+}
+
+function toKebabCase(property: string): string {
+    if (property.startsWith("--")) {
+        return property;
+    }
+    return property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+function normalizeNestedSelector(parent: string, selector: string): string {
+    if (selector.startsWith("&")) {
+        return selector.replace(/&/g, parent);
+    }
+
+    if (selector.startsWith(":")) {
+        return `${parent}${selector}`;
+    }
+
+    if (selector.startsWith("[")) {
+        return `${parent}${selector}`;
+    }
+
+    if (/^[>+~]/.test(selector)) {
+        return `${parent} ${selector}`;
+    }
+
+    return `${parent} ${selector}`;
+}
+
+export function cssObjectToCssText(selector: string, value: CSSObject): string {
+    const declarations: string[] = [];
+    const nestedRules: string[] = [];
+
+    for (const [key, ruleValue] of Object.entries(value)) {
+        if (ruleValue === undefined) {
+            continue;
+        }
+
+        if (typeof ruleValue === "object") {
+            const nestedObject = ruleValue as CSSObject;
+
+            if (key.startsWith("@")) {
+                nestedRules.push(`${key} { ${cssObjectToCssText(selector, nestedObject)} }`);
+                continue;
+            }
+
+            const nestedSelector = normalizeNestedSelector(selector, key);
+            nestedRules.push(cssObjectToCssText(nestedSelector, nestedObject));
+            continue;
+        }
+
+        declarations.push(`${toKebabCase(key)}: ${String(ruleValue)};`);
+    }
+
+    const baseRule = declarations.length > 0 ? `${selector} { ${declarations.join(" ")} }` : "";
+    return [baseRule, ...nestedRules].filter(Boolean).join("\n");
 }

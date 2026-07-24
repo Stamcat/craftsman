@@ -1,11 +1,9 @@
-import { css, type CSSObject, type SerializedStyles } from "@emotion/react";
 import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "./types";
 import { defaultWidths } from "./constants";
 
 export const widths: Record<LayoutWidthsType, string> = Object.fromEntries(
     LayoutWidthsSchema.options.map((w) => [w, `var(--w-${w}, ${defaultWidths[w]}px)`]),
 ) as Record<LayoutWidthsType, string>;
-
 
 export const media = {
     get mobile() {
@@ -74,8 +72,6 @@ export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean =
  * @param styles
  * @returns
  */
-export const breakpoint = (bp: Breakpoint, styles: SerializedStyles | CSSObject) => {
-    return css`@media ${media[bp]} {
-        ${styles}
-    }`
-};  
+export const breakpoint = (bp: Breakpoint, styles: string) => {
+    return `@media ${media[bp]} { ${String(styles)} }`;
+};

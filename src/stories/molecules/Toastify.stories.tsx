@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useRef } from "react";
-import styled from "@emotion/styled";
 import { toast, ToastContainer, type ToastContainerProps } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { width } from "../../styles/utilities/layout";
@@ -51,22 +50,22 @@ const meta: Meta<StoryArgs> = {
 export default meta;
 type Story = StoryObj<StoryArgs>;
 
-const Page = styled.div`
-    display: grid;
-    gap: ${width("gutter")};
-    max-width: ${width("column", 8)};
-`;
+const pageStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter"),
+    maxWidth: width("column", 8),
+};
 
-const Section = styled.section`
-    display: grid;
-    gap: ${width("gutter", 0.5)};
-`;
+const sectionStyle: React.CSSProperties = {
+    display: "grid",
+    gap: width("gutter", 0.5),
+};
 
-const ButtonRow = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: ${width("gutter", 0.5)};
-`;
+const buttonRowStyle: React.CSSProperties = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: width("gutter", 0.5),
+};
 
 type DemoRowProps = {
     readonly label: string;
@@ -92,9 +91,9 @@ function DemoRow({ label, code, onTrigger, onScrollToToast }: DemoRowProps) {
             }}
         >
             <code><pre>{code}</pre></code>
-            <ButtonRow>
+            <div style={buttonRowStyle}>
                 <Button onClick={handleClick}>{label}</Button>
-            </ButtonRow>
+            </div>
         </div>
     );
 }
@@ -120,8 +119,8 @@ function UsageGuideDemo(args: Readonly<StoryArgs>) {
     };
 
         return (
-            <Page>
-                <Section>
+            <div style={pageStyle}>
+                <section style={sectionStyle}>
                     <h2>react-toastify</h2>
                     <p><a href="https://www.npmjs.com/package/react-toastify" target="_blank" rel="noreferrer">Full documentation available here</a></p>
                     <p>
@@ -133,9 +132,9 @@ function UsageGuideDemo(args: Readonly<StoryArgs>) {
 import "react-toastify/dist/ReactToastify.css";
 
 <ToastContainer position="bottom-right" autoClose={3000} />`}</pre></code>
-                </Section>
+                </section>
 
-                <Section>
+                <section style={sectionStyle}>
                     <h3>Live demos</h3>
                     <DemoRow
                         label="Run"
@@ -171,12 +170,12 @@ import "react-toastify/dist/ReactToastify.css";
                         onTrigger={showPromiseToast}
                         onScrollToToast={scrollToToast}
                     />
-                </Section>
+                </section>
 
                 <div ref={toastAnchorRef}>
                     <ToastContainer {...args} />
                 </div>
-            </Page>
+            </div>
         );
 }
 

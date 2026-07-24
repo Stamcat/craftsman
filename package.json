@@ -38,10 +38,8 @@
     "type-check:storybook": "tsc --p ./tsconfig-storybook.json --noEmit"
   },
   "dependencies": {
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.1",
+    "clsx": "2.1.1",
     "dompurify": "3.4.12",
-    "emotion": "11.0.0",
     "react": "19.2.7",
     "react-date-picker": "12.0.2",
     "react-datetime-picker": "7.0.2",
@@ -50,6 +48,7 @@
     "react-international-phone": "4.8.0",
     "react-toastify": "11.1.0",
     "sass-embedded": "1.100.0",
+    "typescript-plugin-css-modules": "5.2.0",
     "zod": "4.4.3"
   },
   "devDependencies": {
@@ -81,7 +80,6 @@
     "eslint-plugin-storybook": "10.4.6",
     "fs-extra": "11.3.6",
     "globals": "17.7.0",
-    "next": "16.2.11",
     "playwright": "1.56.1",
     "postcss": "8.5.20",
     "prettier": "3.9.4",
@@ -92,6 +90,7 @@
     "vite": "8.1.2",
     "vite-plugin-dts": "5.0.3",
     "vite-plugin-lib-inject-css": "2.2.2",
+    "vite-plugin-typed-css-modules": "0.5.3",
     "vitest": "4.1.10"
   },
   "overrides": {

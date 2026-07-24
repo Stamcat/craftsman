@@ -1,48 +1,102 @@
-import { ThemeProvider as EmotionThemeProvider, css, type SerializedStyles } from "@emotion/react";
-import React, { createElement } from "react";
-import type { ComponentThemeOverrides, RegisteredComponent, Theme, ThemeProviderProps } from "./types";
+import type { ComponentThemeOverrides, RegisteredComponent, Theme } from "./types";
 import { componentSelectors } from "./components";
-import { toCSSObject } from "./utilities";
-import { colors } from "../global/variables";
-import { isEmpty } from "../../utilities/validations";
+import { cssObjectToCssText, toCSSObject } from "./utilities";
+import { colors, widths } from "../global/variables";
 
-function buildComponentThemeOverrides(components?: ComponentThemeOverrides): SerializedStyles[] {
-    const componentOverrides: SerializedStyles[] = [];
+const classStylesCache = new Map<string, Record<string, string> | null>();
+
+function readClassDeclarationsFromDocument(className: string): Record<string, string> | undefined {
+    if (typeof document === "undefined") {
+        return undefined;
+    }
+
+    const selector = `.${className}`;
+    const declarations: Record<string, string> = {};
+    let found = false;
+
+    const readRules = (rules: CSSRuleList) => {
+        for (const rule of Array.from(rules)) {
+            if (rule instanceof CSSStyleRule) {
+                const selectors = rule.selectorText.split(",").map((value) => value.trim());
+
+                // Resolve only the base class selector so declarations can be copied to component selectors.
+                if (!selectors.includes(selector)) {
+                    continue;
+                }
+
+                found = true;
+                for (const property of Array.from(rule.style)) {
+                    declarations[property] = rule.style.getPropertyValue(property);
+                }
+                continue;
+            }
+
+            if (rule instanceof CSSGroupingRule) {
+                readRules(rule.cssRules);
+            }
+        }
+    };
+
+    for (const styleSheet of Array.from(document.styleSheets)) {
+        try {
+            if (styleSheet.cssRules) {
+                readRules(styleSheet.cssRules);
+            }
+        } catch {
+            // Ignore cross-origin stylesheets; they are not readable from JS.
+        }
+    }
+
+    return found ? declarations : undefined;
+}
+
+function resolveThemeClassStyleObject(className: string): Record<string, string> | undefined {
+    if (classStylesCache.has(className)) {
+        const cached = classStylesCache.get(className);
+        return cached ?? undefined;
+    }
+
+    const resolved = readClassDeclarationsFromDocument(className);
+    classStylesCache.set(className, resolved ?? null);
+    return resolved;
+}
+
+function buildComponentThemeOverrides(components?: ComponentThemeOverrides): string[] {
+    const componentOverrides: string[] = [];
 
     (Object.keys(componentSelectors) as RegisteredComponent[]).forEach((componentName) => {
         const componentThemeStyles = components?.[componentName];
 
-        if (!componentThemeStyles || typeof componentThemeStyles === "string") {
+        if (!componentThemeStyles) {
             return;
         }
+
+        if (typeof componentThemeStyles === "string") {
+            const resolvedClassStyles = resolveThemeClassStyleObject(componentThemeStyles);
+
+            if (!resolvedClassStyles) {
+                return;
+            }
+
+            componentOverrides.push(cssObjectToCssText(componentSelectors[componentName], resolvedClassStyles));
+            return;
+        }
+
         componentOverrides.push(
-            css({
-                [componentSelectors[componentName]]: {
-                    ...(componentThemeStyles ? toCSSObject(componentThemeStyles) : {}),
-                },
-            }),
+            cssObjectToCssText(componentSelectors[componentName], toCSSObject(componentThemeStyles)),
         );
     });
 
     return componentOverrides;
 }
 
-export function CraftsmanThemeProvider({ theme, children }: ThemeProviderProps) {
-    const safeTheme = isEmpty(theme) ? {} : theme;
-    return createElement(
-        EmotionThemeProvider as React.ComponentType<{ theme: Theme; children?: React.ReactNode }>,
-        { theme: safeTheme },
-        children,
-    );
-}
-
 export function themeBuilder(theme: Theme) {
-    const root = css({
-        ":root": {
-            ...theme.colors,
-            ...theme.root,
-        },
+    const root = cssObjectToCssText(":root", {
+        ...(theme.colors || {}),
+        ...(theme.root ? toCSSObject(theme.root) : {}),
     });
 
-    return css([colors, root, ...buildComponentThemeOverrides(theme.components)]);
+    return [`:root { ${widths} ${colors} }`, root, ...buildComponentThemeOverrides(theme.components)]
+        .filter(Boolean)
+        .join("\n");
 }

@@ -1,19 +1,10 @@
 import type { Preview } from "@storybook/react-vite";
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
-import { Global } from '@emotion/react';
-import { createElement } from 'react';
-import { themeBuilder, CraftsmanThemeProvider } from "../src/styles/theme/theme";
-import type { Theme } from "../src/styles/theme/types";
+import { ThemeProvider } from "../src/styles/components/ThemeProvider";
 import { appThemes } from "./themes/themes";
-import { globalStyles } from "../src/styles/global/globalStyles";
+import "../src/styles/global/globalStyles";
 
 // TODO: This can probably be included in package 
- 
-const GlobalStyles = () => (
-    createElement(Global, {
-        styles: (theme: unknown) => [globalStyles, themeBuilder(theme as Theme)],
-    })
-);
 
 const preview: Preview = {
     parameters: {
@@ -53,8 +44,7 @@ const preview: Preview = {
         withThemeFromJSXProvider({
             themes: appThemes,
             defaultTheme: "default",
-            Provider: CraftsmanThemeProvider,
-            GlobalStyles,
+            Provider: ThemeProvider,
         }),
     ],
 };

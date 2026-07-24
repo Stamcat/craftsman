@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import styled from "@emotion/styled";
 import { Checkbox } from "../../components/Checkbox";
 
-const Stack = styled.div`
-	display: grid;
-	gap: 0.75rem;
-`;
+const stackStyle: React.CSSProperties = {
+    display: "grid",
+    gap: "0.75rem",
+};
 
 const optionItems = [
     { id: "notifications-email", value: "email", label: "Email notifications" },
@@ -26,7 +25,7 @@ const ThreeOptionsGroup = (args: CheckboxGroupProps) => {
     };
 
     return (
-        <Stack>
+        <div style={stackStyle}>
             {optionItems.map((option) => (
                 <Checkbox
                     {...args}
@@ -39,7 +38,7 @@ const ThreeOptionsGroup = (args: CheckboxGroupProps) => {
                 />
             ))}
             <small>Selected: {selected.join(", ") || "none"}</small>
-        </Stack>
+        </div>
     );
 };
 
