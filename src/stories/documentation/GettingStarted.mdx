@@ -4,17 +4,21 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # How To Use `ThemeProvider`
 
-This guide shows how to set up theming and apply:
+This guide shows the RSC-safe styling setup and how to apply:
 
 1. custom theme values
-2. root-level CSS variable overrides
+2. base global styles
 
-## What Each Provider Is For
+## Styling Pattern
 
 - `ThemeProvider`
 	- Use in any React app, including Next.js App Router
-	- Injects global theme CSS variables and component override rules
-	- Renders only a `<style>` element (it does not wrap children)
+	- Injects theme CSS variables and component override rules
+	- Renders a `<style>` element and wraps children
+
+- Global styles
+	- Import once at your application root
+	- Do not rely on provider side-effect imports for global styling in RSC setups
 
 
 ## 1. Create a Shared Theme Object
@@ -42,10 +46,11 @@ export const appTheme: Theme = {
 
 ```
 
-## 2. Setup In a Standard React App With `ThemeProvider`
+## 2. Setup In a Standard React App
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
+import "@stamcat/craftsman/styles";
 import ReactDOM from "react-dom/client";
 import { Button } from "@stamcat/craftsman/Button";
 import { appTheme } from "./theme";
@@ -54,28 +59,26 @@ function App() {
 	return <Button variant="primary">Save</Button>;
 }
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<>
-		<ThemeProvider theme={appTheme}>
+	<ThemeProvider theme={appTheme}>
 		<App />
-        </ThemeProvider>
-	</>,
+	</ThemeProvider>,
 );
 ```
 
 ## 3. Setup In Next.js App Router
 
-Add `ThemeProvider` in your root layout and pass your theme:
+Import global styles once in root layout, then render `ThemeProvider` with your theme:
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
+import "@stamcat/craftsman/styles";
 import { appTheme } from "./theme";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<body>
-				<ThemeProvider theme={appTheme} />
-				{children}
+				<ThemeProvider theme={appTheme}>{children}</ThemeProvider>
 			</body>
 		</html>
 	);
@@ -83,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```
 
 - Prefer one provider at app root.
-- Keep `theme` for component/global style overrides.
+- Keep `theme` for component and CSS-variable overrides.
 - Use `theme.root` CSS variables to override base design tokens like widths.
 
 ## Editor Setup (CSS Modules IntelliSense)
