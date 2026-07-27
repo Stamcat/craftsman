@@ -50,7 +50,7 @@ export const appTheme: Theme = {
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles";
+import "@stamcat/craftsman/styles/globalStyles.module.scss";
 import ReactDOM from "react-dom/client";
 import { Button } from "@stamcat/craftsman/Button";
 import { appTheme } from "./theme";
@@ -71,7 +71,7 @@ Import global styles once in root layout, then render `ThemeProvider` with your 
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles";
+import "@stamcat/craftsman/styles/globalStyles.module.scss";
 import { appTheme } from "./theme";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -84,6 +84,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	);
 }
 ```
+
+RSC note:
+
+- `ThemeProvider` emits default style-hoisting metadata for compatibility in React Server Components.
+- If your app renders multiple themed providers, pass a unique `href` per provider instance to avoid hoist key collisions.
 
 - Prefer one provider at app root.
 - Keep `theme` for component and CSS-variable overrides.

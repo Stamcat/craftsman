@@ -17,7 +17,7 @@ Use this pattern in React Server Component architectures (for example Next.js Ap
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles";
+import "@stamcat/craftsman/styles/globalStyles.module.scss";
 
 const appTheme = {
 	root: {

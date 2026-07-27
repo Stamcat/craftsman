@@ -1,3 +1,4 @@
-import "./globalStyles.module.scss";
+import styles from "./globalStyles.module.scss";
 
-export const globalStyles = "globalStyles";
+export const globalStyles = styles;
+export default styles;
