@@ -47,6 +47,7 @@ export default defineConfig({
         rollupOptions: {
             // Externalize dependencies that should not be bundled
             external: [
+                "clsx",
                 "react",
                 "react-dom",
                 "zod",
