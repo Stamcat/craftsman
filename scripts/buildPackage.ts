@@ -1,26 +1,24 @@
 /* eslint-disable no-console */
 import fse from "fs-extra";
 import path from "path";
+import { EXPORTS, PACKAGE_EXPORTS } from "../exports";
 
 // DO NOT DELETE THIS FILE
 // This file is used by build system to build a clean npm package with the
 // compiled js files in the root of the package.
 // It will not be included in the npm package.
+const getComponentFolder = () => {
+    return EXPORTS.Components;
+};
+
 const getComponentIndexPath = () => {
-    const exportsConfigPath = path.join(process.cwd(), "exports.ts");
+    const componentFolder = getComponentFolder();
 
-    if (!fse.existsSync(exportsConfigPath)) {
+    if (!componentFolder) {
         return undefined;
     }
 
-    const exportsConfig = fse.readFileSync(exportsConfigPath, "utf-8");
-    const componentFolderMatch = exportsConfig.match(/Components\s*:\s*["']([^"']+)["']/);
-
-    if (!componentFolderMatch?.[1]) {
-        return undefined;
-    }
-
-    return path.join(process.cwd(), "src", componentFolderMatch[1], "index.ts");
+    return path.join(process.cwd(), "src", componentFolder, "index.ts");
 };
 
 const getComponentExports = () => {
@@ -45,11 +43,13 @@ const getComponentExports = () => {
 
 const createPackageJson = () => {
     const buildExportsMap = (componentNames: string[]) => {
+        const componentsFolder = getComponentFolder();
+
         const subpathExports = componentNames.reduce<Record<string, { types: string; default: string }>>(
             (acc, componentName) => {
                 acc[`./${componentName}`] = {
-                    types: `./src/components/${componentName}.d.ts`,
-                    default: `./src/components/${componentName}.esm.js`,
+                    types: `./src/${componentsFolder}/${componentName}.d.ts`,
+                    default: `./src/${componentsFolder}/${componentName}.esm.js`,
                 };
                 return acc;
             },
@@ -57,21 +57,7 @@ const createPackageJson = () => {
         );
 
         return {
-            ".": {
-                types: "./src/components/index.d.ts",
-                default: "./Components.esm.js",
-            },
-            "./styles": {
-                types: "./src/styles/index.d.ts",
-                default: "./Styles.esm.js",
-            },
-            "./utilities": {
-                types: "./src/utilities/index.d.ts",
-                default: "./Utilities.esm.js",
-            },
-            "./styles/globalStyles.module.scss": {
-                default: "./src/styles/global/globalStyles.module.scss",
-            },
+            ...PACKAGE_EXPORTS,
             ...subpathExports,
         };
     };
@@ -86,7 +72,8 @@ const createPackageJson = () => {
     sourceObj.scripts = prepublishOnly ? { prepublishOnly } : {};
     sourceObj.devDependencies = {};
     sourceObj.main = "./Components.esm.js";
-    sourceObj.types = "./src/components/index.d.ts";
+    const componentsFolder = getComponentFolder();
+    sourceObj.types = `./src/${componentsFolder}/index.d.ts`;
     const componentExports = getComponentExports();
     if (componentExports.length > 0) {
         sourceObj.exports = buildExportsMap(componentExports);
