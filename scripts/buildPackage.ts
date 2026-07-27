@@ -69,6 +69,9 @@ const createPackageJson = () => {
                 types: "./src/utilities/index.d.ts",
                 default: "./Utilities.esm.js",
             },
+            "./styles/globalStyles.module.scss": {
+                default: "./src/styles/global/globalStyles.module.scss",
+            },
             ...subpathExports,
         };
     };
