@@ -1,3 +1,5 @@
+"use client";
+
 import { Input, type InputProps } from "./Input"
 
 type CheckboxProps = InputProps & {

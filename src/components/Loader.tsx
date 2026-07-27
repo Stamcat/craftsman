@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { loaders, type LoaderStyle } from "../styles/global/components/loaders";
 import styles from "../styles/global/components/loaders.module.scss";
