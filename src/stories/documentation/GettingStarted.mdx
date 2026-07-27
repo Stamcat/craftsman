@@ -50,7 +50,7 @@ export const appTheme: Theme = {
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles/globalStyles.module.scss";
+import "@stamcat/craftsman/styles/globalStyles";
 import ReactDOM from "react-dom/client";
 import { Button } from "@stamcat/craftsman/Button";
 import { appTheme } from "./theme";
@@ -71,7 +71,7 @@ Import global styles once in root layout, then render `ThemeProvider` with your 
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles/globalStyles.module.scss";
+import "@stamcat/craftsman/styles/globalStyles";
 import { appTheme } from "./theme";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
