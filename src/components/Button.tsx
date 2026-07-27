@@ -1,3 +1,5 @@
+"use client";
+
 import type { ButtonType } from "../styles/global/components/button";
 import clsx from "clsx";
 import { isEmpty } from "../utilities/validations";

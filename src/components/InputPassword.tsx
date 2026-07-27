@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import type { TextInputType } from "../styles/utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
