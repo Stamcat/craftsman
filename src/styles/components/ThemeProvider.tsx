@@ -1,4 +1,3 @@
-import "../global/globalStyles";
 import { themeBuilder } from "../theme/theme";
 import type { Theme } from "../theme/types";
 
