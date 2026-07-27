@@ -4,8 +4,6 @@ import { ThemeProvider } from "../src/styles/components/ThemeProvider";
 import { appThemes } from "./themes/themes";
 import "../src/styles/global/globalStyles";
 
-// TODO: This can probably be included in package 
-
 const preview: Preview = {
     parameters: {
         options: {

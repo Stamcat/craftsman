@@ -18,9 +18,6 @@ export const PACKAGE_EXPORTS = {
         types: `./src/${EXPORTS.Utilities}/index.d.ts`,
         default: "./Utilities.esm.js",
     },
-    [`./${EXPORTS.Styles}/globalStyles`]: {
-        default: `./src/${EXPORTS.Styles}/global/globalStyles.scss`,
-    },
     [`./${EXPORTS.Styles}/globalStyles.scss`]: {
         default: `./src/${EXPORTS.Styles}/global/globalStyles.scss`,
     },
