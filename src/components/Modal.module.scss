@@ -1,4 +1,5 @@
 @use "../styles/global/components/modal";
+@use "../styles/utilities/functions" as u;
 
 @keyframes fadeIn {
   from {
@@ -64,7 +65,7 @@
 }
 
 .content {
-  padding: var(--w-gutter, 16px);
+  padding: #{u.width("gutter")};
   z-index: 1002;
   background-color: var(--white);
   max-height: 80vh;
@@ -96,16 +97,16 @@
     display: inline-flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: calc(var(--w-gutter, 16px) * 0.5);
+    margin-bottom: #{u.width("gutter", 0.5)};
   }
 }
 
 .actionContainer {
-  margin-top: calc(var(--w-gutter, 16px) * 2);
+  margin-top: #{u.width("gutter", 2)};
   background-color: var(--white);
   height: fit-content;
   display: flex;
-  gap: var(--w-gutter, 16px);
+  gap: #{u.width("gutter")};
 }
 
 @media (min-width: 0px) and (max-width: 659.99999px) {
@@ -118,16 +119,16 @@
 
 @media (min-width: 660px) {
   .content[data-type="panel"] {
-    width: calc((var(--w-column, 60px) * 4) + (var(--w-gutter, 16px) * 3));
+    width: #{u.width("column", 4)};
   }
 
   .content[data-type="dialog"] {
-    width: calc((var(--w-column, 60px) * 6) + (var(--w-gutter, 16px) * 5));
+    width: #{u.width("column", 6)};
   }
 }
 
 @media (min-width: 1040px) {
   .content[data-type="dialog"] {
-    width: calc((var(--w-column, 60px) * 8) + (var(--w-gutter, 16px) * 7));
+    width: #{u.width("column", 8)};
   }
 }

@@ -41,7 +41,7 @@ $width-defaults: (
 			@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
 		}
 
-		@return string.unquote("calc(((#{$value} / 1px) * #{$multiplier}) + ((#{$gutter} / 1px) * #{$gutter-steps}))");
+		@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
 	}
 
 	@if $px {
@@ -53,10 +53,10 @@ $width-defaults: (
 	}
 
 	@if $multiplier == 1 {
-		@return string.unquote("calc(#{$value} / 1px)");
+		@return string.unquote("#{$value}");
 	}
 
-	@return string.unquote("calc((#{$value} / 1px) * #{$multiplier})");
+	@return string.unquote("calc(#{$value} * #{$multiplier})");
 }
 
 @function media($bp) {

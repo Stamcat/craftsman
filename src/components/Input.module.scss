@@ -1,9 +1,17 @@
 @use "../styles/global/components/input";
+@use "../styles/utilities/functions" as u;
+
+
+@mixin inside-input-label-floating {
+top: -0.5rem;
+left: #{u.width("gutter", 0.125)};
+font-size: #{u.width("text", 0.75)};
+}
 
 .wrapper {
     label {
         .inputLabel {
-            margin-bottom: calc(var(--w-gutter, 16px) * 0.25);
+            margin-bottom: #{u.width("gutter", 0.25)};
         }
     }
 
@@ -25,7 +33,7 @@
 
             .inputLabel {
                 width: fit-content;
-                margin-right: calc(var(--w-gutter, 16px) * 0.75);
+                margin-right: #{u.width("gutter", 0.75)};
             }
         }
     }
@@ -38,7 +46,7 @@
 
             .inputLabel {
                 margin-bottom: 0;
-                margin-top: calc(var(--w-gutter, 16px) * 0.25);
+                margin-top: #{u.width("gutter", 0.25)};
             }
         }
     }
@@ -50,7 +58,7 @@
             align-items: baseline;
 
             .inputLabel {
-                margin-left: calc(var(--w-gutter, 16px) * 0.25);
+                margin-left: #{u.width("gutter", 0.25)};
                 margin-bottom: 0;
             }
         }
@@ -65,8 +73,8 @@
             z-index: 1;
             width: fit-content;
             padding: 0 5px;
-            top: calc(var(--w-gutter, 16px) * 0.25);
-            left: calc(var(--w-gutter, 16px) * 0.25);
+            top: #{u.width(gutter, 0.25)};
+            left: #{u.width(gutter, 0.25)};
             pointer-events: none;
             transition:
                 top 150ms ease,
@@ -82,7 +90,7 @@
 
         &:focus-within {
             .inputLabel {
-                @extend %inside-input-label-floating;
+                @include inside-input-label-floating;
                 color: var(--blue500);
             }
 
@@ -99,7 +107,7 @@
         &:has(.input:-webkit-autofill),
         &[data-has-input="true"] {
             .inputLabel {
-                @extend %inside-input-label-floating;
+                @include inside-input-label-floating;
             }
         }
 
@@ -122,14 +130,14 @@
     &[data-has-end-adornment="true"] {
         > .input {
             width: 100%;
-            padding-right: calc(calc(var(--w-gutter, 16px) * 0.5) + 24px + calc(var(--w-gutter, 16px) * 0.5));
+            padding-right: #{u.width("gutter", 1.5)};;
         }
     }
 }
 
 .inputAdornment {
     position: absolute;
-    right: calc(var(--w-gutter, 16px) * 0.5);
+    right: #{u.width("gutter", 0.5)};;
     top: 50%;
     transform: translateY(-50%);
     margin-top: 0;
@@ -139,7 +147,13 @@
 }
 
 .error {
-    margin-top: calc(var(--w-gutter, 16px) * 0.25);
-    font-size: calc(var(--w-text, 14px) * 0.75);
+    margin-top: #{u.width("gutter", 0.25)};;
+    font-size: #{u.width("text", 0.75)};;
     color: var(--red600);
 }
+.inputViewToggle {
+    padding: 0;
+    display: inline-flex;
+    align-items: "center";
+    line-height: 1;
+};

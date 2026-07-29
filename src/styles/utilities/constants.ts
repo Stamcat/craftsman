@@ -1,4 +1,4 @@
-import type { LayoutWidthsType } from "./types";
+import type { LayoutWidthsType } from "../../utilities/types";
 
 export const defaultColors = {
     red990: "#2A0D09",

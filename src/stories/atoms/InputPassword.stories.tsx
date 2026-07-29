@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { InputPassword } from "../../components/InputPassword";
 import { width } from "../../styles/utilities/layout";
-import { zLabelPosition } from "../../styles/utilities/types";
+import { zLabelPosition } from "../../utilities/types";
 
 const meta: Meta<typeof InputPassword> = {
     title: "Atoms/Input/InputPassword",

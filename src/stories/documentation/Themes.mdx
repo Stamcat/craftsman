@@ -169,7 +169,7 @@ const overlay = color("green500", "rgba", 0.24);
 ```
 
 ```scss
-@use "../../styles/global/components/utilities" as u;
+@use "../../styles/utilities/functions" as u;
 
 .example {
     border-color: #{u.color(green500)};
@@ -188,7 +188,7 @@ const numeric = width("column", 3, false);
 ```
 
 ```scss
-@use "../../styles/global/components/utilities" as u;
+@use "../../styles/utilities/functions" as u;
 
 .example {
     font-size: #{u.width(text)};
@@ -206,7 +206,7 @@ const rules = breakpoint("mobileMax", "h4{font-size:14px;} p{font-size:12.25px;}
 ```
 
 ```scss
-@use "../../styles/global/components/utilities" as u;
+@use "../../styles/utilities/functions" as u;
 
 @include u.breakpoint(mobileMax) {
     :where(h4) { font-size: var(--w-text, 14px); }

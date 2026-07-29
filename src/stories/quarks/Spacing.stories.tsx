@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { LayoutWidthsSchema, type LayoutWidthsType } from "../../styles/utilities/types";
+import { LayoutWidthsSchema, type LayoutWidthsType } from "../../utilities/types";
 import { width } from "../../styles/utilities/layout";
 import { color } from "../../styles";
 

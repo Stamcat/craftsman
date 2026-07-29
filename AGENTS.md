@@ -368,7 +368,7 @@ const mobileRule = breakpoint("mobileMax", "h4{font-size:14px;}");
 Sass usage (framework source):
 
 ```scss
-@use "./src/styles/global/components/utilities" as u;
+@use "./src/styles/utilities" as u;
 
 .example {
   color: #{u.color(blue500)};

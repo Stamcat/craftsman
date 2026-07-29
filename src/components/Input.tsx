@@ -3,7 +3,7 @@
 import { useId } from "react";
 import clsx from "clsx";
 import { isEmpty } from "../utilities/validations";
-import type { LabelPosition, TextInputType } from "../styles/utilities/types";
+import type { LabelPosition, TextInputType } from "../utilities/types";
 import styles from "./Input.module.scss";
 
 export type InputProps = React.ComponentProps<"input"> & {

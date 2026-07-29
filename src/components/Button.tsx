@@ -1,10 +1,8 @@
 "use client";
 
-import type { ButtonType } from "../styles/global/components/button";
 import clsx from "clsx";
 import { isEmpty } from "../utilities/validations";
-import { width } from "../styles";
-import styles from "./Button.module.scss";
+import { ButtonType, width } from "../styles";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
     /** Primary - Call-To-Action, Text - use for non-anchored text buttons */
@@ -39,7 +37,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         <button
             type={type}
             data-variant={variant}
-            className={clsx(styles.button, "button", className)}
+            className={clsx(className)}
             style={{ ...scaledStyle, ...resolvedStyleOverride, ...style }}
             {...rest}
         />
