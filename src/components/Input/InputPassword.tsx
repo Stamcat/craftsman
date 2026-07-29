@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { TextInputType } from "../utilities/types";
+import type { TextInputType } from "../../utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { Input, type InputProps } from "./Input";
 import styles from "./Input.module.scss";
 

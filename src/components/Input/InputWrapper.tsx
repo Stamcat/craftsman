@@ -1,12 +1,11 @@
 "use client";
 
-import { useId } from "react";
 import clsx from "clsx";
-import { isEmpty } from "../utilities/validations";
-import type { LabelPosition, TextInputType } from "../utilities/types";
+import { isEmpty } from "../../utilities/validations";
+import type { LabelPosition } from "../../utilities/types";
 import styles from "./Input.module.scss";
 
-export type InputProps = React.ComponentProps<"input"> & {
+export type LabeledInput = {
     /** String is recommended, use ReactNode to for custom elements */
     label?: string | React.ReactNode;
     /** Default position is top. Strongly recommend text label for accessibility, use 'hidden' if you don't want to display it. */
@@ -19,38 +18,28 @@ export type InputProps = React.ComponentProps<"input"> & {
     styles?: React.CSSProperties;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
-    /** Exclude Checkbox and Radio, we have dedicated components for those. */
-    type?: TextInputType;
 };
+
+export type InputWrapperProps = React.ComponentProps<"input" | "textarea"> & LabeledInput;
 
 /**
  * For accessibility, we recommend using assigning an ID to every Input element.
  * If no ID exists, we will generate a random value.
  */
-export const Input: React.FC<InputProps> = ({
+export const InputWrapper: React.FC<InputWrapperProps> = ({
     label,
-    id,
     labelPosition = "top",
     required = false,
-    type = "text",
     error,
     styles: styleOverride,
     className,
     style,
-    endAdornment,
-    ...props
+    children,
+    value,
+    defaultValue
 }) => {
-    const generatedId = useId();
-    const inputId = id || generatedId;
-    const hasInput = !isEmpty(props.value) || !isEmpty(props.defaultValue);
+    const hasInput = !isEmpty(value) || !isEmpty(defaultValue);
     const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
-    const inputElement = (
-        <span className={styles.inputField} data-has-end-adornment={!isEmpty(endAdornment)}>
-            <input id={inputId} type={type} className={clsx(styles.input, type)} {...props} />
-            {!isEmpty(endAdornment) && <span className={styles.inputAdornment}>{endAdornment}</span>}
-        </span>
-    );
-
     return (
         <div
             data-label-position={labelPosition}
@@ -60,11 +49,11 @@ export const Input: React.FC<InputProps> = ({
             style={{ ...resolvedStyleOverride, ...style }}
         >
             {isEmpty(label) ? (
-                inputElement
+                children
             ) : (
                 <label>
                         {labelPosition !== "hidden" && <div className={styles.inputLabel}>{label}</div>}
-                        {inputElement}
+                        {children}
                 </label>
             )}
             {!isEmpty(error) && <div className={styles.error}>{error}</div>}

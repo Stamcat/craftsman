@@ -1,7 +1,9 @@
 export { Button } from "./Button";
-export { Input } from "./Input";
-export { InputPassword } from "./InputPassword";
+export { Input } from "./Input/Input";
+export { InputPassword } from "./Input/InputPassword";
 export { Loader } from "./Loader";
-export { RadioButton } from "./RadioButton";
-export { Checkbox } from "./Checkbox";
+export { RadioButton } from "./Input/RadioButton";
+export { Checkbox } from "./Input/Checkbox";
+export { Textarea } from "./Input/Textarea";
+
 export { Modal } from "./Modal";

@@ -71,6 +71,9 @@ input {
         @extend %radio;
     }
 }
+textarea {
+    @extend %input-base;
+}
 
 a {
     @extend %text-link;
