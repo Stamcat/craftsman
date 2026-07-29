@@ -6,6 +6,10 @@
 @use "./components/button";
 @use "./components/input";
 
+@layer craftsman-base, craftsman-theme;
+
+@layer craftsman-base {
+:global {
 :root {
     color-scheme: light dark;
     font-synthesis: none;
@@ -31,17 +35,13 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-
-body {
-    @extend %body-typography;
-}
-body,
-ul {
+body, ul {
     margin: 0;
     padding: 0;
 }
 
 body {
+    @extend %body-typography;
     background-color: #fff;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -61,67 +61,21 @@ button {
 }
 
 input {
-    @extend %input-base;
-
-    &[type="radio"] {
-    @extend %radio;
+    &:not([type="radio"]):not([type="checkbox"]) {
+        @extend %input-base;
+    }
+    &[type="checkbox"] {
+        @extend %checkbox;
     }
 
-    &[type="checkbox"] {
-    @extend %checkbox;
+    &[type="radio"] {
+        @extend %radio;
     }
 }
 
 a {
     @extend %text-link;
 }
-
-h1 {
-    font-size: calc(var(--w-text, 14px) * 3.125);
-    line-height: 1.2;
 }
 
-h2 {
-    font-size: calc(var(--w-text, 14px) * 2.625);
-    font-weight: 625;
-    line-height: 1.1;
-}
-
-h3 {
-    font-size: calc(var(--w-text, 14px) * 1.625);
-    line-height: 1.1;
-}
-
-h4 {
-    font-size: calc(var(--w-text, 14px) * 1.25);
-    line-height: 1.1;
-    margin: calc(var(--w-gutter, 16px) * 0.5) 0;
-}
-
-h5 {
-    font-size: var(--w-text, 14px);
-    line-height: 1.2;
-}
-
-h6 {
-    font-size: calc(var(--w-text, 14px) * 0.875);
-    line-height: 1.2;
-    font-weight: 600;
-}
-
-p {
-    font-style: normal;
-    font-size: var(--w-text, 14px);
-    line-height: 1.5;
-    margin: 0;
-}
-
-@media (max-width: 659.99999px) {
-    h4 {
-    font-size: var(--w-text, 14px);
-    }
-
-    p {
-    font-size: calc(var(--w-text, 14px) * 0.875);
-    }
 }

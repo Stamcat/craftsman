@@ -50,3 +50,6 @@ import { Modal } from "@stamcat/craftsman/Modal";
 
 - `ThemeProvider` injects theme CSS variables and component override rules.
 - Global styles should be loaded once at app root.
+- Base defaults are emitted in the `craftsman-base` layer and theme overrides in `craftsman-theme`.
+- For equal specificity, `craftsman-theme` overrides `craftsman-base`.
+- `theme.components.input` targets only non-radio and non-checkbox inputs.

@@ -96,7 +96,15 @@ export function themeBuilder(theme: Theme) {
         ...(theme.root ? toCSSObject(theme.root) : {}),
     });
 
-    return [`:root { ${widths} ${colors} }`, root, ...buildComponentThemeOverrides(theme.components)]
+    const themeRules = [root, ...buildComponentThemeOverrides(theme.components)].filter(Boolean).join("\n");
+
+    return [
+        `:root { ${widths} ${colors} }`,
+        "@layer craftsman-base, craftsman-theme;",
+        "@layer craftsman-theme {",
+        themeRules,
+        "}",
+    ]
         .filter(Boolean)
         .join("\n");
 }

@@ -1,3 +1,4 @@
+import { color } from "../../src/styles";
 import type { AppTheme } from "../../src/styles/theme/types";
 import styles from "./theme.module.scss";
 /**
@@ -18,6 +19,15 @@ export const appThemes: AppTheme = {
                 color: "#ffffff",
                 border: "2px solid green",
                 borderRadius: "8px",
+            },
+            input: {
+                borderColor: color("green500"),
+                borderWidth: "2px",
+            },
+            checkbox: {
+                borderColor: color("green700"),
+                borderWidth: "3px",
+                backgroundColor: color("beige300"),
             },
         },
     },

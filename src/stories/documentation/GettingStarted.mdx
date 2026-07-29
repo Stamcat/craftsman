@@ -14,11 +14,14 @@ This guide shows the RSC-safe styling setup and how to apply:
 - `ThemeProvider`
 	- Use in any React app, including Next.js App Router
 	- Injects theme CSS variables and component override rules
+	- Emits overrides in the `craftsman-theme` CSS layer
 	- Renders a `<style>` element and wraps children
 
 - Global styles
 	- Import once at your application root
+	- Emit defaults in the `craftsman-base` CSS layer
 	- Do not rely on provider side-effect imports for global styling in RSC setups
+	- Base is intentionally lower priority than theme when selector specificity is equal
 
 
 ## 1. Create a Shared Theme Object
@@ -89,6 +92,12 @@ RSC note:
 
 - `ThemeProvider` emits default style-hoisting metadata for compatibility in React Server Components.
 - If your app renders multiple themed providers, pass a unique `href` per provider instance to avoid hoist key collisions.
+
+Selector note:
+
+- `theme.components.input` targets `input:not([type='radio']):not([type='checkbox'])`.
+- `theme.components.checkbox` targets `input[type='checkbox']`.
+- `theme.components.radioButton` targets `input[type='radio']`.
 
 - Prefer one provider at app root.
 - Keep `theme` for component and CSS-variable overrides.

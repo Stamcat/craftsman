@@ -11,7 +11,7 @@ type ThemeProviderProps = {
 export function ThemeProvider({
     theme,
     children,
-    precedence = "default",
+    precedence = "high",
     href = "stamcat-craftsman-theme-provider",
 }: ThemeProviderProps) {
     const resolvedTheme = theme || {};

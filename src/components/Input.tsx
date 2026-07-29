@@ -46,7 +46,7 @@ export const Input: React.FC<InputProps> = ({
     const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
     const inputElement = (
         <span className={styles.inputField} data-has-end-adornment={!isEmpty(endAdornment)}>
-            <input id={inputId} type={type} className={styles.input} {...props} />
+            <input id={inputId} type={type} className={clsx(styles.input, type)} {...props} />
             {!isEmpty(endAdornment) && <span className={styles.inputAdornment}>{endAdornment}</span>}
         </span>
     );

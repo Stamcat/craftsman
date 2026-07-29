@@ -1,19 +1,23 @@
-%code {
-    background-color: var(--gray200);
-    color: var(--gray800);
-    padding: calc(var(--w-gutter, 16px) * 0.125) calc(var(--w-gutter, 16px) * 0.25);
-    margin: calc(var(--w-gutter, 16px) * 0.125);
-    display: inline-block;
-    font-size: var(--w-text, 14px);
+@use "./utilities" as u;
 
-    &:has(pre) {
-    padding: var(--w-gutter, 16px);
-    border-radius: calc(var(--w-gutter, 16px) * 0.5);
-    background-color: var(--gray800);
-    color: var(--gray200);
-    }
+@layer craftsman-base {
+    %code {
+        background-color: var(--gray200);
+        color: var(--gray800);
+        padding: #{u.width(gutter, 0.125)} #{u.width(gutter, 0.25)};
+        margin: #{u.width(gutter, 0.125)};
+        display: inline-block;
+        font-size: var(--w-text, 14px);
 
-    &:has(pre) pre {
-    margin: 0;
+        &:has(pre) {
+        padding: #{u.width(gutter)};
+        border-radius: #{u.width(gutter, 0.5)};
+        background-color: var(--gray800);
+        color: var(--gray200);
+        }
+
+        &:has(pre) pre {
+        margin: 0;
+        }
     }
 }

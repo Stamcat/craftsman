@@ -48,8 +48,8 @@ Behavior notes:
 
 - `type` defaults to `"button"`.
 - For `variant !== "default"`, variant is appended to `className` (for example `"primary"`).
-- Theme class merge: if `theme.components.button` is a string, it is appended to the class list.
-- `className` is preserved and merged after variant/theme classes.
+- `className` is preserved and merged after component classes.
+- Theme component overrides are selector-based CSS emitted by `ThemeProvider`; string values in `theme.components` are resolved from stylesheet class declarations, not appended to runtime `className`.
 - If `children` is empty (per `isEmpty`), the component renders nothing.
 - `size` is clamped to `[0.1, 10]` before styling is applied.
 - When `size` is provided, Button scales:
@@ -348,6 +348,37 @@ if (value === undefined || value === null) { ... }
 if (typeof value === "string" && value.trim().length === 0) { ... }
 if (Object.keys(obj).length === 0) { ... }
 if (arr.length === 0) { ... }
+```
+
+### Style utilities parity (`color`, `width`, `breakpoint`)
+
+These utility patterns exist in both TypeScript and Sass.
+
+TypeScript usage:
+
+```ts
+import { color, width, breakpoint } from "@stamcat/craftsman/styles";
+
+const accent = color("blue500");
+const alphaAccent = color("blue500", "rgba", 0.32);
+const twoColumns = width("column", 2);
+const mobileRule = breakpoint("mobileMax", "h4{font-size:14px;}");
+```
+
+Sass usage (framework source):
+
+```scss
+@use "./src/styles/global/components/utilities" as u;
+
+.example {
+  color: #{u.color(blue500)};
+  background: #{u.color(blue500, rgba, 0.32)};
+  max-width: #{u.width(column, 2)};
+}
+
+@include u.breakpoint(mobileMax) {
+  .example { font-size: #{u.width(text)}; }
+}
 ```
 
 ## Code Generation Patterns to Prefer
