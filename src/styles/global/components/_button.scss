@@ -36,8 +36,7 @@
       background-color: var(--teal200);
     }
 
-    &.text,
-    &[data-variant="text"] {
+    &.text {
       @extend %text-link;
     }
 
@@ -47,16 +46,14 @@
       border-color: var(--gray200);
       color: var(--gray400);
 
-      &.primary,
-      &[data-variant="primary"] {
+      &.primary {
         border-color: var(--gray200);
         background-color: var(--gray400);
         color: var(--gray200);
       }
     }
 
-    &.primary,
-    &[data-variant="primary"] {
+    &.primary {
       color: var(--white);
       background-color: var(--blue500);
 

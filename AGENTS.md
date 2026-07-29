@@ -49,7 +49,7 @@ Behavior notes:
 - `type` defaults to `"button"`.
 - For `variant !== "default"`, variant is appended to `className` (for example `"primary"`).
 - `className` is preserved and merged after component classes.
-- Theme component overrides are selector-based CSS emitted by `ThemeProvider`; string values in `theme.components` are resolved from stylesheet class declarations, not appended to runtime `className`.
+- Theme component overrides are selector-based CSS emitted by `ThemeProvider`; `theme.components.*` accepts JS style objects or raw CSS/Sass strings for the target selector.
 - If `children` is empty (per `isEmpty`), the component renders nothing.
 - `size` is clamped to `[0.1, 10]` before styling is applied.
 - When `size` is provided, Button scales:
@@ -315,6 +315,27 @@ Example:
 - Components are built with SCSS modules and class-based variant hooks.
 - If your app does not include this package's global CSS variable setup, visual output may differ.
 - Agents should avoid hard-coding assumptions about token names beyond what the consumer app already defines.
+
+## Theme Authoring
+
+- `theme.root` supports JS style objects and raw CSS/Sass strings.
+- `theme.components.*` supports JS style objects and raw CSS/Sass strings.
+- String component styles are applied to the mapped target selector (for example `button`, `input[type='checkbox']`).
+- For multi-file Sass workflows with syntax highlighting and mixins, import compiled CSS text via `*.scss?inline`.
+
+Example:
+
+```tsx
+import greenRoot from "./green.root.scss?inline";
+import greenButton from "./green.button.scss?inline";
+
+export const theme = {
+  root: greenRoot,
+  components: {
+    button: greenButton,
+  },
+};
+```
 
 ## Utility Functions
 

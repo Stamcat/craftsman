@@ -47,5 +47,5 @@
     //   "@src/*": ["src/*"]
     // }
   },
-  "include": ["src", ".storybook", "vitest.shims.d.ts", "scss.d.ts"]
+  "include": ["src", "vitest.shims.d.ts", "scss.d.ts"]
 }

@@ -7,6 +7,7 @@ export type RegisteredComponentName = Uncapitalize<ExportedComponentName>;
 type SelectorMap = Partial<Record<RegisteredComponentName, string>>;
 
 const componentSelectorTargets: SelectorMap = {
+    button: "button",
     input: "input:not([type='radio']):not([type='checkbox'])",
     checkbox: "input[type='checkbox']",
     radioButton: "input[type='radio']",

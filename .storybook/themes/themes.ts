@@ -1,25 +1,18 @@
 import { color } from "../../src/styles";
 import type { AppTheme } from "../../src/styles/theme/types";
-import styles from "./theme.module.scss";
-/**
- * This is provided by the consuming application
- * we can use js styling or css/sass modules
- */
+import greenRoot from "./green.scss?inline";
+import greenButton from "./green.button.scss?inline";
+
 export const appThemes: AppTheme = {
     default: {
-        // you can put your own brand styles here
         root: {
             "--w-gutter": "14px",
         },
     },
     green: {
+        root: greenRoot,
         components: {
-            button: {
-                backgroundColor: "#16a34a",
-                color: "#ffffff",
-                border: "2px solid green",
-                borderRadius: "8px",
-            },
+            button: greenButton,
             input: {
                 borderColor: color("green500"),
                 borderWidth: "2px",
@@ -36,7 +29,13 @@ export const appThemes: AppTheme = {
             "--blue500": "#31198a",
         },
         components: {
-            button: styles.button,
+            button: {
+                backgroundColor: "var(--blue500)",
+                color: "#fff",
+                borderRadius: "4px",
+                border: "1px solid blue",
+            },
         },
     },
 };
+

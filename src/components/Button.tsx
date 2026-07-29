@@ -36,8 +36,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     return (
         <button
             type={type}
-            data-variant={variant}
-            className={clsx(className)}
+            className={clsx(variant, className)}
             style={{ ...scaledStyle, ...resolvedStyleOverride, ...style }}
             {...rest}
         />

@@ -53,3 +53,5 @@ import { Modal } from "@stamcat/craftsman/Modal";
 - Base defaults are emitted in the `craftsman-base` layer and theme overrides in `craftsman-theme`.
 - For equal specificity, `craftsman-theme` overrides `craftsman-base`.
 - `theme.components.input` targets only non-radio and non-checkbox inputs.
+- `theme.root` and `theme.components.*` support JS style objects and raw CSS/Sass strings.
+- For Sass file workflows, import compiled CSS text via `*.scss?inline` and pass that string into the theme object.

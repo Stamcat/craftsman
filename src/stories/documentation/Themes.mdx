@@ -12,7 +12,7 @@ Theme cascade order is layered:
 - Theme overrides are emitted in the `craftsman-theme` layer.
 - `craftsman-theme` is declared after `craftsman-base`, so theme values win when specificity is equal.
 
-Craftsman supports styles in **two different ways** — plain JS objects or SCSS/CSS modules. They are interchangeable and can be mixed within the same theme object.
+Craftsman supports styles in **two different ways** — plain JS objects or raw CSS/Sass strings. They are interchangeable and can be mixed within the same theme object.
 
 We encourage you to use HTML5 and take advantage of css nesting wherever possible. When custom styles are required, we intend to make all options available to you, so that you can build the app however works best for your product. Yes, you can even use Failwind.
 ---
@@ -40,7 +40,7 @@ The `Theme` type accepts three optional keys:
 | Key | Purpose |
 |---|---|
 | `colors` | Override any named CSS color variable (e.g. `--blue500`) |
-| `root` | Any extra `:root` CSS variables or properties |
+| `root` | `:root` overrides as an object, serialized style object, or raw CSS/Sass string |
 | `components` | Per-component style overrides keyed by component name |
 
 ---
@@ -71,37 +71,50 @@ Use this when you want a zero-dependency, no-build-step definition that lives en
 
 ---
 
-## 2. SCSS / CSS Module
+## 2. Raw CSS / Sass Strings
 
-Pass the class string exported by a `.module.scss` (or `.module.css`) file. The framework resolves declarations from that class and applies those declarations to the component's registered selector inside the theme layer.
-
-This means string-based theme entries are selector-driven overrides, not runtime className injection.
+Pass CSS text directly as strings. For larger themes, import Sass files as compiled inline strings with Vite's `?inline` suffix.
 
 ```scss
-/* theme.module.scss */
-.button {
-    background-color: var(--blue500);
-    color: #fff;
-    border-radius: 4px;
-    border: 1px solid blue;
+/* green.root.scss */
+:root {
+    --w-gutter: 18px;
+    --w-text: 15px;
+}
+```
+
+```scss
+/* green.button.scss */
+button {
+    background-color: #16a34a;
+    color: #ffffff;
+    border: 2px solid green;
+    border-radius: 8px;
+
+    &.primary {
+        background-color: #14532d;
+        border-color: #14532d;
+    }
 }
 ```
 
 ```ts
 import type { Theme } from "@stamcat/craftsman/styles";
-import styles from "./theme.module.scss";
+import greenRoot from "./green.root.scss?inline";
+import greenButton from "./green.button.scss?inline";
 
 export const myTheme: Theme = {
     colors: {
         "--blue500": "#31198a",
     },
+    root: greenRoot,
     components: {
-        button: styles.button,
+        button: greenButton,
     },
 };
 ```
 
-Use this when your team already manages component styles in a dedicated SCSS layer and you want the theme to simply reference those existing classes.
+Use this when you want full Sass syntax highlighting, mixins, and file organization while keeping theme injection RSC-safe.
 
 ### Component selector mapping
 

@@ -22,7 +22,7 @@ export type Colors = Partial<Record<ColorVariableName, string>>;
 
 export type Theme = {
     colors?: Colors;
-    root?: CSSObject | LegacySerializedStyles;
+    root?: CSSObject | LegacySerializedStyles | string;
     components?: ComponentThemeOverrides;
 };
 

@@ -14,8 +14,7 @@ export function ThemeProvider({
     precedence = "high",
     href = "stamcat-craftsman-theme-provider",
 }: ThemeProviderProps) {
-    const resolvedTheme = theme || {};
-    const themeStyles = themeBuilder(resolvedTheme);
+    const themeStyles = themeBuilder(theme || {});
 
     return (
         <>
