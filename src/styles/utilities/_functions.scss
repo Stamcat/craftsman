@@ -1,0 +1,116 @@
+@use "sass:map";
+@use "sass:string";
+
+$width-defaults: (
+	text: var(--w-text),
+	gutter: var(--w-gutter),
+	column: var(--w-column),
+	mobileMax: var(--w-mobile-max),
+	tablet: var(--w-tablet),
+	tabletMax: var(--w-tabletMax),
+	desktop: var(--w-desktop),
+	desktopMax: var(--w-desktopMax),
+	extDesktop: var(--w-extDesktop),
+);
+
+@function color($name, $type: hex, $alpha: 1) {
+	@if $type == rgba {
+		@return string.unquote("rgb(from var(--#{$name}) r g b / #{$alpha})");
+	}
+
+	@return string.unquote("var(--#{$name})");
+}
+
+@function width-var($name) {
+	@if not map.has-key($width-defaults, $name) {
+		@error "Unknown width key `#{$name}`.";
+	}
+
+	$fallback: map.get($width-defaults, $name);
+	@return string.unquote("var(--w-#{$name}, #{$fallback}px)");
+}
+
+@function width($name, $multiplier: 1, $px: true) {
+	$value: width-var($name);
+
+	@if $name == column {
+		$gutter-steps: $multiplier - 1;
+		$gutter: width-var(gutter);
+
+		@if $px {
+			@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
+		}
+
+		@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
+	}
+
+	@if $px {
+		@if $multiplier == 1 {
+			@return $value;
+		}
+
+		@return string.unquote("calc(#{$value} * #{$multiplier})");
+	}
+
+	@if $multiplier == 1 {
+		@return string.unquote("#{$value}");
+	}
+
+	@return string.unquote("calc(#{$value} * #{$multiplier})");
+}
+
+@function media($bp) {
+	@if $bp == mobile {
+		@return string.unquote("(min-width: 0px)");
+	}
+
+	@if $bp == mobileMax {
+		@return string.unquote("(max-width: #{width(mobileMax)})");
+	}
+
+	@if $bp == tablet {
+		@return string.unquote("(min-width: #{width(tablet)})");
+	}
+
+	@if $bp == tabletMax {
+		@return string.unquote("(max-width: #{width(tabletMax)})");
+	}
+
+	@if $bp == desktop {
+		@return string.unquote("(min-width: #{width(desktop)})");
+	}
+
+	@if $bp == desktopMax {
+		@return string.unquote("(max-width: #{width(desktopMax)})");
+	}
+
+	@if $bp == extDesktop {
+		@return string.unquote("(min-width: #{width(extDesktop)})");
+	}
+
+	@if $bp == mobileOnly {
+		@return string.unquote("(min-width: 0px) and (max-width: #{width(mobileMax)})");
+	}
+
+	@if $bp == tabletOnly {
+		@return string.unquote("(min-width: #{width(tablet)}) and (max-width: #{width(tabletMax)})");
+	}
+
+	@if $bp == mobileTablet {
+		@return string.unquote("(min-width: 0px) and (max-width: #{width(tabletMax)})");
+	}
+
+	@if $bp == desktopOnly {
+		@return string.unquote("(min-width: #{width(desktop)}) and (max-width: #{width(desktopMax)})");
+	}
+
+	@error "Unknown breakpoint `#{$bp}`.";
+}
+
+@mixin breakpoint($bp) {
+	@media #{media($bp)} {
+		@content;
+	}
+}
+
+

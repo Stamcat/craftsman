@@ -1,0 +1,11 @@
+button {
+    color: green;
+    border: 2px solid green;
+    border-radius: 8px;
+
+    &.primary {
+        background-color: #14532d;
+        border-color: #14532d;
+        color: var(--white);
+    }
+}

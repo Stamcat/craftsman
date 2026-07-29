@@ -1,5 +1,5 @@
 import { defaultColors } from "./constants";
-import type { ColorType } from "./types";
+import type { ColorType } from "../../utilities/types";
 
 export const colors = { ...defaultColors };
 

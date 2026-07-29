@@ -1,17 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { TextInputType } from "../styles/utilities/types";
+import type { TextInputType } from "../../utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { Input, type InputProps } from "./Input";
+import styles from "./Input.module.scss";
 
-const inputPasswordToggleStyles: React.CSSProperties = {
-    padding: 0,
-    display: "inline-flex",
-    alignItems: "center",
-    lineHeight: 1,
-};
 
 
 const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () => void }) => (
@@ -21,7 +16,7 @@ const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () =
         onClick={onToggle}
         aria-label={visible ? "Hide password" : "Show password"}
         aria-pressed={visible}
-        styles={inputPasswordToggleStyles}
+        className={styles.inputViewToggle}
     >
         {visible ? <ImEye size={16} /> : <ImEyeBlocked size={16} />}
     </Button>

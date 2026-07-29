@@ -1,4 +1,4 @@
-import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "./types";
+import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "../../utilities/types";
 import { defaultWidths } from "./constants";
 
 export const widths: Record<LayoutWidthsType, string> = Object.fromEntries(

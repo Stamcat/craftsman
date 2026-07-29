@@ -6,6 +6,7 @@ import { LuX } from "react-icons/lu";
 import { color } from "../styles/utilities/color";
 import { isEmpty } from "../utilities/validations";
 import styles from "./Modal.module.scss";
+import clsx from "clsx";
 
 export type ModalType = "dialog" | "panel";
 export interface ModalProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -22,15 +23,6 @@ export interface ModalProps extends React.ComponentPropsWithoutRef<"div"> {
     /** Custom styles apply to outer wrapper so that you can access selectors within */
     styles?: React.CSSProperties;
 }
-const modalCloseStyles: React.CSSProperties = {
-    textDecoration: "none",
-    height: 30,
-    width: 30,
-    borderRadius: "50%",
-    padding: 0,
-    display: "inline-flex",
-    justifyContent: "center",
-};
 
 type ModalState = {
     isClosing: boolean;
@@ -55,26 +47,30 @@ export class Modal extends React.PureComponent<ModalProps, ModalState> {
         }
     };
     public onClickBackground = () => {
-        const dismissible = this.props.backgroundDismiss || true;
+        const dismissible = this.props.backgroundDismiss ?? true;
         if (dismissible === true) {
             this.onDismiss();
         }
     }
     public render() {
         const resolvedStyleOverride = isEmpty(this.props.styles) ? undefined : this.props.styles;
+        const modalType = this.props.type || "dialog";
 
         if (!this.props.visible) {
             return <></>;
         }
         return (
             <div className={styles.wrapper} style={resolvedStyleOverride}>
-                <div className={styles.content} data-type={this.props.type || "dialog"} data-is-closing={this.state.isClosing}>
+                <div
+                    className={clsx(styles.content, styles[modalType])}
+                    data-is-closing={this.state.isClosing}
+                >
                     <header>
                         {this.props.header && (
                             <>{this.props.header}</>
                         )}
                         {!this.props.hideDismissIcon === true && (
-                            <Button variant="primary" styles={modalCloseStyles} onClick={this.onDismiss}><LuX fill={color("white")} size={18} /></Button>
+                            <Button variant="primary" className={styles.closeModal} onClick={this.onDismiss}><LuX fill={color("white")} size={18} /></Button>
                         )}
                     </header>
                     <section>

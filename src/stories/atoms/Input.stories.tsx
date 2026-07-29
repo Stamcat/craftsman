@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Input } from "../../components/Input";
+import { Input } from "../../components/Input/Input";
 import { width } from "../../styles/utilities/layout";
-import { zLabelPosition, zTextInputType } from "../../styles/utilities/types";
+import { zLabelPosition, zTextInputType } from "../../utilities/types";
 
 
 const meta: Meta<typeof Input> = {

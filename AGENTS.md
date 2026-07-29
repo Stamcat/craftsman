@@ -48,8 +48,8 @@ Behavior notes:
 
 - `type` defaults to `"button"`.
 - For `variant !== "default"`, variant is appended to `className` (for example `"primary"`).
-- Theme class merge: if `theme.components.button` is a string, it is appended to the class list.
-- `className` is preserved and merged after variant/theme classes.
+- `className` is preserved and merged after component classes.
+- Theme component overrides are selector-based CSS emitted by `ThemeProvider`; `theme.components.*` accepts JS style objects or raw CSS/Sass strings for the target selector.
 - If `children` is empty (per `isEmpty`), the component renders nothing.
 - `size` is clamped to `[0.1, 10]` before styling is applied.
 - When `size` is provided, Button scales:
@@ -316,6 +316,27 @@ Example:
 - If your app does not include this package's global CSS variable setup, visual output may differ.
 - Agents should avoid hard-coding assumptions about token names beyond what the consumer app already defines.
 
+## Theme Authoring
+
+- `theme.root` supports JS style objects and raw CSS/Sass strings.
+- `theme.components.*` supports JS style objects and raw CSS/Sass strings.
+- String component styles are applied to the mapped target selector (for example `button`, `input[type='checkbox']`).
+- For multi-file Sass workflows with syntax highlighting and mixins, import compiled CSS text via `*.scss?inline`.
+
+Example:
+
+```tsx
+import greenRoot from "./green.root.scss?inline";
+import greenButton from "./green.button.scss?inline";
+
+export const theme = {
+  root: greenRoot,
+  components: {
+    button: greenButton,
+  },
+};
+```
+
 ## Utility Functions
 
 ### `isEmpty`
@@ -348,6 +369,37 @@ if (value === undefined || value === null) { ... }
 if (typeof value === "string" && value.trim().length === 0) { ... }
 if (Object.keys(obj).length === 0) { ... }
 if (arr.length === 0) { ... }
+```
+
+### Style utilities parity (`color`, `width`, `breakpoint`)
+
+These utility patterns exist in both TypeScript and Sass.
+
+TypeScript usage:
+
+```ts
+import { color, width, breakpoint } from "@stamcat/craftsman/styles";
+
+const accent = color("blue500");
+const alphaAccent = color("blue500", "rgba", 0.32);
+const twoColumns = width("column", 2);
+const mobileRule = breakpoint("mobileMax", "h4{font-size:14px;}");
+```
+
+Sass usage (framework source):
+
+```scss
+@use "./src/styles/utilities" as u;
+
+.example {
+  color: #{u.color(blue500)};
+  background: #{u.color(blue500, rgba, 0.32)};
+  max-width: #{u.width(column, 2)};
+}
+
+@include u.breakpoint(mobileMax) {
+  .example { font-size: #{u.width(text)}; }
+}
 ```
 
 ## Code Generation Patterns to Prefer

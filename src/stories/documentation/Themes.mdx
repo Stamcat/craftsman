@@ -6,7 +6,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 Craftsman themes are plain objects that conform to the `Theme` type. You pass them into `ThemeProvider` and the framework applies them globally via CSS variables and component selectors.
 
-Craftsman supports styles in **two different ways** — plain JS objects or SCSS/CSS modules. They are interchangeable and can be mixed within the same theme object.
+Theme cascade order is layered:
+
+- Base defaults are emitted in the `craftsman-base` layer.
+- Theme overrides are emitted in the `craftsman-theme` layer.
+- `craftsman-theme` is declared after `craftsman-base`, so theme values win when specificity is equal.
+
+Craftsman supports styles in **two different ways** — plain JS objects or raw CSS/Sass strings. They are interchangeable and can be mixed within the same theme object.
 
 We encourage you to use HTML5 and take advantage of css nesting wherever possible. When custom styles are required, we intend to make all options available to you, so that you can build the app however works best for your product. Yes, you can even use Failwind.
 ---
@@ -34,7 +40,7 @@ The `Theme` type accepts three optional keys:
 | Key | Purpose |
 |---|---|
 | `colors` | Override any named CSS color variable (e.g. `--blue500`) |
-| `root` | Any extra `:root` CSS variables or properties |
+| `root` | `:root` overrides as an object, serialized style object, or raw CSS/Sass string |
 | `components` | Per-component style overrides keyed by component name |
 
 ---
@@ -65,35 +71,62 @@ Use this when you want a zero-dependency, no-build-step definition that lives en
 
 ---
 
-## 2. SCSS / CSS Module
+## 2. Raw CSS / Sass Strings
 
-Pass the class string exported by a `.module.scss` (or `.module.css`) file. The framework will apply it as the component's className.
+Pass CSS text directly as strings. For larger themes, import Sass files as compiled inline strings with Vite's `?inline` suffix.
 
 ```scss
-/* theme.module.scss */
-.button {
-    background-color: var(--blue500);
-    color: #fff;
-    border-radius: 4px;
-    border: 1px solid blue;
+/* green.root.scss */
+:root {
+    --w-gutter: 18px;
+    --w-text: 15px;
+}
+```
+
+```scss
+/* green.button.scss */
+button {
+    background-color: #16a34a;
+    color: #ffffff;
+    border: 2px solid green;
+    border-radius: 8px;
+
+    &.primary {
+        background-color: #14532d;
+        border-color: #14532d;
+    }
 }
 ```
 
 ```ts
 import type { Theme } from "@stamcat/craftsman/styles";
-import styles from "./theme.module.scss";
+import greenRoot from "./green.root.scss?inline";
+import greenButton from "./green.button.scss?inline";
 
 export const myTheme: Theme = {
     colors: {
         "--blue500": "#31198a",
     },
+    root: greenRoot,
     components: {
-        button: styles.button,
+        button: greenButton,
     },
 };
 ```
 
-Use this when your team already manages component styles in a dedicated SCSS layer and you want the theme to simply reference those existing classes.
+Use this when you want full Sass syntax highlighting, mixins, and file organization while keeping theme injection RSC-safe.
+
+### Component selector mapping
+
+Theme component entries are written to these selectors:
+
+| Component key | Selector target |
+|---|---|
+| `input` | `input:not([type='radio']):not([type='checkbox'])` |
+| `checkbox` | `input[type='checkbox']` |
+| `radioButton` | `input[type='radio']` |
+
+All other component keys use their HTML tag selector and class selector (for HTML tags), or class selector (for non-HTML component names).
 
 ---
 
@@ -132,3 +165,64 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 ```
 
 Switch themes using the **Themes** icon in the Storybook toolbar to see each variant applied live across all stories.
+
+---
+
+## Utility Parity (TypeScript + Sass)
+
+The `color`, `width`, and `breakpoint` utilities exist in both TypeScript and Sass and follow the same usage patterns.
+
+### Color utility
+
+```ts
+import { color } from "@stamcat/craftsman/styles";
+
+const border = color("green500");
+const overlay = color("green500", "rgba", 0.24);
+```
+
+```scss
+@use "../../styles/utilities/functions" as u;
+
+.example {
+    border-color: #{u.color(green500)};
+    background-color: #{u.color(green500, rgba, 0.24)};
+}
+```
+
+### Width utility
+
+```ts
+import { width } from "@stamcat/craftsman/styles";
+
+const text = width("text");
+const cols = width("column", 3);
+const numeric = width("column", 3, false);
+```
+
+```scss
+@use "../../styles/utilities/functions" as u;
+
+.example {
+    font-size: #{u.width(text)};
+    max-width: #{u.width(column, 3)};
+    --column-count: #{u.width(column, 3, false)};
+}
+```
+
+### Breakpoint utility
+
+```ts
+import { breakpoint } from "@stamcat/craftsman/styles";
+
+const rules = breakpoint("mobileMax", "h4{font-size:14px;} p{font-size:12.25px;}");
+```
+
+```scss
+@use "../../styles/utilities/functions" as u;
+
+@include u.breakpoint(mobileMax) {
+    :where(h4) { font-size: var(--w-text, 14px); }
+    :where(p) { font-size: calc(var(--w-text, 14px) * 0.875); }
+}
+```

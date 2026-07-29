@@ -62,3 +62,7 @@ export type TextInputType = z.infer<typeof zTextInputType>;
 
 export const zLabelPosition = z.enum(["top", "left", "bottom", "right", "inside", "hidden"]);
 export type LabelPosition = z.infer<typeof zLabelPosition>;
+
+
+export const ButtonType = z.enum(["primary", "default", "text"]);
+export type ButtonType = z.infer<typeof ButtonType>;
