@@ -1,0 +1,30 @@
+/// Configurable Sass variables for @stamcat/craftsman.
+///
+/// To override breakpoints in your application, load this module first with
+/// your custom values before importing any other craftsman styles:
+///
+/// @example scss
+///   @use "@stamcat/craftsman/styles/config" with (
+///     $bp-tablet: 768,
+///     $bp-desktop: 1200,
+///     $bp-mobileMax: 767.99999,
+///     $bp-tabletMax: 1199.99999,
+///   );
+///   @use "@stamcat/craftsman/styles/global/globalStyles";
+
+// All values are unitless numbers (px implied).
+// Default values mirror src/styles/utilities/constants.ts.
+
+// Width defaults
+$w-text: 14 !default;
+$w-gutter: 16 !default;
+$w-column: 60 !default;
+
+// Breakpoint values used in @media queries.
+// CSS custom properties cannot be used in @media conditions — these must be static values.
+$bp-mobileMax: 659.99999 !default;
+$bp-tablet: 660 !default;
+$bp-tabletMax: 1039.99999 !default;
+$bp-desktop: 1040 !default;
+$bp-desktopMax: 1319.99999 !default;
+$bp-extDesktop: 1320 !default;

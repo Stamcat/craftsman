@@ -1,3 +1,4 @@
+@use "../config";
 @use "./components/typography";
 @use "./components/code";
 @use "./components/checkbox";
@@ -8,7 +9,6 @@
 @layer craftsman-base, craftsman-theme;
 
 @layer craftsman-base {
-:global {
 :root {
     color-scheme: light dark;
     font-synthesis: none;
@@ -77,7 +77,6 @@ textarea {
 
 a {
     @extend %text-link;
-}
 }
 
 }

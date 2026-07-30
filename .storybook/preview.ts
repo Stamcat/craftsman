@@ -2,9 +2,7 @@ import type { Preview } from "@storybook/react-vite";
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from "../src/styles/components/ThemeProvider";
 import { appThemes } from "./themes/themes";
-import { globalStyles } from "../src/styles/global/globalStyles";
-
-void globalStyles;
+import "../src/styles/global/globalStyles.scss";
 
 const preview: Preview = {
     parameters: {

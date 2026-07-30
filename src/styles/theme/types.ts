@@ -1,5 +1,6 @@
 import type { ColorKey } from "../utilities/color";
 import type { componentSelectors } from "./components";
+import type { LayoutWidthsType } from "../../utilities/types";
 
 export type ColorVariableName = `--${ColorKey}`;
 
@@ -20,8 +21,12 @@ export type ComponentThemeOverrides = {
 };
 export type Colors = Partial<Record<ColorVariableName, string>>;
 
+export type WidthOverrides = Partial<Record<LayoutWidthsType, number>>;
+
 export type Theme = {
     colors?: Colors;
+    /** Override default width/breakpoint CSS variables (e.g. tablet, desktop, gutter). Values are in px. */
+    widths?: WidthOverrides;
     root?: CSSObject | LegacySerializedStyles | string;
     components?: ComponentThemeOverrides;
 };

@@ -1,16 +1,17 @@
 @use "sass:map";
 @use "sass:string";
+@use "../config" as cfg;
 
 $width-defaults: (
-	text: var(--w-text),
-	gutter: var(--w-gutter),
-	column: var(--w-column),
-	mobileMax: var(--w-mobile-max),
-	tablet: var(--w-tablet),
-	tabletMax: var(--w-tabletMax),
-	desktop: var(--w-desktop),
-	desktopMax: var(--w-desktopMax),
-	extDesktop: var(--w-extDesktop),
+	text: cfg.$w-text,
+	gutter: cfg.$w-gutter,
+	column: cfg.$w-column,
+	mobileMax: cfg.$bp-mobileMax,
+	tablet: cfg.$bp-tablet,
+	tabletMax: cfg.$bp-tabletMax,
+	desktop: cfg.$bp-desktop,
+	desktopMax: cfg.$bp-desktopMax,
+	extDesktop: cfg.$bp-extDesktop,
 );
 
 @function color($name, $type: hex, $alpha: 1) {
@@ -65,43 +66,43 @@ $width-defaults: (
 	}
 
 	@if $bp == mobileMax {
-		@return string.unquote("(max-width: #{width(mobileMax)})");
+		@return string.unquote("(max-width: #{cfg.$bp-mobileMax}px)");
 	}
 
 	@if $bp == tablet {
-		@return string.unquote("(min-width: #{width(tablet)})");
+		@return string.unquote("(min-width: #{cfg.$bp-tablet}px)");
 	}
 
 	@if $bp == tabletMax {
-		@return string.unquote("(max-width: #{width(tabletMax)})");
+		@return string.unquote("(max-width: #{cfg.$bp-tabletMax}px)");
 	}
 
 	@if $bp == desktop {
-		@return string.unquote("(min-width: #{width(desktop)})");
+		@return string.unquote("(min-width: #{cfg.$bp-desktop}px)");
 	}
 
 	@if $bp == desktopMax {
-		@return string.unquote("(max-width: #{width(desktopMax)})");
+		@return string.unquote("(max-width: #{cfg.$bp-desktopMax}px)");
 	}
 
 	@if $bp == extDesktop {
-		@return string.unquote("(min-width: #{width(extDesktop)})");
+		@return string.unquote("(min-width: #{cfg.$bp-extDesktop}px)");
 	}
 
 	@if $bp == mobileOnly {
-		@return string.unquote("(min-width: 0px) and (max-width: #{width(mobileMax)})");
+		@return string.unquote("(min-width: 0px) and (max-width: #{cfg.$bp-mobileMax}px)");
 	}
 
 	@if $bp == tabletOnly {
-		@return string.unquote("(min-width: #{width(tablet)}) and (max-width: #{width(tabletMax)})");
+		@return string.unquote("(min-width: #{cfg.$bp-tablet}px) and (max-width: #{cfg.$bp-tabletMax}px)");
 	}
 
 	@if $bp == mobileTablet {
-		@return string.unquote("(min-width: 0px) and (max-width: #{width(tabletMax)})");
+		@return string.unquote("(min-width: 0px) and (max-width: #{cfg.$bp-tabletMax}px)");
 	}
 
 	@if $bp == desktopOnly {
-		@return string.unquote("(min-width: #{width(desktop)}) and (max-width: #{width(desktopMax)})");
+		@return string.unquote("(min-width: #{cfg.$bp-desktop}px) and (max-width: #{cfg.$bp-desktopMax}px)");
 	}
 
 	@error "Unknown breakpoint `#{$bp}`.";

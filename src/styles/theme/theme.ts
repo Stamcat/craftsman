@@ -34,9 +34,20 @@ function buildComponentThemeOverrides(components?: ComponentThemeOverrides): str
         .filter((value): value is string => Boolean(value));
 }
 
+function buildWidthOverrides(widths?: Theme["widths"]): string | undefined {
+    if (!widths || Object.keys(widths).length === 0) {
+        return undefined;
+    }
+    const vars = Object.entries(widths)
+        .map(([key, value]) => `--w-${key}: ${value}px;`)
+        .join(" ");
+    return `:root { ${vars} }`;
+}
+
 export function themeBuilder(theme: Theme) {
     const themeRules = [
         cssObjectToCssText(":root", { ...(theme.colors || {}) }),
+        buildWidthOverrides(theme.widths),
         buildRootStyle(theme.root),
         ...buildComponentThemeOverrides(theme.components),
     ]
