@@ -122,7 +122,7 @@
     justify-content: center;
 };
 
-@media (min-width: 0px) and (max-width: 659.99999px) {
+@include u.breakpoint(mobileOnly) {
   .content.panel,
   .content.dialog {
     width: 100%;
@@ -130,7 +130,7 @@
   }
 }
 
-@media (min-width: 660px) {
+@include u.breakpoint(tablet) {
   .content.panel {
     width: #{u.width("column", 4)};
   }
@@ -140,7 +140,7 @@
   }
 }
 
-@media (min-width: 1040px) {
+@include u.breakpoint(desktop) {
   .content.dialog {
     width: #{u.width("column", 8)};
   }

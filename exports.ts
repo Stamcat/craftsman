@@ -21,6 +21,9 @@ export const PACKAGE_EXPORTS = {
     [`./${EXPORTS.Styles}/globalStyles.scss`]: {
         default: `./src/${EXPORTS.Styles}/global/globalStyles.scss`,
     },
+    [`./${EXPORTS.Styles}/config`]: {
+        default: `./src/${EXPORTS.Styles}/_config.scss`,
+    },
 } as const;
 
 

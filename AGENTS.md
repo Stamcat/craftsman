@@ -320,8 +320,11 @@ Example:
 
 - `theme.root` supports JS style objects and raw CSS/Sass strings.
 - `theme.components.*` supports JS style objects and raw CSS/Sass strings.
+- `theme.widths` accepts a partial record of width/breakpoint keys to override the default `--w-*` CSS variables. Values are numbers in `px`.
 - String component styles are applied to the mapped target selector (for example `button`, `input[type='checkbox']`).
 - For multi-file Sass workflows with syntax highlighting and mixins, import compiled CSS text via `*.scss?inline`.
+
+Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" | "extDesktop" | "mobileMax" | "tabletMax" | "desktopMax"`
 
 Example:
 
@@ -330,6 +333,10 @@ import greenRoot from "./green.root.scss?inline";
 import greenButton from "./green.button.scss?inline";
 
 export const theme = {
+  widths: {
+    gutter: 20,
+    tablet: 768,
+  },
   root: greenRoot,
   components: {
     button: greenButton,
