@@ -1,9 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { loaders, type LoaderStyle } from "../styles/global/components/loaders";
-import styles from "../styles/global/components/loaders.module.scss";
-import { isEmpty } from "../utilities/validations";
+import { loaders, type LoaderStyle } from "./types";
+import styles from "./loaders.module.scss";
+import { isEmpty } from "../../utilities/validations";
 
 export type LoaderProps = React.ComponentProps<"div"> & {
     type: LoaderStyle;

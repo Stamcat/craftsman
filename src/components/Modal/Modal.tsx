@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import { LuX } from "react-icons/lu";
-import { color } from "../styles/utilities/color";
-import { isEmpty } from "../utilities/validations";
+import { color } from "../../styles/utilities/color";
+import { isEmpty } from "../../utilities/validations";
 import styles from "./Modal.module.scss";
 import clsx from "clsx";
 

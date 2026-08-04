@@ -1,5 +1,5 @@
 @use "../config";
-@use "./components/typography";
+@use "./components/typography" as t;
 @use "./components/code";
 @use "./components/checkbox";
 @use "./components/radioButton";
@@ -9,74 +9,74 @@
 @layer craftsman-base, craftsman-theme;
 
 @layer craftsman-base {
-:root {
-    color-scheme: light dark;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+    :root {
+        color-scheme: light dark;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-}
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
 
-::-webkit-scrollbar-track {
-    background: #ddd;
-}
+    ::-webkit-scrollbar-track {
+        background: #ddd;
+    }
 
-::-webkit-scrollbar-thumb {
-    background: #000;
-    border-radius: 6px;
-}
+    ::-webkit-scrollbar-thumb {
+        background: #000;
+        border-radius: 6px;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-body, ul {
-    margin: 0;
-    padding: 0;
-}
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    body,
+    ul {
+        margin: 0;
+        padding: 0;
+    }
 
-body {
-    @extend %body-typography;
-    background-color: #fff;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-}
+    body {
+        @include t.body-typography;
+        background-color: #fff;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
 
-fieldset {
-    padding: 0;
-    border: 0;
-}
+    fieldset {
+        padding: 0;
+        border: 0;
+    }
 
-code {
-    @extend %code;
-}
+    code {
+        @extend %code;
+    }
 
-button {
-    @extend %button-styles;
-}
+    button {
+        @extend %button-styles;
+    }
 
-input {
-    &:not([type="radio"]):not([type="checkbox"]) {
+    input {
+        &:not([type="radio"]):not([type="checkbox"]) {
+            @extend %input-base;
+        }
+        &[type="checkbox"] {
+            @extend %checkbox;
+        }
+
+        &[type="radio"] {
+            @extend %radio;
+        }
+    }
+    textarea {
         @extend %input-base;
     }
-    &[type="checkbox"] {
-        @extend %checkbox;
+
+    a {
+        @extend %text-link;
     }
-
-    &[type="radio"] {
-        @extend %radio;
-    }
-}
-textarea {
-    @extend %input-base;
-}
-
-a {
-    @extend %text-link;
-}
-
 }

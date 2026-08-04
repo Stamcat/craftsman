@@ -26,9 +26,9 @@ $width-defaults: (
 	@if not map.has-key($width-defaults, $name) {
 		@error "Unknown width key `#{$name}`.";
 	}
-
-	$fallback: map.get($width-defaults, $name);
-	@return string.unquote("var(--w-#{$name}, #{$fallback}px)");
+	@return string.unquote("var(--w-#{$name})");
+    // $fallback: map.get($width-defaults, $name);
+	// @return string.unquote("var(--w-#{$name}, #{$fallback}px)");
 }
 
 @function width($name, $multiplier: 1, $px: true) {
