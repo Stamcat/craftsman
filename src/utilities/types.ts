@@ -66,3 +66,12 @@ export type LabelPosition = z.infer<typeof zLabelPosition>;
 
 export const ButtonType = z.enum(["primary", "default", "text"]);
 export type ButtonType = z.infer<typeof ButtonType>;
+
+export const TextTags = z.enum(["h1", "h2", "h3", "h4", "h5", "p", "span", "div"]);
+export type TextTags = z.infer<typeof TextTags>;
+
+export const TextType = z.enum(["display", "heading", "paragraph", "caption", "small-title"]);
+export type TextType = z.infer<typeof TextType>;
+
+export const TextSize = z.enum(["xlarge", "large", "medium", "small", "xsmall"]);
+export type TextSize = z.infer<typeof TextSize>;

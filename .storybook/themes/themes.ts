@@ -1,6 +1,8 @@
 import { color } from "../../src/styles";
 import type { AppTheme } from "../../src/styles/theme/types";
+// @ts-expect-error Resolved by the bundler as an inline style import.
 import greenRoot from "./green.scss?inline";
+// @ts-expect-error Resolved by the bundler as an inline style import.
 import greenButton from "./green.button.scss?inline";
 
 export const appThemes: AppTheme = {
@@ -21,6 +23,9 @@ export const appThemes: AppTheme = {
                 borderColor: color("green700"),
                 borderWidth: "3px",
                 backgroundColor: color("beige300"),
+            },
+            text: {
+                color: color("green500"),
             },
         },
     },

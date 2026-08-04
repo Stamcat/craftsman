@@ -1,0 +1,80 @@
+@use "../../styles/utilities/functions" as u;
+@use "../../styles/global/components/typography" as t;
+@layer craftsman-base {
+    .text {
+        // --- display ---
+        &.display {
+            @include t.h3;
+        }
+        &.display.xlarge {
+            @include t.h1;
+        }
+        &.display.large {
+            @include t.h2;
+        }
+        &.display.small {
+            @include t.h4;
+        }
+
+        // --- heading ---
+        &.heading {
+            @include t.h3;
+        }
+        &.heading.xlarge {
+            @include t.h1;
+        }
+        &.heading.large,
+        &.xlarge {
+            @include t.h2;
+        }
+        &.heading.medium {
+            @include t.h3;
+        }
+        &.heading.small {
+            @include t.h4;
+        }
+        &.heading.xsmall {
+            @include t.h5;
+        }
+
+        // --- paragraph ---
+        &.paragraph {
+            @include t.p;
+        }
+        &.paragraph.xlarge,
+        &.large {
+            @include t.h3;
+        }
+        &.paragraph.large {
+            @include t.h4;
+        }
+        &.paragraph.medium,
+        &.medium {
+            @include t.p;
+        }
+        &.paragraph.small,
+        &.small {
+            @include t.small;
+        }
+        &.paragraph.xsmall,
+        &.xsmall {
+            @include t.xsmall;
+        }
+
+        // --- caption ---
+        &.caption {
+            @include t.small;
+        }
+
+        // --- alignment ---
+        &.center {
+            text-align: center;
+        }
+        &.left {
+            text-align: left;
+        }
+        &.right {
+            text-align: right;
+        }
+    }
+}
