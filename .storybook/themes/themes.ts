@@ -15,6 +15,9 @@ export const appThemes: AppTheme = {
         root: greenRoot,
         components: {
             button: greenButton,
+            select: {
+                borderColor: color("green500"),
+            },
             input: {
                 borderColor: color("green500"),
                 borderWidth: "2px",

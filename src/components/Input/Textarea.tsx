@@ -16,14 +16,14 @@ export const Textarea: React.FC<TextareaProps> = ({
     error,
     required,
     className,
-    styles: styleOverride,
+    style,
     ...props
 }) => {
     const generatedId = useId();
     const inputId = id || generatedId;
 
     return (
-        <InputWrapper label={label} className={clsx(styles.textarea, className)} labelPosition={labelPosition} error={error} required={required} styles={styleOverride}>
+        <InputWrapper label={label} className={clsx(styles.textarea, className)} labelPosition={labelPosition} error={error} required={required} style={style}>
             <textarea id={inputId} className={clsx(styles.input)} {...props} />
         </InputWrapper>
     )

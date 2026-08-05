@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "../Button";
+import { Button } from "../Button/Button";
 import { LuX } from "react-icons/lu";
 import { color } from "../../styles/utilities/color";
-import { isEmpty } from "../../utilities/validations";
 import styles from "./Modal.module.scss";
 import clsx from "clsx";
 
@@ -20,8 +19,6 @@ export interface ModalProps extends React.ComponentPropsWithoutRef<"div"> {
     hideDismissIcon?: boolean;
     /** Footer element, put your action buttons here */
     footer?: React.ReactNode;
-    /** Custom styles apply to outer wrapper so that you can access selectors within */
-    styles?: React.CSSProperties;
 }
 
 type ModalState = {
@@ -53,14 +50,14 @@ export class Modal extends React.PureComponent<ModalProps, ModalState> {
         }
     }
     public render() {
-        const resolvedStyleOverride = isEmpty(this.props.styles) ? undefined : this.props.styles;
         const modalType = this.props.type || "dialog";
 
         if (!this.props.visible) {
             return <></>;
         }
+        const classNames = clsx([styles.wrapper, this.props.className]);
         return (
-            <div className={styles.wrapper} style={resolvedStyleOverride}>
+            <div className={classNames} style={this.props.style}>
                 <div
                     className={clsx(styles.content, styles[modalType])}
                     data-is-closing={this.state.isClosing}
