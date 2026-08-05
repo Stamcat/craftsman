@@ -1,8 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { isEmpty } from "../utilities/validations";
-import { ButtonType, width } from "../styles";
+import { isEmpty } from "../../utilities/validations";
+import { ButtonType, width } from "../../styles";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
     /** Primary - Call-To-Action, Text - use for non-anchored text buttons */

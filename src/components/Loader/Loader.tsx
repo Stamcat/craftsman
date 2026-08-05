@@ -3,13 +3,11 @@
 import clsx from "clsx";
 import { loaders, type LoaderStyle } from "./types";
 import styles from "./loaders.module.scss";
-import { isEmpty } from "../../utilities/validations";
 
 export type LoaderProps = React.ComponentProps<"div"> & {
     type: LoaderStyle;
     color?: string;
     width?: number;
-    styles?: React.CSSProperties;
 }
 
 /**
@@ -19,14 +17,13 @@ export type LoaderProps = React.ComponentProps<"div"> & {
  * We intend to expand selections in the future
  */
 export const Loader: React.FC<LoaderProps> = (props) => {
-    const { type, color = "black", width, styles: styleOverride, className, style, ...rest } = props;
-    const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
+    const { type, color = "black", width, className, style, ...rest } = props;
     const loaderStyleVars = loaders[type](color, width);
 
     return (
         <div
             className={clsx(styles[type], className)}
-            style={{ ...loaderStyleVars, ...resolvedStyleOverride, ...style }}
+            style={{ ...loaderStyleVars, ...style }}
             {...rest}
         />
     );

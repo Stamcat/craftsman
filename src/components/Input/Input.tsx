@@ -23,15 +23,15 @@ export const Input: React.FC<InputProps> = ({
     required = false,
     type = "text",
     error,
-    styles: styleOverride,
     endAdornment,
+    style,
+    className,
     ...props
 }) => {
     const generatedId = useId();
     const inputId = id || generatedId;
-
     return (
-        <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} styles={styleOverride}>
+        <InputWrapper className={className} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
             <span className={styles.inputField} data-has-end-adornment={!isEmpty(endAdornment)}>
                 <input id={inputId} type={type} className={clsx(styles.input, type)} {...props} />
                 {!isEmpty(endAdornment) && <span className={styles.inputAdornment}>{endAdornment}</span>}

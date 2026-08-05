@@ -95,8 +95,7 @@ const meta: Meta<typeof RadioButton> = {
 	},
 	argTypes: {
 		type: { control: false },
-		endAdornment: { control: false },
-		styles: { control: false },
+        endAdornment: { control: false },
 		error: { control: "text" },
         value: {
             control: "select",

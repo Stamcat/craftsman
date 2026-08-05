@@ -1,4 +1,4 @@
-export { Button } from "./Button";
+export { Button } from "./Button/Button";
 export { Input } from "./Input/Input";
 export { InputPassword } from "./Input/InputPassword";
 export { Loader } from "./Loader/Loader";
@@ -7,3 +7,4 @@ export { Checkbox } from "./Input/Checkbox";
 export { Textarea } from "./Input/Textarea";
 export { Text } from "./Text/Text";
 export { Modal } from "./Modal/Modal";
+export { Select } from "./Select/Select";

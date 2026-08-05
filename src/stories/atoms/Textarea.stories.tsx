@@ -34,7 +34,6 @@ const meta: Meta<typeof Textarea> = {
         rows: { control: "number" },
         disabled: { control: "boolean" },
         readOnly: { control: "boolean" },
-        styles: { control: false },
     },
 };
 

@@ -34,7 +34,6 @@ const meta: Meta<typeof InputPassword> = {
         },
         required: { control: "boolean" },
         error: { control: "text" },
-        styles: { control: false },
     },
 };
 

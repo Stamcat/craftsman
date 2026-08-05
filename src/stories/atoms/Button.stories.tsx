@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "../../components/Button";
+import { Button } from "../../components/Button/Button";
 import { ButtonType } from "../../styles";
 import { Loader } from "../../components";
 import { GiFlatbed, GiDiceSixFacesFive, GiBatLeth } from "react-icons/gi";

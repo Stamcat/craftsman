@@ -14,13 +14,11 @@ export type LabeledInput = {
     error?: string | boolean | React.ReactNode;
     /** Shows Required '*' if true */
     required?: boolean;
-    /** Optional wrapper styles using React CSSProperties. */
-    styles?: React.CSSProperties;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
 };
 
-export type InputWrapperProps = React.ComponentProps<"input" | "textarea"> & LabeledInput;
+export type InputWrapperProps = React.ComponentProps<"input" | "textarea" | "select"> & LabeledInput;
 
 /**
  * For accessibility, we recommend using assigning an ID to every Input element.
@@ -31,7 +29,6 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     labelPosition = "top",
     required = false,
     error,
-    styles: styleOverride,
     className,
     style,
     children,
@@ -39,14 +36,13 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     defaultValue
 }) => {
     const hasInput = !isEmpty(value) || !isEmpty(defaultValue);
-    const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
     return (
         <div
             data-label-position={labelPosition}
             data-required={required}
             data-has-input={hasInput}
             className={clsx(styles.wrapper, className)}
-            style={{ ...resolvedStyleOverride, ...style }}
+            style={style}
         >
             {isEmpty(label) ? (
                 children

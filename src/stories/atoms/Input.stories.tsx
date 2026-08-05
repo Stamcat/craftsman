@@ -36,7 +36,6 @@ const meta: Meta<typeof Input> = {
         },
         required: { control: "boolean" },
         error: { control: "text" },
-        styles: { control: false },
         endAdornment: { control: false },
     },
 };
@@ -94,6 +93,6 @@ export const WrapperStyled: Story = {
     args: {
         label: "Styled Wrapper",
         placeholder: "Input with wrapper styles",
-        styles: customWrapperStyles,
+        style: customWrapperStyles,
     },
 };
