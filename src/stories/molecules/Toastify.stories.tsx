@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { toast, ToastContainer, type ToastContainerProps } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { width } from "../../styles/utilities/layout";
-import { Button } from "../../components/Button";
+import { Button } from "../../components/Button/Button";
 
 type StoryArgs = Pick<ToastContainerProps, "position" | "autoClose" | "theme" | "closeOnClick" | "pauseOnHover" | "draggable" | "newestOnTop">;
 
