@@ -81,7 +81,7 @@
     "fs-extra": "11.3.6",
     "globals": "17.7.0",
     "playwright": "1.56.1",
-    "postcss": "8.5.20",
+    "postcss": "8.5.23",
     "prettier": "3.9.4",
     "storybook": "10.4.6",
     "tsx": "4.22.4",
@@ -94,7 +94,7 @@
     "vitest": "4.1.10"
   },
   "overrides": {
-    "postcss": "8.5.20",
+    "postcss": "8.5.23",
     "sharp": "0.35.3"
   }
 }
