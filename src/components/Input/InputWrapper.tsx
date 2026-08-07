@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { isEmpty } from "../../utilities/validations";
 import type { LabelPosition } from "../../utilities/types";
-import styles from "./Input.module.scss";
+import "./Input.scss";
 
 export type LabeledInput = {
     /** String is recommended, use ReactNode to for custom elements */
@@ -41,18 +41,18 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             data-label-position={labelPosition}
             data-required={required}
             data-has-input={hasInput}
-            className={clsx(styles.wrapper, className)}
+            className={clsx("input-wrapper", className)}
             style={style}
         >
             {isEmpty(label) ? (
                 children
             ) : (
                 <label>
-                        {labelPosition !== "hidden" && <div className={styles.inputLabel}>{label}</div>}
+                        {labelPosition !== "hidden" && <div className="input-label">{label}</div>}
                         {children}
                 </label>
             )}
-            {!isEmpty(error) && <div className={styles.error}>{error}</div>}
+            {!isEmpty(error) && <div className="input-error">{error}</div>}
         </div>
     );
 };

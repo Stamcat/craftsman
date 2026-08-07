@@ -3,7 +3,6 @@
 import { useId } from "react";
 import clsx from "clsx";
 import { isEmpty } from "../../utilities/validations";
-import styles from "./Input.module.scss";
 import { InputWrapper, type LabeledInput } from "./InputWrapper";
 import type { TextInputType } from "../../utilities/types";
 
@@ -32,9 +31,9 @@ export const Input: React.FC<InputProps> = ({
     const inputId = id || generatedId;
     return (
         <InputWrapper className={className} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
-            <span className={styles.inputField} data-has-end-adornment={!isEmpty(endAdornment)}>
-                <input id={inputId} type={type} className={clsx(styles.input, type)} {...props} />
-                {!isEmpty(endAdornment) && <span className={styles.inputAdornment}>{endAdornment}</span>}
+            <span className="input-field" data-has-end-adornment={!isEmpty(endAdornment)}>
+                <input id={inputId} type={type} className={clsx("input", type)} {...props} />
+                {!isEmpty(endAdornment) && <span className="input-adornment">{endAdornment}</span>}
             </span>
         </InputWrapper>
     )

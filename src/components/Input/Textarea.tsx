@@ -1,7 +1,6 @@
 "use client";
 
 import { InputWrapper, type LabeledInput } from "./InputWrapper";
-import styles from "./Input.module.scss";
 import clsx from "clsx";
 import { useId } from "react";
 
@@ -23,8 +22,8 @@ export const Textarea: React.FC<TextareaProps> = ({
     const inputId = id || generatedId;
 
     return (
-        <InputWrapper label={label} className={clsx(styles.textarea, className)} labelPosition={labelPosition} error={error} required={required} style={style}>
-            <textarea id={inputId} className={clsx(styles.input)} {...props} />
+        <InputWrapper label={label} className={clsx("textarea", className)} labelPosition={labelPosition} error={error} required={required} style={style}>
+            <textarea id={inputId} className="input" {...props} />
         </InputWrapper>
     )
 }

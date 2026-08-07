@@ -1,9 +1,7 @@
 import { color } from "../../src/styles";
 import type { AppTheme } from "../../src/styles/theme/types";
-// @ts-expect-error Resolved by the bundler as an inline style import.
 import greenRoot from "./green.scss?inline";
-// @ts-expect-error Resolved by the bundler as an inline style import.
-import greenButton from "./green.button.scss?inline";
+import greenButton from "./green.button.scss?inline"; // these aren't errors.
 
 export const appThemes: AppTheme = {
     default: {

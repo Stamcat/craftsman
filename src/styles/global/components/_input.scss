@@ -1,12 +1,6 @@
 @use "../../utilities/functions" as u;
 
 @layer craftsman-base {
-  %inside-input-label-base {
-    --react-international-phone-height: 50px;
-    --react-international-phone-border-radius: 8px;
-    --react-international-phone-border-color: #c0c0c0ff;
-    position: relative;
-  }
 
   %interactive-focus-reset {
     &:focus {

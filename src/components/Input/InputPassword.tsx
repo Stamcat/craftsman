@@ -5,8 +5,6 @@ import type { TextInputType } from "../../utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Button } from "../Button/Button";
 import { Input, type InputProps } from "./Input";
-import styles from "./Input.module.scss";
-
 
 
 const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () => void }) => (
@@ -16,7 +14,7 @@ const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () =
         onClick={onToggle}
         aria-label={visible ? "Hide password" : "Show password"}
         aria-pressed={visible}
-        className={styles.inputViewToggle}
+        className="input-view-toggle"
     >
         {visible ? <ImEye size={16} /> : <ImEyeBlocked size={16} />}
     </Button>
