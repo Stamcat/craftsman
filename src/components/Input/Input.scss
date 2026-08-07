@@ -1,23 +1,22 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/functions" as u;
 
-
 @mixin inside-input-label-floating {
-top: -0.5rem;
-left: #{u.width("gutter", 0.125)};
-font-size: #{u.width("text", 0.75)};
+    top: -0.5rem;
+    left: #{u.width("gutter", 0.125)};
+    font-size: #{u.width("text", 0.75)};
 }
 
-.wrapper {
+.input-wrapper {
     label {
-        .inputLabel {
+        .input-label {
             margin-bottom: #{u.width("gutter", 0.25)};
         }
     }
 
     &[data-required="true"] {
         label {
-            .inputLabel {
+            .input-label {
                 &::after {
                     content: "*";
                     color: var(--red700);
@@ -31,7 +30,7 @@ font-size: #{u.width("text", 0.75)};
             display: inline-flex;
             align-items: center;
 
-            .inputLabel {
+            .input-label {
                 width: fit-content;
                 margin-right: #{u.width("gutter", 0.75)};
             }
@@ -49,7 +48,7 @@ font-size: #{u.width("text", 0.75)};
             flex-direction: column-reverse;
             align-items: flex-start;
 
-            .inputLabel {
+            .input-label {
                 margin-bottom: 0;
                 margin-top: #{u.width("gutter", 0.25)};
             }
@@ -62,7 +61,7 @@ font-size: #{u.width("text", 0.75)};
             flex-direction: row-reverse;
             align-items: baseline;
 
-            .inputLabel {
+            .input-label {
                 margin-left: #{u.width("gutter", 0.25)};
                 margin-bottom: 0;
             }
@@ -70,9 +69,12 @@ font-size: #{u.width("text", 0.75)};
     }
 
     &[data-label-position="inside"] {
-        @extend %inside-input-label-base;
+        --react-international-phone-height: 50px;
+        --react-international-phone-border-radius: 8px;
+        --react-international-phone-border-color: #c0c0c0ff;
+        position: relative;
 
-        .inputLabel {
+        .input-label {
             position: absolute;
             background-color: var(--white);
             z-index: 1;
@@ -88,13 +90,13 @@ font-size: #{u.width("text", 0.75)};
                 color 150ms ease;
         }
 
-        > label > .inputField > .input,
+        > label > .input-field > .input,
         > .input {
             transition: border-color 200ms ease;
         }
 
         &:focus-within {
-            .inputLabel {
+            .input-label {
                 @include inside-input-label-floating;
                 color: var(--blue500);
             }
@@ -108,10 +110,8 @@ font-size: #{u.width("text", 0.75)};
             }
         }
 
-        &:has(.input:not(:placeholder-shown)),
-        &:has(.input:-webkit-autofill),
         &[data-has-input="true"] {
-            .inputLabel {
+            .input-label {
                 @include inside-input-label-floating;
             }
         }
@@ -125,41 +125,39 @@ font-size: #{u.width("text", 0.75)};
             transition: opacity 200ms ease;
         }
     }
+    .input-field {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
 
-}
-
-.inputField {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-
-    &[data-has-end-adornment="true"] {
-        > .input {
-            width: 100%;
-            padding-right: #{u.width("gutter", 1.5)};;
+        &[data-has-end-adornment="true"] {
+            > .input {
+                width: 100%;
+                padding-right: #{u.width("gutter", 1.5)};
+            }
         }
     }
-}
 
-.inputAdornment {
-    position: absolute;
-    right: #{u.width("gutter", 0.5)};;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-top: 0;
-    z-index: 1;
-    display: inline-flex;
-    align-items: center;
-}
+    .input-adornment {
+        position: absolute;
+        right: #{u.width("gutter", 0.5)};
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+    }
 
-.error {
-    margin-top: #{u.width("gutter", 0.25)};;
-    font-size: #{u.width("text", 0.75)};;
-    color: var(--red600);
+    .input-error {
+        margin-top: #{u.width("gutter", 0.25)};
+        font-size: #{u.width("text", 0.75)};
+        color: var(--red600);
+    }
+    .input-view-toggle {
+        padding: 0;
+        display: inline-flex;
+        align-items: "center";
+        line-height: 1;
+    }
 }
-.inputViewToggle {
-    padding: 0;
-    display: inline-flex;
-    align-items: "center";
-    line-height: 1;
-};

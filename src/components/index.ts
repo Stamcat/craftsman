@@ -8,3 +8,5 @@ export { Textarea } from "./Input/Textarea";
 export { Text } from "./Text/Text";
 export { Modal } from "./Modal/Modal";
 export { Select } from "./Select/Select";
+export { DatePicker } from "./Input/DatePicker";
+export { InputPhone } from "./Input/InputPhone";

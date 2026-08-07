@@ -2,8 +2,7 @@ import type { Preview } from "@storybook/react-vite";
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from "../src/styles/components/ThemeProvider";
 import { appThemes } from "./themes/themes";
-// @ts-expect-error -- this is just a storybook.
-import "../src/styles/global/globalStyles.scss";
+import "../src/styles/global/globalStyles.scss"; // these aren't errors.
 
 const preview: Preview = {
     parameters: {
