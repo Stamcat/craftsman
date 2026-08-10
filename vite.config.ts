@@ -48,6 +48,7 @@ export default defineConfig({
             // Externalize dependencies that should not be bundled
             external: [
                 "clsx",
+                "pure-react-carousel",
                 "react",
                 "react-dom",
                 "zod",

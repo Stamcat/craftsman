@@ -72,6 +72,10 @@
             @extend %radio;
         }
     }
+    figure {
+        margin: 0;
+        
+    }
     textarea {
         @extend %input-base;
     }

@@ -75,3 +75,6 @@ export type TextType = z.infer<typeof TextType>;
 
 export const TextSize = z.enum(["xlarge", "large", "medium", "small", "xsmall"]);
 export type TextSize = z.infer<typeof TextSize>;
+
+export const CarouselPageType = z.enum(["dots", "numbers"]);
+export type CarouselPageType = z.infer<typeof CarouselPageType>;
