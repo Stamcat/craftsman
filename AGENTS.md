@@ -11,11 +11,16 @@ Use these imports:
 ```tsx
 import { Button } from "@stamcat/craftsman/Button";
 import { Checkbox } from "@stamcat/craftsman/Checkbox";
+import { DatePicker } from "@stamcat/craftsman/DatePicker";
 import { Input } from "@stamcat/craftsman/Input";
 import { InputPassword } from "@stamcat/craftsman/InputPassword";
+import { InputPhone } from "@stamcat/craftsman/InputPhone";
 import { Loader } from "@stamcat/craftsman/Loader";
 import { Modal } from "@stamcat/craftsman/Modal";
 import { RadioButton } from "@stamcat/craftsman/RadioButton";
+import { Select } from "@stamcat/craftsman/Select";
+import { Text } from "@stamcat/craftsman/Text";
+import { Textarea } from "@stamcat/craftsman/Textarea";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
@@ -26,6 +31,125 @@ Do not assume a root export like `@stamcat/craftsman` unless that export is expl
 2. Only use documented component entry points.
 3. Do not import storybook files or internal style utilities from consuming applications.
 4. Prefer standard React props first; use custom props only when required.
+
+## Code Block Rendering
+
+Craftsman's global styles automatically style `<code>` and `<code><pre>` elements. **Never create custom inline styles or wrapper divs to simulate a code block.** Use the native elements directly:
+
+```tsx
+// Inline code — renders with pill/badge style
+<code>someValue</code>
+
+// Block code — renders with dark background, padding, and border-radius
+<code><pre>{`your
+multiline
+code here`}</pre></code>
+```
+
+The two modes are driven by `_code.scss`:
+- `<code>` alone → light gray background, inline display
+- `<code>` containing `<pre>` → dark background (`--gray800`), block display, padded and rounded
+
+Do not create `preStyle`, `codeBlockStyle`, or equivalent inline style objects for this purpose. The global styles handle it.
+
+## Style Utilities
+
+Craftsman provides TypeScript helpers and matching Sass functions for color, spacing, and breakpoints. Always use these instead of hard-coded values so theming and overrides work correctly.
+
+### color()
+
+**TypeScript** — import from `@stamcat/craftsman/styles`:
+
+```ts
+import { color, colors, hexToRgba } from "@stamcat/craftsman/styles";
+
+// Returns var(--blue500)
+color("blue500")
+
+// Returns rgb(from var(--blue500) r g b / 0.5)
+color("blue500", "rgba", 0.5)
+
+// Fallback for environments that don't support CSS relative color syntax
+hexToRgba(colors.blue500, 0.5)
+```
+
+**Sass** — import `functions` as `u`:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
+
+.element {
+  color:      #{u.color(blue500)};
+  background: #{u.color(black, rgba, 0.4)};
+}
+```
+
+- `color(name)` → `var(--name)` — always prefer this over hard-coded hex values so theme overrides apply.
+- `color(name, rgba, alpha)` → `rgb(from var(--name) r g b / alpha)` — uses CSS relative color syntax; verify browser support for your target.
+- Never hard-code hex color values. Always use `color()` or a CSS variable.
+
+### width()
+
+**TypeScript** — import from `@stamcat/craftsman/styles`:
+
+```ts
+import { width } from "@stamcat/craftsman/styles";
+
+width("gutter")        // var(--w-gutter, 16px)
+width("gutter", 0.5)   // calc(var(--w-gutter, 16px) * 0.5)
+width("column", 3)     // calc((var(--w-column) * 3) + (var(--w-gutter) * 2))
+```
+
+**Sass** — import `functions` as `u`:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
+
+.card {
+  padding:   #{u.width(gutter)};
+  gap:       #{u.width(gutter, 0.5)};
+  max-width: #{u.width(column, 4)};
+}
+```
+
+Valid keys: `text` · `gutter` · `column` · `tablet` · `desktop` · `extDesktop` · `mobileMax` · `tabletMax` · `desktopMax`
+
+- The `column` key automatically accounts for gutters between columns.
+- Never use hard-coded `px` values for spacing or layout widths. Always use `width()`.
+
+### breakpoint()
+
+**TypeScript** — returns a full `@media` rule string for CSS-in-JS:
+
+```ts
+import { breakpoint, media } from "@stamcat/craftsman/styles";
+
+// Full rule — use inside styled-components, emotion, or style injection
+breakpoint("desktop", "font-size: 18px;")
+// => "@media (min-width: 1040px) { font-size: 18px; }"
+
+// Raw query string only — use for conditional logic or matchMedia
+media.tablet  // => "(min-width: 660px)"
+```
+
+**Sass** — `@include breakpoint(key)` wraps content in the correct `@media` query:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
+
+.sidebar {
+  display: none;
+
+  @include u.breakpoint(tablet) {
+    display: block;
+  }
+}
+```
+
+Available breakpoint keys: `tablet` · `tabletMax` · `tabletOnly` · `desktop` · `desktopMax` · `desktopOnly` · `extDesktop` · `mobileMax` · `mobileOnly` · `mobileTablet`
+
+- Breakpoint values come from `_config.scss` and stay in sync with any project overrides.
+- Never hard-code `@media (min-width: 1040px)` or similar — always use `breakpoint()` so values stay consistent with config.
 
 ## Component Contracts
 
@@ -310,6 +434,213 @@ Example:
 <Loader type="spinner" color="var(--blue500)" width={40} aria-label="Loading" />
 ```
 
+### Textarea
+
+Import:
+
+```tsx
+import { Textarea } from "@stamcat/craftsman/Textarea";
+```
+
+Props:
+
+- Inherits all native `<textarea>` props.
+- `label?: string | ReactNode`
+- `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
+- `error?: string | boolean | ReactNode`
+- `required?: boolean`
+- `rows?: number`
+
+Behavior notes:
+
+- Shares the same `InputWrapper` as `Input` — label, error, and required behavior is identical.
+- `id` is auto-generated via `useId` if not provided.
+
+Example:
+
+```tsx
+<Textarea
+  label="Your Message"
+  placeholder="Type here"
+  rows={4}
+  required
+/>
+```
+
+### Select
+
+Import:
+
+```tsx
+import { Select } from "@stamcat/craftsman/Select";
+```
+
+Props:
+
+- Inherits all native `<select>` props.
+- `label?: string | ReactNode`
+- `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
+- `error?: string | boolean | ReactNode`
+- `required?: boolean`
+- `options?: Array<{ label: string; value: string }>`
+
+Behavior notes:
+
+- Built on the native `<select>` element via `InputWrapper`.
+- Pass options as a plain array — do not render `<option>` children manually.
+- `id` is auto-generated via `useId` if not provided.
+
+Example:
+
+```tsx
+<Select
+  label="Favorite Fruit"
+  required
+  options={[
+    { value: "", label: "Select one..." },
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+  ]}
+/>
+```
+
+### InputPhone
+
+Import:
+
+```tsx
+import { InputPhone } from "@stamcat/craftsman/InputPhone";
+```
+
+Props:
+
+- Extends `PhoneInputProps` from `react-international-phone`.
+- `label?: string | ReactNode`
+- `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
+- `error?: string | boolean | ReactNode`
+- `required?: boolean`
+- `defaultCountry?: string` (default: `"us"`)
+- `preferredCountries?: string[]`
+- `endAdornment?: ReactNode`
+
+Behavior notes:
+
+- Powered by `react-international-phone` for i18n-aware phone number formatting.
+- Country selector dropdown opens below the field; ensure the container has at least 350px of vertical space.
+- Use `preferredCountries` to surface commonly used countries at the top of the dropdown.
+
+Example:
+
+```tsx
+<InputPhone
+  label="Phone Number"
+  defaultCountry="us"
+  preferredCountries={["us", "gb", "ca"]}
+  required
+/>
+```
+
+### DatePicker
+
+Import:
+
+```tsx
+import { DatePicker } from "@stamcat/craftsman/DatePicker";
+```
+
+Props:
+
+- Extends `DatePickerProps` from `react-date-picker`.
+- `label?: string | ReactNode`
+- `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
+- `error?: string | boolean | ReactNode`
+- `required?: boolean`
+- `value?: Date | null`
+- `onChange?: (value: DatePickerProps["value"]) => void`
+
+Behavior notes:
+
+- Controlled component — parent owns `value` and `onChange`.
+- Calendar flyout renders below the input; ensure the container has at least 400px of vertical space.
+- Use `useState` to manage the selected date value.
+
+Example:
+
+```tsx
+const [date, setDate] = useState<Date | null>(null);
+
+<DatePicker
+  label="Appointment Date"
+  value={date}
+  onChange={setDate}
+  required
+/>
+```
+
+### Text
+
+Import:
+
+```tsx
+import { Text } from "@stamcat/craftsman/Text";
+```
+
+Props:
+
+- Inherits all native HTML element props.
+- `as?: TextTags` — HTML tag to render (default: `"div"`)
+- `richText?: boolean` — when `true`, renders sanitized HTML from a string `children` value (always renders as `<div>`)
+- `type?: TextType` — overrides base type styling (e.g. `"display"`, `"heading"`)
+- `size?: TextSize` — overrides base size styling
+- `alignment?: "center" | "left" | "right"` — legacy text-align shorthand
+
+Behavior notes:
+
+- Uses global HTML5 tag declarations by default; `type` and `size` override base styling.
+- `richText` mode sanitizes HTML via DOMPurify. Always pass a string as `children` in this mode.
+- Prefer semantic HTML5 tags via `as` over using `type`/`size` overrides.
+
+Example:
+
+```tsx
+// Semantic heading
+<Text as="h2">Section Title</Text>
+
+// Sanitized rich text from a CMS
+<Text richText>{'<p><strong>Hello</strong> world</p>'}</Text>
+```
+
+### Toast (react-toastify)
+
+Craftsman re-exports `toast` and `ToastContainer` from `react-toastify`. No custom wrapper is needed.
+
+Import:
+
+```tsx
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+```
+
+Usage:
+
+- Render one `<ToastContainer>` near the root of your app.
+- Call `toast(...)` anywhere in response to user actions.
+- `ToastContainer` props: `position`, `autoClose`, `theme` (`"light" | "dark" | "colored"`), `closeOnClick`, `pauseOnHover`, `draggable`, `newestOnTop`.
+
+Example:
+
+```tsx
+// Root layout
+<ToastContainer position="bottom-right" autoClose={3000} theme="light" />
+
+// Anywhere in the app
+toast("Saved successfully!");
+toast.error("Something went wrong.");
+toast.success("Profile updated.");
+toast.warning("Unsaved changes.");
+toast.info("New version available.");
+```
+
 ## Styling Expectations
 
 - Components are built with SCSS modules and class-based variant hooks.
@@ -426,6 +757,6 @@ Sass usage (framework source):
 
 If uncertain about available exports:
 
-1. Use only `Button`, `Checkbox`, `Input`, `InputPassword`, `Loader`, `Modal`, and `RadioButton` from their component entry points.
+1. Use only `Button`, `Checkbox`, `DatePicker`, `Input`, `InputPassword`, `InputPhone`, `Loader`, `Modal`, `RadioButton`, `Select`, `Text`, and `Textarea` from their component entry points.
 2. Do not invent package APIs.
 3. Prefer native HTML elements for anything not explicitly exported.
