@@ -1,0 +1,32 @@
+@use "../../styles/utilities/functions" as u;
+
+.carousel {
+    position: relative;
+
+    &__viewport {
+        overflow: hidden;
+    }
+
+    &__container {
+        display: flex;
+        touch-action: pan-y pinch-zoom;
+    }
+
+    &__slide {
+        flex: 0 0 100%;
+        min-width: 0;
+    }
+
+    &__controls {
+        display: inline-flex;
+        justify-content: space-between;
+        flex-flow: row nowrap;
+        gap: #{u.width("gutter", 0.5)};
+        margin-top: #{u.width("gutter", 0.75)};
+        width: 100%;
+    }
+    &__dots button {
+        margin: 0 #{u.width("gutter", 0.125)};
+    }
+
+}

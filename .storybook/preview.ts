@@ -19,6 +19,7 @@ const preview: Preview = {
                     "Templates",
                     "Utilities",
                     "*",
+                    "About Stamcat",
                     "To Do",
                 ],
                 method: "alphabetical",

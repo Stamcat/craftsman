@@ -241,7 +241,7 @@ const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: st
 
     return {
         total: entries.length,
-        icons: entries.slice(0, MAX_ICONS_PER_STORY),
+        icons: entries,
     };
 };
 
@@ -252,11 +252,30 @@ type GalleryProps = {
 };
 
 const IconGallery = ({ icons, total, error }: GalleryProps) => {
+    const [visibleCount, setVisibleCount] = useState(MAX_ICONS_PER_STORY);
+    const sentinelRef = useRef<HTMLDivElement>(null);
     const [iconUsage, setIconUsage] = useState<IconUsageState>({
         name: "",
         iconPath: "",
         visible: false,
     });
+
+    useEffect(() => {
+        const el = sentinelRef.current;
+        if (!el || !icons) {
+            return undefined;
+        }
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setVisibleCount((n) => Math.min(n + MAX_ICONS_PER_STORY, total));
+                }
+            },
+            { rootMargin: "400px" },
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [icons, total]);
 
     if (error) {
         return <p>{error}</p>;
@@ -266,13 +285,15 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
         return <p>Loading icons…</p>;
     }
 
+    const visible = icons.slice(0, visibleCount);
+
     return (
         <div style={pageStyle}>
             <div style={toolbarStyle}>
-                <span>Showing {icons.length} of {total} icons</span>
+                <span>Showing {visible.length} of {total} icons</span>
             </div>
             <div style={gridStyle}>
-                {icons.map(({ name, Icon, importPath }) => (
+                {visible.map(({ name, Icon, importPath }) => (
                     <IconCard
                         key={name}
                         name={name}
@@ -288,6 +309,7 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
                     />
                 ))}
             </div>
+            {visibleCount < total && <div ref={sentinelRef} style={{ height: 1 }} />}
             <Modal
                 header={iconUsage.name || "Icon Usage"}
                 visible={iconUsage.visible}
