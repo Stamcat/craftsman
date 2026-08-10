@@ -196,6 +196,85 @@ const style = {
     },
 };
 
+export const SassColorFunction: Story = {
+    name: "Sass color()",
+    parameters: {
+        docs: {
+            description: {
+                story: `The \`color()\` Sass function resolves a color variable reference for use inside stylesheets. It has two modes:
+
+- **hex** (default) — returns the raw CSS variable: \`var(--blue500)\`
+- **rgba** — returns a \`rgb(from ...)\` relative color expression for alpha control: \`rgb(from var(--blue500) r g b / 0.5)\`
+
+Use this instead of hard-coding hex values so themes can override via \`--name\` variables.
+
+\`\`\`scss
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
+
+.element {
+  // Hex — resolves to var(--blue500)
+  color: #{u.color(blue500)};
+
+  // RGBA — resolves to rgb(from var(--blue500) r g b / 0.5)
+  background: #{u.color(blue500, rgba, 0.5)};
+}
+\`\`\`
+
+> **Note:** The \`rgba\` mode uses the CSS relative color syntax (\`rgb(from ...)\`). Verify browser support requirements for your target audience.`,
+            },
+            source: {
+                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+
+.badge {
+  color: #{u.color(white)};
+  background: #{u.color(blue500)};
+  border: 1px solid #{u.color(blue700)};
+}
+
+.overlay {
+  background: #{u.color(black, rgba, 0.4)};
+}`,
+                language: "scss",
+            },
+        },
+    },
+    render: ({ variable, alpha }) => {
+        const hexResult = color(variable, "hex");
+        const rgbaResult = color(variable, "rgba", alpha);
+
+        return (
+            <section style={utilityCardStyle}>
+                <h3>Sass color(name, type?, alpha?)</h3>
+                <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
+                    <thead>
+                        <tr>
+                            <th style={{ textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb" }}>Call</th>
+                            <th style={{ textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb" }}>Output</th>
+                            <th style={{ textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb" }}>Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ padding: "4px 8px" }}><code>{`#{u.color(${variable})}`}</code></td>
+                            <td style={{ padding: "4px 8px" }}><code>{hexResult}</code></td>
+                            <td style={{ padding: "4px 8px" }}>
+                                <div style={{ width: 32, height: 32, borderRadius: 4, border: "1px solid #e5e7eb", background: hexResult }} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style={{ padding: "4px 8px" }}><code>{`#{u.color(${variable}, rgba, ${alpha})}`}</code></td>
+                            <td style={{ padding: "4px 8px" }}><code>{rgbaResult}</code></td>
+                            <td style={{ padding: "4px 8px" }}>
+                                <div style={{ width: 32, height: 32, borderRadius: 4, border: "1px solid #e5e7eb", background: rgbaResult }} />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        );
+    },
+};
+
 export const Palette: Story = {
     render: () => {
         const grouped = Object.entries(colors).reduce<Array<{ key: string; items: Array<[string, string]> }>>((acc, entry, index, list) => {

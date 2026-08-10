@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/craftsman",
-  "version": "0.0.27-alpha.9",
+  "version": "0.0.27-alpha.10",
   "type": "module",
   "description": "A powerful, lightweight framework for design systems",
   "repository": {
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
-    "dompurify": "3.4.12",
+    "dompurify": "3.4.13",
     "react": "19.2.7",
     "react-date-picker": "12.0.2",
     "react-datetime-picker": "7.0.2",
@@ -67,7 +67,7 @@
     "@vitest/browser": "4.1.10",
     "@vitest/browser-playwright": "4.1.10",
     "@vitest/coverage-v8": "4.1.10",
-    "brace-expansion": "5.0.7",
+    "brace-expansion": "5.0.9",
     "commit-and-tag-version": "11.2.2",
     "eslint": "9.35.0",
     "eslint-config-prettier": "10.1.8",
@@ -81,7 +81,7 @@
     "fs-extra": "11.3.6",
     "globals": "17.7.0",
     "playwright": "1.56.1",
-    "postcss": "8.5.20",
+    "postcss": "8.5.23",
     "prettier": "3.9.4",
     "storybook": "10.4.6",
     "tsx": "4.22.4",
@@ -94,7 +94,7 @@
     "vitest": "4.1.10"
   },
   "overrides": {
-    "postcss": "8.5.20",
+    "postcss": "8.5.23",
     "sharp": "0.35.3"
   }
 }

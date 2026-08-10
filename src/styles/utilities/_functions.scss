@@ -21,7 +21,7 @@ $width-defaults: (
 
 	@return string.unquote("var(--#{$name})");
 }
-
+// internal function
 @function width-var($name) {
 	@if not map.has-key($width-defaults, $name) {
 		@error "Unknown width key `#{$name}`.";
@@ -59,7 +59,7 @@ $width-defaults: (
 
 	@return string.unquote("calc(#{$value} * #{$multiplier})");
 }
-
+// internal function
 @function media($bp) {
 	@if $bp == mobile {
 		@return string.unquote("(min-width: 0px)");
