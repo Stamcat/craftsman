@@ -15,10 +15,16 @@ export function validateEmail(value: string): boolean {
  * This exists in Stamcat/Localize, but since we're using so little of it at this point in time, 
  * we're duplicating code to reduce dependency
  */
-export const getUnitLabel = (locale: Intl.LocalesArgument, unit: Intl.NumberFormatOptions["unit"]): string =>
+export const getUnitLabel = (
+    locale: Intl.LocalesArgument,
+    unit: Intl.NumberFormatOptions["unit"],
+    override?: string,
+): string =>
+    override ??
     new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "long" })
         .formatToParts(1)
-        .find((p) => p.type === "unit")?.value ?? String(unit);
+        .find((p) => p.type === "unit")?.value ??
+    String(unit);
         
 /**
  * This exists in Stamcat/Localize, but since we're using so little of it at this point in time, 

@@ -52,6 +52,7 @@ export default defineConfig({
                 "react",
                 "react-dom",
                 "zod",
+                "@floating-ui/react-dom",
                 "react/jsx-runtime",
                 /^react-icons(\/.*)?$/,
                 "dompurify",
