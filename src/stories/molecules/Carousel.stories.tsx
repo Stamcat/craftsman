@@ -7,9 +7,9 @@ import "./Carousel.scss";
 import { CarouselPageType } from "../../styles";
 
 const SLIDES = [
-    <figure><img src={stam} alt="Stam" /><figcaption>Stam</figcaption></figure>,
-    <figure><img src={kaluah} alt="Kaluah" /><figcaption>Kaluah</figcaption></figure>,
-    <figure><img src={tito} alt="Tito" /><figcaption>Tito</figcaption></figure>,
+    <figure><img src={stam} alt="Stam" loading="lazy" /><figcaption>Stam</figcaption></figure>,
+    <figure><img src={kaluah} alt="Kaluah" loading="lazy" /><figcaption>Kaluah</figcaption></figure>,
+    <figure><img src={tito} alt="Tito" loading="lazy" /><figcaption>Tito</figcaption></figure>,
 
 ];
 
@@ -22,43 +22,48 @@ const meta: Meta<typeof Carousel> = {
         pagination: "dots",
         className: "carouselWrapper",
         slides: SLIDES,
-        options: {
-            loop: false,
-            align: "center",
-            direction: "ltr",
-            dragFree: false,
-            dragThreshold: 10,
-            slidesToScroll: 1,
-            containScroll: "trimSnaps",
-            skipSnaps: false,
-            startIndex: 0,
-            duration: 25,
-        },
+        loop: false,
+        align: "center",
+        direction: "ltr",
+        dragFree: false,
+        dragThreshold: 10,
+        slidesToScroll: 1,
+        containScroll: "trimSnaps",
+        skipSnaps: false,
+        startIndex: 0,
+        duration: 25,
     },
     argTypes: {
-        buttons: {
-            control: "boolean"
-        },
+        buttons: { control: "boolean" },
         pagination: {
             control: "select",
             options: CarouselPageType.options,
         },
+        loop: { control: "boolean" },
+        align: { control: "select", options: ["start", "center", "end"] },
+        direction: { control: "radio", options: ["ltr", "rtl"] },
+        dragFree: { control: "boolean" },
+        dragThreshold: { control: "number" },
+        slidesToScroll: { control: "number" },
+        containScroll: { control: "select", options: ["trimSnaps", "keepSnaps"] },
+        skipSnaps: { control: "boolean" },
+        startIndex: { control: "number" },
+        duration: { control: "number" },
         slides: { control: false },
         className: { control: false },
         style: { control: false },
-        options: { control: "object" },
     },
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Carousel>;
 
 export const Default: Story = {};
 
 export const FreeScroll: Story = {
     args: {
-        buttons: true,
-        options: { dragFree: true, loop: true },
+        dragFree: true,
+        loop: true,
     },
 };
 

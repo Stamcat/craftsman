@@ -1,0 +1,151 @@
+"use client";
+
+import React, { useState } from "react";
+import { IosPickerItem } from './TimePickerWheel'
+import "./TimePicker.scss";
+import { getAmPmLabels, getUnitLabel, is24HourFormat } from '../../utilities';
+import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
+import { padTime, parseTimeString, resolveHasValue, resolveLocale, resolveTime, to24Hour } from "./utilities";
+import { isEmpty } from "../../utilities/validations";
+import { TimePickerDisplay } from "./TimePickerDisplay";
+
+
+type PropType = Omit<React.ComponentProps<"input">, "type"> & LabeledInput & {
+    locale?: Intl.LocalesArgument;
+    format?: 24 | 12;
+}
+/**
+ * Custom time picker element, displays a wheel to scroll through time values.
+ * Supports internationalization with custom locale.
+ * 
+ * TODO: Need to implement Tooltip and can wrap the picker wheel component. Tooltip will have browser window awareness so that we can ensure the menu doesn't go off-screen or cause weird layout shifts when open.
+ */
+export const TimePicker = (props: PropType) => {
+    const { locale, format, value, defaultValue, onChange, label, labelPosition, error, required, name } = props;
+
+    // hooks
+    const [internalHours, setHours] = useState<number | null>(() =>
+        isEmpty(defaultValue) ? null : parseTimeString(defaultValue)[0]
+    );
+    const [internalMinutes, setMinutes] = useState<number | null>(() =>
+        isEmpty(defaultValue) ? null : parseTimeString(defaultValue)[1]
+    );
+    const [visible, setVisible] = useState(false);
+
+    // derived state
+    const resolvedLocale = resolveLocale(locale);
+    // controlled mode: derive from value prop; uncontrolled: use internal state
+    const [hours, minutes] = resolveTime(value, internalHours, internalMinutes);
+    const hasValue = resolveHasValue(value, internalHours);
+    // fixed value: consumer provided value with no onChange handler
+    const isReadOnly = !isEmpty(value) && !onChange;
+    const timeFormat = format ?? (is24HourFormat(resolvedLocale) ? 24 : 12);
+    const hourOffset = timeFormat === 12 ? 1 : 0;
+    const amPmLabels = timeFormat === 12 ? getAmPmLabels(resolvedLocale) : null;
+    const amPmIndex = hours >= 12 ? 1 : 0;
+    const hourIndex = timeFormat === 12 ? (hours % 12 + 11) % 12 : hours;
+    const timeValue = `${padTime(hours)}:${padTime(minutes)}`;
+
+    // actions
+    const dispatchChange = (h: number, m: number) => {
+        onChange?.({ target: { value: `${padTime(h)}:${padTime(m)}` } } as React.ChangeEvent<HTMLInputElement>);
+    };
+    const handleHourSelect = (index: number) => {
+        const display = index + hourOffset;
+        const h = to24Hour(display, hours >= 12, timeFormat === 12);
+        setHours(h);
+        dispatchChange(h, minutes);
+    };
+
+    const handleMinuteSelect = (index: number) => {
+        setMinutes(index);
+        dispatchChange(hours, index);
+    };
+
+    const handleAmPmSelect = (index: number) => {
+        const isPM = index === 1;
+        const currentIsPM = hours >= 12;
+        if (isPM === currentIsPM) { return; }
+        const next = isPM ? hours + 12 : hours - 12;
+        setHours(next);
+        dispatchChange(next, minutes);
+    };
+
+    const handleHourInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const n = parseInt(e.target.value, 10);
+        const max = timeFormat === 12 ? 12 : 23;
+        const min = timeFormat === 12 ? 1 : 0;
+        if (isNaN(n) || n < min || n > max) { return; }
+        const h = to24Hour(n, hours >= 12, timeFormat === 12);
+        setHours(h);
+        dispatchChange(h, minutes);
+    };
+
+    const handleMinuteInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const n = parseInt(e.target.value, 10);
+        if (isNaN(n) || n < 0 || n > 59) { return; }
+        setMinutes(n);
+        dispatchChange(hours, n);
+    };
+
+    const handleAmPmInput = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        handleAmPmSelect(parseInt(e.target.value, 10));
+    };
+
+    return (
+        <div className="timePicker__wrapper">
+            {name && <input type="hidden" name={name} value={timeValue} readOnly />}
+            <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} value={timeValue}>
+                <TimePickerDisplay
+                    hours={hours}
+                    minutes={minutes}
+                    hasValue={hasValue}
+                    isReadOnly={isReadOnly}
+                    timeFormat={timeFormat}
+                    amPmLabels={amPmLabels}
+                    visible={visible}
+                    onToggleVisible={() => setVisible((v) => !v)}
+                    onChange={{
+                        hour: handleHourInput,
+                        minute: handleMinuteInput,
+                        amPm: handleAmPmInput,
+                    }}
+                />
+            </InputWrapper>
+            {visible && <div className="timePicker">
+                <IosPickerItem
+                    slideCount={timeFormat}
+                    perspective="left"
+                    loop={true}
+                    offset={hourOffset}
+                    selectedIndex={hourIndex}
+                    onSelect={handleHourSelect}
+                    disabled={isReadOnly}
+                    label={getUnitLabel(resolvedLocale, "hour")}
+                />
+                <IosPickerItem
+                    slideCount={60}
+                    perspective="right"
+                    loop={true}
+                    selectedIndex={minutes}
+                    onSelect={handleMinuteSelect}
+                    disabled={isReadOnly}
+                    label={getUnitLabel(resolvedLocale, "minute")}
+                />
+                {timeFormat === 12 && amPmLabels && (
+                    <IosPickerItem
+                        slideCount={2}
+                        perspective="center"
+                        loop={false}
+                        slides={amPmLabels}
+                        selectedIndex={amPmIndex}
+                        onSelect={handleAmPmSelect}
+                        disabled={isReadOnly}
+                        label=""
+                    />
+                )}
+            </div>}
+        </div>
+    );
+};
+

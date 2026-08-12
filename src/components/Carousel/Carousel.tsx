@@ -8,10 +8,10 @@ import "./Carousel.scss";
 import { FaAngleRight, FaAngleLeft, FaRegCircle, FaCircle } from "react-icons/fa6";
 import clsx from "clsx";
 import type { CarouselPageType } from "../../utilities/types";
+import { Pagination } from "../Pagination/Pagination";
 
-export type CarouselProps = {
+export type CarouselProps = Omit<EmblaOptionsType, "slides"> & {
     slides?: React.ReactNode[];
-    options?: EmblaOptionsType;
     className?: string;
     style?: React.CSSProperties;
     buttons?: boolean;
@@ -23,9 +23,9 @@ export type CarouselProps = {
  * Please don't use Embla's code examples directly. The code in their codepen is really bad.
  */
 export const Carousel: React.FC<CarouselProps> = (props) => {
-    const { slides = [], options, className, style, buttons = true, pagination = "dots" } = props;
+    const { slides = [], className, style, buttons = true, pagination = "dots", ...opts } = props;
     // Hooks
-    const [emblaRef, emblaApi] = useEmblaCarousel(options);
+    const [emblaRef, emblaApi] = useEmblaCarousel(opts);
 
     const scrollEvent = useCallback(
         (onChange: () => void) => {
@@ -56,7 +56,6 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
         () => emblaApi?.selectedScrollSnap() ?? 0,
         () => 0,
     );
-
     // Actions
     const onPressPrev = () => emblaApi?.scrollPrev();
     const onPressNext = () => emblaApi?.scrollNext();
@@ -92,14 +91,14 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
                         {slides.map((_, idx) => {
                             return (
                                 <Button variant="text" value={idx} onClick={onPressIdx} key={`dot-${idx}`}>
-                                    {currentIndex === idx ? <FaCircle size={14} /> : <FaRegCircle size={14} />}
+                                    {currentIndex === idx ? <FaCircle size={16} /> : <FaRegCircle size={16} />}
                                 </Button>
                             );
                         })}
                     </div>
                 )}
                 {pagination === "numbers" && (
-                    <>pagination coming soon</>
+                    <Pagination total={slides.length} current={currentIndex} onChange={onPressIdx} />
                 )}
             </div>
         </div>

@@ -55,6 +55,7 @@ export default defineConfig({
                 "react/jsx-runtime",
                 /^react-icons(\/.*)?$/,
                 "dompurify",
+                "react-intl",
                 "react-international-phone",
                 "react-date-picker",
                 "react-datetime-picker",

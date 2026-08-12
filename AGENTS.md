@@ -746,6 +746,11 @@ Sass usage (framework source):
 2. Keep accessibility props in place (`aria-label`, `disabled`, semantic `type`).
 3. Use `variant="primary"` for main actions and `variant="text"` for low-emphasis actions.
 4. For loading states, pair `Loader` with accessible status text where needed.
+5. **Functional component declaration order** — always organize the body in this sequence:
+   1. Hook calls (`useSomething`)
+   2. State (`useState`)
+   3. Derived state / variables (values computed from state or props)
+   4. Action handlers (`const handle*`, `const dispatch*`)
 
 ## Known Limitations (Current Package State)
 
