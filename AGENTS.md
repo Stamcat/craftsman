@@ -750,7 +750,7 @@ Sass usage (framework source):
    1. Hook calls (`useSomething`)
    2. State (`useState`)
    3. Derived state / variables (values computed from state or props)
-   4. Action handlers (`const handle*`, `const dispatch*`)
+   4. Action handlers (`const handle*`, `const dispatch*`, `useEffect`)
 
 ## Known Limitations (Current Package State)
 

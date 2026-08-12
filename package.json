@@ -38,6 +38,7 @@
     "type-check:storybook": "tsc --p ./tsconfig-storybook.json --noEmit"
   },
   "dependencies": {
+    "@floating-ui/react-dom": "2.1.9",
     "clsx": "2.1.1",
     "dompurify": "3.4.13",
     "embla-carousel-react": "8.6.0",
