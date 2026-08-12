@@ -10,3 +10,5 @@ export { Modal } from "./Modal/Modal";
 export { Select } from "./Select/Select";
 export { DatePicker } from "./Input/DatePicker";
 export { InputPhone } from "./Input/InputPhone";
+export { Pagination } from "./Pagination/Pagination";
+export { Carousel } from "./Carousel/Carousel";

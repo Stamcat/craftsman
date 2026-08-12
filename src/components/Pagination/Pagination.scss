@@ -1,0 +1,21 @@
+
+@use "../../styles/utilities/functions" as u;
+
+@layer craftsman-base {
+    .pagination {
+        display: inline-flex;
+        align-items: center;
+        gap: #{u.width("gutter", 0.25)};
+
+        .active {
+            color: #{u.color("gray700")};
+            border: 1px solid;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    }
+}

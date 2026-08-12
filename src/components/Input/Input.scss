@@ -6,158 +6,159 @@
     left: #{u.width("gutter", 0.125)};
     font-size: #{u.width("text", 0.75)};
 }
-
-.input-wrapper {
-    label {
-        .input-label {
-            margin-bottom: #{u.width("gutter", 0.25)};
-        }
-    }
-
-    &[data-required="true"] {
+@layer craftsman-base {
+    .input-wrapper {
         label {
             .input-label {
-                &::after {
-                    content: "*";
-                    color: var(--red700);
+                margin-bottom: #{u.width("gutter", 0.25)};
+            }
+        }
+
+        &[data-required="true"] {
+            label {
+                .input-label {
+                    &::after {
+                        content: "*";
+                        color: var(--red700);
+                    }
                 }
             }
         }
-    }
 
-    &[data-label-position="left"] {
-        label {
-            display: inline-flex;
-            align-items: center;
-
-            .input-label {
-                width: fit-content;
-                margin-right: #{u.width("gutter", 0.75)};
-            }
-        }
-        &.textarea {
+        &[data-label-position="left"] {
             label {
+                display: inline-flex;
+                align-items: center;
+
+                .input-label {
+                    width: fit-content;
+                    margin-right: #{u.width("gutter", 0.75)};
+                }
+            }
+            &.textarea {
+                label {
+                    align-items: flex-start;
+                }
+            }
+        }
+
+        &[data-label-position="bottom"] {
+            label {
+                display: inline-flex;
+                flex-direction: column-reverse;
                 align-items: flex-start;
+
+                .input-label {
+                    margin-bottom: 0;
+                    margin-top: #{u.width("gutter", 0.25)};
+                }
             }
         }
-    }
 
-    &[data-label-position="bottom"] {
-        label {
-            display: inline-flex;
-            flex-direction: column-reverse;
-            align-items: flex-start;
+        &[data-label-position="right"] {
+            label {
+                display: inline-flex;
+                flex-direction: row-reverse;
+                align-items: baseline;
+
+                .input-label {
+                    margin-left: #{u.width("gutter", 0.25)};
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &[data-label-position="inside"] {
+            --react-international-phone-height: 50px;
+            --react-international-phone-border-radius: 8px;
+            --react-international-phone-border-color: #c0c0c0ff;
+            position: relative;
 
             .input-label {
-                margin-bottom: 0;
-                margin-top: #{u.width("gutter", 0.25)};
-            }
-        }
-    }
-
-    &[data-label-position="right"] {
-        label {
-            display: inline-flex;
-            flex-direction: row-reverse;
-            align-items: baseline;
-
-            .input-label {
-                margin-left: #{u.width("gutter", 0.25)};
-                margin-bottom: 0;
-            }
-        }
-    }
-
-    &[data-label-position="inside"] {
-        --react-international-phone-height: 50px;
-        --react-international-phone-border-radius: 8px;
-        --react-international-phone-border-color: #c0c0c0ff;
-        position: relative;
-
-        .input-label {
-            position: absolute;
-            background-color: var(--white);
-            z-index: 1;
-            width: fit-content;
-            padding: 0 5px;
-            top: #{u.width(gutter, 0.25)};
-            left: #{u.width(gutter, 0.25)};
-            pointer-events: none;
-            transition:
-                top 150ms ease,
-                left 150ms ease,
-                font-size 150ms ease,
-                color 150ms ease;
-        }
-
-        > label > .input-field > .input,
-        > .input {
-            transition: border-color 200ms ease;
-        }
-
-        &:focus-within {
-            .input-label {
-                @include inside-input-label-floating;
-                color: var(--blue500);
+                position: absolute;
+                background-color: var(--white);
+                z-index: 1;
+                width: fit-content;
+                padding: 0 5px;
+                top: #{u.width(gutter, 0.25)};
+                left: #{u.width(gutter, 0.25)};
+                pointer-events: none;
+                transition:
+                    top 150ms ease,
+                    left 150ms ease,
+                    font-size 150ms ease,
+                    color 150ms ease;
             }
 
-            .input {
-                border-color: var(--blue500);
+            > label > .input-field > .input,
+            > .input {
+                transition: border-color 200ms ease;
+            }
+
+            &:focus-within {
+                .input-label {
+                    @include inside-input-label-floating;
+                    color: var(--blue500);
+                }
+
+                .input {
+                    border-color: var(--blue500);
+                }
+
+                .input::placeholder {
+                    opacity: 1;
+                }
+            }
+
+            &[data-has-input="true"] {
+                .input-label {
+                    @include inside-input-label-floating;
+                }
+            }
+
+            .input[type="tel"] {
+                width: 100%;
             }
 
             .input::placeholder {
-                opacity: 1;
+                opacity: 0;
+                transition: opacity 200ms ease;
+            }
+        }
+        .input-field {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+
+            &[data-has-end-adornment="true"] {
+                > .input {
+                    width: 100%;
+                    padding-right: #{u.width("gutter", 1.5)};
+                }
             }
         }
 
-        &[data-has-input="true"] {
-            .input-label {
-                @include inside-input-label-floating;
-            }
+        .input-adornment {
+            position: absolute;
+            right: #{u.width("gutter", 0.5)};
+            top: 50%;
+            transform: translateY(-50%);
+            margin-top: 0;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .input[type="tel"] {
-            width: 100%;
+        .input-error {
+            margin-top: #{u.width("gutter", 0.25)};
+            font-size: #{u.width("text", 0.75)};
+            color: var(--red600);
         }
-
-        .input::placeholder {
-            opacity: 0;
-            transition: opacity 200ms ease;
+        .input-view-toggle {
+            padding: 0;
+            display: inline-flex;
+            align-items: "center";
+            line-height: 1;
         }
-    }
-    .input-field {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-
-        &[data-has-end-adornment="true"] {
-            > .input {
-                width: 100%;
-                padding-right: #{u.width("gutter", 1.5)};
-            }
-        }
-    }
-
-    .input-adornment {
-        position: absolute;
-        right: #{u.width("gutter", 0.5)};
-        top: 50%;
-        transform: translateY(-50%);
-        margin-top: 0;
-        z-index: 1;
-        display: inline-flex;
-        align-items: center;
-    }
-
-    .input-error {
-        margin-top: #{u.width("gutter", 0.25)};
-        font-size: #{u.width("text", 0.75)};
-        color: var(--red600);
-    }
-    .input-view-toggle {
-        padding: 0;
-        display: inline-flex;
-        align-items: "center";
-        line-height: 1;
     }
 }

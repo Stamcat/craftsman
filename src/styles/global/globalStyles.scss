@@ -61,9 +61,7 @@
     }
 
     input {
-        &:not([type="radio"]):not([type="checkbox"]) {
-            @extend %input-base;
-        }
+        @extend %input-base;
         &[type="checkbox"] {
             @extend %checkbox;
         }
