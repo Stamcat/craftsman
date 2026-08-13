@@ -2,6 +2,35 @@
 
 @layer craftsman-base {
 
+    .timePicker__wrapper {
+        // suppress the built-in clock popup — our custom wheel renders instead
+        .react-time-picker__clock { display: none; }
+
+        .timePicker__field {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            border: 1px solid #{u.color("gray400")};
+            border-radius: 4px;
+            background: #{u.color("white")};
+
+            .input-view-toggle {
+                position: absolute;
+                right: 4px;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 4px;
+                line-height: 1;
+            }
+
+            // hand off the border to .timePicker__field and make room for the button
+            .react-time-picker__wrapper {
+                border: none;
+                padding-right: 32px;
+            }
+        }
+    }
+
     .timePicker {
         position: relative;
         display: inline-flex;

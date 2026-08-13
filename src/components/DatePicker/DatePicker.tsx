@@ -13,7 +13,7 @@ export type DatePickerProps = ReactDatePickerProps & LabeledInput & {
 };
 
 /**
- * This component shamelessly and directly implements <a href='https://projects.wojtekmaj.pl/react-date-picker/'>react-datepicker</>.
+ * This component shamelessly and directly implements <a href='https://projects.wojtekmaj.pl/react-date-picker/'>react-datepicker</a>.
  */
 export const DatePicker: React.FC<DatePickerProps> = ({
     label,

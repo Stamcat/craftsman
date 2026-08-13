@@ -5,7 +5,7 @@ import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../utilities/types";
 
 const meta: Meta<typeof DatePicker> = {
-    title: "Atoms/Input/DatePicker",
+    title: "Molecules/DatePicker",
     component: DatePicker,
     tags: ["autodocs"],
     decorators: [
@@ -13,11 +13,6 @@ const meta: Meta<typeof DatePicker> = {
     ],
     parameters: {
         layout: "padded",
-        docs: {
-            description: {
-                component: "Date picker input powered by `react-date-picker`. Wraps `InputWrapper` so it supports all label positions, error states, and required marking.",
-            },
-        },
     },
     args: {
         id: "testDatePicker",
