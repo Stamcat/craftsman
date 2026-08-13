@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useFloating, autoUpdate, offset, flip, shift } from "@floating-ui/react-dom";
 import { IosPickerItem } from './TimePickerWheel'
 import "./TimePicker.scss";
 import { getAmPmLabels, getUnitLabel, is24HourFormat } from '../../utilities';
 import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
-import { padTime, parseTimeString, resolveHasValue, resolveLocale, resolveTime, to24Hour } from "./utilities";
-import { isEmpty } from "../../utilities/validations";
+import { padTime, parseTimeString, resolveHasValue, resolveLocale, resolveTime, resolveTimeFormat, to24Hour } from "./utilities";
+import { isEmpty, isTouchDevice } from "../../utilities/validations";
 import { TimePickerDisplay } from "./TimePickerDisplay";
 
 type PropType = Omit<React.ComponentProps<"input">, "type"> & LabeledInput & {
@@ -18,18 +18,22 @@ type PropType = Omit<React.ComponentProps<"input">, "type"> & LabeledInput & {
         minute?: "string";
     }
 }
+
+const wheelIndex = (hasValue: boolean, index: number): number | undefined =>
+    hasValue ? index : undefined;
+
 /**
  * Custom time picker element, displays a wheel to scroll through time values.
  * Supports internationalization with custom locale, if no locale is passed it will use browser's native locale.
  * Locale will automatically resolve labels and time formatting using react-intl standards. <br /><br />
  * You can pass in your own custom labels, but I highly recommend sticking to i18n standards.
  * 
- * TODO: Need to implement Tooltip and can wrap the picker wheel component. Tooltip will have browser window awareness so that we can ensure the menu doesn't go off-screen or cause weird layout shifts when open.
  */
 export const TimePicker = (props: PropType) => {
     const { labels, locale, format, value, defaultValue, onChange, label, labelPosition, error, required, name } = props;
 
     // hooks
+    const nativeTimeRef = useRef<HTMLInputElement>(null);
     const [referenceEl, setReferenceEl] = useState<Element | null>(null);
     const [floatingEl, setFloatingEl] = useState<HTMLElement | null>(null);
     const { floatingStyles } = useFloating({
@@ -52,9 +56,11 @@ export const TimePicker = (props: PropType) => {
     // controlled mode: derive from value prop; uncontrolled: use internal state
     const [hours, minutes] = resolveTime(value, internalHours, internalMinutes);
     const hasValue = resolveHasValue(value, internalHours);
+    const minuteHasValue = resolveHasValue(value, internalMinutes);
     // fixed value: consumer provided value with no onChange handler
     const isReadOnly = !isEmpty(value) && !onChange;
-    const timeFormat = format ?? (is24HourFormat(resolvedLocale) ? 24 : 12);
+    const isMobile = isTouchDevice();
+    const timeFormat = resolveTimeFormat(format, is24HourFormat(resolvedLocale));
     const hourOffset = timeFormat === 12 ? 1 : 0;
     const amPmLabels = timeFormat === 12 ? getAmPmLabels(resolvedLocale) : null;
     const amPmIndex = hours >= 12 ? 1 : 0;
@@ -72,6 +78,37 @@ export const TimePicker = (props: PropType) => {
         document.addEventListener("pointerdown", handlePointerDown);
         return () => { document.removeEventListener("pointerdown", handlePointerDown); };
     }, [visible, referenceEl, floatingEl]);
+
+    const handleHourClear = () => {
+        setHours(null);
+        onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+    };
+
+    const handleMinuteClear = () => {
+        setMinutes(null);
+        onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+    };
+
+    const handleNativeTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (isEmpty(e.target.value)) {
+            setHours(null);
+            setMinutes(null);
+            onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+        } else {
+            const [h, m] = parseTimeString(e.target.value);
+            setHours(h);
+            setMinutes(m);
+            dispatchChange(h, m);
+        }
+    };
+
+    const handleToggleVisible = () => {
+        if (isMobile) {
+            (nativeTimeRef.current as HTMLInputElement & { showPicker?: () => void })?.showPicker?.();
+        } else {
+            setVisible((v) => !v);
+        }
+    };
 
     const dispatchChange = (h: number, m: number) => {
         onChange?.({ target: { value: `${padTime(h)}:${padTime(m)}` } } as React.ChangeEvent<HTMLInputElement>);
@@ -121,16 +158,19 @@ export const TimePicker = (props: PropType) => {
     return (
         <div className="timePicker__wrapper" ref={setReferenceEl}>
             {name && <input type="hidden" name={name} value={timeValue} readOnly />}
+            {isMobile && <input ref={nativeTimeRef} type="time" value={hasValue ? timeValue : ""} onChange={handleNativeTimeChange} style={{ position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }} aria-hidden="true" tabIndex={-1} />}
             <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} value={timeValue}>
                 <TimePickerDisplay
                     hours={hours}
                     minutes={minutes}
-                    hasValue={hasValue}
+                    hourHasValue={hasValue}
+                    minuteHasValue={minuteHasValue}
                     isReadOnly={isReadOnly}
                     timeFormat={timeFormat}
                     amPmLabels={amPmLabels}
                     visible={visible}
-                    onToggleVisible={() => setVisible((v) => !v)}
+                    onToggleVisible={handleToggleVisible}
+                    onClear={{ hour: handleHourClear, minute: handleMinuteClear }}
                     onChange={{
                         hour: handleHourInput,
                         minute: handleMinuteInput,
@@ -144,7 +184,7 @@ export const TimePicker = (props: PropType) => {
                     perspective="left"
                     loop={true}
                     offset={hourOffset}
-                    selectedIndex={hourIndex}
+                    selectedIndex={wheelIndex(hasValue, hourIndex)}
                     onSelect={handleHourSelect}
                     disabled={isReadOnly}
                     label={getUnitLabel(resolvedLocale, "hour", labels?.hour)}
@@ -153,7 +193,7 @@ export const TimePicker = (props: PropType) => {
                     slideCount={60}
                     perspective="right"
                     loop={true}
-                    selectedIndex={minutes}
+                    selectedIndex={wheelIndex(minuteHasValue, minutes)}
                     onSelect={handleMinuteSelect}
                     disabled={isReadOnly}
                     label={getUnitLabel(resolvedLocale, "minute", labels?.minute)}
@@ -164,7 +204,7 @@ export const TimePicker = (props: PropType) => {
                         perspective="center"
                         loop={false}
                         slides={amPmLabels}
-                        selectedIndex={amPmIndex}
+                        selectedIndex={wheelIndex(hasValue, amPmIndex)}
                         onSelect={handleAmPmSelect}
                         disabled={isReadOnly}
                         label=""

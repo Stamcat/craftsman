@@ -29,6 +29,8 @@ export const resolveLocale = (locale?: Intl.LocalesArgument): string => {
     return Array.isArray(locale) ? String(locale[0]) : String(locale);
 };
 
+export const resolveTimeFormat = (format: 24 | 12 | undefined, is24h: boolean): 24 | 12 => format ?? (is24h ? 24 : 12);
+
 export const isInView = (wheelLocation: number, slidePosition: number): boolean =>
     Math.abs(wheelLocation - slidePosition) < IN_VIEW_DEGREES;
 
