@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { InputPassword } from "../../components/Input/InputPassword";
+import { InputPassword } from "../../components/InputPassword/InputPassword";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../utilities/types";
 

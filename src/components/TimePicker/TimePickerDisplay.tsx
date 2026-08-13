@@ -39,6 +39,7 @@ export const TimePickerDisplay = (props: TimePickerDisplayProps) => {
         <div className="timePicker__display">
             <Input
                 type="number"
+                inputMode="numeric"
                 min={timeFormat === 12 ? 1 : 0}
                 max={timeFormat === 12 ? 12 : 23}
                 value={toDisplayInputValue(hourHasValue, displayHour)}
@@ -50,6 +51,7 @@ export const TimePickerDisplay = (props: TimePickerDisplayProps) => {
             <span>:</span>
             <Input
                 type="number"
+                inputMode="numeric"
                 min={0}
                 max={59}
                 value={toDisplayInputValue(minuteHasValue, padTime(minutes))}

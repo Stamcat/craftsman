@@ -1,8 +1,8 @@
 "use client";
 
-import { Input, type InputProps } from "./Input"
+import { Input, type InputProps } from "../Input/Input"
 
-type CheckboxProps = InputProps & {
+export type CheckboxProps = InputProps & {
     type?: "checkbox";
     labelPosition?: "left" | "right" | "top" | "bottom"; 
 }

@@ -60,6 +60,7 @@ export default defineConfig({
                 "react-international-phone",
                 "react-date-picker",
                 "react-datetime-picker",
+                "react-time-picker",
                 "react-toastify",
                 "sass-embedded",
                 /^next(\/.*)?$/,

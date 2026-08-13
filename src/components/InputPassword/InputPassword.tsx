@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { TextInputType } from "../../utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Button } from "../Button/Button";
-import { Input, type InputProps } from "./Input";
+import { Input, type InputProps } from "../Input/Input";
 
 
 const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () => void }) => (

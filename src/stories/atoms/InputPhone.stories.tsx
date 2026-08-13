@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { InputPhone } from "../../components/Input/InputPhone";
+import { InputPhone } from "../../components/InputPhone/InputPhone";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../utilities/types";
 

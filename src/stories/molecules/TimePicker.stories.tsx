@@ -4,11 +4,24 @@ import { TimePicker } from "../../components/TimePicker/TimePicker";
 
 // defined at module level to avoid remount on every render
 const ControlledDemo = (args: React.ComponentProps<typeof TimePicker>) => {
-    const [time, setTime] = useState("11:00");
+    const [time, setTime] = useState(typeof args.value === "string" ? args.value : "");
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-            <TimePicker {...args} value={time} onChange={(e) => setTime(e.target.value)} />
-            <code>{time}</code>
+            <TimePicker {...args} value={time} onChange={(v) => setTime(v ?? "")} />
+            <code>{time || "(no value)"}</code>
+        </div>
+    );
+};
+
+const SideBySideDemo = () => {
+    const [time, setTime] = useState("09:00");
+    return (
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "2rem" }}>
+            <div>
+                <label htmlFor="native-time" style={{ display: "block", marginBottom: "4px" }}>Native input</label>
+                <input id="native-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+            </div>
+            <TimePicker label="TimePicker" value={time} onChange={(v) => setTime(v ?? "")} />
         </div>
     );
 };
@@ -52,9 +65,6 @@ const meta: Meta<typeof TimePicker> = {
         value: {
             control: "text",
         },
-        defaultValue: {
-            control: "text",
-        },
     },
     parameters: {
         docs: {
@@ -77,10 +87,12 @@ export default meta;
 type Story = StoryObj<typeof TimePicker>;
 
 export const Uncontrolled: Story = {
-    args: { defaultValue: "09:30" },
+    args: { value: "09:30" },
+    render: (args) => <ControlledDemo {...args} />,
 };
 
 export const Controlled: Story = {
+    args: { value: "11:00" },
     render: (args) => <ControlledDemo {...args} />,
 };
 
@@ -95,11 +107,13 @@ export const NoValue: Story = {
 };
 
 export const Format24: Story = {
-    args: { defaultValue: "14:30", format: 24 },
+    args: { value: "14:30", format: 24 },
+    render: (args) => <ControlledDemo {...args} />,
 };
 
 export const International: Story = {
-    args: { defaultValue: "09:00", locale: "de-DE", label: "Uhrzeit" },
+    args: { value: "09:00", locale: "de-DE", label: "Uhrzeit" },
+    render: (args) => <ControlledDemo {...args} />,
 };
 
 export const WithError: Story = {
@@ -107,13 +121,5 @@ export const WithError: Story = {
 };
 
 export const SideBySide: Story = {
-    render: () => (
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "2rem" }}>
-            <div>
-                <label htmlFor="native-time" style={{ display: "block", marginBottom: "4px" }}>Native input</label>
-                <input id="native-time" type="time" defaultValue="09:00" />
-            </div>
-            <TimePicker label="TimePicker" defaultValue="09:00" />
-        </div>
-    ),
+    render: () => <SideBySideDemo />,
 };

@@ -2,9 +2,9 @@
 
 import React, { useId } from "react";
 import clsx from "clsx";
-import { InputWrapper, type LabeledInput } from "./InputWrapper";
+import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
 import { PhoneInput, type PhoneInputProps, type PhoneInputRefType } from "react-international-phone";
-import "../../styles/global/components/_reactPhone.scss";
+import "./InputPhone.scss";
 
 export type InputProps = PhoneInputProps & LabeledInput & {
     id?: string;

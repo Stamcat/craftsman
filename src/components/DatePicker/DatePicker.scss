@@ -1,7 +1,7 @@
-@use "../components/input";
-@use "../../utilities/functions" as u;
-
-.react-date-picker,
+@use "../../styles/global/components/input";
+@use "../../styles/utilities/functions" as u;
+@layer craftsman-base {
+    .react-date-picker,
     .react-date-picker *,
     .react-date-picker *:before,
     .react-date-picker *:after,
@@ -150,3 +150,4 @@
     .react-date-picker__inputGroup__input:invalid, .react-datetime-picker__inputGroup__input:invalid {
         background: unset;
     }
+}

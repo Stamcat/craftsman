@@ -1,6 +1,6 @@
 "use client";
 
-import { InputWrapper, type LabeledInput } from "./InputWrapper";
+import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
 import clsx from "clsx";
 import { useId } from "react";
 

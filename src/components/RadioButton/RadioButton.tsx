@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, type InputProps } from "./Input"
+import { Input, type InputProps } from "../Input/Input"
 
 type RadioButtonProps = InputProps & {
     type?: "radio";

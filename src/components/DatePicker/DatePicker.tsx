@@ -2,20 +2,20 @@
 
 import React, { useId } from "react";
 import clsx from "clsx";
-import { InputWrapper, type LabeledInput } from "./InputWrapper";
-import { DatePicker as ReactDatePicker, type DatePickerProps } from "react-date-picker";
-import "../../styles/global/components/_reactDatePicker.scss";
-import "../../styles/global/components/_reactCalendar.scss";
+import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
+import { DatePicker as ReactDatePicker, type DatePickerProps as ReactDatePickerProps } from "react-date-picker";
+import "./DatePicker.scss";
+import "./ReactCalendar.scss";
 
-export type InputProps = DatePickerProps & LabeledInput & {
+export type DatePickerProps = ReactDatePickerProps & LabeledInput & {
     id?: string;
     style?: React.CSSProperties;
 };
 
 /**
- * This component implements react-international-phone, which relies on i18n to automatically format phone number inputs based on country.
+ * This component shamelessly and directly implements <a href='https://projects.wojtekmaj.pl/react-date-picker/'>react-datepicker</a>.
  */
-export const DatePicker: React.FC<InputProps> = ({
+export const DatePicker: React.FC<DatePickerProps> = ({
     label,
     id,
     labelPosition = "top",

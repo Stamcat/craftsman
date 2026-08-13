@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { RadioButton } from "../../components/Input/RadioButton";
+import { RadioButton } from "../../components/RadioButton/RadioButton";
 import { width } from "../../styles/utilities/layout";
 
 const containerStyle: React.CSSProperties = {
