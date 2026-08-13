@@ -1,0 +1,29 @@
+@use "../../styles/utilities/functions" as u;
+
+@layer craftsman-base {
+    .tooltip {
+        --tooltip-bg: #{u.color("gray800")};
+
+        &__floating {
+            position: relative;
+            background-color: var(--tooltip-bg);
+            color: #{u.color("white")};
+            padding: #{u.width("gutter", 0.25)} #{u.width("gutter", 0.5)};
+            border-radius: 6px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                background-color: var(--tooltip-bg);
+                transform: rotate(45deg);
+            }
+
+            &[data-placement^="bottom"]::before { top: -4px; left: 50%; margin-left: -4px; }
+            &[data-placement^="top"]::before    { bottom: -4px; left: 50%; margin-left: -4px; }
+            &[data-placement^="left"]::before   { right: -4px; top: 50%; margin-top: -4px; }
+            &[data-placement^="right"]::before  { left: -4px; top: 50%; margin-top: -4px; }
+        }
+    }
+}

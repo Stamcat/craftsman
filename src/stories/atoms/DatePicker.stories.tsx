@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DatePicker } from "../../components/Input/DatePicker";
-import type { DatePickerProps } from "react-date-picker";
+import { DatePicker, type DatePickerProps } from "../../components/DatePicker/DatePicker";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../utilities/types";
 

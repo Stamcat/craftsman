@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useFloating, autoUpdate, offset, flip, shift } from "@floating-ui/react-dom";
 import { IosPickerItem } from './TimePickerWheel'
 import "./TimePicker.scss";
@@ -10,7 +10,7 @@ import { padTime, parseTimeString, resolveHasValue, resolveLocale, resolveTime, 
 import { isEmpty, isTouchDevice } from "../../utilities/validations";
 import { TimePickerDisplay } from "./TimePickerDisplay";
 
-type PropType = Omit<React.ComponentProps<"input">, "type"> & LabeledInput & {
+type TimePickerProps = Omit<React.ComponentProps<"input">, "type"> & LabeledInput & {
     locale?: Intl.LocalesArgument;
     format?: 24 | 12;
     labels?: {
@@ -29,11 +29,10 @@ const wheelIndex = (hasValue: boolean, index: number): number | undefined =>
  * You can pass in your own custom labels, but I highly recommend sticking to i18n standards.
  * 
  */
-export const TimePicker = (props: PropType) => {
+export const TimePicker: React.FC<TimePickerProps> = (props) => {
     const { labels, locale, format, value, defaultValue, onChange, label, labelPosition, error, required, name } = props;
 
     // hooks
-    const nativeTimeRef = useRef<HTMLInputElement>(null);
     const [referenceEl, setReferenceEl] = useState<Element | null>(null);
     const [floatingEl, setFloatingEl] = useState<HTMLElement | null>(null);
     const { floatingStyles } = useFloating({
@@ -89,22 +88,9 @@ export const TimePicker = (props: PropType) => {
         onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
     };
 
-    const handleNativeTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (isEmpty(e.target.value)) {
-            setHours(null);
-            setMinutes(null);
-            onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
-        } else {
-            const [h, m] = parseTimeString(e.target.value);
-            setHours(h);
-            setMinutes(m);
-            dispatchChange(h, m);
-        }
-    };
-
     const handleToggleVisible = () => {
         if (isMobile) {
-            (nativeTimeRef.current as HTMLInputElement & { showPicker?: () => void })?.showPicker?.();
+            (referenceEl?.querySelector('input[type="number"]') as HTMLInputElement)?.focus();
         } else {
             setVisible((v) => !v);
         }
@@ -158,7 +144,6 @@ export const TimePicker = (props: PropType) => {
     return (
         <div className="timePicker__wrapper" ref={setReferenceEl}>
             {name && <input type="hidden" name={name} value={timeValue} readOnly />}
-            {isMobile && <input ref={nativeTimeRef} type="time" value={hasValue ? timeValue : ""} onChange={handleNativeTimeChange} style={{ position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }} aria-hidden="true" tabIndex={-1} />}
             <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} value={timeValue}>
                 <TimePickerDisplay
                     hours={hours}

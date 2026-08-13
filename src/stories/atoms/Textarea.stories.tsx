@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Textarea } from "../../components/Input/Textarea";
+import { Textarea } from "../../components/Textarea/Textarea";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition } from "../../utilities/types";
 

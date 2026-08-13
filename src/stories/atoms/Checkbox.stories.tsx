@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Checkbox } from "../../components/Input/Checkbox";
+import { Checkbox, type CheckboxProps } from "../../components/Checkbox/Checkbox";
 
 const stackStyle: React.CSSProperties = {
     display: "grid",
@@ -68,7 +68,7 @@ export const ThreeOptions: Story = {
         name: "notification-preferences",
         labelPosition: "right",
     },
-    render: (args) => <ThreeOptionsGroup {...args} />,
+    render: (args: CheckboxProps) => <ThreeOptionsGroup {...args} />,
 };
 
 export const WithErrorMessage: Story = {
