@@ -76,7 +76,7 @@ hexToRgba(colors.blue500, 0.5)
 **Sass** — import `functions` as `u`:
 
 ```scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .element {
   color:      #{u.color(blue500)};
@@ -103,7 +103,7 @@ width("column", 3)     // calc((var(--w-column) * 3) + (var(--w-gutter) * 2))
 **Sass** — import `functions` as `u`:
 
 ```scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .card {
   padding:   #{u.width(gutter)};
@@ -135,7 +135,7 @@ media.tablet  // => "(min-width: 660px)"
 **Sass** — `@include breakpoint(key)` wraps content in the correct `@media` query:
 
 ```scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .sidebar {
   display: none;

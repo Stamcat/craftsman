@@ -129,7 +129,7 @@ The \`rgba\` mode uses the CSS relative color syntax. Prefer it over hard-coded 
 > **Note:** \`rgb(from ...)\` requires a browser that supports the CSS relative color specification.`,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .badge {
   color:      #{u.color(white)};
@@ -156,7 +156,7 @@ The \`rgba\` mode uses the CSS relative color syntax. Prefer it over hard-coded 
         return (
             <section style={sectionStyle}>
                 <h3>color(name, type?, alpha?)</h3>
-                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/functions" as u;\n\n.element {\n  color:      #{u.color(blue500)};\n  background: #{u.color(black, rgba, 0.4)};\n}`}</pre>
+                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/_functions" as u;\n\n.element {\n  color:      #{u.color(blue500)};\n  background: #{u.color(black, rgba, 0.4)};\n}`}</pre>
                 <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
                     <thead>
                         <tr>
@@ -202,7 +202,7 @@ The \`column\` key automatically accounts for gutters between columns.
 Valid keys: \`text\` · \`gutter\` · \`column\` · \`tablet\` · \`desktop\` · \`extDesktop\` · \`mobileMax\` · \`tabletMax\` · \`desktopMax\``,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .card {
   padding:   #{u.width(gutter)};
@@ -226,7 +226,7 @@ Valid keys: \`text\` · \`gutter\` · \`column\` · \`tablet\` · \`desktop\` ·
         return (
             <section style={sectionStyle}>
                 <h3>width(name, multiplier?)</h3>
-                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/functions" as u;\n\n.card {\n  padding:   #{u.width(gutter)};\n  gap:       #{u.width(gutter, 0.5)};\n  max-width: #{u.width(column, 4)};\n}`}</pre>
+                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/_functions" as u;\n\n.card {\n  padding:   #{u.width(gutter)};\n  gap:       #{u.width(gutter, 0.5)};\n  max-width: #{u.width(column, 4)};\n}`}</pre>
                 <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
                     <thead>
                         <tr>
@@ -282,7 +282,7 @@ export const BreakpointMixin: Story = {
 | \`extDesktop\` | min-width | ≥ 1320px |`,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .sidebar {
   display: none;
@@ -322,7 +322,7 @@ export const BreakpointMixin: Story = {
         return (
             <section style={sectionStyle}>
                 <h3>@include breakpoint(key)</h3>
-                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/functions" as u;\n\n.sidebar {\n  display: none;\n\n  @include u.breakpoint(tablet) {\n    display: block;\n  }\n}`}</pre>
+                <pre style={codeBlockStyle}>{`@use "@stamcat/craftsman/styles/utilities/_functions" as u;\n\n.sidebar {\n  display: none;\n\n  @include u.breakpoint(tablet) {\n    display: block;\n  }\n}`}</pre>
                 <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
                     <thead>
                         <tr>

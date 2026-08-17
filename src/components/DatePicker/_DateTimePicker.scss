@@ -1,0 +1,67 @@
+@use "../../styles/global/components/input";
+@use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/_placeholders";
+
+@layer craftsman-base {
+    %date-picker-styles {
+        display: inline-flex;
+        position: relative;
+    }
+    %date-picker-disabled {
+        background-color: #f0f0f0;
+        color: #6d6d6d;
+    }
+    %date-picker-wrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        @extend %input-base;
+        padding: 6px 8px;
+    }
+    %date-picker-input-group {
+        // min-width: calc((4px * 3) + 0.54em * 8 + 0.217em * 2);
+        flex-grow: 1;
+        padding: 0 2px;
+        box-sizing: content-box;
+    }
+    %date-picker-divider {
+        padding: 1px 0;
+        white-space: pre;
+    }
+    %date-picker-leading-zero-divider {
+        display: inline-block;
+        font: inherit;
+    }
+    %date-picker-group-input {
+        min-width: calc(2ch + 1px);
+        text-align: center;
+        height: calc(100% - 2px);
+        position: relative;
+        padding: 1px;
+        border: 0;
+        background: none;
+        color: currentColor;
+        font: inherit;
+        box-sizing: content-box;
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+    %date-picker-input-spinner {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+    %date-picker-input-leading-zero {
+        margin-left: -0.54em;
+        padding-left: calc(1px + 0.54em);
+    }
+    %date-picker-button {
+        border: 0;
+        padding: 4px 4px 4px 7px;
+        &:hover {
+            background: transparent;
+        }
+    }
+}

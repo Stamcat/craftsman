@@ -1,5 +1,5 @@
 @use "../../styles/global/components/input";
-@use "../../styles/utilities/functions" as u;
+@use "../../styles/utilities/_functions" as u;
 
 @mixin inside-input-label-floating {
     top: -0.5rem;

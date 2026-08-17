@@ -2,7 +2,8 @@
 
 import clsx from "clsx";
 import { isEmpty } from "../../utilities/validations";
-import { ButtonType, width } from "../../styles";
+import type { ButtonType } from "../../utilities/types";
+import { width } from "../../styles/utilities/layout";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
     /** Primary - Call-To-Action, Text - use for non-anchored text buttons */
