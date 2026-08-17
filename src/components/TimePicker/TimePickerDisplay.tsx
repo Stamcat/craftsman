@@ -1,83 +1,88 @@
-import { padTime, toDisplayHour, toDisplayInputValue } from "./utilities";
-import { Input } from "../Input/Input";
-import { Select } from "../Select/Select";
-import { Button } from "../Button/Button";
-import { FaClock, FaRegClock } from "react-icons/fa6";
+import React from "react";
+import { getAmPmLabels, getUnitLabel, is24HourFormat, isEmpty } from "../../utilities/validations";
+import { IosPickerItem } from "./TimePickerWheel";
+import { padTime, parseTimeString, resolveLocale, resolveTimeFormat, to24Hour } from "./utilities";
 
 type TimePickerDisplayProps = {
-    hours: number;
-    minutes: number;
-    hourHasValue: boolean;
-    minuteHasValue: boolean;
-    isReadOnly: boolean;
-    timeFormat: 12 | 24;
-    amPmLabels: string[] | null;
-    visible: boolean;
-    onToggleVisible: () => void;
-    onClear: { hour: () => void; minute: () => void };
-    onChange: {
-        hour: (e: React.ChangeEvent<HTMLInputElement>) => void;
-        minute: (e: React.ChangeEvent<HTMLInputElement>) => void;
-        amPm: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    value?: unknown;
+    onChange?: (val: string) => void;
+    locale?: Intl.LocalesArgument;
+    format?: 24 | 12;
+    labels?: {
+        hour?: string;
+        minute?: string;
     };
+    visible?: boolean;
+    floatingRef?: (node: HTMLElement | null) => void;
+    style?: React.CSSProperties;
 };
 
-export const TimePickerDisplay = (props: TimePickerDisplayProps) => {
-    const { hours, minutes, hourHasValue, minuteHasValue, isReadOnly, timeFormat, amPmLabels, visible, onToggleVisible, onClear, onChange } = props;
+const wheelIndex = (hasValue: boolean, index: number): number | undefined =>
+    hasValue ? index : undefined;
 
-    // derived state
-    const displayHour = toDisplayHour(hours, timeFormat === 12);
+export const TimePickerDisplay: React.FC<TimePickerDisplayProps> = (props) => {
+    const { value, onChange, locale, format, labels, visible = false, floatingRef, style } = props;
+
+    const resolvedLocale = resolveLocale(locale);
+    const [hours, minutes] = parseTimeString(value);
+    const hasValue = !isEmpty(value);
+    const timeFormat = resolveTimeFormat(format, is24HourFormat(resolvedLocale));
+    const hourOffset = timeFormat === 12 ? 1 : 0;
+    const amPmLabels = timeFormat === 12 ? getAmPmLabels(resolvedLocale) : null;
     const amPmIndex = hours >= 12 ? 1 : 0;
-    const handleHourClearKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Backspace" || e.key === "Delete") { onClear.hour(); }
+    const hourIndex = timeFormat === 12 ? (hours % 12 + 11) % 12 : hours;
+
+    const handleHourSelect = (index: number) => {
+        const h = to24Hour(index + hourOffset, hours >= 12, timeFormat === 12);
+        onChange?.(`${padTime(h)}:${padTime(minutes)}`);
     };
-    const handleMinuteClearKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Backspace" || e.key === "Delete") { onClear.minute(); }
+
+    const handleMinuteSelect = (index: number) => {
+        onChange?.(`${padTime(hours)}:${padTime(index)}`);
     };
+
+    const handleAmPmSelect = (index: number) => {
+        const isPM = index === 1;
+        const currentIsPM = hours >= 12;
+        if (isPM === currentIsPM) { return; }
+        const next = isPM ? hours + 12 : hours - 12;
+        onChange?.(`${padTime(next)}:${padTime(minutes)}`);
+    };
+
+    if (!visible) {
+        return null;
+    }
 
     return (
-        <div className="timePicker__display">
-            <Input
-                type="number"
-                inputMode="numeric"
-                min={timeFormat === 12 ? 1 : 0}
-                max={timeFormat === 12 ? 12 : 23}
-                value={toDisplayInputValue(hourHasValue, displayHour)}
-                placeholder="--"
-                readOnly={isReadOnly}
-                onChange={onChange.hour}
-                onKeyDown={handleHourClearKey}
+        <div className="timePicker" ref={floatingRef} style={style}>
+            <IosPickerItem
+                slideCount={timeFormat}
+                perspective="left"
+                loop={true}
+                offset={hourOffset}
+                selectedIndex={wheelIndex(hasValue, hourIndex)}
+                onSelect={handleHourSelect}
+                label={getUnitLabel(resolvedLocale, "hour", labels?.hour)}
             />
-            <span>:</span>
-            <Input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                max={59}
-                value={toDisplayInputValue(minuteHasValue, padTime(minutes))}
-                placeholder="--"
-                readOnly={isReadOnly}
-                onChange={onChange.minute}
-                onKeyDown={handleMinuteClearKey}
+            <IosPickerItem
+                slideCount={60}
+                perspective="right"
+                loop={true}
+                selectedIndex={wheelIndex(hasValue, minutes)}
+                onSelect={handleMinuteSelect}
+                label={getUnitLabel(resolvedLocale, "minute", labels?.minute)}
             />
             {timeFormat === 12 && amPmLabels && (
-                <Select
-                    value={String(amPmIndex)}
-                    onChange={onChange.amPm}
-                    disabled={isReadOnly}
-                    options={amPmLabels.map((v, i) => ({ value: String(i), label: v }))}
+                <IosPickerItem
+                    slideCount={2}
+                    perspective="center"
+                    loop={false}
+                    slides={amPmLabels}
+                    selectedIndex={wheelIndex(hasValue, amPmIndex)}
+                    onSelect={handleAmPmSelect}
+                    label=""
                 />
             )}
-            <Button
-                type="button"
-                variant="text"
-                onClick={onToggleVisible}
-                aria-label={visible ? "Hide picker" : "Show picker"}
-                aria-pressed={visible}
-                className="input-view-toggle"
-            >
-                {visible ? <FaClock size={16} /> : <FaRegClock size={16} />}
-            </Button>
         </div>
     );
 };

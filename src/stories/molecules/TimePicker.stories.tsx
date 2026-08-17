@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React, { useState } from "react";
 import { TimePicker } from "../../components/TimePicker/TimePicker";
+import { Input } from "../../components/Input/Input";
+import { DatePicker } from "../../components/DatePicker/DatePicker";
 
 // defined at module level to avoid remount on every render
 const ControlledDemo = (args: React.ComponentProps<typeof TimePicker>) => {
@@ -21,6 +23,8 @@ const SideBySideDemo = () => {
                 <label htmlFor="native-time" style={{ display: "block", marginBottom: "4px" }}>Native input</label>
                 <input id="native-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
             </div>
+            <Input type="time" label="Design System Time" value={time} onChange={(e) => setTime(e.target.value)} />
+            <DatePicker label="DatePicker" />
             <TimePicker label="TimePicker" value={time} onChange={(v) => setTime(v ?? "")} />
         </div>
     );

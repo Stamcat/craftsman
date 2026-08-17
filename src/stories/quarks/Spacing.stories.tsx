@@ -109,7 +109,7 @@ export const SassWidthFunction: Story = {
 - **\`width-var(name)\`** — returns only the variable reference with no calc wrapper (useful inside other expressions)
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .card {
   padding: #{u.width(gutter)};
@@ -121,7 +121,7 @@ export const SassWidthFunction: Story = {
 Valid keys: \`text\` · \`gutter\` · \`column\` · \`tablet\` · \`desktop\` · \`extDesktop\` · \`mobileMax\` · \`tabletMax\` · \`desktopMax\``,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .layout {
   // Single unit
@@ -208,7 +208,7 @@ const Card = styled.div\`
 **Sass** — \`@include breakpoint(bp)\` wraps a block in the correct \`@media\` query:
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/_functions" as u;
 
 .card {
   font-size: #{u.width(text)};

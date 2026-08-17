@@ -6,6 +6,7 @@ import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
 import { DatePicker as ReactDatePicker, type DatePickerProps as ReactDatePickerProps } from "react-date-picker";
 import "./DatePicker.scss";
 import "./ReactCalendar.scss";
+import { FaX, FaRegCalendar } from "react-icons/fa6";
 
 export type DatePickerProps = ReactDatePickerProps & LabeledInput & {
     id?: string;
@@ -30,8 +31,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     return (
         <InputWrapper id={inputId} className={clsx(className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
             <ReactDatePicker
-                // calendarIcon={<IconCalendar color={color("black")} />}
-                // clearIcon={clearIcon}
+                calendarIcon={<FaRegCalendar size={16} />}
+                clearIcon={<FaX size={14} />}
                 {...props}
             />
         </InputWrapper>

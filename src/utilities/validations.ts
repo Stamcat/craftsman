@@ -1,3 +1,5 @@
+import type { DateTimePickerProps } from "react-datetime-picker";
+
 export function isEmpty(value: unknown): boolean {
     return (
         value === undefined ||
@@ -15,7 +17,7 @@ export function isTouchDevice(): boolean {
     return typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 }
 /**
- * This exists in Stamcat/Localize, but since we're using so little of it at this point in time, 
+ * This exists in Stamcat/Localize, but since we're using so little of it at this point in time,
  * we're duplicating code to reduce dependency
  */
 export const getUnitLabel = (
@@ -28,19 +30,30 @@ export const getUnitLabel = (
         .formatToParts(1)
         .find((p) => p.type === "unit")?.value ??
     String(unit);
-        
+
 /**
- * This exists in Stamcat/Localize, but since we're using so little of it at this point in time, 
+ * This exists in Stamcat/Localize, but since we're using so little of it at this point in time,
  * we're duplicating code to reduce dependency
  */
 export const is24HourFormat = (locale: Intl.LocalesArgument) => {
     const options = new Intl.DateTimeFormat(locale, { hour: "numeric" }).resolvedOptions();
     return options.hourCycle === "h23" || options.hourCycle === "h24";
-}
+};
 
 export const getAmPmLabels = (locale: Intl.LocalesArgument): [string, string] => {
     const fmt = new Intl.DateTimeFormat(locale, { hour: "numeric", hour12: true });
     const am = fmt.formatToParts(new Date(2000, 0, 1, 9)).find((p) => p.type === "dayPeriod")?.value ?? "AM";
     const pm = fmt.formatToParts(new Date(2000, 0, 1, 21)).find((p) => p.type === "dayPeriod")?.value ?? "PM";
     return [am, pm];
+};
+
+export const formatTime = (value: DateTimePickerProps["value"], locale: Intl.LocalesArgument): string => {
+    if (!(value instanceof Date)) {
+        return "--:--";
+    }
+    return new Intl.DateTimeFormat(locale, {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    }).format(value);
 };

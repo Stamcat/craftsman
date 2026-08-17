@@ -1,12 +1,19 @@
-@use "../../styles/utilities/functions" as u;
+@use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/_placeholders";
 
 @layer craftsman-base {
+    .react-calendar,
+    .react-calendar *,
+    .react-calendar *:before,
+    .react-calendar *:after {
+        @extend %border-box;
+    }
+
     .react-calendar {
         width: 350px;
         max-width: 100%;
         background: white;
         border: 1px solid #a0a096;
-        font-family: "Arial", "Helvetica", sans-serif;
         line-height: 1.125em;
     }
 
@@ -23,16 +30,6 @@
         width: 50%;
         margin: 0.5em;
     }
-
-    .react-calendar,
-    .react-calendar *,
-    .react-calendar *:before,
-    .react-calendar *:after {
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
     .react-calendar button {
         margin: 0;
         border: 0;
@@ -179,61 +176,4 @@
         }
     }
 
-    // .react-calendar__month-view__days__day--weekend {
-    //     color: unset;
-    // }
-    .react-datetime-picker {
-        button {
-            color: unset;
-            &.react-calendar__tile {
-                &--active {
-                    background-color: #{u.color("blue500")};
-                    color: #{u.color("white")};
-                    &:hover {
-                        background-color: #{u.color("blue500")};
-                    }
-                }
-                &--now {
-                    // background-color: unset;
-                    border: 1px solid #{u.color("text")};
-                    &:hover {
-                        background-color: #{u.color("gray100")};
-                    }
-                }
-                &--hasActive {
-                    background: #{u.color("blue500")};
-                    &:hover {
-                        background: #{u.color("blue300")};
-                    }
-                }
-            }
-            &:hover {
-                background-color: unset;
-            }
-        }
-        input {
-            /* Disable spinner/flipper buttons */
-            &[type="number"] {
-                -webkit-appearance: textfield;
-                -moz-appearance: textfield;
-                appearance: textfield;
-            }
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-            background-color: unset;
-            border: unset;
-            box-sizing: unset;
-            border-radius: unset;
-            &:focus,
-            &:focus-visible {
-                border: unset;
-                color: unset;
-                background: unset;
-                outline: none;
-            }
-        }
-    }
 }
