@@ -10,6 +10,7 @@ Use these imports:
 
 ```tsx
 import { Button } from "@stamcat/craftsman/Button";
+import { Carousel } from "@stamcat/craftsman/Carousel";
 import { Checkbox } from "@stamcat/craftsman/Checkbox";
 import { DatePicker } from "@stamcat/craftsman/DatePicker";
 import { Input } from "@stamcat/craftsman/Input";
@@ -17,10 +18,12 @@ import { InputPassword } from "@stamcat/craftsman/InputPassword";
 import { InputPhone } from "@stamcat/craftsman/InputPhone";
 import { Loader } from "@stamcat/craftsman/Loader";
 import { Modal } from "@stamcat/craftsman/Modal";
+import { Pagination } from "@stamcat/craftsman/Pagination";
 import { RadioButton } from "@stamcat/craftsman/RadioButton";
 import { Select } from "@stamcat/craftsman/Select";
 import { Text } from "@stamcat/craftsman/Text";
 import { Textarea } from "@stamcat/craftsman/Textarea";
+import { TimePicker } from "@stamcat/craftsman/TimePicker";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
@@ -402,6 +405,87 @@ const [open, setOpen] = useState(false);
 </>
 ```
 
+### Pagination
+
+Import:
+
+```tsx
+import { Pagination } from "@stamcat/craftsman/Pagination";
+```
+
+Props:
+
+- `total: number`
+- `current: number`
+- `showPages?: number` (default: `5`)
+- `onChange: (e: React.MouseEvent<HTMLButtonElement>) => void`
+- `className?: string`
+- `style?: React.CSSProperties`
+
+Behavior notes:
+
+- Pagination is zero-based internally. Pass `current={0}` for the first page.
+- `total` is the total number of pages, not the last page index.
+- The component renders first/last buttons and jump-by-window buttons when needed.
+- `showPages` controls both the visible window size and the jump step for `‹‹` / `››`.
+- `onChange` receives the clicked button event. Read the next page from `event.currentTarget.value`.
+- The active page button is disabled and marked with `aria-current="page"`.
+
+Example:
+
+```tsx
+const [current, setCurrent] = useState(0);
+
+<Pagination
+  total={50}
+  current={current}
+  showPages={5}
+  onChange={(event) => setCurrent(parseInt(event.currentTarget.value, 10) || 0)}
+/>
+```
+
+### Carousel
+
+Import:
+
+```tsx
+import { Carousel } from "@stamcat/craftsman/Carousel";
+```
+
+Props:
+
+- Extends `EmblaOptionsType` from `embla-carousel`, except `slides`.
+- `slides?: React.ReactNode[]`
+- `className?: string`
+- `style?: React.CSSProperties`
+- `buttons?: boolean` (default: `true`)
+- `pagination?: "dots" | "numbers"` (default: `"dots"`)
+
+Behavior notes:
+
+- `slides` is an array prop; do not pass slide content as `children`.
+- Built on `embla-carousel-react`, so standard Embla options such as `loop`, `align`, `dragFree`, and `slidesToScroll` pass through.
+- Previous/next controls are built in and can be hidden with `buttons={false}`.
+- Pagination can render dots or the shared `Pagination` component in number mode.
+- Number pagination uses zero-based indexes internally, consistent with `Pagination`.
+- The component manages its own selected index from the Embla instance; there is no separate controlled index prop.
+
+Example:
+
+```tsx
+const slides = [
+  <figure key="one"><img src="/slide-1.jpg" alt="First slide" /></figure>,
+  <figure key="two"><img src="/slide-2.jpg" alt="Second slide" /></figure>,
+];
+
+<Carousel
+  slides={slides}
+  loop={false}
+  pagination="dots"
+  align="center"
+/>
+```
+
 ### Loader
 
 Import:
@@ -574,6 +658,48 @@ const [date, setDate] = useState<Date | null>(null);
   value={date}
   onChange={setDate}
   required
+/>
+```
+
+### TimePicker
+
+Import:
+
+```tsx
+import { TimePicker } from "@stamcat/craftsman/TimePicker";
+```
+
+Props:
+
+- Extends `TimePickerProps` from `react-time-picker`, excluding its `locale` and `format` props.
+- `label?: string | ReactNode`
+- `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
+- `error?: string | boolean | ReactNode`
+- `required?: boolean`
+- `locale?: Intl.LocalesArgument`
+- `format?: 24 | 12`
+- `labels?: { hour?: string; minute?: string }`
+
+Behavior notes:
+
+- The component uses a custom wheel UI instead of the stock `react-time-picker` clock popup.
+- `value` is typically a time string such as `"09:30"`; pair it with `onChange` for interactive controlled usage.
+- If a `value` is provided without `onChange`, treat the picker as effectively read-only.
+- Focusing the input opens the wheel, and the trailing toggle button shows or hides it explicitly.
+- Clicking outside the field and wheel closes the wheel.
+- `locale` defaults to the browser locale when omitted and affects time formatting and wheel labels.
+- When `name` is provided, the component renders a hidden input so forms can submit the selected string value.
+
+Example:
+
+```tsx
+const [time, setTime] = useState("09:30");
+
+<TimePicker
+  label="Appointment Time"
+  value={time}
+  onChange={(value) => setTime(value ?? "")}
+  format={24}
 />
 ```
 

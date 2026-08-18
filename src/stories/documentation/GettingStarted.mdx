@@ -28,28 +28,27 @@ This guide shows the RSC-safe styling setup and how to apply:
 
 ```tsx
 import type { Theme } from "@stamcat/craftsman/styles";
+import appRoot from "./app.root.scss?inline";
+import primaryButton from "./primary-button.scss?inline";
 
-// Theme config supports raw style objects and raw CSS/Sass strings
+// Theme config supports raw style objects and raw CSS/Sass strings.
+// You can intermix them within the same theme object.
 export const appTheme: Theme = {
 	colors: {
 		"--blue500": "#1d4ed8",
 	},
-	root: {
-		"--w-gutter": "20px",
-		"--w-text": "16px",
-		backgroundColor: "#ffffff",
-	},
+	root: appRoot,
 	components: {
-		button: {
-			borderRadius: "10px",
-			fontWeight: 600,
+		button: primaryButton,
+		input: {
+			borderWidth: "2px",
 		},
 	},
 };
 
 ```
 
-## 2. Setup In a Standard React App
+## 2 (a). Setup In a Standard React App
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
@@ -68,7 +67,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 ```
 
-## 3. Setup In Next.js App Router
+## 2 (b). Setup In Next.js App Router
 
 Import global styles once in root layout, then render `ThemeProvider` with your theme:
 
@@ -95,15 +94,17 @@ RSC note:
 
 Selector note:
 
-- `theme.components.input` targets `input:not([type='radio']):not([type='checkbox'])`.
 - `theme.components.checkbox` targets `input[type='checkbox']`.
 - `theme.components.radioButton` targets `input[type='radio']`.
+- For HTML-tag component keys such as `button`, `select`, and `textarea`, the override is written to both the tag selector and matching class selector, for example `button, .button`.
+- For non-HTML component keys, the override is written to the component class selector, for example `.modal`.
 
-String style note:
+Style declaration note:
 
-- `theme.root` accepts raw CSS/Sass strings.
-- `theme.components.*` accepts raw CSS/Sass strings for that target selector.
-- To author larger Sass files with syntax highlighting and mixins, import `*.scss?inline` and pass the resulting string.
+- `theme.root` accepts either a JS style object or a raw CSS/Sass string.
+- `theme.components.*` accepts either a JS style object or a raw CSS/Sass string for that target selector.
+- For file-based styles, import `*.scss?inline` or `*.css?inline` and pass the resulting string.
+- Use JS style objects for small inline overrides, and SCSS/CSS files when you want larger style blocks or Sass features.
 
 - Prefer one provider at app root.
 - Keep `theme` for component and CSS-variable overrides.

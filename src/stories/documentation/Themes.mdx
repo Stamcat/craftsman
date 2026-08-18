@@ -122,8 +122,10 @@ Theme component entries are written to these selectors:
 | `input` | `input:not([type='radio']):not([type='checkbox'])` |
 | `checkbox` | `input[type='checkbox']` |
 | `radioButton` | `input[type='radio']` |
+| HTML-tag keys such as `button`, `select`, `textarea` | both the HTML tag and matching class selector, for example `button, .button` |
+| Non-HTML component keys such as `modal` | component class selector, for example `.modal` |
 
-All other component keys use their HTML tag selector and class selector (for HTML tags), or class selector (for non-HTML component names).
+This mapping comes from the exported component name. The theme key is the uncapitalized component name, for example `Button` -> `button`, `RadioButton` -> `radioButton`.
 
 ---
 
