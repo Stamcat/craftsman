@@ -46,6 +46,7 @@
     "react": "19.2.7",
     "react-date-picker": "12.0.2",
     "react-datetime-picker": "7.0.2",
+    "react-device-detect": "2.2.3",
     "react-dom": "19.2.7",
     "react-icons": "5.7.0",
     "react-international-phone": "4.8.0",

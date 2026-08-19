@@ -9,6 +9,7 @@ import "./TimePicker.scss";
 import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
 import { resolveLocale } from "./utilities";
 import { TimePickerDisplay } from "./TimePickerDisplay";
+import { isMobile } from "react-device-detect";
 
 type TimePickerProps = Omit<ReactTimePickerProps, "locale" | "format"> & LabeledInput & {
     locale?: Intl.LocalesArgument;
@@ -45,7 +46,6 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
     // derived state
     const resolvedLocale = resolveLocale(locale);
 
-    // actions
     useEffect(() => {
         if (!visible) { return undefined; }
         const handlePointerDown = (e: PointerEvent) => {
@@ -57,7 +57,11 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
         return () => { document.removeEventListener("pointerdown", handlePointerDown); };
     }, [visible, referenceEl, floatingEl]);
 
+    // Mobile relies on the native time UI; never open the custom wheel there.
     const onFocusTime = (event: React.FocusEvent<HTMLDivElement, Element>) => {
+        if (isMobile) {
+            return;
+        }
         if (event.target instanceof HTMLInputElement) {
             setVisible(true);
         }
@@ -77,28 +81,32 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
                         clearIcon={<FaX size={14} />}
 
                     />
-                    <Button
-                        type="button"
-                        variant="text"
-                        onClick={() => setVisible(v => !v)}
-                        aria-label={visible ? "Hide time picker" : "Show time picker"}
-                        aria-pressed={visible}
-                        className="input-view-toggle"
-                    >
-                        {visible ? <FaClock size={16} /> : <FaRegClock size={16} />}
-                    </Button>
+                    {!isMobile && (
+                        <Button
+                            type="button"
+                            variant="text"
+                            onClick={() => setVisible(v => !v)}
+                            aria-label={visible ? "Hide time picker" : "Show time picker"}
+                            aria-pressed={visible}
+                            className="input-view-toggle"
+                        >
+                            {visible ? <FaClock size={16} /> : <FaRegClock size={16} />}
+                        </Button>
+                    )}
                 </div>
             </InputWrapper>
-            <TimePickerDisplay
-                value={value}
-                onChange={(val) => onChange?.(val)}
-                locale={resolvedLocale}
-                labels={labels}
-                format={format}
-                visible={visible}
-                floatingRef={setFloatingEl}
-                style={floatingStyles}
-            />
+            {!isMobile && (
+                <TimePickerDisplay
+                    value={value}
+                    onChange={(val) => onChange?.(val)}
+                    locale={resolvedLocale}
+                    labels={labels}
+                    format={format}
+                    visible={visible}
+                    floatingRef={setFloatingEl}
+                    style={floatingStyles}
+                />
+            )}
         </div>
     );
 };
