@@ -13,3 +13,5 @@ export { InputPhone } from "./InputPhone/InputPhone";
 export { Pagination } from "./Pagination/Pagination";
 export { Carousel } from "./Carousel/Carousel";
 export { TimePicker } from "./TimePicker/TimePicker";
+export { DateTimePicker } from "./DateTimePicker/DateTimePicker";
+export { Tooltip } from "./Tooltip/Tooltip";

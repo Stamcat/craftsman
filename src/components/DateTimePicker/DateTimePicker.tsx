@@ -67,9 +67,20 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
         };
     }, [clockOpen]);
 
+    const openTimeWidget = () => {
+        if (value instanceof Date) {
+            setClockOpen(true);
+            return;
+        }
+
+        // no date selected yet - focus the date field so the calendar opens instead of the time wheel
+        const dateInput = wrapperRef.current?.querySelector<HTMLInputElement>("input[name=\"day\"]");
+        dateInput?.focus();
+    };
+
     const onFocusTime = (event: React.FocusEvent<HTMLDivElement, Element>) => {
         if (event.target instanceof HTMLInputElement) {
-            setClockOpen(true);
+            openTimeWidget();
         }
     };
 
@@ -101,7 +112,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
             >
                 <ReactDateTimePicker
                     isClockOpen={false}
-                    onClockOpen={() => setClockOpen(true)}
+                    onClockOpen={openTimeWidget}
                     onClockClose={() => { }}
                     onCalendarOpen={() => setClockOpen(false)}
                     calendarIcon={<FaRegCalendar size={16} />}
