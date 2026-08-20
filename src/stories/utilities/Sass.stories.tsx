@@ -3,7 +3,7 @@ import { color } from "../../styles";
 import { width } from "../../styles/utilities/layout";
 
 const meta: Meta = {
-    title: "Quarks/Sass",
+    title: "Utilities/Sass",
     tags: ["autodocs"],
     parameters: { layout: "padded" },
 };

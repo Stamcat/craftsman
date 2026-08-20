@@ -157,14 +157,29 @@ const copyExtension = (filePath: string, arr: string[]) => {
     });
 };
 
+const copyDir = (srcRelPath: string, destRelPath: string) => {
+    const srcDir = path.join(process.cwd(), srcRelPath);
+
+    if (!fse.existsSync(srcDir)) {
+        console.log(`skill dir not found: ${srcDir}`);
+        return;
+    }
+
+    const destDir = path.join(process.cwd(), "dist", destRelPath);
+    console.log(`copying ${srcDir} to ${destDir}`);
+    fse.copySync(srcDir, destDir);
+};
+
 export class PackageBuilder {
     static main() {
         console.log("Beginning Build");
         createPackageJson();
         copyPrepublishScript();
         createIgnoreFile();
-        copyExtension("src", [".scss", ".css", ".png", ".jpg", ".ttf", ".bin"]);
+        copyExtension("src", [".scss", ".css", ".png", ".jpg", ".ttf", ".bin", ".md"]);
         copyFile("README.md");
         copyFile("AGENTS.md");
+        // ships alongside root AGENTS.md so its relative skill links resolve
+        copyDir(path.join(".github", "skills"), path.join(".github", "skills"));
     }
 }

@@ -63,6 +63,7 @@ export default defineConfig({
                 "react-time-picker",
                 "react-toastify",
                 "sass-embedded",
+                "country-flag-icons",
                 /^next(\/.*)?$/,
             ],
             output: {

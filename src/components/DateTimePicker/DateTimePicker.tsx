@@ -10,6 +10,7 @@ import { FaRegCalendar, FaX } from "react-icons/fa6";
 import { TimePickerDisplay } from "../TimePicker/TimePickerDisplay";
 import { resolveLocale } from "../TimePicker/utilities";
 import { formatTime } from "../../utilities/validations";
+import { isMobile } from "react-device-detect";
 
 export type DateTimePickerProps = ReactDateTimePickerProps & LabeledInput & {
     id?: string;
@@ -68,7 +69,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
     }, [clockOpen]);
 
     const openTimeWidget = () => {
-        if (value instanceof Date) {
+        if (!isMobile && value instanceof Date) {
             setClockOpen(true);
             return;
         }
@@ -81,6 +82,12 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
     const onFocusTime = (event: React.FocusEvent<HTMLDivElement, Element>) => {
         if (event.target instanceof HTMLInputElement) {
             openTimeWidget();
+        }
+    };
+
+    const onKeyDownTime = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (isMobile && event.key === "Enter") {
+            setClockOpen(false);
         }
     };
 
@@ -98,7 +105,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
     };
 
     return (
-        <div ref={wrapperRef} className="dateTimePicker__wrapper">
+        <div ref={wrapperRef} className="dateTimePicker__wrapper" onKeyDown={onKeyDownTime}>
             <InputWrapper
                 id={inputId}
                 onFocus={onFocusTime}

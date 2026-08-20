@@ -66,8 +66,13 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
             setVisible(true);
         }
     }
+    const onKeyDownTime = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter") {
+            setVisible(false);
+        }
+    }
     return (
-        <div className="timePicker__wrapper" ref={setReferenceEl} onFocus={onFocusTime}>
+        <div className="timePicker__wrapper" ref={setReferenceEl} onFocus={onFocusTime} onKeyDown={onKeyDownTime}>
             {name && <input type="hidden" name={name} value={typeof value === "string" ? value : ""} readOnly />}
             <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required}>
                 <div className="timePicker__field">

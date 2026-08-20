@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { width } from "../../styles/utilities/layout";
 import { Button, Modal } from "../../components";
+import { IconAmazonPay, IconAmex, IconApplePay, IconDiscover, IconGooglePay, IconMaestro, IconMastercard, IconPayPal, IconSepa, IconShopPay, IconSquare, IconUnionPay, IconVenmo, IconVisa } from "../../components/Icons";
 import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import { color } from "../../styles/utilities/color";
@@ -63,6 +64,8 @@ const meta: Meta = {
                     <h1>Icons</h1>
                     <p>
                         Craftsman implements <a href="https://react-icons.github.io/" target="_blank">react-icons</a> directly and without alteration. Each icon-set story uses namespace imports and dynamic export discovery, so no per-icon imports are required.<br />
+                        The <strong>Payment Card Icons</strong> story documents Craftsman's own local icons (payment brand marks), not a third-party set.<br />
+                        The <strong>Country Flags</strong> story is a separate package, <a href="https://www.npmjs.com/package/country-flag-icons" target="_blank">country-flag-icons</a>, shown here for convenience.
                     </p>
                     <blockquote>
                         <strong>Warning:</strong> These libraries may be slow to load on your local machine.
@@ -245,13 +248,75 @@ const getIcons = (icons: Record<string, unknown>, prefix: string, importPath: st
     };
 };
 
+// country-flag-icons has no shared name prefix (exports are ISO 3166-1 alpha-2 codes) and its
+// flag components have no default width/height, so it needs its own filter + fixed-size wrapper.
+const getFlags = (flags: Record<string, unknown>, importPath: string): IconLoadResult => {
+    const entries = Object.entries(flags)
+        .filter(([name, value]) => /^[A-Z]{2}$/.test(name) && typeof value === "function")
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([name, Flag]) => {
+            const FlagComponent = Flag as IconType;
+            const SizedFlag: IconType = (props) => (
+                <FlagComponent {...props} style={{ width: "32px", height: "auto" }} />
+            );
+            return {
+                name,
+                Icon: SizedFlag,
+                importPath,
+            };
+        });
+
+    return {
+        total: entries.length,
+        icons: entries,
+    };
+};
+
+const getFlagUsageSnippet = (name: string, iconPath: string) => {
+    if (!name || !iconPath) {
+        return "Select a flag to see its import.";
+    }
+
+    return `import { ${name} } from "${iconPath}";\n\n<${name} title="${name}" style={{ width: 32 }} />`;
+};
+
+// Craftsman's own icons (payment brand marks) — a small, fixed local set, unlike the
+// dynamically-discovered third-party icon/flag sets below, so no loader is needed.
+const PAYMENT_ICONS_PATH = "@stamcat/craftsman/Icons";
+const paymentIconEntries: IconEntry[] = [
+    { name: "IconAmex", Icon: IconAmex as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconDiscover", Icon: IconDiscover as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconMastercard", Icon: IconMastercard as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconMaestro", Icon: IconMaestro as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconVisa", Icon: IconVisa as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconVenmo", Icon: IconVenmo as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconPayPal", Icon: IconPayPal as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconSquare", Icon: IconSquare as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconShopPay", Icon: IconShopPay as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconApplePay", Icon: IconApplePay as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconGooglePay", Icon: IconGooglePay as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconSepa", Icon: IconSepa as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconUnionPay", Icon: IconUnionPay as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+    { name: "IconAmazonPay", Icon: IconAmazonPay as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
+
+];
+
+const getPaymentIconUsageSnippet = (name: string, iconPath: string) => {
+    if (!name || !iconPath) {
+        return "Select an icon to see its import.";
+    }
+
+    return `import { ${name} } from "${iconPath}";\n\n<${name} width={40} />`;
+};
+
 type GalleryProps = {
     icons: IconEntry[] | null;
     total: number;
     error: string | null;
+    getSnippet?: (name: string, iconPath: string) => string;
 };
 
-const IconGallery = ({ icons, total, error }: GalleryProps) => {
+const IconGallery = ({ icons, total, error, getSnippet = getUsageSnippet }: GalleryProps) => {
     const [visibleCount, setVisibleCount] = useState(MAX_ICONS_PER_STORY);
     const sentinelRef = useRef<HTMLDivElement>(null);
     const [iconUsage, setIconUsage] = useState<IconUsageState>({
@@ -316,14 +381,19 @@ const IconGallery = ({ icons, total, error }: GalleryProps) => {
                 onDismiss={() => setIconUsage((prev) => ({ ...prev, visible: false }))}
             >
                 <code>
-                    <pre>{getUsageSnippet(iconUsage.name, iconUsage.iconPath)}</pre>
+                    <pre>{getSnippet(iconUsage.name, iconUsage.iconPath)}</pre>
                 </code>
             </Modal>
         </div>
     );
 };
 
-const LazyIconGallery = ({ loader, prefix, importPath }: { loader: IconModuleLoader; prefix: string; importPath: string }) => {
+const LazyIconGallery = ({ loader, resolve, importPath, getSnippet }: {
+    loader: IconModuleLoader;
+    resolve: (mod: Record<string, unknown>, importPath: string) => IconLoadResult;
+    importPath: string;
+    getSnippet?: (name: string, iconPath: string) => string;
+}) => {
     const [icons, setIcons] = useState<IconEntry[] | null>(null);
     const [total, setTotal] = useState(0);
     const [error, setError] = useState<string | null>(null);
@@ -331,7 +401,7 @@ const LazyIconGallery = ({ loader, prefix, importPath }: { loader: IconModuleLoa
     useEffect(() => {
         loader()
             .then((mod) => {
-                const result = getIcons(mod, prefix, importPath);
+                const result = resolve(mod, importPath);
                 setIcons(result.icons);
                 setTotal(result.total);
                 setError(null);
@@ -341,15 +411,24 @@ const LazyIconGallery = ({ loader, prefix, importPath }: { loader: IconModuleLoa
                 setTotal(0);
                 setError(`Unable to load icons from ${importPath}.`);
             });
-    }, [loader, prefix, importPath]);
+    }, [loader, resolve, importPath]);
 
-    return <IconGallery icons={icons} total={total} error={error} />;
+    return <IconGallery icons={icons} total={total} error={error} getSnippet={getSnippet} />;
 };
 
 const createIconSetStory = (loader: IconModuleLoader, prefix: string, importPath: string): Story => ({
-    render: () => <LazyIconGallery loader={loader} prefix={prefix} importPath={importPath} />,
+    render: () => <LazyIconGallery loader={loader} resolve={(mod, path) => getIcons(mod, prefix, path)} importPath={importPath} />,
 });
 
+const createFlagSetStory = (loader: IconModuleLoader, importPath: string): Story => ({
+    render: () => <LazyIconGallery loader={loader} resolve={getFlags} importPath={importPath} getSnippet={getFlagUsageSnippet} />,
+});
+
+export const PaymentCardIcons: Story = {
+    render: () => <IconGallery icons={paymentIconEntries} total={paymentIconEntries.length} error={null} getSnippet={getPaymentIconUsageSnippet} />,
+};
+
+export const CountryFlags: Story = createFlagSetStory(() => import("country-flag-icons/react/3x2"), "country-flag-icons/react/3x2");
 export const AntDesign: Story = createIconSetStory(() => import("react-icons/ai"), "Ai", "react-icons/ai");
 export const BoxIcons: Story = createIconSetStory(() => import("react-icons/bi"), "Bi", "react-icons/bi");
 export const BootstrapIcons: Story = createIconSetStory(() => import("react-icons/bs"), "Bs", "react-icons/bs");
@@ -383,5 +462,5 @@ export const VSCodeIcons: Story = createIconSetStory(() => import("react-icons/v
 export const WeatherIcons: Story = createIconSetStory(() => import("react-icons/wi"), "Wi", "react-icons/wi");
 
 export const Palette: Story = {
-    render: () => <LazyIconGallery loader={() => import("react-icons/ai")} prefix="Ai" importPath="react-icons/ai" />,
+    render: () => <LazyIconGallery loader={() => import("react-icons/ai")} resolve={(mod, path) => getIcons(mod, "Ai", path)} importPath="react-icons/ai" />,
 };

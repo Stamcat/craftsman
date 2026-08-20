@@ -8,6 +8,12 @@ type SpacingProps = {
     type: LayoutWidthsType;
     multiplier?: number;
 };
+const thStyle: React.CSSProperties = { textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb", fontSize: "13px" };
+const tdStyle: React.CSSProperties = { padding: "4px 8px", fontSize: "13px" };
+const sectionStyle: React.CSSProperties = { border: "1px solid #d1d5db", borderRadius: "8px", padding: width("gutter", 0.5), display: "grid", gap: width("gutter", 0.5) };
+
+type BreakpointKey = keyof typeof media;
+const breakpointKeys = ["tablet", "tabletMax", "tabletOnly", "desktop", "desktopMax", "desktopOnly", "extDesktop", "mobileMax", "mobileOnly", "mobileTablet"] as BreakpointKey[];
 
 const Example = ({ type, multiplier }: SpacingProps) => (
     <div
@@ -26,16 +32,16 @@ const Spacing = ({ type, multiplier }: SpacingProps) => {
         <>
             <code>
                 <pre>
-// Using TS Width Utility <br />
+                    // CSS-in-JS Using TS Width Utility <br />
                     {"const Container = styled.div`"}<br />
                     {`     gap: \${width(${type}${multiplier === undefined ? "" : `, ${multiplier}`})};`}<br />
                     {"`;"}<br /><br />
-// Using SCSS width function<br />
+                    // Using SCSS width function<br />
                     {".container {"}<br />
                     {"     gap: #{u.width(gutter)};"}
                     {"}"}<br /><br />
 
-// Using CSS <br />
+                    // Using CSS <br />
                     {".container {"}<br />
                     {`     gap: ${width(type, multiplier)};`} <br />
                     {"}"}<br /><br />
@@ -70,7 +76,7 @@ const meta: Meta<typeof Spacing> = {
         layout: "padded",
         docs: {
             description: {
-                component: "Craftsman comes out of the box with spacing declarations that have been time-tested over decades of building enterprise-grade applications. We offer both CSS variables (prefixed with --w-) as well as a Typescript utility comes strictly typed to make your implementation code easy to use.<br /><br /> As you can see in the example, CSS is very doable, but the Typescript utility makes implementation very simple.",
+                component: "Craftsman comes out of the box with spacing declarations that have been time-tested over decades of building enterprise-grade applications. We offer CSS variables (prefixed with --w-), SASS Mixins AND Typescript utilities to make your implementation code easy to use.<br /><br /> As you can see in the example, CSS is very doable, but the Typescript utility makes implementation very simple.",
             },
             source: {
                 transform: (_src: string, context: { args?: { type?: LayoutWidthsType; multiplier?: number } }) => {
@@ -96,95 +102,6 @@ export const Primary: Story = {
         multiplier: 2,
     },
 };
-
-export const SassWidthFunction: Story = {
-    name: "Sass width()",
-    parameters: {
-        docs: {
-            description: {
-                story: `The \`width()\` Sass function produces the same values as the TypeScript utility, keeping stylesheet and component code consistent.
-
-- **\`width(name)\`** — returns the raw CSS variable: \`var(--w-gutter)\`
-- **\`width(name, multiplier)\`** — returns a \`calc()\` expression scaled by the multiplier
-- **\`width-var(name)\`** — returns only the variable reference with no calc wrapper (useful inside other expressions)
-
-\`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/_functions" as u;
-
-.card {
-  padding: #{u.width(gutter)};
-  gap: #{u.width(gutter, 0.5)};
-  max-width: #{u.width(column, 4)};
-}
-\`\`\`
-
-Valid keys: \`text\` · \`gutter\` · \`column\` · \`tablet\` · \`desktop\` · \`extDesktop\` · \`mobileMax\` · \`tabletMax\` · \`desktopMax\``,
-            },
-            source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
-
-.layout {
-  // Single unit
-  padding: #{u.width(gutter)};
-
-  // Fractional — half a gutter
-  gap: #{u.width(gutter, 0.5)};
-
-  // Multi-column with auto gutters
-  max-width: #{u.width(column, 3)};
-}`,
-                language: "scss",
-            },
-        },
-    },
-    render: ({ type, multiplier }) => {
-        const single = width(type);
-        const scaled = multiplier !== undefined ? width(type, multiplier) : null;
-
-        const rowStyle: React.CSSProperties = { padding: "4px 8px" };
-        const thStyle: React.CSSProperties = { textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb" };
-
-        return (
-            <section style={{ border: "1px solid #d1d5db", borderRadius: "8px", padding: width("gutter", 0.5), display: "grid", gap: width("gutter", 0.5) }}>
-                <h3>Sass width(name, multiplier?)</h3>
-                <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
-                    <thead>
-                        <tr>
-                            <th style={thStyle}>Call</th>
-                            <th style={thStyle}>Output</th>
-                            <th style={thStyle}>Preview</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={rowStyle}><code>{`#{u.width(${type})}`}</code></td>
-                            <td style={rowStyle}><code>{single}</code></td>
-                            <td style={rowStyle}>
-                                <div style={{ height: 24, borderRadius: 4, backgroundColor: color("purple300"), width: single }} />
-                            </td>
-                        </tr>
-                        {scaled !== null && (
-                            <tr>
-                                <td style={rowStyle}><code>{`#{u.width(${type}, ${multiplier})}`}</code></td>
-                                <td style={rowStyle}><code>{scaled}</code></td>
-                                <td style={rowStyle}>
-                                    <div style={{ height: 24, borderRadius: 4, backgroundColor: color("purple500"), width: scaled }} />
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </section>
-        );
-    },
-};
-
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb", fontSize: "13px" };
-const tdStyle: React.CSSProperties = { padding: "4px 8px", fontSize: "13px" };
-const sectionStyle: React.CSSProperties = { border: "1px solid #d1d5db", borderRadius: "8px", padding: width("gutter", 0.5), display: "grid", gap: width("gutter", 0.5) };
-
-type BreakpointKey = keyof typeof media;
-const breakpointKeys = ["tablet", "tabletMax", "tabletOnly", "desktop", "desktopMax", "desktopOnly", "extDesktop", "mobileMax", "mobileOnly", "mobileTablet"] as BreakpointKey[];
 
 export const BreakpointUtility: Story = {
     name: "breakpoint()",

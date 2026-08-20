@@ -1,0 +1,15 @@
+export { IconAmazonPay } from "./IconAmazonPay";
+export { IconAmex } from "./IconAmex";
+export { IconApplePay } from "./IconApplePay";
+export { IconDiscover } from "./IconDiscover";
+export { IconGooglePay } from "./IconGooglePay";
+export { IconMaestro } from "./IconMaestro";
+export { IconMastercard } from "./IconMastercard";
+export { IconPayPal } from "./IconPayPal";
+export { IconSepa } from "./IconSepa";
+export { IconShopPay } from "./IconShopPay";
+export { IconSquare } from "./IconSquare";
+export { IconStripe } from "./IconStripe";
+export { IconUnionPay } from "./IconUnionPay";
+export { IconVenmo } from "./IconVenmo";
+export { IconVisa } from "./IconVisa";

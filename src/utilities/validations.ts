@@ -13,9 +13,7 @@ export function validateEmail(value: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
 }
-export function isTouchDevice(): boolean {
-    return typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
-}
+
 /**
  * This exists in Stamcat/Localize, but since we're using so little of it at this point in time,
  * we're duplicating code to reduce dependency
