@@ -15,3 +15,4 @@ export { Carousel } from "./Carousel/Carousel";
 export { TimePicker } from "./TimePicker/TimePicker";
 export { DateTimePicker } from "./DateTimePicker/DateTimePicker";
 export { Tooltip } from "./Tooltip/Tooltip";
+export * from "./Icons";

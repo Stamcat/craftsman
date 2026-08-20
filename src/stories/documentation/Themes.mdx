@@ -14,6 +14,43 @@ Theme cascade order is layered:
 
 Craftsman supports styles in **two different ways** — plain JS objects or raw CSS/Sass strings. They are interchangeable and can be mixed within the same theme object. We encourage you to use HTML5 and take advantage of css nesting wherever possible. When custom styles are required, we intend to make all options available to you, so that you can build the app however works best for your product. Yes, you can even use Failwind.
 
+## How CSS Layers Work
+
+Craftsman relies on the native [`@layer`](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) at-rule to control the cascade instead of specificity hacks (`!important`, ID selectors, deeply nested overrides).
+
+A `@layer` declares a named cascade layer. Layers are ordered by the position of their *first* declaration, not by where their rules physically live in the file — so declaring the layer order once up front lets every subsequent block, wherever it's authored, slot into that order:
+
+```css
+/* declares the order once: craftsman-base loses to craftsman-theme on a tie */
+@layer craftsman-base, craftsman-theme;
+```
+
+Two rules make this predictable:
+
+1. **Unlayered styles always beat layered styles.** Any plain CSS you write with no `@layer` wrapper (your app's own stylesheets, CSS Modules, styled-components, etc.) sits *above* every named layer, regardless of selector specificity. This is what makes Craftsman trivially overridable — you don't need to fight specificity to override a Craftsman default.
+2. **Between layers, declaration order wins on a tie**, not specificity. That's why `craftsman-theme` is declared after `craftsman-base` — a `.button` rule in `craftsman-theme` beats a `.button` rule in `craftsman-base` even though the selectors are equally specific.
+
+### Everything Craftsman ships lives in `craftsman-base`
+
+Every component stylesheet and the global reset are wrapped in `@layer craftsman-base { ... }`:
+
+```scss
+/* src/components/Button/Button.scss (abbreviated) */
+@layer craftsman-base {
+    .button {
+        border-radius: 6px;
+        padding: 0.5em 1em;
+    }
+}
+```
+
+This means all of Craftsman's built-in styling is intentionally low-priority in the cascade:
+
+- `ThemeProvider` overrides win automatically because they're emitted in `craftsman-theme`, declared after `craftsman-base`.
+- Your own app CSS wins automatically because it's unlayered, beating both Craftsman layers with zero specificity gymnastics.
+
+You never need `!important`, extra class chains, or `:where()` tricks to override a Craftsman component — a plain, unlayered selector of any specificity is enough.
+
 ## Setup
 
 Render `ThemeProvider` once near your app root:

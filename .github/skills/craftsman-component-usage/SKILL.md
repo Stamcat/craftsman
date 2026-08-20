@@ -1,11 +1,11 @@
 ---
 name: craftsman-component-usage
-description: 'Global AI agent guidelines for using the @stamcat/craftsman component library — package exports, hard import rules, code block rendering, Toast usage, and code generation patterns. Use when generating or reviewing code that imports from @stamcat/craftsman or needing per-component prop contracts (Button, Input, Modal, DatePicker, TimePicker, Carousel, Pagination, etc). See the craftsman-style-utilities and craftsman-utility-functions skills for styling and utility function guidance.'
+description: 'Global AI agent guidelines for using the @stamcat/craftsman component library — package exports, hard import rules, code block rendering, Toast usage, and code generation patterns. Use when generating or reviewing code that imports from @stamcat/craftsman or needing per-component prop contracts (Button, Input, Modal, DatePicker, TimePicker, Carousel, Pagination, etc). See the craftsman-style-utilities, craftsman-utility-functions, and craftsman-device-detection skills for styling, utility function, and device detection guidance.'
 ---
 
 # Craftsman Component Library Usage
 
-Global rules for AI agents generating code against `@stamcat/craftsman`. For a specific component's props, behavior notes, and examples, open that component's `AGENTS.md` co-located with its source — see the index below. For styling utilities and theme authoring, see the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md). For the `isEmpty` utility and style utility parity notes, see the [craftsman-utility-functions skill](../craftsman-utility-functions/SKILL.md).
+Global rules for AI agents generating code against `@stamcat/craftsman`. For a specific component's props, behavior notes, and examples, open that component's `AGENTS.md` co-located with its source — see the index below. For styling utilities and theme authoring, see the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md). For the `isEmpty` utility and style utility parity notes, see the [craftsman-utility-functions skill](../craftsman-utility-functions/SKILL.md). For device/browser/OS detection, see the [craftsman-device-detection skill](../craftsman-device-detection/SKILL.md).
 
 ## What This Package Currently Exports
 
@@ -132,7 +132,6 @@ toast.info("New version available.");
 1. README is minimal; treat this skill and the per-component `AGENTS.md` files as the source of truth for agent usage.
 2. Theme utilities exist in source but are not guaranteed public package exports.
 3. `Progress` exists in source but is incomplete and intentionally omitted from documentation for now.
-4. `DateTimePicker` and `Tooltip` exist in source and now have `AGENTS.md` docs, but are not yet part of the published package `exports.ts` — confirm before assuming a public import path.
 
 ## Safe Fallback Strategy for Agents
 

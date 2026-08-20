@@ -6,42 +6,6 @@ import { Button } from "../../components";
 
 const colorOptions = Object.keys(colors) as ColorKey[];
 
-type StoryArgs = {
-    variable: ColorKey;
-    alpha: number;
-    mode: "hex" | "rgba";
-};
-
-const meta: Meta<StoryArgs> = {
-    title: "Quarks/Colors",
-    tags: ["autodocs"],
-    args: {
-        variable: "purple500",
-        alpha: 0.6,
-        mode: "rgba",
-    },
-    argTypes: {
-        variable: {
-            control: "select",
-            options: colorOptions,
-        },
-        alpha: {
-            control: { type: "range", min: 0, max: 1, step: 0.05 },
-            if: { arg: "mode", eq: "rgba" },
-        },
-        mode: {
-            control: "radio",
-            options: ["hex", "rgba"],
-        },
-    },
-    parameters: {
-        layout: "padded",
-    },
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
 const pageStyle: React.CSSProperties = {
     display: "grid",
     gap: width("gutter"),
@@ -107,97 +71,49 @@ const Swatch = ({ name, value }: { name: string; value: string }) => {
         </div>
     );
 }
-export const ColorFunction: Story = {
-    name: "color()",
-    parameters: {
-        docs: {
-            description: {
-                story: "The color utility is very powerful because unlike CSS variables, it brings type safety to the entire color palette. When using standard hex colors, it will return a css variable (for ease of theming). Color also includes an rgba conversion utility that allows you to easily convert a typesafe color to RGBA and then tune its opacity.",
-            },
-            source: {
-                transform: (_src: string, context: { args?: Partial<StoryArgs> }) => {
-                    const variable = context.args?.variable ?? "purple500";
-                    const mode = context.args?.mode ?? "rgba";
-                    const alpha = context.args?.alpha ?? 0.6;
-
-                    if (mode === "hex") {
-                        return `import { color } from "@stamcat/craftsman/styles";
-
-const style = {
-    background: color("${variable}"),
-};`;
-                    }
-
-                    return `import { color } from "@stamcat/craftsman/styles";
-
-const style = {
-    background: color("${variable}", "rgba", ${alpha}),
-};`;
-                },
-            },
-        },
-    },
-    render: ({ variable, alpha, mode }) => {
-        const result = mode === "hex" ? color(variable, "hex") : color(variable, "rgba", alpha);
-
-        return (
-            <section style={utilityCardStyle}>
-                <h3>color(name, type, alpha)</h3>
-                <code><pre>{`color("${variable}"${mode === "rgba" ? `, ${mode}` : ""}${mode === "rgba" ? `, ${alpha}` : ""}) => ${result}`}</pre></code>
-                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
-            </section>
-        );
-    },
+type StoryArgs = {
+    variable: ColorKey;
+    alpha: number;
+    mode: "hex" | "rgba";
 };
 
-export const hexToRgbaFunction: Story = {
-    name: "hexToRgba()",
+const meta: Meta<StoryArgs> = {
+    title: "Quarks/Colors",
+    tags: ["autodocs"],
     args: {
         variable: "purple500",
-        alpha: 0.35,
+        alpha: 0.6,
+        mode: "rgba",
     },
     argTypes: {
         variable: {
             control: "select",
             options: colorOptions,
         },
-        mode: { table: { disable: true } },
-    },
-    parameters: {
-        docs: {
-            description: {
-                story: "`hexToRgba()` is an optional fallback utility for the rare cases where `rgba` from a CSS variable is not possible. Use it when you already have a literal hex value and need a stable rgba string.",
-            },
-            source: {
-                transform: (_src: string, context: { args?: Partial<StoryArgs> }) => {
-                    const variable = context.args?.variable ?? "purple500";
-                    const alpha = context.args?.alpha ?? 0.35;
-
-                    return `import { colors, hexToRgba } from "@stamcat/craftsman/styles";
-
-const style = {
-    background: hexToRgba(colors.${variable}, ${alpha}),
-};`;
-                },
-            },
+        alpha: {
+            control: { type: "range", min: 0, max: 1, step: 0.05 },
+            if: { arg: "mode", eq: "rgba" },
+        },
+        mode: {
+            control: "radio",
+            options: ["hex", "rgba"],
         },
     },
-    render: ({ variable, alpha }) => {
-        const hexValue = colors[variable];
-        const result = hexToRgba(hexValue, alpha);
-
-        return (
-            <section style={utilityCardStyle}>
-                <h3>hexToRgba(hex, alpha)</h3>
-                <code><pre>{`hexToRgba(colors.${variable}, ${alpha}) => ${result}`}</pre></code>
-                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
-            </section>
-        );
+    parameters: {
+        layout: "padded",
+        docs: {
+            description: {
+                component: "The color utility is very powerful because unlike CSS variables, it brings type safety to the entire color palette. When using standard hex colors, it will return a css variable (for ease of theming). Color also includes an rgba conversion utility that allows you to easily convert a typesafe color to RGBA and then tune its opacity.",
+            },
+        }
     },
 };
 
+export default meta;
+type Story = StoryObj<typeof meta>;
+
 export const SassColorFunction: Story = {
-    name: "Sass color()",
+    name: "Sass - color()",
     parameters: {
         docs: {
             description: {
@@ -270,6 +186,94 @@ Use this instead of hard-coding hex values so themes can override via \`--name\`
                         </tr>
                     </tbody>
                 </table>
+            </section>
+        );
+    },
+};
+export const ColorFunction: Story = {
+    name: "TS - color()",
+    parameters: {
+        docs: {
+            description: {
+                story: "color() is a typesafe utility that you can use for inline css-in-js solutions to automatically author color values."
+            },
+            source: {
+                transform: (_src: string, context: { args?: Partial<StoryArgs> }) => {
+                    const variable = context.args?.variable ?? "purple500";
+                    const mode = context.args?.mode ?? "rgba";
+                    const alpha = context.args?.alpha ?? 0.6;
+
+                    if (mode === "hex") {
+                        return `import { color } from "@stamcat/craftsman/styles";
+
+const style = {
+    background: color("${variable}"),
+};`;
+                    }
+
+                    return `import { color } from "@stamcat/craftsman/styles";
+
+const style = {
+    background: color("${variable}", "rgba", ${alpha}),
+};`;
+                },
+            },
+        },
+    },
+    render: ({ variable, alpha, mode }) => {
+        const result = mode === "hex" ? color(variable, "hex") : color(variable, "rgba", alpha);
+
+        return (
+            <section style={utilityCardStyle}>
+                <h3>color(name, type, alpha)</h3>
+                <code><pre>{`color("${variable}"${mode === "rgba" ? `, ${mode}` : ""}${mode === "rgba" ? `, ${alpha}` : ""}) => ${result}`}</pre></code>
+                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
+            </section>
+        );
+    },
+};
+
+export const hexToRgbaFunction: Story = {
+    name: "TS - hexToRgba()",
+    args: {
+        variable: "purple500",
+        alpha: 0.35,
+    },
+    argTypes: {
+        variable: {
+            control: "select",
+            options: colorOptions,
+        },
+        mode: { table: { disable: true } },
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "`hexToRgba()` is an optional fallback utility for the rare cases where `rgba` from a CSS variable is not possible. Use it when you already have a literal hex value and need a stable rgba string.",
+            },
+            source: {
+                transform: (_src: string, context: { args?: Partial<StoryArgs> }) => {
+                    const variable = context.args?.variable ?? "purple500";
+                    const alpha = context.args?.alpha ?? 0.35;
+
+                    return `import { colors, hexToRgba } from "@stamcat/craftsman/styles";
+
+const style = {
+    background: hexToRgba(colors.${variable}, ${alpha}),
+};`;
+                },
+            },
+        },
+    },
+    render: ({ variable, alpha }) => {
+        const hexValue = colors[variable];
+        const result = hexToRgba(hexValue, alpha);
+
+        return (
+            <section style={utilityCardStyle}>
+                <h3>hexToRgba(hex, alpha)</h3>
+                <code><pre>{`hexToRgba(colors.${variable}, ${alpha}) => ${result}`}</pre></code>
+                <div style={{ height: "56px", borderRadius: "6px", border: "1px solid #e5e7eb", background: result }} />
             </section>
         );
     },

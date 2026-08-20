@@ -40,6 +40,7 @@
   "dependencies": {
     "@floating-ui/react-dom": "2.1.9",
     "clsx": "2.1.1",
+    "country-flag-icons": "1.6.20",
     "dompurify": "3.4.13",
     "embla-carousel-react": "8.6.0",
     "pure-react-carousel": "1.35.0",

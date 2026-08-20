@@ -6,6 +6,7 @@ Full guidance has been split out for progressive loading:
 
 - **Global guidelines** (exports, hard rules, code block rendering, style utilities, theme authoring, `isEmpty`, code gen patterns, fallback strategy): see the [craftsman-component-usage skill](.github/skills/craftsman-component-usage/SKILL.md).
 - **Component-specific guidelines** (props, behavior notes, examples): each component has its own `AGENTS.md` co-located with its source, for example [src/components/Button/AGENTS.md](src/components/Button/AGENTS.md).
+- **Device/browser detection** (prefer `react-device-detect` over custom user-agent/viewport checks): see the [craftsman-device-detection skill](.github/skills/craftsman-device-detection/SKILL.md).
 
 ## Quick Reference
 
