@@ -54,7 +54,7 @@ export const TimePickerDisplay: React.FC<TimePickerDisplayProps> = (props) => {
     }
 
     return (
-        <div className="timePicker" ref={floatingRef} style={style}>
+        <div className="timePicker__display" ref={floatingRef} style={style}>
             <IosPickerItem
                 slideCount={timeFormat}
                 perspective="left"

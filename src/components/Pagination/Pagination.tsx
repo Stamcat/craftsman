@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { Button } from "../Button/Button";
 import clsx from "clsx";
 import "./Pagination.scss";
 
@@ -41,36 +40,35 @@ export const Pagination: React.FC<PaginationProps> = ({ total, current, onChange
 
     return (
         <nav className={clsx("pagination", className)} style={style} aria-label="Pagination">
-            <Button variant="text" value={0} onClick={onChange} disabled={current === 0} aria-label="First page">
+            <button className="text" value={0} onClick={onChange} disabled={current === 0} aria-label="First page">
                 «
-            </Button>
+            </button>
             {canJumpBack && (
-                <Button variant="text" value={jumpBackIndex} onClick={onChange} aria-label={`Back ${showPages} pages`}>
+                <button className="text" value={jumpBackIndex} onClick={onChange} aria-label={`Back ${showPages} pages`}>
                     ‹‹
-                </Button>
+                </button>
             )}
             {pages.map((page) => (
-                <Button
+                <button
                     key={page}
-                    variant="text"
                     value={page}
                     onClick={onChange}
                     disabled={page === current}
                     aria-label={`Page ${page + 1}`}
                     aria-current={page === current ? "page" : undefined}
-                    className={page === current ? "active" : undefined}
+                    className={clsx("text", page === current ? "active" : undefined)}
                 >
                     {page + 1}
-                </Button>
+                </button>
             ))}
             {canJumpForward && (
-                <Button variant="text" value={jumpForwardIndex} onClick={onChange} aria-label={`Forward ${showPages} pages`}>
+                <button className="text" value={jumpForwardIndex} onClick={onChange} aria-label={`Forward ${showPages} pages`}>
                     ››
-                </Button>
+                </button>
             )}
-            <Button variant="text" value={total - 1} onClick={onChange} disabled={current === total - 1} aria-label="Last page">
+            <button className="text" value={total - 1} onClick={onChange} disabled={current === total - 1} aria-label="Last page">
                 »
-            </Button>
+            </button>
         </nav>
     );
 };

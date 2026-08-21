@@ -5,6 +5,7 @@ import type { TextInputType } from "../../utilities/types";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 import { Button } from "../Button/Button";
 import { Input, type InputProps } from "../Input/Input";
+import clsx from "clsx";
 
 
 const EyeIconToggle = ({ visible, onToggle }: { visible: boolean; onToggle: () => void }) => (
@@ -29,6 +30,7 @@ export type InputPasswordProps = React.ComponentProps<"input"> & {
  */
 export const InputPassword: React.FC<InputPasswordProps> = ({
     type = "password",
+    className,
     ...props
 }) => {
     const [visible, setVisible] = useState(false);
@@ -36,6 +38,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
 
     return (
         <Input
+            className={clsx("inputPassword", className)}
             {...props}
             type={resolvedType}
             endAdornment={<EyeIconToggle visible={visible} onToggle={() => setVisible((prev) => !prev)} />}

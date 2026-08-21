@@ -71,10 +71,10 @@ const meta: Meta<typeof TimePicker> = {
         },
     },
     parameters: {
+        // height (not iframeHeight) applies to inline stories too, keeping theme propagation from the Docs page
         docs: {
             story: {
-                inline: false,
-                iframeHeight: 400,
+                height: "400px",
             },
         },
     },

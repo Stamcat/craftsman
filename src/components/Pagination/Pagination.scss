@@ -10,6 +10,7 @@
         .active {
             color: #{u.color("gray700")};
             border: 1px solid;
+            border-radius: 50%;
             width: 20px;
             height: 20px;
             display: inline-flex;

@@ -29,7 +29,7 @@ export const InputPhone: React.FC<InputProps> = ({
     const phoneInputRef = React.useRef<PhoneInputRefType>(null);
 
     return (
-        <InputWrapper id={inputId} className={clsx("input-phone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
+        <InputWrapper id={inputId} className={clsx("inputPhone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
             <PhoneInput
                 defaultCountry={defaultCountry}
                 {...props}
