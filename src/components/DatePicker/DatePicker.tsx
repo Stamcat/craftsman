@@ -29,7 +29,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     const generatedId = useId();
     const inputId = id || generatedId;
     return (
-        <InputWrapper id={inputId} className={clsx(className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
+        <InputWrapper id={inputId} className={clsx("datePicker", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
             <ReactDatePicker
                 calendarIcon={<FaRegCalendar size={16} />}
                 clearIcon={<FaX size={14} />}

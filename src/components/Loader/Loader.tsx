@@ -22,7 +22,7 @@ export const Loader: React.FC<LoaderProps> = (props) => {
 
     return (
         <div
-            className={clsx(styles[type], className)}
+            className={clsx("loader", styles[type], className)}
             style={{ ...loaderStyleVars, ...style }}
             {...rest}
         />

@@ -105,11 +105,11 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
     };
 
     return (
-        <div ref={wrapperRef} className="dateTimePicker__wrapper" onKeyDown={onKeyDownTime}>
+        <div ref={wrapperRef} className="dateTimePicker" onKeyDown={onKeyDownTime}>
             <InputWrapper
                 id={inputId}
                 onFocus={onFocusTime}
-                className={clsx(className, "dateTimePicker")}
+                className={clsx(className, "dateTimePicker_wrapper")}
                 label={label}
                 labelPosition={labelPosition}
                 error={error}

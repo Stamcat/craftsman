@@ -1,7 +1,7 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
 @layer craftsman-base {
-    .input-phone {
+    .inputPhone {
         &[data-label-position="inside"] {
             .input-label {
                 top: 15px;

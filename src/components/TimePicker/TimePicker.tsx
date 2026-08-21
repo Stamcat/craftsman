@@ -72,7 +72,7 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
         }
     }
     return (
-        <div className="timePicker__wrapper" ref={setReferenceEl} onFocus={onFocusTime} onKeyDown={onKeyDownTime}>
+        <div className="timePicker" ref={setReferenceEl} onFocus={onFocusTime} onKeyDown={onKeyDownTime}>
             {name && <input type="hidden" name={name} value={typeof value === "string" ? value : ""} readOnly />}
             <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required}>
                 <div className="timePicker__field">

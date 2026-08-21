@@ -1,4 +1,4 @@
-button {
+.button {
     color: green;
     border: 2px solid green;
     border-radius: 8px;
@@ -7,5 +7,8 @@ button {
         background-color: #14532d;
         border-color: #14532d;
         color: var(--white);
+    }
+    &.text {
+        border: none;
     }
 }
