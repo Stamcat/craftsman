@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { Button } from "../Button/Button";
 import clsx from "clsx";
 import "./Pagination.scss";
 
