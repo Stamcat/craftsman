@@ -124,11 +124,19 @@ const createIgnoreFile = () => {
 
     console.log("ignore file created");
 };
+// dirs never shipped in the published package (docs-only, not referenced by any export)
+const SKIP_DIRS = [path.join("src", "stories")];
+
 const fromDir = (startPath: string, filter: string) => {
     console.log("Starting from dir " + startPath + "/");
 
     if (!fse.existsSync(startPath)) {
         console.log("no dir ", startPath);
+        return;
+    }
+
+    if (SKIP_DIRS.includes(startPath)) {
+        console.log("-- skipping: ", startPath);
         return;
     }
 
