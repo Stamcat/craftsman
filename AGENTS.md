@@ -30,6 +30,9 @@ import { Select } from "@stamcat/craftsman/Select";
 import { Text } from "@stamcat/craftsman/Text";
 import { Textarea } from "@stamcat/craftsman/Textarea";
 import { TimePicker } from "@stamcat/craftsman/TimePicker";
+import { Toggle } from "@stamcat/craftsman/Toggle";
+import { Notice } from "@stamcat/craftsman/Notice";
+import { SortableList } from "@stamcat/craftsman/SortableList";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.

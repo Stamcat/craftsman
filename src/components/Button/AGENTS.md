@@ -21,10 +21,11 @@ Behavior notes:
 - Theme component overrides are selector-based CSS emitted by `ThemeProvider`; `theme.components.*` accepts JS style objects or raw CSS/Sass strings for the target selector.
 - If `children` is empty (per `isEmpty`), the component renders nothing.
 - `size` is clamped to `[0.1, 10]` before styling is applied.
-- When `size` is provided, Button scales:
-  - `border-radius: calc(var(--btn-border-radius) * size)`
-  - `padding: calc(var(--btn-pad-y) * size) calc(var(--btn-pad-x) * size)`
-  - `font-size: max(10px, calc(var(--w-text) * size))`
+- When `size` is provided, Button sets a single `--btn-size` CSS variable inline; all scaling math lives in SCSS:
+  - `border-radius: calc(var(--w-gutter) * 0.75 * var(--btn-size))`
+  - `padding: calc(var(--w-gutter) * 0.5 * var(--btn-size)) calc(var(--w-gutter) * 0.75 * var(--btn-size))`
+  - `font-size: max(10px, calc(var(--w-text) * var(--btn-size)))`
+  - This is the standard sizing pattern used across the library (see `Toggle`'s `--toggle-width`): components expose one scale/size CSS variable, and SCSS does all the `calc()` work.
 - There is no dedicated icon/loading prop. Icons, loaders, and mixed content are passed as `children`.
 - Supports both real disable (`disabled={true}`) and style-only disable (`className="disabled"`).
 - Native button modes are supported (`type="button" | "submit" | "reset"`).

@@ -9,16 +9,17 @@
         display: inline-grid;
         place-content: center;
         padding: 0;
-        width: #{u.width("gutter")};
-        height: #{u.width("gutter")};
+        --radio-size: 1;
+        width: calc(#{u.width("gutter")} * var(--radio-size));
+        height: calc(#{u.width("gutter")} * var(--radio-size));
         border: 1px solid var(--blue600);
         border-radius: 50%;
         box-sizing: border-box;
 
         &::before {
             content: "";
-            width: #{u.width("gutter", 0.5)};
-            height: #{u.width("gutter", 0.5)};
+            width: calc(#{u.width("gutter", 0.5)} * var(--radio-size));
+            height: calc(#{u.width("gutter", 0.5)} * var(--radio-size));
             border-radius: 50%;
             transform: scale(0);
             transition: transform 0.2s ease;

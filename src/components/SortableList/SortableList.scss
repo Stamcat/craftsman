@@ -1,0 +1,41 @@
+@use "../../styles/utilities/_functions" as u;
+
+@layer craftsman-component {
+    .sortable-list {
+        display: flex;
+        flex-direction: column;
+        gap: #{u.width("gutter", 0.25)};
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .sortable-list-item {
+        position: relative;
+        cursor: grab;
+        transition: transform 200ms ease, opacity 150ms ease;
+
+        &.dragging {
+            opacity: 0.4;
+        }
+
+        &.drop-top::before,
+        &.drop-bottom::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 1px;
+            background-color: #{u.color("blue500")};
+        }
+
+        &.drop-top::before {
+            top: -1px;
+        }
+
+        &.drop-bottom::after {
+            bottom: -1px;
+        }
+    }
+}

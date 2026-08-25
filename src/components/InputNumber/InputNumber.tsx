@@ -14,15 +14,17 @@ export type InputNumberProps = React.ComponentProps<"input"> & {
     onDecrement?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     onIncrement?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     iconIncrement?: React.ReactNode;
+    iconDecrement?: React.ReactNode;
 };
 
 /**
- * InputNumber provides a flipper component to increment numbers
+ * InputNumber provides a flipper component to increment numbers using native controls
  */
 export const InputNumber: React.FC<InputNumberProps> = ({
     type = "number",
     className,
     iconIncrement,
+    iconDecrement,
     onDecrement,
     onIncrement,
     ...props
@@ -52,7 +54,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
             ref={inputRef}
             className={clsx("inputNumber", className)}
             preAdornment={<Button variant="text" onClick={onPressDown}>{iconIncrement || <IoRemoveCircleOutline size="26" />}</Button>}
-            endAdornment={<Button variant="text" onClick={onPressUp}>{iconIncrement || <IoAddCircleOutline size="26" />}</Button>}
+            endAdornment={<Button variant="text" onClick={onPressUp}>{iconDecrement || <IoAddCircleOutline size="26" />}</Button>}
             {...props}
             type={type}
         />

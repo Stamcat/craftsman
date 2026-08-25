@@ -38,6 +38,7 @@
     "type-check:storybook": "tsc --p ./tsconfig-storybook.json --noEmit"
   },
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "3.0.0",
     "@floating-ui/react-dom": "2.1.9",
     "@wojtekmaj/react-daterange-picker": "7.1.0",
     "clsx": "2.1.1",

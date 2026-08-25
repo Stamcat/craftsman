@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import { isEmpty } from "../../utilities/validations";
 import type { ButtonType } from "../../utilities/types";
-import { width } from "../../styles/utilities/layout";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
     /** Primary - Call-To-Action, Text - use for non-anchored text buttons */
@@ -22,13 +21,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     const { type = "button", variant = "default", size, styles: styleOverride, className, style, ...rest } = props;
     const normalizedSize = typeof size === "number" ? Math.min(10, Math.max(0.1, size)) : undefined;
     const resolvedStyleOverride = isEmpty(styleOverride) ? undefined : styleOverride;
-    const scaledStyle: React.CSSProperties = normalizedSize
-        ? {
-            borderRadius: `calc(var(--btn-border-radius) * ${normalizedSize})`,
-            padding: `calc(var(--btn-pad-y) * ${normalizedSize}) calc(var(--btn-pad-x) * ${normalizedSize})`,
-            fontSize: `max(10px, calc(${width("text")} * ${normalizedSize}))`,
-        }
-        : {};
+    const sizeStyle = normalizedSize ? ({ "--btn-size": normalizedSize } as React.CSSProperties) : undefined;
 
     if (isEmpty(props.children)) {
         return <></>;
@@ -38,7 +31,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         <button
             type={type}
             className={clsx("button", variant, className)}
-            style={{ ...scaledStyle, ...resolvedStyleOverride, ...style }}
+            style={{ ...sizeStyle, ...resolvedStyleOverride, ...style }}
             {...rest}
         />
     );

@@ -105,6 +105,7 @@ const meta: Meta<typeof RadioButton> = {
             control: "select",
             options: ["right", "left"],
         },
+		size: { control: "number" },
 	},
 };
 
@@ -155,3 +156,21 @@ export const SingleWithError: Story = {
 		</div>
 	),
 };
+
+export const Sized: Story = {
+	args: {
+		id: "sized-radio",
+		name: "sized-radio",
+		value: "Picard",
+		label: "Jean-Luc Picard",
+		labelPosition: "right",
+		checked: true,
+		size: 1.75,
+	},
+	render: (args) => (
+		<div style={containerStyle}>
+			<RadioButton {...args} />
+		</div>
+	),
+};
+

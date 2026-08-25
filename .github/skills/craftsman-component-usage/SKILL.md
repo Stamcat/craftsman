@@ -29,6 +29,9 @@ import { Select } from "@stamcat/craftsman/Select";
 import { Text } from "@stamcat/craftsman/Text";
 import { Textarea } from "@stamcat/craftsman/Textarea";
 import { TimePicker } from "@stamcat/craftsman/TimePicker";
+import { Toggle } from "@stamcat/craftsman/Toggle";
+import { Notice } from "@stamcat/craftsman/Notice";
+import { SortableList } from "@stamcat/craftsman/SortableList";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
@@ -65,6 +68,9 @@ Each entry links to the `AGENTS.md` co-located with that component's source for 
 | Text | [../../../src/components/Text/AGENTS.md](../../../src/components/Text/AGENTS.md) |
 | DateTimePicker | [../../../src/components/DateTimePicker/AGENTS.md](../../../src/components/DateTimePicker/AGENTS.md) |
 | Tooltip | [../../../src/components/Tooltip/AGENTS.md](../../../src/components/Tooltip/AGENTS.md) |
+| Toggle | [../../../src/components/Toggle/AGENTS.md](../../../src/components/Toggle/AGENTS.md) |
+| Notice | [../../../src/components/Notice/AGENTS.md](../../../src/components/Notice/AGENTS.md) |
+| SortableList | [../../../src/components/SortableList/AGENTS.md](../../../src/components/SortableList/AGENTS.md) |
 
 Not yet part of the documented public export surface: `Progress` (source exists but is incomplete — see Known Limitations).
 
