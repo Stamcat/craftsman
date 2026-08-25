@@ -1,10 +1,11 @@
 "use client";
 
+import type { RadioLabelPosition } from "../../styles";
 import { Input, type InputProps } from "../Input/Input"
 
 type RadioButtonProps = InputProps & {
     type?: "radio";
-    labelPosition?: "left" | "right"; 
+    labelPosition?: RadioLabelPosition;
 }
 /**
  * Radio Button simply implements Input, but it has some guardrails in place to maintain correct of usage of Radio button elements.

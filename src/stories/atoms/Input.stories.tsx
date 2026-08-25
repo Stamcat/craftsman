@@ -10,17 +10,12 @@ const meta: Meta<typeof Input> = {
 	tags: ["autodocs"],
     parameters: {
         layout: "padded",
-        docs: {
-            description: {
-                component: "Base text input. For password visibility toggle, use InputPassword.",
-            },
-        },
     },
 	args: {
 		type: "text",
         id: "testInput",
 		placeholder: "Type here",
-        label: "Your Favorite",
+        label: "Favorite Beer",
         labelPosition: "top",
         required: false,
 	},

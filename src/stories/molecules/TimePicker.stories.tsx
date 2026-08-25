@@ -102,7 +102,10 @@ export const Controlled: Story = {
 
 // value with no onChange — wheels and inputs are non-interactive
 export const ReadOnly: Story = {
-    args: { value: "14:45" },
+    args: {
+        value: "14:45",
+        disabled: true,
+    },
 };
 
 // no value or defaultValue — displays -- placeholder

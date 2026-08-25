@@ -2,7 +2,7 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
 
-@layer craftsman-base {
+@layer craftsman-component {
     %date-picker-styles {
         display: inline-flex;
         position: relative;
@@ -46,6 +46,12 @@
         -webkit-appearance: textfield;
         -moz-appearance: textfield;
         appearance: textfield;
+        &[name="year"] {
+            min-width: calc(4ch + 2px);
+        }
+        &:disabled {
+            background-color: unset;
+        }
     }
     %date-picker-input-spinner {
         -webkit-appearance: none;

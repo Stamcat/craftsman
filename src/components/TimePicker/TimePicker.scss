@@ -1,9 +1,9 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_placeholders";
-@use "../DatePicker/_DateTimePicker";
+@use "../DatePicker/_DatePicker";
 
-@layer craftsman-base {
+@layer craftsman-component {
     .react-time-picker,
     .react-time-picker *,
     .react-time-picker *:before,

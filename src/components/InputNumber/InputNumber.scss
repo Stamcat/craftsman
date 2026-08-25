@@ -1,0 +1,29 @@
+@use "../../styles/global/components/input";
+@use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/_placeholders";
+
+@layer craftsman-component {
+    .inputNumber {
+        &.input-wrapper[data-label-position=inside] .input-label {
+            left: 40px;
+        }
+        .input-field {
+            gap: #{u.width("gutter", 0.5)};
+        }
+        .input-field[data-has-end-adornment=true] {
+            & > .input {
+                padding-right: #{u.width("gutter", 0.75)};
+            }
+        }
+        .input-field[data-has-pre-adornment=true] {
+            & > .input {
+                padding-left: #{u.width("gutter", 0.75)};
+            }
+        }
+        .input-end-adornment, .input-pre-adornment {
+            position: unset;
+            transform: unset;
+            top: unset;
+        }
+    }
+}

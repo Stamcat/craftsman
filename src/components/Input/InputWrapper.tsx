@@ -16,6 +16,7 @@ export type LabeledInput = {
     required?: boolean;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
+    preAdornment?: React.ReactNode;
 };
 
 export type InputWrapperProps = React.ComponentProps<"input" | "textarea" | "select"> & LabeledInput;

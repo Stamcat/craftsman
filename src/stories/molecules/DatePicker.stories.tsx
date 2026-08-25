@@ -30,6 +30,10 @@ const meta: Meta<typeof DatePicker> = {
         error: { control: "text" },
         value: { control: false },
         onChange: { control: false },
+        locale: {
+            control: "select",
+            options: ["en-US", "en-GB", "fr-FR", "de-DE", "ja-JP", "ar-EG", "zh-CN", "es-MX", "hi-IN", "ko-KR"],
+        },
     },
 };
 
@@ -97,4 +101,17 @@ export const LabelPositions: Story = {
         </div>
     ),
 };
+
+const LocalizationStory = (args: React.ComponentProps<typeof DatePicker>) => {
+    const [value, setValue] = useState<DatePickerProps["value"]>(new Date("2026-03-05"));
+    return <DatePicker {...args} label="Localized Date" value={value} onChange={setValue} />;
+};
+
+export const Localization: Story = {
+    args: {
+        locale: "en-US",
+    },
+    render: (args) => <LocalizationStory {...args} />,
+};
+
 

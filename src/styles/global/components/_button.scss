@@ -12,6 +12,10 @@
           background-color: transparent;
           text-decoration: underline;
           cursor: pointer;
+          &.disabled, &:disabled {
+            cursor: not-allowed;
+            color: #{u.color("gray400")};
+          }
       }
   }
 
@@ -52,13 +56,13 @@
     &:disabled,
     &.disabled {
       cursor: not-allowed;
-      border-color: var(--gray200);
-      color: var(--gray400);
+      border-color:  #{u.color("gray200")};
+      color:  #{u.color("gray400")};
 
       &.primary {
-        border-color: var(--gray200);
-        background-color: var(--gray400);
-        color: var(--gray200);
+        border-color:  #{u.color("gray200")};
+        background-color:  #{u.color("gray400")};
+        color:  #{u.color("gray200")};
       }
     }
   }

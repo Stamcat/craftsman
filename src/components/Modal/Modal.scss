@@ -40,109 +40,111 @@
     transform: translateY(100%);
   }
 }
-.modal {
-    &.wrapper {
-        @extend %modal-overlay;
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .background {
-        @extend %modal-overlay;
-        z-index: 1001;
-        background-color: rgba(0, 0, 0, 0.5);
-        animation-fill-mode: forwards;
-
-        &[data-is-closing="true"] {
-            animation: fadeOut 0.3s ease-in-out;
+@layer craftsman-component {
+    .modal {
+        &.wrapper {
+            @extend %modal-overlay;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        &[data-is-closing="false"] {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-    }
+        .background {
+            @extend %modal-overlay;
+            z-index: 1001;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation-fill-mode: forwards;
 
-    .content {
-        padding: #{u.width("gutter")};
-        z-index: 1002;
-        background-color: var(--white);
-        max-height: 80vh;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-        animation-fill-mode: forwards;
+            &[data-is-closing="true"] {
+                animation: fadeOut 0.3s ease-in-out;
+            }
 
-        &[data-is-closing="true"] {
-            animation: slideOut 0.3s ease-in-out;
-        }
-
-        &[data-is-closing="false"] {
-            animation: slideIn 0.3s ease-in-out;
-        }
-
-        &.panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-        }
-
-        &.dialog {
-            border-radius: 8px;
-        }
-
-        > header {
-            display: inline-flex;
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: #{u.width("gutter", 0.5)};
-
-            > button:only-child {
-            margin-left: auto;
+            &[data-is-closing="false"] {
+                animation: fadeIn 0.3s ease-in-out;
             }
         }
-    }
 
-    .actionContainer {
-        margin-top: #{u.width("gutter", 2)};
-        background-color: var(--white);
-        height: fit-content;
-        display: flex;
-        gap: #{u.width("gutter")};
-    }
-    .closeModal {
-        text-decoration: none;
-        height: 30px;
-        width: 30px;
-        border-radius: 50%;
-        padding: 0;
-        display: inline-flex;
-        justify-content: center;
-    };
+        .content {
+            padding: #{u.width("gutter")};
+            z-index: 1002;
+            background-color: var(--white);
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+            animation-fill-mode: forwards;
 
-    @include u.breakpoint(mobileOnly) {
-    .content.panel,
-    .content.dialog {
-        width: 100%;
-        height: 100%;
-    }
-    }
+            &[data-is-closing="true"] {
+                animation: slideOut 0.3s ease-in-out;
+            }
 
-    @include u.breakpoint(tablet) {
-    .content.panel {
-        width: #{u.width("column", 4)};
-    }
+            &[data-is-closing="false"] {
+                animation: slideIn 0.3s ease-in-out;
+            }
 
-    .content.dialog {
-        width: #{u.width("column", 6)};
-    }
-    }
+            &.panel {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100%;
+            }
 
-    @include u.breakpoint(desktop) {
+            &.dialog {
+                border-radius: 8px;
+            }
+
+            > header {
+                display: inline-flex;
+                width: 100%;
+                justify-content: space-between;
+                margin-bottom: #{u.width("gutter", 0.5)};
+
+                > button:only-child {
+                margin-left: auto;
+                }
+            }
+        }
+
+        .actionContainer {
+            margin-top: #{u.width("gutter", 2)};
+            background-color: var(--white);
+            height: fit-content;
+            display: flex;
+            gap: #{u.width("gutter")};
+        }
+        .closeModal {
+            text-decoration: none;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            padding: 0;
+            display: inline-flex;
+            justify-content: center;
+        };
+
+        @include u.breakpoint(mobileOnly) {
+        .content.panel,
         .content.dialog {
-            width: #{u.width("column", 8)};
+            width: 100%;
+            height: 100%;
+        }
+        }
+
+        @include u.breakpoint(tablet) {
+        .content.panel {
+            width: #{u.width("column", 4)};
+        }
+
+        .content.dialog {
+            width: #{u.width("column", 6)};
+        }
+        }
+
+        @include u.breakpoint(desktop) {
+            .content.dialog {
+                width: #{u.width("column", 8)};
+            }
         }
     }
 }

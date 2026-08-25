@@ -1,16 +1,16 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
-@use "./_DatePicker";
-@layer craftsman-base {
-    .react-date-picker,
-    .react-date-picker *,
-    .react-date-picker *:before,
-    .react-date-picker *:after {
+@use "../DatePicker/_DatePicker";
+@layer craftsman-component {
+    .react-daterange-picker,
+    .react-daterange-picker *,
+    .react-daterange-picker *:before,
+    .react-daterange-picker *:after {
         @extend %border-box;
     }
 
-    .react-date-picker {
+    .react-daterange-picker {
         @extend %date-picker-styles;
         &--disabled {
             @extend %date-picker-disabled;
@@ -54,8 +54,9 @@
         }
 
     }
-    .react-date-picker__calendar 
-    .react-date-picker__inputGroup__input:invalid {
+    .react-daterange-picker__calendar 
+    .react-daterange-picker__inputGroup__input:invalid {
         background: unset;
     }
+
 }

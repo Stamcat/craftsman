@@ -1,6 +1,6 @@
 @use "../../styles/utilities/_functions" as u;
 
-@layer craftsman-base {
+@layer craftsman-component {
     .tooltip {
         --tooltip-bg: #{u.color("gray800")};
 

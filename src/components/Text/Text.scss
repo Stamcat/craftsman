@@ -1,6 +1,6 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/global/components/typography" as t;
-@layer craftsman-base {
+@layer craftsman-component {
     .text {
         // --- display ---
         &.display {

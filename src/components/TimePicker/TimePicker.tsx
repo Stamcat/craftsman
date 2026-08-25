@@ -84,7 +84,6 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
                         required={required}
                         disableClock={true}
                         clearIcon={<FaX size={14} />}
-
                     />
                     {!isMobile && (
                         <Button
@@ -93,7 +92,8 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
                             onClick={() => setVisible(v => !v)}
                             aria-label={visible ? "Hide time picker" : "Show time picker"}
                             aria-pressed={visible}
-                            className="input-view-toggle"
+                            disabled={props.disabled}
+                            className={"input-view-toggle"}
                         >
                             {visible ? <FaClock size={16} /> : <FaRegClock size={16} />}
                         </Button>
