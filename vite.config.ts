@@ -64,6 +64,7 @@ export default defineConfig({
                 "react-toastify",
                 "sass-embedded",
                 "country-flag-icons",
+                "@atlaskit/pragmatic-drag-and-drop",
                 /^next(\/.*)?$/,
             ],
             output: {

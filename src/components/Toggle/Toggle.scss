@@ -1,0 +1,64 @@
+@use "../../styles/utilities/_functions" as u;
+
+@layer craftsman-component {
+    .input-wrapper.toggle {
+        > label {
+            display: inline-flex;
+            align-items: center;
+            gap: #{u.width("gutter", 0.5)};
+        }
+
+        .input-field {
+            position: relative;
+            width: var(--toggle-width, 60px);
+            height: calc(var(--toggle-width, 60px) * 0.56);
+        }
+
+        .input.checkbox {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .input-end-adornment {
+            position: absolute;
+            inset: 0;
+            top: 0;
+            transform: none;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-color: var(--gray400);
+            border-radius: calc(var(--toggle-width, 60px) * 0.56);
+            transition: background-color 0.2s ease;
+
+            &::before {
+                position: absolute;
+                content: "";
+                left: calc(var(--toggle-width, 60px) * 0.065);
+                bottom: calc(var(--toggle-width, 60px) * 0.065);
+                height: calc(var(--toggle-width, 60px) * 0.43);
+                width: calc(var(--toggle-width, 60px) * 0.43);
+                border-radius: 50%;
+                background-color: var(--white);
+                transition: transform 0.2s ease;
+            }
+        }
+
+        .input.checkbox:checked + .input-end-adornment .toggle-slider {
+            background-color: var(--blue500);
+
+            &::before {
+                transform: translateX(calc(var(--toggle-width, 60px) * 0.43));
+            }
+        }
+    }
+}

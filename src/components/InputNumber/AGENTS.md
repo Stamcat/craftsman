@@ -12,7 +12,8 @@ Props:
 - `type?: "number"` (fixed, default: `"number"`)
 - `onDecrement?: (e: React.MouseEvent<HTMLButtonElement>) => void`
 - `onIncrement?: (e: React.MouseEvent<HTMLButtonElement>) => void`
-- `iconIncrement?: React.ReactNode` — overrides the icon rendered in **both** the decrement and increment buttons (there is no separate `iconDecrement` prop yet).
+- `iconIncrement?: React.ReactNode` — overrides the icon rendered in the increment button.
+- `iconDecrement?: React.ReactNode` — overrides the icon rendered in the decrement button.
 
 Behavior notes:
 

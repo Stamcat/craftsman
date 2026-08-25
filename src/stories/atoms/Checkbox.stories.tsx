@@ -49,6 +49,9 @@ const meta: Meta<typeof Checkbox> = {
 	args: {
         label: "Accept terms",
 	},
+    argTypes: {
+        size: { control: "number" },
+    },
 };
 
 export default meta;
@@ -61,6 +64,13 @@ export const Checked: Story = {
 	args: {
 		checked: true,
 	},
+};
+
+export const Sized: Story = {
+    args: {
+        checked: true,
+        size: 1.75,
+    },
 };
 
 export const ThreeOptions: Story = {

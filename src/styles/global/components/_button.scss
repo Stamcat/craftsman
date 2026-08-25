@@ -20,9 +20,7 @@
   }
 
   %button-styles {
-    --btn-pad-y: #{u.width(gutter, 0.5)};
-    --btn-pad-x: #{u.width(gutter, 0.75)};
-    --btn-border-radius: #{u.width(gutter, 0.75)};
+    --btn-size: 1;
     color: var(--blue600);
     border: none;
     cursor: pointer;
@@ -31,8 +29,9 @@
     align-items: center;
     font-weight: 500;
     transition: 0.125s;
-    padding: var(--btn-pad-y) var(--btn-pad-x);
-    border-radius: var(--btn-border-radius);
+    padding: calc(#{u.width(gutter, 0.5)} * var(--btn-size)) calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+    border-radius: calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+    font-size: max(10px, calc(#{u.width(text)} * var(--btn-size)));
     border: 1px solid var(--blue500);
     background-color: var(--white);
 

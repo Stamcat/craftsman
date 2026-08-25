@@ -112,6 +112,27 @@ Available breakpoint keys: `tablet` · `tabletMax` · `tabletOnly` · `desktop` 
 - If your app does not include this package's global CSS variable setup, visual output may differ.
 - Agents should avoid hard-coding assumptions about token names beyond what the consumer app already defines.
 
+## Custom Sizing / Scale Props
+
+When a component accepts a numeric size/scale prop (for example `Button`'s `size` or `Toggle`'s `width`), the component sets **one** CSS custom property inline (only when the prop is provided), and the SCSS file does all the `calc()` math from there:
+
+```tsx
+// Component: only ever set the single scale variable
+const sizeStyle = normalizedSize ? ({ "--btn-size": normalizedSize } as React.CSSProperties) : undefined;
+```
+
+```scss
+// SCSS: give the variable a default, then derive every scaled property from it
+%button-styles {
+  --btn-size: 1;
+  padding: calc(#{u.width(gutter, 0.5)} * var(--btn-size)) calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+  border-radius: calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+  font-size: max(10px, calc(#{u.width(text)} * var(--btn-size)));
+}
+```
+
+Do not compute `calc()` strings per-property in JS/TS (for example building a `padding: "calc(... * 1.5)"` string in the component). Always push that math into SCSS and only pass the raw scale/size value through a single CSS variable.
+
 ## Theme Authoring
 
 - `theme.root` supports JS style objects and raw CSS/Sass strings.

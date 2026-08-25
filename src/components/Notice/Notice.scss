@@ -1,0 +1,76 @@
+@use "../../styles/utilities/_functions" as u;
+
+@layer craftsman-component {
+    .notice {
+        transition: opacity 500ms ease-in-out;
+        display: flex;
+        flex-direction: column;
+        gap: #{u.width("gutter", 0.5)};
+        padding: #{u.width("gutter")};
+        border: 1px solid var(--gray400);
+        border-left-width: 3px;
+        background-color: var(--white);
+        border-radius: 4px;
+
+        &.info {
+            border-color: var(--blue500);
+            background-color: var(--blue50);
+            color: var(--blue600);
+        }
+
+        &.success {
+            border-color: var(--green500);
+            background-color: var(--green50);
+            border-color: var(--green500);
+        }
+
+        &.error {
+            border-color: var(--red500);
+            background-color: var(--red50);
+            color: var(--red600);
+        }
+
+        &.help {
+            border-color: var(--gray500);
+            background-color: var(--gray50);
+        }
+        button.text {
+            color: inherit;
+        }
+    }
+
+    .notice-contents {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        gap: #{u.width("gutter", 0.5)};
+        width: 100%;
+    }
+
+    .notice-icon {
+        display: flex;
+        flex: 0 0 auto;
+        font-size: 24px;
+    }
+
+    .notice-text {
+        flex-grow: 1;
+        margin-top: #{u.width("gutter", 0.25)};
+        span {
+            display: block;
+        }
+    }
+
+    .notice-dismiss {
+        flex: 0 0 auto;
+        padding: 0;
+    }
+
+    .notice-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: #{u.width("gutter", 0.5)};
+       
+    }
+}

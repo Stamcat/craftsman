@@ -39,7 +39,9 @@
         margin: 0;
         padding: 0;
     }
-
+    ul {
+        list-style: none;
+    }
     body {
         @include t.body-typography;
         background-color: #fff;
