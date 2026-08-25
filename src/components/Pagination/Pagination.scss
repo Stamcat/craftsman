@@ -1,7 +1,7 @@
 
 @use "../../styles/utilities/_functions" as u;
 
-@layer craftsman-base {
+@layer craftsman-component {
     .pagination {
         display: inline-flex;
         align-items: center;

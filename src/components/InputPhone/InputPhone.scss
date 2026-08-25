@@ -1,6 +1,6 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
-@layer craftsman-base {
+@layer craftsman-component {
     .inputPhone {
         &[data-label-position="inside"] {
             .input-label {

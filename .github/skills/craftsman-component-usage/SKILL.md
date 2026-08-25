@@ -16,7 +16,9 @@ import { Button } from "@stamcat/craftsman/Button";
 import { Carousel } from "@stamcat/craftsman/Carousel";
 import { Checkbox } from "@stamcat/craftsman/Checkbox";
 import { DatePicker } from "@stamcat/craftsman/DatePicker";
+import { DateRangePicker } from "@stamcat/craftsman/DateRangePicker";
 import { Input } from "@stamcat/craftsman/Input";
+import { InputNumber } from "@stamcat/craftsman/InputNumber";
 import { InputPassword } from "@stamcat/craftsman/InputPassword";
 import { InputPhone } from "@stamcat/craftsman/InputPhone";
 import { Loader } from "@stamcat/craftsman/Loader";
@@ -57,6 +59,8 @@ Each entry links to the `AGENTS.md` co-located with that component's source for 
 | Select | [../../../src/components/Select/AGENTS.md](../../../src/components/Select/AGENTS.md) |
 | InputPhone | [../../../src/components/InputPhone/AGENTS.md](../../../src/components/InputPhone/AGENTS.md) |
 | DatePicker | [../../../src/components/DatePicker/AGENTS.md](../../../src/components/DatePicker/AGENTS.md) |
+| DateRangePicker | [../../../src/components/DateRangePicker/AGENTS.md](../../../src/components/DateRangePicker/AGENTS.md) |
+| InputNumber | [../../../src/components/InputNumber/AGENTS.md](../../../src/components/InputNumber/AGENTS.md) |
 | TimePicker | [../../../src/components/TimePicker/AGENTS.md](../../../src/components/TimePicker/AGENTS.md) |
 | Text | [../../../src/components/Text/AGENTS.md](../../../src/components/Text/AGENTS.md) |
 | DateTimePicker | [../../../src/components/DateTimePicker/AGENTS.md](../../../src/components/DateTimePicker/AGENTS.md) |

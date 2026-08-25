@@ -6,7 +6,17 @@
     left: #{u.width("gutter", 0.125)};
     font-size: #{u.width("text", 0.75)};
 }
+// This is in base layer because many components implement it.
 @layer craftsman-base {
+    %input-adornment {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+    }
     .input-wrapper {
         label {
             .input-label {
@@ -80,7 +90,7 @@
                 z-index: 1;
                 width: fit-content;
                 padding: 0 5px;
-                top: #{u.width(gutter, 0.25)};
+                top: #{u.width(gutter, 0.45)};
                 left: #{u.width(gutter, 0.25)};
                 pointer-events: none;
                 transition:
@@ -125,40 +135,42 @@
                 transition: opacity 200ms ease;
             }
         }
-        .input-field {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-
-            &[data-has-end-adornment="true"] {
-                > .input {
-                    width: 100%;
-                    padding-right: #{u.width("gutter", 1.5)};
-                }
+    }
+    .input-field {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        &[data-has-end-adornment="true"] {
+            > .input {
+                padding-right: #{u.width("gutter", 1.5)};
             }
         }
+        &[data-has-pre-adornment="true"] {
+            > .input {
+                padding-left: #{u.width("gutter", 2.25)};
+            }
+        }
+    }
 
-        .input-adornment {
-            position: absolute;
-            right: #{u.width("gutter", 0.5)};
-            top: 50%;
-            transform: translateY(-50%);
-            margin-top: 0;
-            z-index: 1;
-            display: inline-flex;
-            align-items: center;
-        }
 
-        .input-error {
-            margin-top: #{u.width("gutter", 0.25)};
-            font-size: #{u.width("text", 0.75)};
-            color: var(--red600);
-        }
-        .input-view-toggle {
-            padding: 0;
-            display: inline-flex;
-            align-items: "center";
-            line-height: 1;
-        }
+    .input-end-adornment {
+        @extend %input-adornment;
+        right: #{u.width("gutter", 0.5)};
+    }
+    .input-pre-adornment {
+        @extend %input-adornment;
+        left: #{u.width("gutter", 0.5)};
+    }
+
+    .input-error {
+        margin-top: #{u.width("gutter", 0.25)};
+        font-size: #{u.width("text", 0.75)};
+        color: var(--red600);
+    }
+    .input-view-toggle {
+        padding: 0;
+        display: inline-flex;
+        align-items: "center";
+        line-height: 1;
     }
 }
