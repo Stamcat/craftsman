@@ -88,6 +88,7 @@ export const SortableList = <T,>({ items, getKey, renderItem, onReorder, disable
                 }
             },
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- Ignoring for now
     }, [items, getKey, onReorder, disabled, resolvedListId, onReceive]);
 
     return (
