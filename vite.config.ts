@@ -48,7 +48,7 @@ export default defineConfig({
             // Externalize dependencies that should not be bundled
             external: [
                 "clsx",
-                "pure-react-carousel",
+                "embla-carousel-react",
                 "react",
                 "react-dom",
                 "zod",

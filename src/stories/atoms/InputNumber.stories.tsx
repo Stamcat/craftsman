@@ -47,16 +47,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+const ControlledInputNumber = (args: Story["args"]) => {
+    const [value, setValue] = useState(0);
+
+    return (
+        <InputNumber
+            {...args}
+            value={value}
+            onChange={(e) => setValue(Number(e.currentTarget.value))}
+        />
+    );
+};
+
 export const Controlled: Story = {
-    render: (args) => {
-        const [value, setValue] = useState(0);
-        return (
-            <InputNumber
-                {...args}
-                value={value}
-                onChange={(e) => setValue(Number(e.currentTarget.value))}
-            />
-        );
-    },
+    render: (args) => <ControlledInputNumber {...args} />,
 };
 
