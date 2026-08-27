@@ -22,7 +22,7 @@ A `@layer` declares a named cascade layer. Layers are ordered by the position of
 
 ```css
 /* declares the order once: craftsman-base loses to craftsman-theme on a tie */
-@layer craftsman-base, craftsman-theme;
+@layer craftsman-base, craftsman-component, craftsman-theme;
 ```
 
 Two rules make this predictable:

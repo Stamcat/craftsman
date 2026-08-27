@@ -29,7 +29,9 @@ import { Select } from "@stamcat/craftsman/Select";
 import { Text } from "@stamcat/craftsman/Text";
 import { Textarea } from "@stamcat/craftsman/Textarea";
 import { TimePicker } from "@stamcat/craftsman/TimePicker";
+import { DateTimePicker } from "@stamcat/craftsman/DateTimePicker";
 import { Toggle } from "@stamcat/craftsman/Toggle";
+import { Tooltip } from "@stamcat/craftsman/Tooltip";
 import { Notice } from "@stamcat/craftsman/Notice";
 import { SortableList } from "@stamcat/craftsman/SortableList";
 ```
@@ -139,7 +141,7 @@ toast.info("New version available.");
 
 ## Known Limitations (Current Package State)
 
-1. README is minimal; treat this skill and the per-component `AGENTS.md` files as the source of truth for agent usage.
+1. The README now covers installation, theming, and getting-started usage; treat this skill and the per-component `AGENTS.md` files as the source of truth for deeper agent usage.
 2. Theme utilities exist in source but are not guaranteed public package exports.
 3. `Progress` exists in source but is incomplete and intentionally omitted from documentation for now.
 
