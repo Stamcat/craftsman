@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/craftsman",
-  "version": "0.0.29",
+  "version": "0.0.30-beta.0",
   "type": "module",
   "description": "A powerful, lightweight framework for design systems",
   "repository": {
@@ -76,7 +76,6 @@
     "react-intl": "10.1.20",
     "react-time-picker": "8.1.0",
     "react-toastify": "11.1.0",
-
     "@eslint/js": "9.35.0",
     "@rollup/plugin-node-resolve": "16.0.3",
     "@storybook/addon-a11y": "10.4.6",
