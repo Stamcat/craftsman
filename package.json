@@ -45,11 +45,9 @@
     "country-flag-icons": "1.6.20",
     "dompurify": "3.4.13",
     "embla-carousel-react": "8.6.0",
-    "react": "19.2.7",
     "react-date-picker": "12.0.2",
     "react-datetime-picker": "7.0.2",
     "react-device-detect": "2.2.3",
-    "react-dom": "19.2.7",
     "react-icons": "5.7.0",
     "react-international-phone": "4.8.0",
     "react-intl": "10.1.20",
@@ -58,6 +56,10 @@
     "sass-embedded": "1.100.0",
     "typescript-plugin-css-modules": "5.2.0",
     "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@eslint/js": "9.35.0",
