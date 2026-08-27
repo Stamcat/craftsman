@@ -62,9 +62,11 @@ export default defineConfig({
                 "react-datetime-picker",
                 "react-time-picker",
                 "react-toastify",
+                "react-device-detect",
                 "sass-embedded",
                 "country-flag-icons",
-                "@atlaskit/pragmatic-drag-and-drop",
+                "@wojtekmaj/react-daterange-picker",
+                /^@atlaskit\/pragmatic-drag-and-drop(\/.*)?$/,
                 /^next(\/.*)?$/,
             ],
             output: {
