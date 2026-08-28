@@ -24,10 +24,13 @@ export const PACKAGE_EXPORTS = {
     [`./${EXPORTS.Styles}/config`]: {
         default: `./src/${EXPORTS.Styles}/_config.scss`,
     },
-    [`./${EXPORTS.Styles}/utilities/_functions`]: {
+    [`./${EXPORTS.Styles}/utilities/functions`]: {
         default: `./src/${EXPORTS.Styles}/utilities/_functions.scss`,
     },
-    [`./${EXPORTS.Styles}/utilities/_placeholders`]: {
+    [`./${EXPORTS.Styles}/utilities/mixins`]: {
+        default: `./src/${EXPORTS.Styles}/utilities/_mixins.scss`,
+    },
+    [`./${EXPORTS.Styles}/utilities/placeholders`]: {
         default: `./src/${EXPORTS.Styles}/utilities/_placeholders.scss`,
     },
 } as const;
