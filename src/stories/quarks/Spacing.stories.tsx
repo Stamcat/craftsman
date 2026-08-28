@@ -160,6 +160,20 @@ const query = media.tablet;
             { call: `breakpoint("tabletOnly", "padding: 24px;")`, result: breakpoint("tabletOnly", "padding: 24px;") },
         ];
 
+        // the generated @media rule is injected as real CSS so resizing the viewport visibly flips the box
+        const liveExampleClass = "spacing-breakpoint-live-example";
+        const liveExampleStyles = `
+.${liveExampleClass} {
+    background-color: ${color("purple300")};
+    padding: ${width("gutter")};
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+}
+${breakpoint("desktop", `.${liveExampleClass} { background-color: ${color("green300")}; }`)}
+`;
+
         return (
             <section style={sectionStyle}>
                 <h3>breakpoint(bp) — TypeScript &amp; Sass</h3>
@@ -167,6 +181,11 @@ const query = media.tablet;
 
 const rule = breakpoint("desktop", "font-size: 18px;");
 // => "@media (min-width: 1040px) { font-size: 18px; }"`}</pre></code>
+                <h4 style={{ margin: 0 }}>Live example</h4>
+                <style>{liveExampleStyles}</style>
+                <div className={liveExampleClass}>
+                    Resize the viewport — this box turns green at the &quot;desktop&quot; breakpoint (≥1040px).
+                </div>
                 <h4 style={{ margin: 0 }}>Live output</h4>
                 <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "13px" }}>
                     <thead>

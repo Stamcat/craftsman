@@ -8,7 +8,7 @@ export type {
     ColorVariableName,
     ComponentThemeOverrides,
     CSSObject,
-    LegacySerializedStyles,
+    SerializedStyles,
     RegisteredComponent,
     Theme,
     ThemeProviderProps,
