@@ -1,6 +1,6 @@
-import type { CSSObject, LegacySerializedStyles } from "./types";
+import type { CSSObject, SerializedStyles } from "./types";
 
-function isSerializedStyles(value: CSSObject | LegacySerializedStyles): value is LegacySerializedStyles {
+function isSerializedStyles(value: CSSObject | SerializedStyles): value is SerializedStyles {
     return "styles" in value && "name" in value;
 }
 
@@ -9,9 +9,9 @@ function isSerializedStyles(value: CSSObject | LegacySerializedStyles): value is
  * compiled CSS string. Supports flat declarations only — nested rules and
  * at-rules are ignored. Traverses the linked list via `.next`.
  */
-function serializedStylesToCSSObject(serialized: LegacySerializedStyles): CSSObject {
+function serializedStylesToCSSObject(serialized: SerializedStyles): CSSObject {
     const result: Record<string, string> = {};
-    let current: LegacySerializedStyles | undefined = serialized;
+    let current: SerializedStyles | undefined = serialized;
 
     while (current) {
         const declarations = current.styles
@@ -41,7 +41,7 @@ function serializedStylesToCSSObject(serialized: LegacySerializedStyles): CSSObj
     return result;
 }
 
-export function toCSSObject(value: CSSObject | LegacySerializedStyles): CSSObject {
+export function toCSSObject(value: CSSObject | SerializedStyles): CSSObject {
     return isSerializedStyles(value) ? serializedStylesToCSSObject(value) : value;
 }
 
