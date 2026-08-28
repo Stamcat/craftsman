@@ -8,16 +8,16 @@ export type CSSObject = {
     [key: string]: string | number | CSSObject | undefined;
 };
 
-export type LegacySerializedStyles = {
+export type SerializedStyles = {
     name: string;
     styles: string;
-    next?: LegacySerializedStyles;
+    next?: SerializedStyles;
 };
 
 export type RegisteredComponent = keyof typeof componentSelectors;
 
 export type ComponentThemeOverrides = {
-    [K in RegisteredComponent]?: CSSObject | LegacySerializedStyles | string;
+    [K in RegisteredComponent]?: CSSObject | SerializedStyles | string;
 };
 export type Colors = Partial<Record<ColorVariableName, string>>;
 
@@ -27,7 +27,7 @@ export type Theme = {
     colors?: Colors;
     /** Override default width/breakpoint CSS variables (e.g. tablet, desktop, gutter). Values are in px. */
     widths?: WidthOverrides;
-    root?: CSSObject | LegacySerializedStyles | string;
+    root?: CSSObject | SerializedStyles | string;
     components?: ComponentThemeOverrides;
 };
 

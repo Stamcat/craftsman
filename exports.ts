@@ -24,6 +24,12 @@ export const PACKAGE_EXPORTS = {
     [`./${EXPORTS.Styles}/config`]: {
         default: `./src/${EXPORTS.Styles}/_config.scss`,
     },
+    [`./${EXPORTS.Styles}/utilities/_functions`]: {
+        default: `./src/${EXPORTS.Styles}/utilities/_functions.scss`,
+    },
+    [`./${EXPORTS.Styles}/utilities/_placeholders`]: {
+        default: `./src/${EXPORTS.Styles}/utilities/_placeholders.scss`,
+    },
 } as const;
 
 

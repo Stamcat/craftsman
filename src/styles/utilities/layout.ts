@@ -10,34 +10,34 @@ export const media = {
         return `(min-width: 0px)`;
     },
     get mobileMax() {
-        return `(max-width: ${widths.mobileMax}px)`;
+        return `(max-width: ${defaultWidths.mobileMax}px)`;
     },
     get tablet() {
-        return `(min-width: ${widths.tablet}px)`;
+        return `(min-width: ${defaultWidths.tablet}px)`;
     },
     get tabletMax() {
-        return `(max-width: ${widths.tabletMax}px)`;
+        return `(max-width: ${defaultWidths.tabletMax}px)`;
     },
     get desktop() {
-        return `(min-width: ${widths.desktop}px)`;
+        return `(min-width: ${defaultWidths.desktop}px)`;
     },
     get desktopMax() {
-        return `(max-width: ${widths.desktopMax}px)`;
+        return `(max-width: ${defaultWidths.desktopMax}px)`;
     },
     get extDesktop() {
-        return `(min-width: ${widths.extDesktop}px)`;
+        return `(min-width: ${defaultWidths.extDesktop}px)`;
     },
     get mobileOnly() {
-        return `(min-width: 0px) and (max-width: ${widths.mobileMax}px)`;
+        return `(min-width: 0px) and (max-width: ${defaultWidths.mobileMax}px)`;
     },
     get tabletOnly() {
-        return `(min-width: ${widths.tablet}px) and (max-width: ${widths.tabletMax}px)`;
+        return `(min-width: ${defaultWidths.tablet}px) and (max-width: ${defaultWidths.tabletMax}px)`;
     },
     get mobileTablet() {
-        return `(min-width: 0px) and (max-width: ${widths.tabletMax}px)`;
+        return `(min-width: 0px) and (max-width: ${defaultWidths.tabletMax}px)`;
     },
     get desktopOnly() {
-        return `(min-width: ${widths.desktop}px) and (max-width: ${widths.desktopMax}px)`;
+        return `(min-width: ${defaultWidths.desktop}px) and (max-width: ${defaultWidths.desktopMax}px)`;
     },
 };
 /**
