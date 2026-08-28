@@ -1,4 +1,4 @@
-import type { CSSObject, ComponentThemeOverrides, LegacySerializedStyles, RegisteredComponent, Theme } from "./types";
+import type { CSSObject, ComponentThemeOverrides, SerializedStyles, RegisteredComponent, Theme } from "./types";
 import { componentSelectors } from "./components";
 import { cssObjectToCssText, toCSSObject } from "./utilities";
 import { colors, widths } from "../global/variables";
@@ -16,7 +16,7 @@ function buildRootStyle(root: Theme["root"]): string | undefined {
     return cssObjectToCssText(":root", toCSSObject(root));
 }
 
-function buildComponentStyle(selector: string, styles: CSSObject | LegacySerializedStyles | string): string {
+function buildComponentStyle(selector: string, styles: CSSObject | SerializedStyles | string): string {
     if (typeof styles === "string") {
         const value = styles.trim();
         return value.includes("{") ? value : `${selector} { ${value} }`;
