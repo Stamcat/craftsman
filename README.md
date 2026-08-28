@@ -24,7 +24,7 @@ npm install @stamcat/craftsman
 import { ThemeProvider } from "@stamcat/craftsman/styles";
 import { Button } from "@stamcat/craftsman/Button";
 import { Input } from "@stamcat/craftsman/Input";
-import "@stamcat/craftsman/styles/globalStyles";
+import "@stamcat/craftsman/styles/globalStyles.scss";
 
 const appTheme = {
 	root: {
@@ -48,7 +48,7 @@ Use this pattern in React Server Component architectures (for example Next.js Ap
 
 ```tsx
 import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles/globalStyles";
+import "@stamcat/craftsman/styles/globalStyles.scss";
 
 const appTheme = {
 	root: {
