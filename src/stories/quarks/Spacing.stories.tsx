@@ -125,7 +125,7 @@ const Card = styled.div\`
 **Sass** — \`@include breakpoint(bp)\` wraps a block in the correct \`@media\` query:
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/_functions" as u;
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
 
 .card {
   font-size: #{u.width(text)};

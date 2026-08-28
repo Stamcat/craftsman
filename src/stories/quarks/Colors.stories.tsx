@@ -125,7 +125,7 @@ export const SassColorFunction: Story = {
 Use this instead of hard-coding hex values so themes can override via \`--name\` variables.
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/_functions" as u;
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
 
 .element {
   // Hex — resolves to var(--blue500)
@@ -139,7 +139,7 @@ Use this instead of hard-coding hex values so themes can override via \`--name\`
 > **Note:** The \`rgba\` mode uses the CSS relative color syntax (\`rgb(from ...)\`). Verify browser support requirements for your target audience.`,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/_functions" as u;
+                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
 
 .badge {
   color: #{u.color(white)};
