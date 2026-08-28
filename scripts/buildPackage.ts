@@ -48,8 +48,8 @@ const createPackageJson = () => {
         const subpathExports = componentNames.reduce<Record<string, { types: string; default: string }>>(
             (acc, componentName) => {
                 acc[`./${componentName}`] = {
-                    types: `./src/${componentsFolder}/${componentName}.d.ts`,
-                    default: `./src/${componentsFolder}/${componentName}.esm.js`,
+                    types: `./src/${componentsFolder}/${componentName}/${componentName}.d.ts`,
+                    default: `./src/${componentsFolder}/${componentName}/${componentName}.esm.js`,
                 };
                 return acc;
             },

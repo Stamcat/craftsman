@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/craftsman",
-  "version": "0.0.30",
+  "version": "0.0.31-beta.0",
   "type": "module",
   "description": "A powerful, lightweight framework for design systems",
   "repository": {
