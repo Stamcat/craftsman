@@ -16,6 +16,8 @@
   "bugs": {
     "url": "https://github.com/Stamcat/craftsman/issues"
   },
+  "x-agent-instructions": "./AGENTS.md",
+  "x-agent-components": "./src/components/*/AGENTS.md",
   "types": "index.d.ts",
   "main": "index.js",
   "homepage": "https://github.com/Stamcat/craftsman#readme",

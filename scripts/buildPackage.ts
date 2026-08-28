@@ -188,6 +188,6 @@ export class PackageBuilder {
         copyFile("README.md");
         copyFile("AGENTS.md");
         // ships alongside root AGENTS.md so its relative skill links resolve
-        copyDir(path.join(".github", "skills"), path.join(".github", "skills"));
+        copyDir("skills", "skills");
     }
 }

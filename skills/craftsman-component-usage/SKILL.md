@@ -40,9 +40,9 @@ Do not assume a root export like `@stamcat/craftsman` unless that export is expl
 
 ## Hard Rules for Agents
 
-1. Never deep-import from package internals (for example `@stamcat/craftsman/src/...`).
+1. Never deep-import from package internals (for example `@stamcat/craftsman/src/...`). This applies to Sass too — `@use "@stamcat/craftsman/src/styles/utilities/functions"` will fail to resolve; use the published subpath `@stamcat/craftsman/styles/utilities/functions` instead.
 2. Only use documented component entry points.
-3. Do not import storybook files or internal style utilities from consuming applications.
+3. Do not import storybook files from consuming applications. Style utilities are fine to import, but only via their published subpaths (`@stamcat/craftsman/styles/utilities/functions`, `/mixins`, `/placeholders`) — never via a `/src/...` path.
 4. Prefer standard React props first; use custom props only when required.
 
 ## Component Index
@@ -51,28 +51,28 @@ Each entry links to the `AGENTS.md` co-located with that component's source for 
 
 | Component | Docs |
 |---|---|
-| Button | [../../../src/components/Button/AGENTS.md](../../../src/components/Button/AGENTS.md) |
-| Input | [../../../src/components/Input/AGENTS.md](../../../src/components/Input/AGENTS.md) |
-| InputPassword | [../../../src/components/InputPassword/AGENTS.md](../../../src/components/InputPassword/AGENTS.md) |
-| Checkbox | [../../../src/components/Checkbox/AGENTS.md](../../../src/components/Checkbox/AGENTS.md) |
-| RadioButton | [../../../src/components/RadioButton/AGENTS.md](../../../src/components/RadioButton/AGENTS.md) |
-| Modal | [../../../src/components/Modal/AGENTS.md](../../../src/components/Modal/AGENTS.md) |
-| Pagination | [../../../src/components/Pagination/AGENTS.md](../../../src/components/Pagination/AGENTS.md) |
-| Carousel | [../../../src/components/Carousel/AGENTS.md](../../../src/components/Carousel/AGENTS.md) |
-| Loader | [../../../src/components/Loader/AGENTS.md](../../../src/components/Loader/AGENTS.md) |
-| Textarea | [../../../src/components/Textarea/AGENTS.md](../../../src/components/Textarea/AGENTS.md) |
-| Select | [../../../src/components/Select/AGENTS.md](../../../src/components/Select/AGENTS.md) |
-| InputPhone | [../../../src/components/InputPhone/AGENTS.md](../../../src/components/InputPhone/AGENTS.md) |
-| DatePicker | [../../../src/components/DatePicker/AGENTS.md](../../../src/components/DatePicker/AGENTS.md) |
-| DateRangePicker | [../../../src/components/DateRangePicker/AGENTS.md](../../../src/components/DateRangePicker/AGENTS.md) |
-| InputNumber | [../../../src/components/InputNumber/AGENTS.md](../../../src/components/InputNumber/AGENTS.md) |
-| TimePicker | [../../../src/components/TimePicker/AGENTS.md](../../../src/components/TimePicker/AGENTS.md) |
-| Text | [../../../src/components/Text/AGENTS.md](../../../src/components/Text/AGENTS.md) |
-| DateTimePicker | [../../../src/components/DateTimePicker/AGENTS.md](../../../src/components/DateTimePicker/AGENTS.md) |
-| Tooltip | [../../../src/components/Tooltip/AGENTS.md](../../../src/components/Tooltip/AGENTS.md) |
-| Toggle | [../../../src/components/Toggle/AGENTS.md](../../../src/components/Toggle/AGENTS.md) |
-| Notice | [../../../src/components/Notice/AGENTS.md](../../../src/components/Notice/AGENTS.md) |
-| SortableList | [../../../src/components/SortableList/AGENTS.md](../../../src/components/SortableList/AGENTS.md) |
+| Button | [../../src/components/Button/AGENTS.md](../../src/components/Button/AGENTS.md) |
+| Input | [../../src/components/Input/AGENTS.md](../../src/components/Input/AGENTS.md) |
+| InputPassword | [../../src/components/InputPassword/AGENTS.md](../../src/components/InputPassword/AGENTS.md) |
+| Checkbox | [../../src/components/Checkbox/AGENTS.md](../../src/components/Checkbox/AGENTS.md) |
+| RadioButton | [../../src/components/RadioButton/AGENTS.md](../../src/components/RadioButton/AGENTS.md) |
+| Modal | [../../src/components/Modal/AGENTS.md](../../src/components/Modal/AGENTS.md) |
+| Pagination | [../../src/components/Pagination/AGENTS.md](../../src/components/Pagination/AGENTS.md) |
+| Carousel | [../../src/components/Carousel/AGENTS.md](../../src/components/Carousel/AGENTS.md) |
+| Loader | [../../src/components/Loader/AGENTS.md](../../src/components/Loader/AGENTS.md) |
+| Textarea | [../../src/components/Textarea/AGENTS.md](../../src/components/Textarea/AGENTS.md) |
+| Select | [../../src/components/Select/AGENTS.md](../../src/components/Select/AGENTS.md) |
+| InputPhone | [../../src/components/InputPhone/AGENTS.md](../../src/components/InputPhone/AGENTS.md) |
+| DatePicker | [../../src/components/DatePicker/AGENTS.md](../../src/components/DatePicker/AGENTS.md) |
+| DateRangePicker | [../../src/components/DateRangePicker/AGENTS.md](../../src/components/DateRangePicker/AGENTS.md) |
+| InputNumber | [../../src/components/InputNumber/AGENTS.md](../../src/components/InputNumber/AGENTS.md) |
+| TimePicker | [../../src/components/TimePicker/AGENTS.md](../../src/components/TimePicker/AGENTS.md) |
+| Text | [../../src/components/Text/AGENTS.md](../../src/components/Text/AGENTS.md) |
+| DateTimePicker | [../../src/components/DateTimePicker/AGENTS.md](../../src/components/DateTimePicker/AGENTS.md) |
+| Tooltip | [../../src/components/Tooltip/AGENTS.md](../../src/components/Tooltip/AGENTS.md) |
+| Toggle | [../../src/components/Toggle/AGENTS.md](../../src/components/Toggle/AGENTS.md) |
+| Notice | [../../src/components/Notice/AGENTS.md](../../src/components/Notice/AGENTS.md) |
+| SortableList | [../../src/components/SortableList/AGENTS.md](../../src/components/SortableList/AGENTS.md) |
 
 Not yet part of the documented public export surface: `Progress` (source exists but is incomplete — see Known Limitations).
 
