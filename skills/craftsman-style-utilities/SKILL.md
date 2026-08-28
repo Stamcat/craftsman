@@ -7,6 +7,20 @@ description: 'Styling conventions for @stamcat/craftsman — color()/width()/bre
 
 Styling rules for AI agents generating code against `@stamcat/craftsman`. For package exports, hard rules, and component contracts, see the [craftsman-component-usage skill](../craftsman-component-usage/SKILL.md). For non-styling utility functions (`isEmpty`), see the [craftsman-utility-functions skill](../craftsman-utility-functions/SKILL.md).
 
+## Sass Import Path (hard rule)
+
+Always `@use` the published subpath — never deep-import the source file directly.
+
+```scss
+// Correct
+@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "@stamcat/craftsman/styles/utilities/mixins" as m;
+@use "@stamcat/craftsman/styles/utilities/placeholders";
+
+// Wrong — not an exported subpath, will fail to resolve at build time
+@use "@stamcat/craftsman/src/styles/utilities/functions" as u;
+```
+
 ## Style Utilities
 
 Craftsman provides TypeScript helpers and matching Sass functions for color, spacing, and breakpoints. Always use these instead of hard-coded values so theming and overrides work correctly.

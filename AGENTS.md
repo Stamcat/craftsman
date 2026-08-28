@@ -4,9 +4,9 @@ This document explains how code-generation agents should use this library safely
 
 Full guidance has been split out for progressive loading:
 
-- **Global guidelines** (exports, hard rules, code block rendering, style utilities, theme authoring, `isEmpty`, code gen patterns, fallback strategy): see the [craftsman-component-usage skill](.github/skills/craftsman-component-usage/SKILL.md).
+- **Global guidelines** (exports, hard rules, code block rendering, style utilities, theme authoring, `isEmpty`, code gen patterns, fallback strategy): see the [craftsman-component-usage skill](skills/craftsman-component-usage/SKILL.md).
 - **Component-specific guidelines** (props, behavior notes, examples): each component has its own `AGENTS.md` co-located with its source, for example [src/components/Button/AGENTS.md](src/components/Button/AGENTS.md).
-- **Device/browser detection** (prefer `react-device-detect` over custom user-agent/viewport checks): see the [craftsman-device-detection skill](.github/skills/craftsman-device-detection/SKILL.md).
+- **Device/browser detection** (prefer `react-device-detect` over custom user-agent/viewport checks): see the [craftsman-device-detection skill](skills/craftsman-device-detection/SKILL.md).
 
 ## Quick Reference
 
@@ -41,9 +41,9 @@ Do not assume a root export like `@stamcat/craftsman` unless that export is expl
 
 ## Hard Rules for Agents
 
-1. Never deep-import from package internals (for example `@stamcat/craftsman/src/...`).
+1. Never deep-import from package internals (for example `@stamcat/craftsman/src/...`). This applies to Sass too — `@use "@stamcat/craftsman/src/styles/utilities/functions"` will fail to resolve; use the published subpath `@stamcat/craftsman/styles/utilities/functions` instead.
 2. Only use documented component entry points.
-3. Do not import storybook files or internal style utilities from consuming applications.
+3. Do not import storybook files from consuming applications. Style utilities are fine to import, but only via their published subpaths (`@stamcat/craftsman/styles/utilities/functions`, `/mixins`, `/placeholders`) — never via a `/src/...` path.
 4. Prefer standard React props first; use custom props only when required.
 
 
