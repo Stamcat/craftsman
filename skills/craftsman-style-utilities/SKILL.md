@@ -7,6 +7,48 @@ description: 'Styling conventions for @stamcat/craftsman — color()/width()/bre
 
 Styling rules for AI agents generating code against `@stamcat/craftsman`. For package exports, hard rules, and component contracts, see the [craftsman-component-usage skill](../craftsman-component-usage/SKILL.md). For non-styling utility functions (`isEmpty`), see the [craftsman-utility-functions skill](../craftsman-utility-functions/SKILL.md).
 
+## General Sass Guidance
+
+When writing styles for more than 2 elements in an app that uses Sass, prefer a placeholder (`%placeholder` + `@extend`) over string concatenation to share the rule set.
+
+Prefer one meaningful class name per component root and rely on HTML5 element semantics plus Sass nesting to style descendants — not every element needs its own `className`.
+
+```scss
+// Preferred: one root class, nested element selectors
+.card {
+  padding: #{u.width(gutter)};
+
+  h3 {
+    margin-bottom: #{u.width(gutter, 0.5)};
+  }
+
+  p {
+    color: #{u.color(gray500)};
+  }
+
+  button {
+    margin-top: #{u.width(gutter)};
+  }
+}
+```
+
+```scss
+// Avoid: a className on every descendant when nesting on semantic tags is sufficient
+.card { }
+.card-title { }
+.card-body { }
+.card-action { }
+```
+
+Prefer resolving color and spacing through the `color()`/`width()` functions and mixins when the value is actually derived from a globally declared variable — for example, a width that is exactly half the declared gutter should use `width("gutter", 0.5)`. If a value isn't a derivation of a global variable (e.g. gutter is `16px` but a component needs `14px`), use the literal value directly rather than forcing it through a function.
+
+Preferred page/layout pattern:
+
+- Use one primary page/layout wrapper class and style semantic descendants via nesting (`> header`, `> main`, `> section`, etc.).
+- Avoid adding class names to semantic sectioning elements only to mirror old style objects; prefer structural selectors first.
+- Introduce small helper classes or placeholders only where they add clear value: repeated layout primitives (for example shared row/stack wrappers) or stateful/dynamic visual states.
+- Keep the DOM semantic and minimal; avoid class-heavy markup when nested selectors can express the same styling.
+
 ## Sass Import Path (hard rule)
 
 Always `@use` the published subpath — never deep-import the source file directly.
@@ -119,6 +161,9 @@ Available breakpoint keys: `tablet` · `tabletMax` · `tabletOnly` · `desktop` 
 
 - Breakpoint values come from `_config.scss` and stay in sync with any project overrides.
 - Never hard-code `@media (min-width: 1040px)` or similar — always use `breakpoint()` so values stay consistent with config.
+- Prefer media query breakpoints over window resize event listeners for responsive design whenever possible.
+- Responsive styling should be mobile-first (`min-width` breakpoints) whenever possible. Use `mobileOnly`/`mobileMax` only for outlier cases that require a mobile-specific exception.
+- In apps using SCSS, use the `breakpoint` mixin (`@include u.breakpoint(key)`). In apps using JS styling, use the `breakpoint` function (`breakpoint(key, styles)` or `media.key` for raw queries).
 
 ## Styling Expectations
 
@@ -156,6 +201,13 @@ Do not compute `calc()` strings per-property in JS/TS (for example building a `p
 - For multi-file Sass workflows with syntax highlighting and mixins, import compiled CSS text via `*.scss?inline`.
 
 Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" | "extDesktop" | "mobileMax" | "tabletMax" | "desktopMax"`
+
+### Theme Authoring Usage Parameters
+
+- Prefer authoring theme styles as SCSS over JS styling, except in apps that primarily use JS styling and do not use SCSS.
+- Global component styles should use the `components` object.
+- When declaring styles for multiple components globally for the app theme, use SCSS placeholders, mixins, or functions (in apps that use SCSS). For apps that use JS styling, use variables.
+- Component styles should live in a `/components` subfolder within whatever folder contains the app theme declarations.
 
 Example:
 

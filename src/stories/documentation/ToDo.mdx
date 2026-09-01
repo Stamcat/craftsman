@@ -7,8 +7,23 @@ import { Meta } from "@storybook/addon-docs/blocks";
 - image
 - radio button alignment to baseline
 - implement dark mode @media (prefers-color-scheme: dark)
-- Accordion
 - Progress
 - Skeleton
 - Toast - enhance to show pile vs stacking
 - Tabs
+
+- Accordion - prioritry
+
+- expand capability of Text to include a line height util. 
+also Add it as a sass & js function that can be called anywhere.
+When line height is declared we use the following styles. 
+<code><pre>
+p \{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+\}
+</pre>
+</code>
+

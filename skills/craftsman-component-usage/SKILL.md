@@ -12,6 +12,7 @@ Global rules for AI agents generating code against `@stamcat/craftsman`. For a s
 The package is built with component-level entry points only.
 
 ```tsx
+import { Accordion } from "@stamcat/craftsman/Accordion";
 import { Button } from "@stamcat/craftsman/Button";
 import { Carousel } from "@stamcat/craftsman/Carousel";
 import { Checkbox } from "@stamcat/craftsman/Checkbox";
@@ -51,6 +52,7 @@ Each entry links to the `AGENTS.md` co-located with that component's source for 
 
 | Component | Docs |
 |---|---|
+| Accordion | [../../src/components/Accordion/AGENTS.md](../../src/components/Accordion/AGENTS.md) |
 | Button | [../../src/components/Button/AGENTS.md](../../src/components/Button/AGENTS.md) |
 | Input | [../../src/components/Input/AGENTS.md](../../src/components/Input/AGENTS.md) |
 | InputPassword | [../../src/components/InputPassword/AGENTS.md](../../src/components/InputPassword/AGENTS.md) |

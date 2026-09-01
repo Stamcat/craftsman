@@ -9,11 +9,11 @@ export type TextProps = React.HTMLAttributes<HTMLElement> & {
 	as?: TextTags;
     /** Rich text will always return a div */
 	richText?: boolean;
-    /** Recommend using semantic HTML5 - This will override base styling */
+    /** @deprecated Legacy support only. Recommend using semantic HTML5 - This will override base styling */
     type?: TextType;
     /** Recommend using semantic HTML5 - This will override base styling */
     size?: TextSize;
-    /** Legacy support: simple text-align style (You don't need this) */
+    /** @deprecated Legacy support only: simple text-align style (You don't need this) */
 	alignment?: "center" | "left" | "right";
 };
 /**
