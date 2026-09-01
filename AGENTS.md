@@ -13,6 +13,7 @@ Full guidance has been split out for progressive loading:
 Use these imports:
 
 ```tsx
+import { Accordion } from "@stamcat/craftsman/Accordion";
 import { Button } from "@stamcat/craftsman/Button";
 import { Carousel } from "@stamcat/craftsman/Carousel";
 import { Checkbox } from "@stamcat/craftsman/Checkbox";

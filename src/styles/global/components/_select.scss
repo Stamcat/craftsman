@@ -1,21 +1,16 @@
 @use "../../utilities/functions" as u;
+@use "./input";
+
 @layer craftsman-base {
     select,
     ::picker(select) {
         appearance: base-select;
-        background: #{u.color("white")};
-        color: #{u.color("text")};
-        border: 1px solid #{u.color("gray200")};
-        border-radius: 6px;
+        @extend %input-base;
+        
     }
     select {
-        padding: 10px 40px 10px 14px;
+        padding-right: 40px;
         position: relative;
-        &:hover,
-        &:focus {
-            outline: none;
-            border-color: #{u.color("gray200")};
-        }
         &:focus-visible {
             outline: none;
         }
@@ -28,25 +23,25 @@
             transition: 0.2s rotate;
             content: "";
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 7px;
+            height: 7px;
             border-style: solid;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
             margin: 0px 2px 0 12px;
             position: absolute;
-            right: 16px;
-            top: 12px;
+            right: 14px;
+            top: 14px;
         }
         &:open::picker-icon {
-            margin-top: 6px;
+            margin-top: 4px;
             rotate: 180deg;
         }
         option {
             padding: #{u.width("gutter", 0.5)};
             &:hover,
             &:focus {
-                background: #{u.color("gray100")};
+                background: #{u.color("gray300")};
             }
             &::checkmark {
                 content: "";

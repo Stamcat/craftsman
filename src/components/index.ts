@@ -1,3 +1,4 @@
+export { Accordion } from "./Accordion/Accordion";
 export { Button } from "./Button/Button";
 export { Input } from "./Input/Input";
 export { InputPassword } from "./InputPassword/InputPassword";

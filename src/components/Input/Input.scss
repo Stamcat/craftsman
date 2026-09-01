@@ -126,6 +126,13 @@
                 }
             }
 
+            // A select always shows visible option text, even with none explicitly chosen, so its label floats unconditionally.
+            &.select {
+                .input-label {
+                    @include inside-input-label-floating;
+                }
+            }
+
             .input[type="tel"] {
                 width: 100%;
             }

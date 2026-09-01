@@ -2,19 +2,19 @@
 
 @layer craftsman-base {
 
-  %interactive-focus-reset {
-    &:focus {
-      outline: 0;
-      box-shadow: none;
-    }
-  }
-
   %input-base {
     color: var(--text);
     border-radius: 6px;
     border: 1px solid var(--gray400);
     padding: #{u.width("gutter", 0.5)};
     background-color: var(--white);
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+    &:hover {
+        border-color: #{u.color("gray500")};
+    }
 
     &[type="number"]::-webkit-outer-spin-button,
     &[type="number"]::-webkit-inner-spin-button {
@@ -29,10 +29,9 @@
 
     &:disabled,
     &.disabled {
-      border-color: var(--gray200);
+      border-color: var(--gray400);
       background-color: var(--gray100);
     }
 
-    @extend %interactive-focus-reset;
   }
 }

@@ -1,0 +1,64 @@
+@use "../../styles/utilities/_functions" as u;
+
+@layer craftsman-component {
+    .accordion {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--gray400);
+        border-radius: #{u.width("gutter", 0.5)};
+        overflow: hidden;
+    }
+
+    .accordion-item {
+        border-bottom: 1px solid var(--gray400);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &[data-disabled="true"] .accordion-trigger {
+            cursor: not-allowed;
+            color: var(--gray400);
+        }
+
+        > .accordion-content {
+            padding: #{u.width("gutter", 0.75)} #{u.width("gutter")};
+
+            &[hidden] {
+                display: none;
+            }
+        }
+    }
+
+    .accordion-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: #{u.width("gutter", 0.5)};
+        width: 100%;
+        padding: #{u.width("gutter", 0.75)} #{u.width("gutter")};
+        background-color: var(--white);
+        border: none;
+        text-align: left;
+        color: inherit;
+
+        &:focus-visible {
+            outline: 2px solid var(--blue500);
+            outline-offset: -2px;
+        }
+
+        span {
+            flex-grow: 1;
+        }
+
+        svg {
+            flex: 0 0 auto;
+            transition: transform 200ms ease;
+            transform: rotate(180deg);
+        }
+    }
+
+    .accordion-item[data-expanded="true"] .accordion-trigger svg {
+        transform: rotate(0deg);
+    }
+}
