@@ -70,7 +70,15 @@ export default defineConfig({
                 /^next(\/.*)?$/,
             ],
             output: {
-                entryFileNames: "[name].[format].js",
+                // preserveModulesRoot: "." makes [name] the full relative path minus extension, so a
+                // component's .scss import (same basename, same dir, e.g. Accordion/Accordion.scss)
+                // resolves to the same chunk name as Accordion/Accordion.tsx. Give style-derived chunks
+                // a distinct suffix so Rollup never has to dedupe-rename the real component chunk
+                // (previously silently emitted as e.g. Accordion2.esm.js).
+                entryFileNames: (chunkInfo) => {
+                    const isStyleModule = /\.(scss|css)$/.test(chunkInfo.facadeModuleId ?? "");
+                    return isStyleModule ? "[name].style.[format].js" : "[name].[format].js";
+                },
                 preserveModules: true,
                 preserveModulesRoot: ".",
                 globals: {
