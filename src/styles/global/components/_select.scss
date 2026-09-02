@@ -1,51 +1,45 @@
 @use "../../utilities/functions" as u;
 @use "./input";
 
-@layer craftsman-base {
-    select,
-    ::picker(select) {
-        appearance: base-select;
-        @extend %input-base;
-        
+%select-styles {
+    padding-right: 40px;
+    position: relative;
+    &:focus-visible {
+        outline: none;
     }
-    select {
-        padding-right: 40px;
-        position: relative;
-        &:focus-visible {
-            outline: none;
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #{u.color("text")};
+    }
+    &::picker-icon {
+        color: #999999;
+        transition: 0.2s rotate;
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        margin: 0px 2px 0 12px;
+        position: absolute;
+        right: 14px;
+        top: 14px;
+    }
+    &:open::picker-icon {
+        margin-top: 4px;
+        rotate: 180deg;
+    }
+    option {
+        padding: #{u.width("gutter", 0.5)};
+        &:hover,
+        &:focus {
+            background: #{u.color("gray300")};
         }
-        &:-moz-focusring {
-            color: transparent;
-            text-shadow: 0 0 0 #{u.color("text")};
-        }
-        &::picker-icon {
-            color: #999999;
-            transition: 0.2s rotate;
+        &::checkmark {
             content: "";
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            border-style: solid;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            margin: 0px 2px 0 12px;
-            position: absolute;
-            right: 14px;
-            top: 14px;
-        }
-        &:open::picker-icon {
-            margin-top: 4px;
-            rotate: 180deg;
-        }
-        option {
-            padding: #{u.width("gutter", 0.5)};
-            &:hover,
-            &:focus {
-                background: #{u.color("gray300")};
-            }
-            &::checkmark {
-                content: "";
-            }
         }
     }
 }
+
+
