@@ -6,6 +6,7 @@
 @use "./components/button";
 @use "./components/input";
 @use "./components/select";
+
 @layer craftsman-base, craftsman-component, craftsman-theme;
 
 @layer craftsman-base {
@@ -82,6 +83,55 @@
 
     a {
         @extend %text-link;
+    }
+    select,
+    ::picker(select) {
+        appearance: base-select;
+        @extend %input-base;    
+    }
+    select {
+        @extend %select-styles;
+    }
+     // TODO: These h* declarations need to be moved somewhere not-terrible
+    h1 {
+        @include h1;
+    }
+
+    h2 {
+        @include h2;
+    }
+
+    h3 {
+        @include h3;
+    }
+
+    h4 {
+        @include h4;
+    }
+
+    h5 {
+        @include h5;
+    }
+
+    h6 {
+        @include h6;
+    }
+
+    p {
+        @include p;
+    }
+    small {
+        @include small;
+    }
+
+    @include u.breakpoint(mobileMax) {
+        h4 {
+            font-size: var(--w-text, 14px);
+        }
+
+        p {
+            font-size: calc(var(--w-text, 14px) * 0.875);
+        }
     }
     
 }

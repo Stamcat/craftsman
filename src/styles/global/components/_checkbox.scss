@@ -1,83 +1,82 @@
 @use "../../utilities/functions" as u;
 
-@layer craftsman-base {
-    %checkbox {
-        appearance: none;
-        box-sizing: border-box;
-        position: relative;
-        display: inline-block;
-        vertical-align: baseline;
-        top: 0.08em;
-        margin: 0;
-        padding: 0;
-        --checkbox-size: 1;
-        height: calc(#{u.width("gutter")} * var(--checkbox-size));
-        width: calc(#{u.width("gutter")} * var(--checkbox-size));
+%checkbox {
+    appearance: none;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    vertical-align: baseline;
+    top: 0.08em;
+    margin: 0;
+    padding: 0;
+    --checkbox-size: 1;
+    height: calc(#{u.width("gutter")} * var(--checkbox-size));
+    width: calc(#{u.width("gutter")} * var(--checkbox-size));
+    border-radius: 4px;
+    border: 1px solid var(--blue500);
+    background: #fff;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
         border-radius: 4px;
-        border: 1px solid var(--blue500);
-        background: #fff;
+        background: transparent;
+        transition: background-color 0.15s ease;
+    }
+
+    &::after {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+        width: calc(5px * var(--checkbox-size));
+        height: calc(8px * var(--checkbox-size));
+        content: "";
+        display: block;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: translate(-50%, -58%) rotate(45deg) scale(0);
+        transform-origin: center;
+        transition: transform 0.15s ease;
+    }
+
+    &:checked {
+        border-color: var(--blue500);
 
         &::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 4px;
-            background: transparent;
-            transition: background-color 0.15s ease;
+        background-color: var(--blue500);
+        border-radius: unset;
         }
 
         &::after {
-            position: absolute;
-            left: 50%;
-            top: 45%;
-            width: calc(5px * var(--checkbox-size));
-            height: calc(8px * var(--checkbox-size));
-            content: "";
-            display: block;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: translate(-50%, -58%) rotate(45deg) scale(0);
-            transform-origin: center;
-            transition: transform 0.15s ease;
+        transform: translate(-50%, -58%) rotate(45deg) scale(1);
+        }
+    }
+
+    &:disabled {
+        border-color: var(--gray500);
+
+        &::before {
+        background-color: var(--gray200);
         }
 
-        &:checked {
-            border-color: var(--blue500);
+        &::after {
+        border-color: var(--gray200);
+        transform: translate(-50%, -58%) rotate(45deg) scale(1);
+        }
+    }
 
-            &::before {
-            background-color: var(--blue500);
-            border-radius: unset;
-            }
+    &:checked:disabled {
+        border-color: var(--gray400);
 
-            &::after {
-            transform: translate(-50%, -58%) rotate(45deg) scale(1);
-            }
+        &::before {
+        background: var(--gray400);
         }
 
-        &:disabled {
-            border-color: var(--gray500);
-
-            &::before {
-            background-color: var(--gray200);
-            }
-
-            &::after {
-            border-color: var(--gray200);
-            transform: translate(-50%, -58%) rotate(45deg) scale(1);
-            }
-        }
-
-        &:checked:disabled {
-            border-color: var(--gray400);
-
-            &::before {
-            background: var(--gray400);
-            }
-
-            &::after {
-            border-color: var(--white);
-            transform: translate(-50%, -58%) rotate(45deg) scale(1);
-            }
+        &::after {
+        border-color: var(--white);
+        transform: translate(-50%, -58%) rotate(45deg) scale(1);
         }
     }
 }
+

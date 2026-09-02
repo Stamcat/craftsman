@@ -33,6 +33,9 @@ export const PACKAGE_EXPORTS = {
     [`./${EXPORTS.Styles}/utilities/placeholders`]: {
         default: `./src/${EXPORTS.Styles}/utilities/_placeholders.scss`,
     },
+    [`./${EXPORTS.Styles}/global/components`]: {
+        default: `./src/${EXPORTS.Styles}/global/components/_index.scss`,
+    },
 } as const;
 
 
