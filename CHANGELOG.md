@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.34](https://github.com/Stamcat/craftsman/compare/v0.0.33...v0.0.34) (2026-09-02)
+
+
+### Bug Fixes
+
+* global style import fix ([fefdf80](https://github.com/Stamcat/craftsman/commit/fefdf809e291014706240cbe55d420331ea5789d))
+
 ## [0.0.33](https://github.com/Stamcat/craftsman/compare/v0.0.32...v0.0.33) (2026-09-02)
 
 ## [0.0.32](https://github.com/Stamcat/craftsman/compare/v0.0.31...v0.0.32) (2026-09-02)
