@@ -202,6 +202,18 @@ Do not compute `calc()` strings per-property in JS/TS (for example building a `p
 
 Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" | "extDesktop" | "mobileMax" | "tabletMax" | "desktopMax"`
 
+### Cascade Layers and `themeBuilder`'s `layered` Option
+
+Runtime theme CSS produced by `themeBuilder`/`ThemeProvider` is wrapped in the `craftsman-theme` cascade layer by default (`layered: true`). This stylesheet is inserted via a hoisted `<style>` tag, which browsers always place first in `<head>` regardless of import order — so its `@layer` declaration always wins the layer-registration race and permanently fixes `craftsman-theme`'s priority relative to any layers a consuming app declares afterward.
+
+If the consuming app uses Tailwind or another framework that declares its own cascade layers (for example Tailwind's `@layer theme, base, components, utilities;`), set `layered: false` so Craftsman's theme overrides don't pre-register `craftsman-theme` ahead of the app's own layer order:
+
+```tsx
+themeBuilder(theme, { layered: false });
+```
+
+With `layered: false`, the theme CSS still declares `@layer craftsman-theme` but does not join a Craftsman-owned layer order — the consuming app is responsible for declaring `craftsman-theme` in its own `@layer` order statement wherever it wants that priority to apply.
+
 ### Theme Authoring Usage Parameters
 
 - Prefer authoring theme styles as SCSS over JS styling, except in apps that primarily use JS styling and do not use SCSS.
