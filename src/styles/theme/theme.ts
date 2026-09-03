@@ -44,7 +44,12 @@ function buildWidthOverrides(widths?: Theme["widths"]): string | undefined {
     return `:root { ${vars} }`;
 }
 
-export function themeBuilder(theme: Theme) {
+export type ThemeBuilderOptions = {
+    layered?: boolean;
+};
+
+export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
+    const layered = options?.layered ?? true;
     const themeRules = [
         cssObjectToCssText(":root", { ...(theme.colors || {}) }),
         buildWidthOverrides(theme.widths),
@@ -53,6 +58,12 @@ export function themeBuilder(theme: Theme) {
     ]
         .filter(Boolean)
         .join("\n");
+
+    if (!layered) {
+        return [`:root { ${widths} ${colors} }`, "@layer craftsman-theme {", themeRules, "}"]
+            .filter(Boolean)
+            .join("\n");
+    }
 
     return [
         `:root { ${widths} ${colors} }`,
