@@ -4,14 +4,10 @@ import type { Theme } from "../theme/types";
 type ThemeProviderProps = {
     theme?: Theme;
     children?: React.ReactNode;
-    precedence?: string;
+    /** Default: "high" - Set to false to opt out of React's style hoisting */
+    precedence?: string | false;
     href?: string;
-    /**
-     * Whether the runtime theme CSS is wrapped in the `craftsman-theme` cascade
-     * layer. Defaults to true. Set to false if your app declares its own
-     * `@layer` order and needs these theme overrides to always win regardless
-     * of it - see `ThemeBuilderOptions.layered` for why this is necessary.
-     */
+    /** Default: true - Set false to declare your own layer ordering */
     layered?: boolean;
 };
 
@@ -27,8 +23,7 @@ export function ThemeProvider({
     return (
         <>
             <style
-                precedence={precedence}
-                href={href}
+                {...(precedence !== false ? { precedence, href } : {})}
                 dangerouslySetInnerHTML={{ __html: themeStyles }}
             />
             {children}
