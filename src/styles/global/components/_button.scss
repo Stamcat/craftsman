@@ -1,67 +1,68 @@
 @use "../../utilities/functions" as u;
 
-%text-link {
-    padding: 0;
+@layer craftsman-base {
+  %text-link {
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--blue500);
+
+      &:hover {
+          color: var(--teal700);
+          background-color: transparent;
+          text-decoration: underline;
+          cursor: pointer;
+          &.disabled, &:disabled {
+            cursor: not-allowed;
+            color: #{u.color("gray400")};
+          }
+      }
+  }
+
+  %button-styles {
+    --btn-size: 1;
+    color: var(--blue600);
     border: none;
-    background: none;
-    color: var(--blue500);
+    cursor: pointer;
+    display: inline-flex;
+    flex-flow: row wrap;
+    align-items: center;
+    font-weight: 500;
+    transition: 0.125s;
+    padding: calc(#{u.width(gutter, 0.5)} * var(--btn-size)) calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+    border-radius: calc(#{u.width(gutter, 0.75)} * var(--btn-size));
+    font-size: max(10px, calc(#{u.width(text)} * var(--btn-size)));
+    border: 1px solid var(--blue500);
+    background-color: var(--white);
 
     &:hover {
-        color: var(--teal700);
-        background-color: transparent;
-        text-decoration: underline;
-        cursor: pointer;
-        &.disabled, &:disabled {
-        cursor: not-allowed;
-        color: #{u.color("gray400")};
-        }
+      background-color: var(--teal200);
     }
-}
-
-%button-styles {
---btn-size: 1;
-color: var(--blue600);
-border: none;
-cursor: pointer;
-display: inline-flex;
-flex-flow: row wrap;
-align-items: center;
-font-weight: 500;
-transition: 0.125s;
-padding: calc(#{u.width(gutter, 0.5)} * var(--btn-size)) calc(#{u.width(gutter, 0.75)} * var(--btn-size));
-border-radius: calc(#{u.width(gutter, 0.75)} * var(--btn-size));
-font-size: max(10px, calc(#{u.width(text)} * var(--btn-size)));
-border: 1px solid var(--blue500);
-background-color: var(--white);
-
-&:hover {
-    background-color: var(--teal200);
-}
-
-&.primary {
-    color: var(--white);
-    background-color: var(--blue500);
-
-    &:hover {
-    background-color: var(--blue700);
-    }
-}
-
-&.text {
-    @extend %text-link;
-}
-
-&:disabled,
-&.disabled {
-    cursor: not-allowed;
-    border-color:  #{u.color("gray200")};
-    color:  #{u.color("gray400")};
 
     &.primary {
-    border-color:  #{u.color("gray200")};
-    background-color:  #{u.color("gray400")};
-    color:  #{u.color("gray200")};
-    }
-}
-}
+      color: var(--white);
+      background-color: var(--blue500);
 
+      &:hover {
+        background-color: var(--blue700);
+      }
+    }
+    
+    &.text {
+      @extend %text-link;
+    }
+
+    &:disabled,
+    &.disabled {
+      cursor: not-allowed;
+      border-color:  #{u.color("gray200")};
+      color:  #{u.color("gray400")};
+
+      &.primary {
+        border-color:  #{u.color("gray200")};
+        background-color:  #{u.color("gray400")};
+        color:  #{u.color("gray200")};
+      }
+    }
+  }
+}
