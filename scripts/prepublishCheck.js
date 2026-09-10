@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-import { readFileSync } from "fs";
-import { globSync } from "glob";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { join } from "path";
+
+// This script ships to dist/ and runs via `npm publish` with no node_modules present
+// (the publish jobs only download the dist/ build artifact), so it must have zero
+// external dependencies. Do not import third-party packages here.
 
 const pkg = JSON.parse(readFileSync(join(process.cwd(), "package.json"), "utf-8"));
 const { version, name: packageName } = pkg;
@@ -27,7 +30,38 @@ const KNOWN_THIRD_PARTY_SCOPES = [
 ];
 const scopedPackageRegex = /@[\w.-]+\/[\w-]+/g;
 
-const docFiles = AGENT_DOC_GLOBS.flatMap((pattern) => globSync(pattern, { cwd: process.cwd() }));
+// Minimal stand-in for `glob` supporting only the "literal" and "dir/**/name-or-*.ext"
+// patterns used in AGENT_DOC_GLOBS above.
+const globSync = (pattern, cwd) => {
+    const wildcardIndex = pattern.indexOf("**");
+    if (wildcardIndex === -1) {
+        return existsSync(join(cwd, pattern)) ? [pattern] : [];
+    }
+
+    const baseDir = pattern.slice(0, wildcardIndex).replace(/\/$/, "");
+    const suffix = pattern.slice(wildcardIndex + 2).replace(/^\//, "");
+    const matchesSuffix = (fileName) => (suffix.startsWith("*") ? fileName.endsWith(suffix.slice(1)) : fileName === suffix);
+
+    const results = [];
+    const walk = (relDir) => {
+        const absDir = join(cwd, relDir);
+        if (!existsSync(absDir)) {
+            return;
+        }
+        for (const entry of readdirSync(absDir, { withFileTypes: true })) {
+            const relPath = join(relDir, entry.name);
+            if (entry.isDirectory()) {
+                walk(relPath);
+            } else if (matchesSuffix(entry.name)) {
+                results.push(relPath);
+            }
+        }
+    };
+    walk(baseDir);
+    return results;
+};
+
+const docFiles = AGENT_DOC_GLOBS.flatMap((pattern) => globSync(pattern, process.cwd()));
 const staleReferences = [];
 
 for (const file of docFiles) {
