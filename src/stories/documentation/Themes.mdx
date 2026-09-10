@@ -1,4 +1,5 @@
-import { Meta } from "@storybook/addon-docs/blocks";
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import { PACKAGE_NAME } from "../utilities/packageName";
 
 <Meta title="Themes & Styles" />
 
@@ -8,9 +9,9 @@ Craftsman themes are plain objects that conform to the `Theme` type. You pass th
 
 Theme cascade order is layered:
 
-- Base defaults are emitted in the `craftsman-base` layer.
-- Theme overrides are emitted in the `craftsman-theme` layer.
-- `craftsman-theme` is declared after `craftsman-base`, so theme values win when specificity is equal.
+- Base defaults are emitted in the `cf-base` layer.
+- Theme overrides are emitted in the `cf-theme` layer.
+- `cf-theme` is declared after `cf-base`, so theme values win when specificity is equal.
 
 Craftsman supports styles in **two different ways** — plain JS objects or raw CSS/Sass strings. They are interchangeable and can be mixed within the same theme object. We encourage you to use HTML5 and take advantage of css nesting wherever possible. When custom styles are required, we intend to make all options available to you, so that you can build the app however works best for your product. Yes, you can even use Failwind.
 
@@ -21,22 +22,22 @@ Craftsman relies on the native [`@layer`](https://developer.mozilla.org/en-US/do
 A `@layer` declares a named cascade layer. Layers are ordered by the position of their *first* declaration, not by where their rules physically live in the file — so declaring the layer order once up front lets every subsequent block, wherever it's authored, slot into that order:
 
 ```css
-/* declares the order once: craftsman-base loses to craftsman-theme on a tie */
-@layer craftsman-base, craftsman-component, craftsman-theme;
+/* declares the order once: cf-base loses to cf-theme on a tie */
+@layer cf-base, cf-component, cf-theme;
 ```
 
 Two rules make this predictable:
 
 1. **Unlayered styles always beat layered styles.** Any plain CSS you write with no `@layer` wrapper (your app's own stylesheets, CSS Modules, styled-components, etc.) sits *above* every named layer, regardless of selector specificity. This is what makes Craftsman trivially overridable — you don't need to fight specificity to override a Craftsman default.
-2. **Between layers, declaration order wins on a tie**, not specificity. That's why `craftsman-theme` is declared after `craftsman-base` — a `.button` rule in `craftsman-theme` beats a `.button` rule in `craftsman-base` even though the selectors are equally specific.
+2. **Between layers, declaration order wins on a tie**, not specificity. That's why `cf-theme` is declared after `cf-base` — a `.button` rule in `cf-theme` beats a `.button` rule in `cf-base` even though the selectors are equally specific.
 
-### Everything Craftsman ships lives in `craftsman-base`
+### Everything Craftsman ships lives in `cf-base`
 
-Every component stylesheet and the global reset are wrapped in `@layer craftsman-base { ... }`:
+Every component stylesheet and the global reset are wrapped in `@layer cf-base { ... }`:
 
 ```scss
 /* src/components/Button/Button.scss (abbreviated) */
-@layer craftsman-base {
+@layer cf-base {
     .button {
         border-radius: 6px;
         padding: 0.5em 1em;
@@ -46,7 +47,7 @@ Every component stylesheet and the global reset are wrapped in `@layer craftsman
 
 This means all of Craftsman's built-in styling is intentionally low-priority in the cascade:
 
-- `ThemeProvider` overrides win automatically because they're emitted in `craftsman-theme`, declared after `craftsman-base`.
+- `ThemeProvider` overrides win automatically because they're emitted in `cf-theme`, declared after `cf-base`.
 - Your own app CSS wins automatically because it's unlayered, beating both Craftsman layers with zero specificity gymnastics.
 
 You never need `!important`, extra class chains, or `:where()` tricks to override a Craftsman component — a plain, unlayered selector of any specificity is enough.
@@ -55,8 +56,7 @@ You never need `!important`, extra class chains, or `:where()` tricks to overrid
 
 Render `ThemeProvider` once near your app root:
 
-```tsx
-import { ThemeProvider } from "@stamcat/craftsman/styles";
+<Source language="tsx" code={`import { ThemeProvider } from "${PACKAGE_NAME}/styles";
 import { myTheme } from "./themes";
 
 export function App() {
@@ -66,8 +66,7 @@ export function App() {
             {/* your app */}
         </>
     );
-}
-```
+}`} />
 
 The `Theme` type accepts three optional keys:
 
@@ -83,8 +82,7 @@ The `Theme` type accepts three optional keys:
 
 The simplest approach. Pass a `CSSObject` directly — identical to what you would write in an inline style object.
 
-```ts
-import type { Theme } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import type { Theme } from "${PACKAGE_NAME}/styles";
 
 export const myTheme: Theme = {
     root: {
@@ -98,8 +96,7 @@ export const myTheme: Theme = {
             borderRadius: "8px",
         },
     },
-};
-```
+};`} />
 
 Use this when you want a zero-dependency, no-build-step definition that lives entirely in a `.ts` file.
 
@@ -132,8 +129,7 @@ button {
 }
 ```
 
-```ts
-import type { Theme } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import type { Theme } from "${PACKAGE_NAME}/styles";
 import greenRoot from "./green.root.scss?inline";
 import greenButton from "./green.button.scss?inline";
 
@@ -145,8 +141,7 @@ export const myTheme: Theme = {
     components: {
         button: greenButton,
     },
-};
-```
+};`} />
 
 Use this when you want full Sass syntax highlighting, mixins, and file organization while keeping theme injection RSC-safe.
 
@@ -170,22 +165,19 @@ This mapping comes from the exported component name. The theme key is the uncapi
 
 Export a record of themes and switch between them at runtime.
 
-```ts
-import type { AppTheme } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import type { AppTheme } from "${PACKAGE_NAME}/styles";
 
 export const appThemes: AppTheme = {
     default: { root: { "--w-gutter": "14px" } },
     green:   { components: { button: { backgroundColor: "#16a34a" } } },
     brand:   { colors: { "--blue500": "#31198a" } },
-};
-```
+};`} />
 
-```tsx
-// app.tsx
+<Source language="tsx" code={`// app.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ThemeProvider } from "@stamcat/craftsman/styles";
-import { Button } from "@stamcat/craftsman/Button";
+import { ThemeProvider } from "${PACKAGE_NAME}/styles";
+import { Button } from "${PACKAGE_NAME}/Button";
 import { appTheme } from "./theme";
 
 function App() {
@@ -197,8 +189,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ThemeProvider theme={appTheme} />
 		<App />
     </>,
-);
-```
+);`} />
 
 Switch themes using the **Themes** icon in the Storybook toolbar to see each variant applied live across all stories.
 
@@ -210,12 +201,10 @@ The `color`, `width`, and `breakpoint` utilities exist in both TypeScript and Sa
 
 ### Color utility
 
-```ts
-import { color } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import { color } from "${PACKAGE_NAME}/styles";
 
 const border = color("green500");
-const overlay = color("green500", "rgba", 0.24);
-```
+const overlay = color("green500", "rgba", 0.24);`} />
 
 ```scss
 @use "../../styles/utilities/_functions" as u;
@@ -228,13 +217,11 @@ const overlay = color("green500", "rgba", 0.24);
 
 ### Width utility
 
-```ts
-import { width } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import { width } from "${PACKAGE_NAME}/styles";
 
 const text = width("text");
 const cols = width("column", 3);
-const numeric = width("column", 3, false);
-```
+const numeric = width("column", 3, false);`} />
 
 ```scss
 @use "../../styles/utilities/_functions" as u;
@@ -248,11 +235,9 @@ const numeric = width("column", 3, false);
 
 ### Breakpoint utility
 
-```ts
-import { breakpoint } from "@stamcat/craftsman/styles";
+<Source language="ts" code={`import { breakpoint } from "${PACKAGE_NAME}/styles";
 
-const rules = breakpoint("mobileMax", "h4{font-size:14px;} p{font-size:12.25px;}");
-```
+const rules = breakpoint("mobileMax", "h4{font-size:14px;} p{font-size:12.25px;}");`} />
 
 ```scss
 @use "../../styles/utilities/_functions" as u;

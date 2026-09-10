@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { LayoutWidthsSchema, type LayoutWidthsType } from "../../utilities/types";
 import { width, breakpoint, media } from "../../styles/utilities/layout";
 import { color } from "../../styles";
+import { PACKAGE_NAME } from "../utilities/packageName";
 
 type SpacingProps = {
     type: LayoutWidthsType;
@@ -81,7 +82,7 @@ const meta: Meta<typeof Spacing> = {
             source: {
                 transform: (_src: string, context: { args?: { type?: LayoutWidthsType; multiplier?: number } }) => {
                     const { type = "gutter", multiplier } = context.args ?? {};
-                    return `import { width } from "@stamcat/craftsman/styles";
+                    return `import { width } from "${PACKAGE_NAME}/styles";
 
 const space = ${multiplier ? `width("${type}", ${multiplier});` : `width("${type}");`}
 `;
@@ -113,7 +114,7 @@ export const BreakpointUtility: Story = {
 **TypeScript** — \`breakpoint(bp, styles)\` returns a raw \`@media ...\` string for use in CSS-in-JS or inline \`<style>\` injection:
 
 \`\`\`ts
-import { breakpoint } from "@stamcat/craftsman/styles";
+import { breakpoint } from "${PACKAGE_NAME}/styles";
 
 // CSS-in-JS (e.g. styled-components template literal)
 const Card = styled.div\`
@@ -125,7 +126,7 @@ const Card = styled.div\`
 **Sass** — \`@include breakpoint(bp)\` wraps a block in the correct \`@media\` query:
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "${PACKAGE_NAME}/styles/utilities/functions" as u;
 
 .card {
   font-size: #{u.width(text)};
@@ -139,7 +140,7 @@ const Card = styled.div\`
 The \`media\` object is also exported from TypeScript if you need the raw query string without wrapping styles.`,
             },
             source: {
-                code: `import { breakpoint, media } from "@stamcat/craftsman/styles";
+                code: `import { breakpoint, media } from "${PACKAGE_NAME}/styles";
 
 // Full @media rule string (CSS-in-JS)
 const rule = breakpoint("desktop", "padding: 32px;");
@@ -177,7 +178,7 @@ ${breakpoint("desktop", `.${liveExampleClass} { background-color: ${color("green
         return (
             <section style={sectionStyle}>
                 <h3>breakpoint(bp) — TypeScript &amp; Sass</h3>
-                <code><pre>{`import { breakpoint, media } from "@stamcat/craftsman/styles";
+                <code><pre>{`import { breakpoint, media } from "${PACKAGE_NAME}/styles";
 
 const rule = breakpoint("desktop", "font-size: 18px;");
 // => "@media (min-width: 1040px) { font-size: 18px; }"`}</pre></code>

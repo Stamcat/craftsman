@@ -2,7 +2,7 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
 
-@layer craftsman-component {
+@layer cf-component {
     .inputNumber {
         &.input-wrapper[data-label-position=inside] .input-label {
             left: 40px;

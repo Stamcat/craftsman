@@ -3,6 +3,7 @@ import { color, colors, hexToRgba, type ColorKey } from "../../styles/utilities/
 import { width } from "../../styles/utilities/layout";
 import { toast, ToastContainer } from "react-toastify";
 import { Button } from "../../components";
+import { PACKAGE_NAME } from "../utilities/packageName";
 
 const colorOptions = Object.keys(colors) as ColorKey[];
 
@@ -125,7 +126,7 @@ export const SassColorFunction: Story = {
 Use this instead of hard-coding hex values so themes can override via \`--name\` variables.
 
 \`\`\`scss
-@use "@stamcat/craftsman/styles/utilities/functions" as u;
+@use "${PACKAGE_NAME}/styles/utilities/functions" as u;
 
 .element {
   // Hex — resolves to var(--blue500)
@@ -139,7 +140,7 @@ Use this instead of hard-coding hex values so themes can override via \`--name\`
 > **Note:** The \`rgba\` mode uses the CSS relative color syntax (\`rgb(from ...)\`). Verify browser support requirements for your target audience.`,
             },
             source: {
-                code: `@use "@stamcat/craftsman/styles/utilities/functions" as u;
+                code: `@use "${PACKAGE_NAME}/styles/utilities/functions" as u;
 
 .badge {
   color: #{u.color(white)};
@@ -204,14 +205,14 @@ export const ColorFunction: Story = {
                     const alpha = context.args?.alpha ?? 0.6;
 
                     if (mode === "hex") {
-                        return `import { color } from "@stamcat/craftsman/styles";
+                        return `import { color } from "${PACKAGE_NAME}/styles";
 
 const style = {
     background: color("${variable}"),
 };`;
                     }
 
-                    return `import { color } from "@stamcat/craftsman/styles";
+                    return `import { color } from "${PACKAGE_NAME}/styles";
 
 const style = {
     background: color("${variable}", "rgba", ${alpha}),
@@ -256,7 +257,7 @@ export const hexToRgbaFunction: Story = {
                     const variable = context.args?.variable ?? "purple500";
                     const alpha = context.args?.alpha ?? 0.35;
 
-                    return `import { colors, hexToRgba } from "@stamcat/craftsman/styles";
+                    return `import { colors, hexToRgba } from "${PACKAGE_NAME}/styles";
 
 const style = {
     background: hexToRgba(colors.${variable}, ${alpha}),

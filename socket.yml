@@ -1,0 +1,9 @@
+# Socket.dev CI scan configuration — see https://docs.socket.dev/docs/socket-yml
+version: 2
+
+# NOTE: issueRules here would apply repo-wide per issue-type, not per-package,
+# so it isn't used for accepting specific findings (embla-carousel-react
+# obfuscatedFile, less/lodash/source-map-js/react-dom usesEval, sass-embedded
+# shellAccess, @atlaskit/pragmatic-drag-and-drop urlStrings). Those are
+# accepted per package@version via Socket dashboard alert triage instead —
+# see /memories/repo/build-notes.md for the reviewed rationale on each.

@@ -40,7 +40,7 @@
     transform: translateY(100%);
   }
 }
-@layer craftsman-component {
+@layer cf-component {
     .modal {
         &.wrapper {
             @extend %modal-overlay;

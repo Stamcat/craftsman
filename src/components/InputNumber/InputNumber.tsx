@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import type { TextInputType } from "../../utilities/types";
+import type { InputNumberLabelPosition, TextInputType } from "../../utilities/types";
 import { Button } from "../Button/Button";
 import { Input, type InputProps } from "../Input/Input";
 import clsx from "clsx";
@@ -9,8 +9,9 @@ import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import "./InputNumber.scss";
 
 export type InputNumberProps = React.ComponentProps<"input"> & {
-} & Omit<InputProps, "type" | "endAdornment"> & {
+} & Omit<InputProps, "type" | "endAdornment" | "labelPosition"> & {
     type?: Extract<TextInputType, "number">;
+    labelPosition?: InputNumberLabelPosition;
     onDecrement?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     onIncrement?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     iconIncrement?: React.ReactNode;

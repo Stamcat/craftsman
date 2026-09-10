@@ -40,7 +40,7 @@
     // "sourceMap": false,
     "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */,
     // "esModuleInterop": true,
-    // "resolveJsonModule": true,
+    "resolveJsonModule": true,
     "strictNullChecks": true /* Enable strict null checks. */,
     "strictFunctionTypes": true /* Enable strict checking of function types. */
     // "paths": {

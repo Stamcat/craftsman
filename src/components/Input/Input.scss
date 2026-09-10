@@ -7,7 +7,7 @@
     font-size: #{u.width("text", 0.75)};
 }
 // This is in base layer because many components implement it.
-@layer craftsman-base {
+@layer cf-base {
     %input-adornment {
         position: absolute;
         top: 50%;

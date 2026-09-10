@@ -2,7 +2,7 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
 @use "../DatePicker/_DatePicker";
-@layer craftsman-component {
+@layer cf-component {
     .react-datetime-picker,
     .react-datetime-picker *,
     .react-datetime-picker *:before,
