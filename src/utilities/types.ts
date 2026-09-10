@@ -69,7 +69,10 @@ export type CheckboxLabelPosition = z.infer<typeof zCheckboxLabelPosition>;
 export const zRadioLabelPosition = zLabelPosition.extract(["left", "right"]);
 export type RadioLabelPosition = z.infer<typeof zRadioLabelPosition>;
 
-export const ButtonType = z.enum(["primary", "default", "text"]);
+export const zInputNumberLabelPosition = zLabelPosition.exclude(["inside"]);
+export type InputNumberLabelPosition = z.infer<typeof zInputNumberLabelPosition>;
+
+export const ButtonType = z.enum(["primary", "secondary", "default", "text"]);
 export type ButtonType = z.infer<typeof ButtonType>;
 
 export const TextTags = z.enum(["h1", "h2", "h3", "h4", "h5", "p", "span", "div"]);

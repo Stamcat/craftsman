@@ -15,7 +15,7 @@ export function ThemeProvider({
     theme,
     children,
     precedence = "high",
-    href = "stamcat-craftsman-theme-provider",
+    href = "stamcat-cf-theme-provider",
     layered = true,
 }: ThemeProviderProps) {
     const themeStyles = themeBuilder(theme || {}, { layered });

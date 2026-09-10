@@ -31,6 +31,11 @@ jobs:
       - name: run lint
         run: npm run lint
 
+      - name: run socket scan
+        run: npm run scan:socket
+        env:
+          SOCKET_SECURITY_API_KEY: ${{ secrets.SOCKET_SECURITY_API_KEY }}
+
       # - name: run lint
       #   run: npm run lint:package
 

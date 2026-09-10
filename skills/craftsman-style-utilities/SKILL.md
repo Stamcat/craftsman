@@ -206,18 +206,18 @@ Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" 
 
 `ThemeProvider` (and the underlying `themeBuilder`) exposes two related but independent options for controlling how the runtime theme CSS interacts with cascade layers:
 
-- **`layered`** (default `true`) — whether the theme CSS is wrapped in the `craftsman-theme` cascade layer.
+- **`layered`** (default `true`) — whether the theme CSS is wrapped in the `cf-theme` cascade layer.
 - **`hoist`** (default `true`) — whether the theme `<style>` is hoisted to `<head>` via React's resource precedence mechanism. React always inserts a hoisted style as the first stylesheet in the document, which wins any `@layer` name-registration race against your app's own `@layer` order pin.
 
-By default (`hoist: true`), the hoisted style is always the first stylesheet in `<head>` regardless of import order, so its `@layer` declaration always wins the layer-registration race and permanently fixes `craftsman-theme`'s priority relative to any layers a consuming app declares afterward.
+By default (`hoist: true`), the hoisted style is always the first stylesheet in `<head>` regardless of import order, so its `@layer` declaration always wins the layer-registration race and permanently fixes `cf-theme`'s priority relative to any layers a consuming app declares afterward.
 
-If the consuming app uses Tailwind or another framework that declares its own cascade layer order (for example Tailwind's `@layer theme, base, components, utilities;`) and needs that app-level order to win instead, set `hoist: false` so the theme `<style>` renders in normal tree/commit order instead — letting an earlier-declared app-level `@layer` statement control where `craftsman-theme` ranks:
+If the consuming app uses Tailwind or another framework that declares its own cascade layer order (for example Tailwind's `@layer theme, base, components, utilities;`) and needs that app-level order to win instead, set `hoist: false` so the theme `<style>` renders in normal tree/commit order instead — letting an earlier-declared app-level `@layer` statement control where `cf-theme` ranks:
 
 ```tsx
 <ThemeProvider theme={theme} hoist={false} />
 ```
 
-Set `layered: false` (on `ThemeProvider` or `themeBuilder` directly) when the theme CSS should not join `@layer craftsman-theme` at all:
+Set `layered: false` (on `ThemeProvider` or `themeBuilder` directly) when the theme CSS should not join `@layer cf-theme` at all:
 
 ```tsx
 <ThemeProvider theme={theme} layered={false} />
@@ -225,7 +225,7 @@ Set `layered: false` (on `ThemeProvider` or `themeBuilder` directly) when the th
 themeBuilder(theme, { layered: false });
 ```
 
-With `layered: false`, the theme CSS still declares `@layer craftsman-theme` but does not join a Craftsman-owned layer order — the consuming app is responsible for declaring `craftsman-theme` in its own `@layer` order statement wherever it wants that priority to apply.
+With `layered: false`, the theme CSS still declares `@layer cf-theme` but does not join a Craftsman-owned layer order — the consuming app is responsible for declaring `cf-theme` in its own `@layer` order statement wherever it wants that priority to apply.
 
 ### Theme Authoring Usage Parameters
 

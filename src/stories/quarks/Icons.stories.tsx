@@ -5,6 +5,7 @@ import { IconAmazonPay, IconAmex, IconApplePay, IconDiscover, IconGooglePay, Ico
 import React, { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import { color } from "../../styles/utilities/color";
+import { PACKAGE_NAME } from "../utilities/packageName";
 /**
  * This is mostly vibe coded trash. don't look at this file as an example of how to do anything. 
  * Only look at the storybook directly
@@ -282,7 +283,7 @@ const getFlagUsageSnippet = (name: string, iconPath: string) => {
 
 // Craftsman's own icons (payment brand marks) — a small, fixed local set, unlike the
 // dynamically-discovered third-party icon/flag sets below, so no loader is needed.
-const PAYMENT_ICONS_PATH = "@stamcat/craftsman/Icons";
+const PAYMENT_ICONS_PATH = `${PACKAGE_NAME}/Icons`;
 const paymentIconEntries: IconEntry[] = [
     { name: "IconAmex", Icon: IconAmex as unknown as IconType, importPath: PAYMENT_ICONS_PATH },
     { name: "IconDiscover", Icon: IconDiscover as unknown as IconType, importPath: PAYMENT_ICONS_PATH },

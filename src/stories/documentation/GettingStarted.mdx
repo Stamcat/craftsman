@@ -1,4 +1,5 @@
-import { Meta } from "@storybook/addon-docs/blocks";
+import { Meta, Source } from "@storybook/addon-docs/blocks";
+import { PACKAGE_NAME } from "../utilities/packageName";
 
 <Meta title="Getting Started" />
 
@@ -14,20 +15,19 @@ This guide shows the RSC-safe styling setup and how to apply:
 - `ThemeProvider`
 	- Use in any React app, including Next.js App Router
 	- Injects theme CSS variables and component override rules
-	- Emits overrides in the `craftsman-theme` CSS layer
+	- Emits overrides in the `cf-theme` CSS layer
 	- Renders a `<style>` element and wraps children
 
 - Global styles
 	- Import once at your application root
-	- Emit defaults in the `craftsman-base` CSS layer
+	- Emit defaults in the `cf-base` CSS layer
 	- Do not rely on provider side-effect imports for global styling in RSC setups
 	- Base is intentionally lower priority than theme when selector specificity is equal
 
 
 ## 1. Create a Shared Theme Object
 
-```tsx
-import type { Theme } from "@stamcat/craftsman/styles";
+<Source language="tsx" code={`import type { Theme } from "${PACKAGE_NAME}/styles";
 import appRoot from "./app.root.scss?inline";
 import primaryButton from "./primary-button.scss?inline";
 
@@ -44,17 +44,14 @@ export const appTheme: Theme = {
 			borderWidth: "2px",
 		},
 	},
-};
-
-```
+};`} />
 
 ## 2 (a). Setup In a Standard React App
 
-```tsx
-import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles/globalStyles.scss";
+<Source language="tsx" code={`import { ThemeProvider } from "${PACKAGE_NAME}/styles";
+import "${PACKAGE_NAME}/styles/globalStyles.scss";
 import ReactDOM from "react-dom/client";
-import { Button } from "@stamcat/craftsman/Button";
+import { Button } from "${PACKAGE_NAME}/Button";
 import { appTheme } from "./theme";
 
 function App() {
@@ -64,16 +61,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 	<ThemeProvider theme={appTheme}>
 		<App />
 	</ThemeProvider>,
-);
-```
+);`} />
 
 ## 2 (b). Setup In Next.js App Router
 
 Import global styles once in root layout, then render `ThemeProvider` with your theme:
 
-```tsx
-import { ThemeProvider } from "@stamcat/craftsman/styles";
-import "@stamcat/craftsman/styles/globalStyles.scss";
+<Source language="tsx" code={`import { ThemeProvider } from "${PACKAGE_NAME}/styles";
+import "${PACKAGE_NAME}/styles/globalStyles.scss";
 import { appTheme } from "./theme";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -84,8 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			</body>
 		</html>
 	);
-}
-```
+}`} />
 
 RSC note:
 

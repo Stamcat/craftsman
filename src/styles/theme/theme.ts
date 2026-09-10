@@ -60,18 +60,10 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
         .join("\n");
 
     if (!layered) {
-        return [`:root { ${widths} ${colors} }`, "@layer craftsman-theme {", themeRules, "}"]
-            .filter(Boolean)
-            .join("\n");
+        return [`:root { ${widths} ${colors} }`, "@layer cf-theme {", themeRules, "}"].filter(Boolean).join("\n");
     }
 
-    return [
-        `:root { ${widths} ${colors} }`,
-        "@layer craftsman-base, craftsman-theme;",
-        "@layer craftsman-theme {",
-        themeRules,
-        "}",
-    ]
+    return [`:root { ${widths} ${colors} }`, "@layer cf-base, cf-theme;", "@layer cf-theme {", themeRules, "}"]
         .filter(Boolean)
         .join("\n");
 }

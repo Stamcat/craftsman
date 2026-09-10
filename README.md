@@ -101,8 +101,8 @@ Each component has its own package entry point, e.g. `@stamcat/craftsman/Button`
 
 - `ThemeProvider` injects theme CSS variables and component override rules.
 - Global styles should be loaded once at app root.
-- Base defaults are emitted in the `craftsman-base` layer and theme overrides in `craftsman-theme`.
-- For equal specificity, `craftsman-theme` overrides `craftsman-base`.
+- Base defaults are emitted in the `cf-base` layer and theme overrides in `cf-theme`.
+- For equal specificity, `cf-theme` overrides `cf-base`.
 - `theme.components.input` targets only non-radio and non-checkbox inputs.
 - `theme.root` and `theme.components.*` support JS style objects and raw CSS/Sass strings.
 - For Sass file workflows, import compiled CSS text via `*.scss?inline` and pass that string into the theme object.
