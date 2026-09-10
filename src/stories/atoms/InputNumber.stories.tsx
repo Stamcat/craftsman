@@ -15,7 +15,7 @@ const meta: Meta<typeof InputNumber> = {
 		type: "number",
         id: "testInput",
 		placeholder: "0",
-        label: "Beers consumed",
+        label: "Cats Pet Today",
         labelPosition: "top",
         required: false,
         min: 0,
