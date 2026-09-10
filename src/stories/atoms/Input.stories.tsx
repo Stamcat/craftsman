@@ -15,7 +15,7 @@ const meta: Meta<typeof Input> = {
 		type: "text",
         id: "testInput",
 		placeholder: "Type here",
-        label: "Favorite Beer",
+        label: "Favorite Cat",
         labelPosition: "top",
         required: false,
 	},
