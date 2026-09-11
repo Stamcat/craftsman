@@ -17,6 +17,8 @@ export type LabeledInput = {
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
     preAdornment?: React.ReactNode;
+    /** Fires on click of the wrapping <label> element. Use to override the browser's default behavior of forwarding the click to the first focusable child. */
+    onLabelClick?: React.MouseEventHandler<HTMLLabelElement>;
 };
 
 export type InputWrapperProps = React.ComponentProps<"input" | "textarea" | "select"> & LabeledInput;
@@ -34,7 +36,8 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     style,
     children,
     value,
-    defaultValue
+    defaultValue,
+    onLabelClick
 }) => {
     const hasInput = !isEmpty(value) || !isEmpty(defaultValue);
     return (
@@ -48,7 +51,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             {isEmpty(label) ? (
                 children
             ) : (
-                <label>
+                    <label onClick={onLabelClick}>
                         {labelPosition !== "hidden" && <div className="input-label">{label}</div>}
                         {children}
                 </label>
