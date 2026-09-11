@@ -28,8 +28,19 @@ export const InputPhone: React.FC<InputProps> = ({
     const inputId = id || generatedId;
     const phoneInputRef = React.useRef<PhoneInputRefType>(null);
 
+    // Prevent the wrapping label from forwarding its click to the country selector button (which would open the dropdown); focus the number input instead.
+    const handleLabelClick: React.MouseEventHandler<HTMLLabelElement> = (event) => {
+        const numberInput = phoneInputRef.current;
+        const target = event.target as HTMLElement;
+        if (!numberInput || target === numberInput || target.closest("button")) {
+            return;
+        }
+        event.preventDefault();
+        numberInput.focus();
+    };
+
     return (
-        <InputWrapper id={inputId} className={clsx("inputPhone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
+        <InputWrapper id={inputId} className={clsx("inputPhone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style} onLabelClick={handleLabelClick}>
             <PhoneInput
                 defaultCountry={defaultCountry}
                 {...props}

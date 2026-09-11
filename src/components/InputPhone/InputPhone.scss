@@ -43,7 +43,7 @@
             user-select: none;
 
             &:hover {
-                background-color: var(--react-international-phone-country-selector-background-color-hover, whitesmoke);
+                background-color: unset; //var(--react-international-phone-country-selector-background-color-hover, whitesmoke);
             }
 
             &--hide-dropdown {
