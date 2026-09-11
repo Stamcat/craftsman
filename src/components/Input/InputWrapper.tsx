@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import clsx from "clsx";
 import { isEmpty } from "../../utilities/validations";
 import type { LabelPosition } from "../../utilities/types";
@@ -39,7 +40,17 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     defaultValue,
     onLabelClick
 }) => {
-    const hasInput = !isEmpty(value) || !isEmpty(defaultValue);
+    const isControlled = value !== undefined;
+    const [uncontrolledHasInput, setUncontrolledHasInput] = useState(!isEmpty(defaultValue));
+    const hasInput = isControlled ? !isEmpty(value) : uncontrolledHasInput;
+
+    // reads the live DOM value so uncontrolled fields (defaultValue only, no onChange) update as the user types
+    const handleFieldInput: React.FormEventHandler<HTMLDivElement> = (event) => {
+        if (isControlled) { return; }
+        const target = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+        setUncontrolledHasInput(!isEmpty(target.value));
+    };
+
     return (
         <div
             data-label-position={labelPosition}
@@ -47,6 +58,8 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             data-has-input={hasInput}
             className={clsx("input-wrapper", className)}
             style={style}
+            onInput={handleFieldInput}
+            onChange={handleFieldInput}
         >
             {isEmpty(label) ? (
                 children

@@ -27,15 +27,17 @@ export const Input: React.FC<InputProps> = (props) => {
         preAdornment,
         style,
         className,
+        value,
+        defaultValue,
         ...rest
     } = props;
     const generatedId = useId();
     const inputId = id || generatedId;
     return (
-        <InputWrapper className={className} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
+        <InputWrapper className={className} label={label} labelPosition={labelPosition} error={error} required={required} style={style} value={value} defaultValue={defaultValue}>
             <span className="input-field" data-has-end-adornment={!isEmpty(endAdornment)} data-has-pre-adornment={!isEmpty(preAdornment)}>
                 {!isEmpty(preAdornment) && <span className="input-pre-adornment">{preAdornment}</span>}
-                <input id={inputId} type={type} className={clsx("input", type)} {...rest} />
+                <input id={inputId} type={type} className={clsx("input", type)} value={value} defaultValue={defaultValue} {...rest} />
                 {!isEmpty(endAdornment) && <span className="input-end-adornment">{endAdornment}</span>}
             </span>
         </InputWrapper>
