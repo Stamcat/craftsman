@@ -15,14 +15,16 @@ export const Textarea: React.FC<TextareaProps> = ({
     required,
     className,
     style,
+    value,
+    defaultValue,
     ...props
 }) => {
     const generatedId = useId();
     const inputId = id || generatedId;
 
     return (
-        <InputWrapper label={label} className={className} labelPosition={labelPosition} error={error} required={required} style={style}>
-            <textarea id={inputId} className="input" {...props} />
+        <InputWrapper label={label} className={className} labelPosition={labelPosition} error={error} required={required} style={style} value={value} defaultValue={defaultValue}>
+            <textarea id={inputId} className="input" value={value} defaultValue={defaultValue} {...props} />
         </InputWrapper>
     )
 }
