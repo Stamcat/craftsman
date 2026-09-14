@@ -60,10 +60,18 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
         .join("\n");
 
     if (!layered) {
-        return [`:root { ${widths} ${colors} }`, "@layer cf-theme {", themeRules, "}"].filter(Boolean).join("\n");
+        return [`@layer cf-base { :root { ${widths} ${colors} } }`, "@layer cf-theme {", themeRules, "}"]
+            .filter(Boolean)
+            .join("\n");
     }
 
-    return [`:root { ${widths} ${colors} }`, "@layer cf-base, cf-theme;", "@layer cf-theme {", themeRules, "}"]
+    return [
+        "@layer cf-base, cf-theme;",
+        `@layer cf-base { :root { ${widths} ${colors} } }`,
+        "@layer cf-theme {",
+        themeRules,
+        "}",
+    ]
         .filter(Boolean)
         .join("\n");
 }
