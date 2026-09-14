@@ -145,7 +145,8 @@
     }
     .input-field {
         position: relative;
-        display: inline-flex;
+        display: flex;
+        width: 100%;
         align-items: center;
         &[data-has-end-adornment="true"] {
             > .input {
