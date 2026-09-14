@@ -22,6 +22,7 @@ export const Toggle: React.FC<ToggleProps> = ({
     return (
         <Input
             type="checkbox"
+            role="switch"
             labelPosition={labelPosition}
             className={clsx("toggle", className)}
             endAdornment={<span className="toggle-slider" />}
