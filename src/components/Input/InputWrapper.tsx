@@ -61,14 +61,11 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             onInput={handleFieldInput}
             onChange={handleFieldInput}
         >
-            {isEmpty(label) ? (
-                children
-            ) : (
-                    <label onClick={onLabelClick}>
-                        {labelPosition !== "hidden" && <div className="input-label">{label}</div>}
-                        {children}
-                </label>
-            )}
+
+            <label onClick={onLabelClick}>
+                {!isEmpty(label) && labelPosition !== "hidden" && <div className="input-label">{label}</div>}
+                {children}
+            </label>
             {!isEmpty(error) && <div className="input-error">{error}</div>}
         </div>
     );

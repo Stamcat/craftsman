@@ -44,6 +44,14 @@ export const CustomWidth: Story = {
     },
 };
 
+export const NoLabel: Story = {
+    args: {
+        label: undefined,
+        labelPosition: undefined,
+    },
+};
+
+
 export const WithErrorMessage: Story = {
     args: {
         label: "Enable two-factor authentication",
