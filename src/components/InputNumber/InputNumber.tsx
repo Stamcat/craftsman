@@ -56,6 +56,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
             className={clsx("inputNumber", className)}
             preAdornment={<Button variant="text" onClick={onPressDown}>{iconIncrement || <IoRemoveCircleOutline size="26" />}</Button>}
             endAdornment={<Button variant="text" onClick={onPressUp}>{iconDecrement || <IoAddCircleOutline size="26" />}</Button>}
+            role={"spinbutton"}
             {...props}
             type={type}
         />

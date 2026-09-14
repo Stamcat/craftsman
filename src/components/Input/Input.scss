@@ -115,7 +115,7 @@
                     border-color: var(--blue500);
                 }
 
-                .input::placeholder {
+                input::placeholder {
                     opacity: 1;
                 }
             }
@@ -137,7 +137,7 @@
                 width: 100%;
             }
 
-            .input::placeholder {
+            input::placeholder {
                 opacity: 0;
                 transition: opacity 200ms ease;
             }
