@@ -76,6 +76,14 @@ export const WithValue: Story = {
     render: (args) => <WithValueStory {...args} />,
 };
 
+export const LabelInside: Story = {
+    args: {
+        label: "Label Inside",
+        labelPosition: "inside",
+    },
+    render: (args) => <WithValueStory {...args} />,
+};
+
 export const Disabled: Story = {
     args: {
         label: "Locked Date",
@@ -83,6 +91,7 @@ export const Disabled: Story = {
         disabled: true,
     },
 };
+
 
 const positionsGridStyle: React.CSSProperties = {
     display: "grid",
