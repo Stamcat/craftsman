@@ -29,7 +29,16 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     const generatedId = useId();
     const inputId = id || generatedId;
     return (
-        <InputWrapper id={inputId} className={clsx("dateRangePicker", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style}>
+        <InputWrapper
+            id={inputId}
+            className={clsx("dateRangePicker", className)}
+            label={label}
+            labelPosition={labelPosition}
+            error={error}
+            required={required}
+            style={style}
+            value={props.value?.toString()}
+        >
             <ReactDateRangePicker
                 calendarIcon={<FaRegCalendar size={16} />}
                 clearIcon={<FaX size={14} />}

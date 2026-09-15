@@ -74,7 +74,13 @@ const WithValueStory = (args: React.ComponentProps<typeof DateTimePicker>) => {
 export const WithValue: Story = {
     render: (args) => <WithValueStory {...args} />,
 };
-
+export const LabelInside: Story = {
+    args: {
+        label: "Label Inside",
+        labelPosition: "inside",
+    },
+    render: (args) => <WithValueStory {...args} />,
+};
 const RequiredStory = (args: React.ComponentProps<typeof DateTimePicker>) => {
     const [value, setValue] = useState<DateTimePickerProps["value"]>(null);
     return (

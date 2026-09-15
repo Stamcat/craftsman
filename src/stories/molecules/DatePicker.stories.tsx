@@ -69,10 +69,18 @@ export const WithErrorMessage: Story = {
 
 const WithValueStory = (args: React.ComponentProps<typeof DatePicker>) => {
     const [value, setValue] = useState<DatePickerProps["value"]>(new Date("2026-01-15"));
-    return <DatePicker {...args} label="Start Date" value={value} onChange={setValue} />;
+    return <DatePicker {...args} value={value} onChange={setValue} />;
 };
 
 export const WithValue: Story = {
+    render: (args) => <WithValueStory {...args} />,
+};
+
+export const LabelInside: Story = {
+    args: {
+        label: "Label Inside",
+        labelPosition: "inside",
+    },
     render: (args) => <WithValueStory {...args} />,
 };
 
@@ -83,6 +91,7 @@ export const Disabled: Story = {
         disabled: true,
     },
 };
+
 
 const positionsGridStyle: React.CSSProperties = {
     display: "grid",

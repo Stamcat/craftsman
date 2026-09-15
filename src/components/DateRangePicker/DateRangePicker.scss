@@ -3,13 +3,23 @@
 @use "../../styles/utilities/_placeholders";
 @use "../DatePicker/_DatePicker";
 @layer cf-component {
+    
     .react-daterange-picker,
     .react-daterange-picker *,
     .react-daterange-picker *:before,
     .react-daterange-picker *:after {
         @extend %border-box;
     }
-
+    .dateRangePicker {
+        &[data-label-position="inside"][data-has-input="false"]:not(:focus-within) {
+            .react-daterange-picker__range-divider {
+                color: transparent;
+            }
+            .react-date-picker__inputGroup__divider {
+                color: transparent;
+            }
+        }
+    }
     .react-daterange-picker {
         @extend %date-picker-styles;
         &--disabled {
@@ -20,6 +30,10 @@
         }
         &__inputGroup {
             @extend %date-picker-input-group;
+            
+            // .react-date-picker__inputGroup__divider {
+            //     display: none;
+            // }
         }
         &__inputGroup__divider {
             @extend %date-picker-divider;
