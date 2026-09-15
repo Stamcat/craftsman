@@ -107,11 +107,17 @@ export const ReadOnly: Story = {
         disabled: true,
     },
 };
+export const NoIcon: Story = {
+    args: {
+        disableClock: true,
 
+    },
+};
 // no value or defaultValue — displays -- placeholder
 export const NoValue: Story = {
     args: {},
 };
+
 
 export const Format24: Story = {
     args: { value: "14:30", format: 24 },

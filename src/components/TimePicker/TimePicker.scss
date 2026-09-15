@@ -18,7 +18,7 @@
         }   
         &__wrapper {
             @extend %date-picker-wrapper;
-            padding: 6px 24px 6px 8px;
+            padding: 6px 8px;
         }  
         &__inputGroup {
             @extend %date-picker-input-group;
@@ -95,10 +95,17 @@
 
         .timePicker__field {
             position: relative;
+            width: fit-content;
+
+            &:has(.input-view-toggle) {
+                .react-time-picker__wrapper {
+                    padding-right: 34px;
+                }
+            }
 
             .input-view-toggle {
                 position: absolute;
-                right: 4px;
+                right: 10px;
                 top: 50%;
                 transform: translateY(-50%);
                 padding: 4px;
