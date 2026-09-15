@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { loaders, type LoaderStyle } from "./types";
-import styles from "./loaders.module.scss";
+import "./loaders.scss";
 
 export type LoaderProps = React.ComponentProps<"div"> & {
     type: LoaderStyle;
@@ -22,7 +22,7 @@ export const Loader: React.FC<LoaderProps> = (props) => {
 
     return (
         <div
-            className={clsx("loader", styles[type], className)}
+            className={clsx("loader", type, className)}
             style={{ ...loaderStyleVars, ...style }}
             {...rest}
         />
