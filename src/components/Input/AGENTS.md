@@ -13,7 +13,8 @@ Props:
 - `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
 - `error?: string | boolean | ReactNode`
 - `required?: boolean`
-- `styles?: React.CSSProperties` (wrapper override)
+- `style?: React.CSSProperties` — targets the wrapper element.
+- `inputStyle?: React.CSSProperties` — targets the `<input>` field directly.
 - `type?: TextInputType` (checkbox/radio excluded)
 
 Behavior notes:

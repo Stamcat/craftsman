@@ -16,7 +16,7 @@ Props:
 - `backgroundDismiss?: boolean` (default behavior: `true`)
 - `hideDismissIcon?: boolean` (default behavior: close icon is shown)
 - `footer?: React.ReactNode`
-- `styles?: React.CSSProperties` (applies to outer modal wrapper)
+- `style?: React.CSSProperties` (native inherited style, applies to outer modal wrapper)
 
 Behavior notes:
 

@@ -22,7 +22,7 @@ Props:
   - `"factory"`
 - `color?: string` (default: `"black"`)
 - `width?: number` (optional, variant-dependent default behavior)
-- `styles?: React.CSSProperties` (inline style override)
+- `style?: React.CSSProperties` (native inherited style, merged after the computed loader style variables)
 
 Example:
 

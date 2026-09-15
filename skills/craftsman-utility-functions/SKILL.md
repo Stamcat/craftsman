@@ -14,7 +14,7 @@ The package exports an `isEmpty` utility. **Always use it instead of writing inl
 Import:
 
 ```ts
-import { isEmpty } from "@stamcat/craftsman/utilities/validations";
+import { isEmpty } from "@stamcat/craftsman/utilities";
 ```
 
 It returns `true` for:
@@ -38,6 +38,18 @@ if (typeof value === "string" && value.trim().length === 0) { ... }
 if (Object.keys(obj).length === 0) { ... }
 if (arr.length === 0) { ... }
 ```
+
+## Other validation/formatting utilities
+
+Also exported from `@stamcat/craftsman/utilities` (all from `src/utilities/validations.ts`):
+
+- `validateEmail(value: string): boolean` — simple regex-based email format check.
+- `getUnitLabel(locale, unit, override?): string` — resolves an `Intl.NumberFormat` unit display label, or returns `override` if provided.
+- `is24HourFormat(locale): boolean` — detects whether the locale's resolved hour cycle is 24-hour (`h23`/`h24`).
+- `getAmPmLabels(locale): [string, string]` — returns the locale's AM/PM strings via `Intl.DateTimeFormat`.
+- `formatTime(value, locale): string` — formats a `Date` (or `DateTimePickerProps["value"]`) as a 24-hour `HH:mm` string, or `"--:--"` if not a valid `Date`.
+
+These back the `TimePicker`/`DateTimePicker` locale-aware formatting — prefer them over hand-rolled `Intl` calls in those contexts.
 
 ## Style utilities parity (`color`, `width`, `breakpoint`)
 

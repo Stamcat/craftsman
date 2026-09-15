@@ -87,6 +87,12 @@ export const LabelPositions: Story = {
     ),
 };
 
+export const FullWidth: Story = {
+    args: {
+        inputStyle: { width: "100%" }
+    }
+};
+
 const ControlledSelect = (args: React.ComponentProps<typeof Select>) => {
     const [value, setValue] = useState("");
     return (

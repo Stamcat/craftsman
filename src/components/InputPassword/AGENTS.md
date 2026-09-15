@@ -9,7 +9,7 @@ import { InputPassword } from "@stamcat/craftsman/InputPassword";
 Props:
 
 - Extends `Input` props, with `type` constrained to password mode.
-- Includes all label, error, required, and wrapper style props from `Input`.
+- Includes all label, error, required, and style props from `Input`, including `style` (wrapper) and `inputStyle` (targets the `<input>` field directly).
 
 Behavior notes:
 

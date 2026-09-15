@@ -9,7 +9,7 @@ import { Button } from "@stamcat/craftsman/Button";
 Props:
 
 - Inherits all native `<button>` props.
-- `variant?: "primary" | "default" | "text"` (default: `"default"`)
+- `variant?: "primary" | "secondary" | "default" | "text"` (default: `"default"`)
 - `size?: number` (default visual scale is `1`)
 - `styles?: React.CSSProperties` (inline style override)
 

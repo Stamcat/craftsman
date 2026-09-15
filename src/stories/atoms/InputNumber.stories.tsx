@@ -58,6 +58,12 @@ const ControlledInputNumber = (args: Story["args"]) => {
         />
     );
 };
+export const FullWidth: Story = {
+    args: {
+        inputStyle: { width: "100%" }
+    }
+};
+
 
 export const Controlled: Story = {
     render: (args) => <ControlledInputNumber {...args} />,

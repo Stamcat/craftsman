@@ -17,6 +17,7 @@ export const Textarea: React.FC<TextareaProps> = ({
     style,
     value,
     defaultValue,
+    inputStyle,
     ...props
 }) => {
     const generatedId = useId();
@@ -24,7 +25,7 @@ export const Textarea: React.FC<TextareaProps> = ({
 
     return (
         <InputWrapper label={label} className={className} labelPosition={labelPosition} error={error} required={required} style={style} value={value} defaultValue={defaultValue}>
-            <textarea id={inputId} className="input" value={value} defaultValue={defaultValue} {...props} />
+            <textarea id={inputId} className="input" value={value} defaultValue={defaultValue} style={inputStyle} {...props} />
         </InputWrapper>
     )
 }
