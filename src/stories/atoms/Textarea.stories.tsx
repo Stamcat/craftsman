@@ -57,6 +57,11 @@ export const WithErrorMessage: Story = {
         error: "This field is required.",
     },
 };
+export const FullWidth: Story = {
+    args: {
+        inputStyle: { width: "100%" }
+    }
+};
 
 export const Disabled: Story = {
     args: {

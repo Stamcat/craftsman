@@ -47,6 +47,12 @@ export const Required: Story = {
     },
 };
 
+export const FullWidth: Story = {
+    args: {
+        inputStyle: { width: "100%" }
+    }
+};
+
 export const WithErrorMessage: Story = {
     args: {
         label: "Phone Number",

@@ -1,8 +1,6 @@
 # DateTimePicker — Agent Usage Notes
 
-> Not yet part of the documented public export surface (see `craftsman-component-usage` skill's Known Limitations). Source path only — do not assume `@stamcat/craftsman/DateTimePicker` is published until confirmed in `exports.ts`.
-
-Import (source-relative, once exported):
+Import:
 
 ```tsx
 import { DateTimePicker } from "@stamcat/craftsman/DateTimePicker";

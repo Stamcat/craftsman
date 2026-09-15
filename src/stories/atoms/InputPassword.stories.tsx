@@ -47,6 +47,11 @@ export const Required: Story = {
         required: true,
     },
 };
+export const FullWidth: Story = {
+    args: {
+        inputStyle: { width: "100%" }
+    }
+};
 
 export const WithErrorMessage: Story = {
     args: {

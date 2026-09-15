@@ -9,6 +9,7 @@ import { InputPhone } from "@stamcat/craftsman/InputPhone";
 Props:
 
 - Extends `PhoneInputProps` from `react-international-phone`.
+- `id?: string` — auto-generated via `useId` if not provided.
 - `label?: string | ReactNode`
 - `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
 - `error?: string | boolean | ReactNode`
@@ -16,6 +17,8 @@ Props:
 - `defaultCountry?: string` (default: `"us"`)
 - `preferredCountries?: string[]`
 - `endAdornment?: ReactNode`
+- `style?: React.CSSProperties` — targets the wrapper element.
+- `inputStyle?: React.CSSProperties` — targets the underlying phone `<input>` field directly.
 
 Behavior notes:
 

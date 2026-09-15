@@ -24,6 +24,7 @@ export const Select: React.FC<SelectProps> = ({
     options = [],
     className,
     style,
+    inputStyle,
     ...props
 }) => {
     const generatedId = useId();
@@ -31,7 +32,7 @@ export const Select: React.FC<SelectProps> = ({
 
     return (
         <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} className={clsx("select", className)} style={style}>
-            <select id={inputId} {...props}>
+            <select id={inputId} style={inputStyle} {...props}>
                 {options.map((opt, i) => (
                     <option key={`${inputId}-opt-${i}`} value={opt.value}>
                         {opt.label}

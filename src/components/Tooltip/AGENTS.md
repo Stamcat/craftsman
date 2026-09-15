@@ -1,8 +1,6 @@
 # Tooltip — Agent Usage Notes
 
-> Not yet part of the documented public export surface (see `craftsman-component-usage` skill's Known Limitations). Source path only — do not assume `@stamcat/craftsman/Tooltip` is published until confirmed in `exports.ts`.
-
-Import (source-relative, once exported):
+Import:
 
 ```tsx
 import { Tooltip } from "@stamcat/craftsman/Tooltip";

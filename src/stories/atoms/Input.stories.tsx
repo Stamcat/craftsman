@@ -48,6 +48,12 @@ export const Required: Story = {
         required: true,
     },
 };
+export const FullWidth: Story = {
+    args: {
+        label: "Last Name",
+        inputStyle: { width: "100%" }
+    },
+};
 
 export const WithErrorMessage: Story = {
     args: {

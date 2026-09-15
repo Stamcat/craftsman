@@ -147,7 +147,6 @@
         position: relative;
         display: flex;
         align-items: center;
-        width: fit-content;
         &[data-has-end-adornment="true"] {
             > .input {
                 padding-right: #{u.width("gutter", 1.5)};

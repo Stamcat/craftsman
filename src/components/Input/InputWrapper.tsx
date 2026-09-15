@@ -15,6 +15,8 @@ export type LabeledInput = {
     error?: string | boolean | React.ReactNode;
     /** Shows Required '*' if true */
     required?: boolean;
+    /** Optional - This targets input field styles directly */
+    inputStyle?: React.CSSProperties;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
     preAdornment?: React.ReactNode;

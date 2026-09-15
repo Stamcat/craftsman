@@ -13,6 +13,8 @@ Props:
 - `labelPosition?: "top" | "left" | "bottom" | "right" | "inside" | "hidden"` (default: `"top"`)
 - `error?: string | boolean | ReactNode`
 - `required?: boolean`
+- `style?: React.CSSProperties` — targets the wrapper element.
+- `inputStyle?: React.CSSProperties` — targets the `<textarea>` field directly.
 - `rows?: number`
 
 Behavior notes:
