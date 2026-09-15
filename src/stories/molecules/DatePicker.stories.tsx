@@ -69,7 +69,7 @@ export const WithErrorMessage: Story = {
 
 const WithValueStory = (args: React.ComponentProps<typeof DatePicker>) => {
     const [value, setValue] = useState<DatePickerProps["value"]>(new Date("2026-01-15"));
-    return <DatePicker {...args} label="Start Date" value={value} onChange={setValue} />;
+    return <DatePicker {...args} value={value} onChange={setValue} />;
 };
 
 export const WithValue: Story = {

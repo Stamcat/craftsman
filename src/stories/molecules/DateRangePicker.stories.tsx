@@ -71,7 +71,13 @@ const WithValueStory = (args: React.ComponentProps<typeof DateRangePicker>) => {
 export const WithValue: Story = {
     render: (args) => <WithValueStory {...args} />,
 };
-
+export const LabelInside: Story = {
+    args: {
+        label: "Label Inside",
+        labelPosition: "inside",
+    },
+    render: (args) => <WithValueStory {...args} />,
+};
 export const Disabled: Story = {
     args: {
         label: "Locked Range",

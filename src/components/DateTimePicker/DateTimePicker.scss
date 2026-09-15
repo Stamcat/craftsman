@@ -9,6 +9,15 @@
     .react-datetime-picker *:after {
         @extend %border-box;
     }
+    .dateTimePicker__wrapper {
+        &[data-label-position="inside"][data-has-input="false"]:not(:focus-within) {
+            .react-datetime-picker__inputGroup {
+                &__divider, &__amPm {
+                    color: transparent;
+                }
+            }
+        }
+    }
     .react-datetime-picker {
         @extend %date-picker-styles;
         &--disabled {

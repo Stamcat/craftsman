@@ -2,7 +2,7 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
 @use "./_DatePicker";
-@layer cf-base {
+@layer cf-component {
     .react-date-picker,
     .react-date-picker *,
     .react-date-picker *:before,
@@ -53,6 +53,15 @@
             display: none;
         }
 
+    }
+    .input-wrapper.datePicker {
+        &[data-label-position="inside"][data-has-input="false"]:not(:focus-within) {
+            .react-date-picker__inputGroup {
+                &__divider {
+                    color: transparent;
+                }
+            }
+        }
     }
     .react-date-picker__calendar 
     .react-date-picker__inputGroup__input:invalid {
