@@ -1,9 +1,4 @@
-import {
-    LayoutWidthsSchema,
-    type Breakpoint,
-    type LayoutWidthsType,
-    type SerializedStyles,
-} from "../../utilities/types";
+import { LayoutWidthsSchema, type Breakpoint, type LayoutWidthsType } from "../../utilities/types";
 import { defaultWidths } from "./constants";
 
 export const widths: Record<LayoutWidthsType, string> = Object.fromEntries(
@@ -77,7 +72,6 @@ export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean =
  * @param styles
  * @returns
  */
-export const breakpoint = (bp: Breakpoint, styles: string | SerializedStyles) => {
-    const str = String(styles);
-    return `@media ${media[bp]} { ${typeof styles === "string" ? str : styles} }`;
+export const breakpoint = (bp: Breakpoint, styles: string) => {
+    return `@media ${media[bp]} { ${String(styles)} }`;
 };
