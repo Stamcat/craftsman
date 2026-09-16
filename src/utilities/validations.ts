@@ -1,4 +1,5 @@
 import type { DateTimePickerProps } from "react-datetime-picker";
+import type { SerializedStyles } from "./types";
 
 export function isEmpty(value: unknown): boolean {
     return (
@@ -54,4 +55,22 @@ export const formatTime = (value: DateTimePickerProps["value"], locale: Intl.Loc
         minute: "2-digit",
         hour12: false,
     }).format(value);
+};
+
+/**
+ * Emotion's SerializedStyles has no toString override, so handing one to a plain
+ * template literal (as the design-system's `breakpoint` does) yields "[object Object]".
+ * Unwraps it — and any chained `next` styles — into the raw CSS string instead.
+ */
+export const toCssString = (styles: string | SerializedStyles): string => {
+    if (typeof styles === "string") {
+        return String(styles);
+    }
+    let result = "";
+    let node: SerializedStyles | undefined = styles;
+    while (node) {
+        result = node.styles + result;
+        node = node.next;
+    }
+    return result;
 };

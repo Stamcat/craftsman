@@ -28,7 +28,12 @@ export type Width = Record<LayoutWidthsType, number>;
 
 export type Colors = Record<string, string>;
 export type ColorType = "rgba" | "hex";
-
+// This allows us to accept emotion styled where applicable
+export type SerializedStyles = {
+    name: string;
+    styles: string;
+    next?: SerializedStyles;
+};
 
 export const zTextInputExclusions = z.enum(["checkbox", "radio"]);
 export type TextInputExclusions = z.infer<typeof zTextInputExclusions>;
