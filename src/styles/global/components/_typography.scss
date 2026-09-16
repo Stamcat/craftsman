@@ -2,10 +2,10 @@
 
 @mixin body-typography {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    color: var(--text);
+    color: var(--text, 14px);
     line-height: 1.5;
     font-weight: 400;
-    font-size: var(--w-text, 14px);
+    font-size:  #{u.width("text")};
 }
 
 @mixin h1 {
@@ -30,7 +30,7 @@
     margin: 0 0 #{u.width(gutter, 0.5)} 0;
 }
 @mixin h5 {
-    font-size: var(--w-text);
+    font-size:  #{u.width("text")};
     line-height: 1.2;
     margin: 0 0 #{u.width(gutter, 0.5)} 0;
 }
@@ -42,7 +42,7 @@
 }
 @mixin p {
     font-style: normal;
-    font-size: var(--w-text);
+    font-size:  #{u.width("text")};
     line-height: 1.5;
     margin: 0;
 }

@@ -27,6 +27,8 @@ export type Theme = {
     colors?: Colors;
     /** Override default width/breakpoint CSS variables (e.g. tablet, desktop, gutter). Values are in px. */
     widths?: WidthOverrides;
+    /** Writes to cf-base layer for custom base styles */
+    base?: CSSObject | SerializedStyles | string;
     root?: CSSObject | SerializedStyles | string;
     components?: ComponentThemeOverrides;
 };

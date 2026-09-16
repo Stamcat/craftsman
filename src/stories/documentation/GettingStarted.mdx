@@ -28,6 +28,7 @@ This guide shows the RSC-safe styling setup and how to apply:
 ## 1. Create a Shared Theme Object
 
 <Source language="tsx" code={`import type { Theme } from "${PACKAGE_NAME}/styles";
+import appBase from "./app.base.scss?inline";
 import appRoot from "./app.root.scss?inline";
 import primaryButton from "./primary-button.scss?inline";
 
@@ -37,6 +38,7 @@ export const appTheme: Theme = {
 	colors: {
 		"--blue500": "#1d4ed8",
 	},
+	base: appBase,
 	root: appRoot,
 	components: {
 		button: primaryButton,
@@ -95,7 +97,8 @@ Selector note:
 
 Style declaration note:
 
-- `theme.root` accepts either a JS style object or a raw CSS/Sass string.
+- `theme.root` accepts either a JS style object or a raw CSS/Sass string, and is emitted in the `cf-theme` layer.
+- `theme.base` accepts the same JS style object or raw CSS/Sass string forms as `theme.root`, but is emitted in the lower-priority `cf-base` layer alongside default width/color variables — use it for base/reset-level styles that should still lose to `theme.root` and `theme.components.*` when specificity is equal.
 - `theme.components.*` accepts either a JS style object or a raw CSS/Sass string for that target selector.
 - For file-based styles, import `*.scss?inline` or `*.css?inline` and pass the resulting string.
 - Use JS style objects for small inline overrides, and SCSS/CSS files when you want larger style blocks or Sass features.
