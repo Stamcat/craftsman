@@ -1,6 +1,7 @@
 @use "../../styles/utilities/_functions" as u;
 
-@layer cf-component {
+// using cf-base since there is no base layer for this to override
+@layer cf-base {
     .input-wrapper.toggle {
         > label {
             display: inline-flex;
