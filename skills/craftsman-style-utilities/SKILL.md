@@ -194,7 +194,8 @@ Do not compute `calc()` strings per-property in JS/TS (for example building a `p
 
 ## Theme Authoring
 
-- `theme.root` supports JS style objects and raw CSS/Sass strings.
+- `theme.root` supports JS style objects and raw CSS/Sass strings, and is written to the `cf-theme` cascade layer.
+- `theme.base` supports the same JS style object / raw CSS/Sass string forms as `theme.root`, but is written to the lower-priority `cf-base` cascade layer alongside the default width/color variables. Use it for base/reset-level styles that should still lose to `theme.root` and `theme.components.*` overrides when specificity is equal.
 - `theme.components.*` supports JS style objects and raw CSS/Sass strings.
 - `theme.widths` accepts a partial record of width/breakpoint keys to override the default `--w-*` CSS variables. Values are numbers in `px`.
 - String component styles are applied to the mapped target selector (for example `button`, `input[type='checkbox']`).
@@ -237,6 +238,7 @@ With `layered: false`, the theme CSS still declares `@layer cf-theme` but does n
 Example:
 
 ```tsx
+import greenBase from "./green.base.scss?inline";
 import greenRoot from "./green.root.scss?inline";
 import greenButton from "./green.button.scss?inline";
 
@@ -245,6 +247,7 @@ export const theme = {
     gutter: 20,
     tablet: 768,
   },
+  base: greenBase,
   root: greenRoot,
   components: {
     button: greenButton,

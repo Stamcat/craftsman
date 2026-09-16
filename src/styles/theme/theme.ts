@@ -50,6 +50,7 @@ export type ThemeBuilderOptions = {
 
 export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
     const layered = options?.layered ?? true;
+    const baseRules = [`:root { ${widths} ${colors} }`, buildRootStyle(theme.base)].filter(Boolean).join("\n");
     const themeRules = [
         cssObjectToCssText(":root", { ...(theme.colors || {}) }),
         buildWidthOverrides(theme.widths),
@@ -60,18 +61,10 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
         .join("\n");
 
     if (!layered) {
-        return [`@layer cf-base { :root { ${widths} ${colors} } }`, "@layer cf-theme {", themeRules, "}"]
-            .filter(Boolean)
-            .join("\n");
+        return [`@layer cf-base {`, baseRules, `}`, "@layer cf-theme {", themeRules, "}"].filter(Boolean).join("\n");
     }
 
-    return [
-        "@layer cf-base, cf-theme;",
-        `@layer cf-base { :root { ${widths} ${colors} } }`,
-        "@layer cf-theme {",
-        themeRules,
-        "}",
-    ]
+    return ["@layer cf-base, cf-theme;", "@layer cf-base {", baseRules, "}", "@layer cf-theme {", themeRules, "}"]
         .filter(Boolean)
         .join("\n");
 }
