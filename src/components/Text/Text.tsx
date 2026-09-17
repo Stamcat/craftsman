@@ -1,6 +1,5 @@
 import DOMPurify, { type Config } from "dompurify";
-import type { TextSize } from "storybook/theming";
-import type { TextTags, TextType } from "../../utilities/types";
+import type { TextSize, TextTags, TextType } from "../../utilities/types";
 import clsx from "clsx";
 import "./Text.scss";
 
@@ -44,7 +43,10 @@ export const Text: React.FC<TextProps> = ({
         const config: Config = {
             ADD_ATTR: ["target"]
         }
-        const sanitizedContent = typeof children === "string" ? DOMPurify.sanitize(children, config) : children;
+        if (typeof children !== "string") {
+            return <div {...rest} className={classes}>{children}</div>;
+        }
+        const sanitizedContent = DOMPurify.sanitize(children, config);
         return (
 			<div
 				{...rest}
