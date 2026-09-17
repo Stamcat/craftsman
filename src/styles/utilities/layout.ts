@@ -1,3 +1,4 @@
+import { toCssString } from "../../utilities";
 import {
     LayoutWidthsSchema,
     type Breakpoint,
@@ -78,6 +79,5 @@ export const width = (w: LayoutWidthsType, multiplier: number = 1, px: boolean =
  * @returns
  */
 export const breakpoint = (bp: Breakpoint, styles: string | SerializedStyles) => {
-    const str = String(styles);
-    return `@media ${media[bp]} { ${typeof styles === "string" ? str : styles} }`;
+    return `@media ${media[bp]} { ${toCssString(styles)} }`;
 };
