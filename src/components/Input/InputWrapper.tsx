@@ -40,7 +40,6 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     children,
     value,
     defaultValue,
-    preAdornment,
     onLabelClick
 }) => {
     const isControlled = value !== undefined;
@@ -59,7 +58,6 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             data-label-position={labelPosition}
             data-required={required}
             data-has-input={hasInput}
-            data-has-pre-adornment={!isEmpty(preAdornment)}
             className={clsx("input-wrapper", className)}
             style={style}
             onInput={handleFieldInput}
