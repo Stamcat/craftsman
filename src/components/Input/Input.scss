@@ -105,7 +105,7 @@
                 transition: border-color 200ms ease;
             }
 
-            &[data-has-pre-adornment="true"] {
+            &:has(.input-field[data-has-pre-adornment="true"]) {
                 .input-label {
                     left: #{u.width("gutter", 1.75)};
                 }
@@ -151,7 +151,7 @@
     }
     .input-field {
         position: relative;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         &[data-has-end-adornment="true"] {
             > .input {
