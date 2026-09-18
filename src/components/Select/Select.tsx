@@ -3,6 +3,7 @@
 import { useId } from "react";
 import clsx from "clsx";
 import { InputWrapper, type LabeledInput } from "../Input/InputWrapper";
+import { isEmpty } from "../../utilities/validations";
 
 export type SelectOption = {
     value: string;
@@ -25,6 +26,7 @@ export const Select: React.FC<SelectProps> = ({
     className,
     style,
     inputStyle,
+    preAdornment,
     ...props
 }) => {
     const generatedId = useId();
@@ -32,13 +34,16 @@ export const Select: React.FC<SelectProps> = ({
 
     return (
         <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} className={clsx("select", className)} style={style}>
-            <select id={inputId} style={inputStyle} {...props}>
-                {options.map((opt, i) => (
-                    <option key={`${inputId}-opt-${i}`} value={opt.value}>
-                        {opt.label}
-                    </option>
-                ))}
-            </select>
+            <span className="input-field" data-has-pre-adornment={!isEmpty(preAdornment)}>
+                {!isEmpty(preAdornment) && <span className="input-pre-adornment">{preAdornment}</span>}
+                <select id={inputId} className="input" style={inputStyle} {...props}>
+                    {options.map((opt, i) => (
+                        <option key={`${inputId}-opt-${i}`} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </span>
         </InputWrapper>
     )
 }

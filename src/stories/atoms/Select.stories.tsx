@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Select } from "../../components/Select/Select";
 import { zLabelPosition } from "../../utilities/types";
 import { width } from "../../styles/utilities/layout";
+import { LuArrowUpWideNarrow } from "react-icons/lu";
 
 const fruitOptions = [
     { value: "", label: "Select one..." },
@@ -68,7 +69,12 @@ export const WithError: Story = {
         error: "Please select an option.",
     },
 };
-
+export const PreAdornment: Story = {
+    args: {
+        label: "Favorite Fruit",
+        preAdornment: <LuArrowUpWideNarrow />,
+    },
+};
 const gridStyle: React.CSSProperties = {
     display: "grid",
     gap: width("gutter"),

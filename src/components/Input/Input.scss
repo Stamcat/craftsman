@@ -160,7 +160,7 @@
         }
         &[data-has-pre-adornment="true"] {
             > .input {
-                padding-left: #{u.width("gutter", 2.25)};
+                padding-left: #{u.width("gutter", 1.75)};
             }
         }
     }
