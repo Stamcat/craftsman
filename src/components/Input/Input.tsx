@@ -44,6 +44,7 @@ export const Input: React.FC<InputProps> = (props) => {
             style={style}
             value={value}
             defaultValue={defaultValue}
+            preAdornment={preAdornment}
         >
             <span
                 className="input-field"

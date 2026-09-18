@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "../../components/Input/Input";
 import { width } from "../../styles/utilities/layout";
 import { zLabelPosition, zTextInputType } from "../../utilities/types";
-
+import { LuSearch } from "react-icons/lu";
 
 const meta: Meta<typeof Input> = {
     title: "Atoms/Input/Input",
@@ -52,6 +52,13 @@ export const FullWidth: Story = {
     args: {
         label: "Last Name",
         inputStyle: { width: "100%" }
+    },
+};
+export const PreAdornment: Story = {
+    args: {
+        label: "Search",
+        labelPosition: "inside",
+        preAdornment: <LuSearch />
     },
 };
 

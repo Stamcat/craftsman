@@ -105,6 +105,12 @@
                 transition: border-color 200ms ease;
             }
 
+            &[data-has-pre-adornment="true"] {
+                .input-label {
+                    left: #{u.width("gutter", 1.75)};
+                }
+            }
+
             &:focus-within {
                 .input-label {
                     @include inside-input-label-floating;
