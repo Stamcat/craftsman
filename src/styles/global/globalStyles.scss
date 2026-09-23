@@ -59,8 +59,10 @@
     code {
         @extend %code;
     }
-
     button {
+        @extend %button-reset;
+    }
+    .button {
         @extend %button-styles;
     }
 

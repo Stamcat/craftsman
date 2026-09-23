@@ -1,6 +1,12 @@
 @use "../../utilities/functions" as u;
 
 @layer cf-base {
+  %button-reset {
+    background: none;
+    border: none;
+    color: #{u.color("text")};
+  }
+
   %text-link {
       padding: 0;
       border: none;
@@ -18,7 +24,7 @@
           }
       }
   }
-
+  
   %button-styles {
     --btn-size: 1;
     color: var(--blue600);
@@ -47,7 +53,16 @@
         background-color: var(--blue700);
       }
     }
-    
+
+    &.secondary {
+      color: var(--white);
+      background-color: var(--blue500);
+
+      &:hover {
+        background-color: var(--blue700);
+      }
+    }
+
     &.text {
       @extend %text-link;
     }
@@ -58,7 +73,7 @@
       border-color:  #{u.color("gray200")};
       color:  #{u.color("gray400")};
 
-      &.primary {
+      &.primary, &.secondary {
         border-color:  #{u.color("gray200")};
         background-color:  #{u.color("gray400")};
         color:  #{u.color("gray200")};
