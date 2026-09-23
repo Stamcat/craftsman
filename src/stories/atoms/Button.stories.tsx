@@ -9,6 +9,7 @@ import { ImRocket } from "react-icons/im";
 
 const wrapperStyle: React.CSSProperties = {
     display: "inline-flex",
+    alignItems: "flex-start",
     gap: width("gutter"),
     width: "100%",
     margin: `${width("gutter")} 0`,
@@ -109,6 +110,70 @@ export const WithIcon: Story = {
                     <p>Rocket</p>
                 </Button>
             </div>
+        </>
+    ),
+
+};
+export const MultipleSizes: Story = {
+    parameters: {
+        docs: {
+            description: {
+                story: "This shows that you can have multiple button sizes on the same layout without affecting each other."
+            }
+        }
+    },
+    render: () => (
+        <>
+            <div style={wrapperStyle}>
+                <Button variant="primary">
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </Button>
+                <Button variant="primary" size={2}>
+                    <span>Bike &nbsp;</span><GrBike />
+                </Button>
+                <Button variant="primary">
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </Button>
+                <Button variant="primary" size={0.5}>
+                    <ImRocket />&nbsp;<span>Rocket</span>
+                </Button>
+                <Button variant="primary">
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </Button>
+            </div>
+
+        </>
+    ),
+
+};
+export const AllVariants: Story = {
+    parameters: {
+        docs: {
+            description: {
+                story: "This shows that you can have multiple button sizes on the same layout without affecting each other."
+            }
+        }
+    },
+    render: () => (
+        <>
+            <div style={wrapperStyle}>
+                <Button variant="primary">
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </Button>
+                <Button variant="secondary" size={2}>
+                    <span>Bike &nbsp;</span><GrBike />
+                </Button>
+                <Button variant="default">
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </Button>
+                <Button variant="text" size={0.5}>
+                    <ImRocket />&nbsp;<span>Rocket</span>
+                </Button>
+                <button>
+                    <GiFlatbed /><span>&nbsp; Truck</span>
+                </button>
+            </div>
+
         </>
     ),
 

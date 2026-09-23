@@ -14,7 +14,8 @@ export type ButtonProps = React.ComponentProps<"button"> & {
 };
 /**
  * Button supports SCSS modules and regular classNames.<br />
- * Color scheme can be changed both by theme or by globalStyles button html element.<br />
+ * A bare `<button>` stays screen-reader/automation friendly without looking styled; visual styling is opt-in via the `.button` class this component always applies.<br />
+ * Color scheme can be changed both by theme or by globalStyles.<br />
  * If button is empty, it will return nothing. This prevents instances of "empty square" which can annoy the end user.
  */
 export const Button: React.FC<ButtonProps> = (props) => {

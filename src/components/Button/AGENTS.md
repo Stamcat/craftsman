@@ -17,6 +17,8 @@ Behavior notes:
 
 - `type` defaults to `"button"`.
 - For `variant !== "default"`, variant is appended to `className` (for example `"primary"`).
+- `primary` and `secondary` share a distinct filled look (blue background, white text); `default` is a base outlined look; `text` is a borderless, underline-on-hover link style.
+- A `<button>` element can wrap arbitrary content (icons, custom markup, anything) purely so it stays usable by screen readers and other automated/assistive services — the native semantics and keyboard behavior come for free. Not every `<button>` should visually look like a button though, so styling is opt-in via class names rather than the bare element: base button styles (`%button-styles`) are scoped to the `.button` class the component always applies, not the bare `button` element — plain `<button>` markup without that class receives no library styling.
 - `className` is preserved and merged after component classes.
 - Theme component overrides are selector-based CSS emitted by `ThemeProvider`; `theme.components.*` accepts JS style objects or raw CSS/Sass strings for the target selector.
 - If `children` is empty (per `isEmpty`), the component renders nothing.

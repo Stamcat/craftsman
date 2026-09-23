@@ -129,6 +129,26 @@ toast.warning("Unsaved changes.");
 toast.info("New version available.");
 ```
 
+## Charts (react-chartjs-2)
+
+Craftsman uses `react-chartjs-2` directly, without modification — there is no Craftsman `Chart` wrapper component. Consumers install `react-chartjs-2` and its `chart.js` peer dependency themselves and use the upstream API exactly as documented at https://react-chartjs-2.js.org/examples.
+
+Import:
+
+```tsx
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+// Register only the controllers/elements/scales/plugins the chart type needs — chart.js is tree-shakeable.
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+```
+
+Usage:
+
+- Every chart type used (`Bar`, `Line`, `Pie`, `Doughnut`, `PolarArea`, `Radar`, `Scatter`, `Bubble`, `Chart` for mixed types) must have its corresponding `chart.js` pieces registered once at module scope before render.
+- Dataset colors must be literal color values (hex/`rgba()`), not CSS variables (`var(--blue500)`) — chart.js draws to a `<canvas>` 2D context, which cannot resolve CSS custom properties. Use `colors` and `hexToRgba` from `@stamcat/craftsman/styles` (see the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md)) to stay on-palette instead of hard-coding hex strings inline.
+- See `src/stories/organisms/Charts.stories.tsx` in this repo for a full worked example of every chart type from the react-chartjs-2 examples page.
+
 ## Code Generation Patterns to Prefer
 
 1. Generate fully typed React usage examples.
