@@ -149,6 +149,26 @@ Usage:
 - Dataset colors must be literal color values (hex/`rgba()`), not CSS variables (`var(--blue500)`) — chart.js draws to a `<canvas>` 2D context, which cannot resolve CSS custom properties. Use `colors` and `hexToRgba` from `@stamcat/craftsman/styles` (see the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md)) to stay on-palette instead of hard-coding hex strings inline.
 - See `src/stories/organisms/Charts.stories.tsx` in this repo for a full worked example of every chart type from the react-chartjs-2 examples page.
 
+## Tables (ag-grid-community)
+
+Craftsman does not wrap `ag-grid-community`/`ag-grid-react` with a custom component. We use them directly, without modification, for advanced data visualization tables (large sortable/filterable datasets) — exactly as documented upstream at https://www.ag-grid.com/react-data-grid/.
+
+Import:
+
+```tsx
+import { AllCommunityModule, ModuleRegistry, themeQuartz } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
+
+// Register only the Community module — do not register Enterprise modules without a license.
+ModuleRegistry.registerModules([AllCommunityModule]);
+```
+
+Usage:
+
+- Only the **free Community feature set** is used/showcased in this repo: client-side sorting, filtering, pagination, row selection, cell rendering/formatting, quick filter, and CSV export.
+- AG Grid also sells **Enterprise-only** features (row grouping, pivoting, master/detail, server-side row model, Excel export, and others). These require registering separate Enterprise modules and a commercial license key. Do not enable or suggest Enterprise modules unless the consumer confirms they hold an AG Grid Enterprise license — it is the consumer's responsibility to obtain and configure that license.
+- See `src/stories/organisms/Tables.stories.tsx` in this repo for worked Community-only examples.
+
 ## Code Generation Patterns to Prefer
 
 1. Generate fully typed React usage examples.
