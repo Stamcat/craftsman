@@ -133,7 +133,14 @@ toast.info("New version available.");
 
 Craftsman uses `react-chartjs-2` directly, without modification — there is no Craftsman `Chart` wrapper component. Consumers install `react-chartjs-2` and its `chart.js` peer dependency themselves and use the upstream API exactly as documented at https://react-chartjs-2.js.org/examples.
 
-Import:
+Do this, in order, every time a chart is requested — do not stop after only picking a chart type:
+
+1. Confirm `chart.js` and `react-chartjs-2` are installed (`npm install chart.js react-chartjs-2` if missing — do not skip this because you "can't run commands"; ask the user to run it if you truly cannot).
+2. Import the chart component (`Bar`, `Line`, `Pie`, `Doughnut`, `PolarArea`, `Radar`, `Scatter`, `Bubble`, or `Chart` for mixed types) from `react-chartjs-2`.
+3. Import and `ChartJS.register(...)` only the `chart.js` pieces that chart type needs, once at module scope, before any render.
+4. Build a `data` object (`labels` + `datasets`) and an `options` object, then render `<ChartComponent data={data} options={options} />`.
+
+Full minimal working example (bar chart) — use this shape as the template for any chart type:
 
 ```tsx
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from "chart.js";
@@ -141,19 +148,67 @@ import { Bar } from "react-chartjs-2";
 
 // Register only the controllers/elements/scales/plugins the chart type needs — chart.js is tree-shakeable.
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+
+function RevenueChart() {
+    return (
+        <Bar
+            data={{
+                labels: ["January", "February", "March"],
+                datasets: [{ label: "Revenue", data: [12, 19, 8], backgroundColor: "#3A70C2" }],
+            }}
+            options={{ responsive: true }}
+        />
+    );
+}
 ```
 
-Usage:
+Usage notes:
 
-- Every chart type used (`Bar`, `Line`, `Pie`, `Doughnut`, `PolarArea`, `Radar`, `Scatter`, `Bubble`, `Chart` for mixed types) must have its corresponding `chart.js` pieces registered once at module scope before render.
+- Every chart type used (`Bar`, `Line`, `Pie`, `Doughnut`, `PolarArea`, `Radar`, `Scatter`, `Bubble`, `Chart` for mixed types) must have its corresponding `chart.js` pieces registered once at module scope before render — a missing registration is the most common cause of a blank canvas, not a bug in the library.
+- "Donut" is just the common spelling of "doughnut" — chart.js and react-chartjs-2 only export `Doughnut`, so treat a request for a "donut chart" as a request for the `Doughnut` chart type. Do not ask the user to clarify or stall on this — just use `Doughnut`.
 - Dataset colors must be literal color values (hex/`rgba()`), not CSS variables (`var(--blue500)`) — chart.js draws to a `<canvas>` 2D context, which cannot resolve CSS custom properties. Use `colors` and `hexToRgba` from `@stamcat/craftsman/styles` (see the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md)) to stay on-palette instead of hard-coding hex strings inline.
-- See `src/stories/organisms/Charts.stories.tsx` in this repo for a full worked example of every chart type from the react-chartjs-2 examples page.
+- Storybook story files are **not published in the npm package** (excluded from the build to reduce package size) — do not look for them in `node_modules/@stamcat/craftsman`. If you are working inside the craftsman source repo itself, `src/stories/organisms/Charts.stories.tsx` has a full worked example of every chart type from the react-chartjs-2 examples page; copy the closest matching example and adapt the data. If you are in a consuming application, follow the steps and minimal example above directly instead.
 
 ## Tables (ag-grid-community)
 
 Craftsman does not wrap `ag-grid-community`/`ag-grid-react` with a custom component. We use them directly, without modification, for advanced data visualization tables (large sortable/filterable datasets) — exactly as documented upstream at https://www.ag-grid.com/react-data-grid/.
 
-Import:
+Do this, in order, every time a table/grid is requested — do not stop after only picking column definitions:
+
+1. Confirm `ag-grid-community` and `ag-grid-react` are installed (`npm install ag-grid-community ag-grid-react` if missing — do not skip this because you "can't run commands"; ask the user to run it if you truly cannot).
+2. Call `ModuleRegistry.registerModules([AllCommunityModule])` once at module scope, before any grid renders. Without this call the grid renders blank/broken — this is expected AG Grid v33+ behavior, not a library bug.
+3. Define `columnDefs` (one entry per column) and `rowData` (your array of row objects).
+4. Render `<AgGridReact theme={themeQuartz} rowData={rowData} columnDefs={columnDefs} />` inside a container with an explicit height (AG Grid does not auto-size its container).
+5. Only reach for Community-safe options (see below). If the request needs row grouping, pivoting, master/detail, server-side row model, or Excel export, tell the user those are AG Grid Enterprise features requiring a separate commercial license — do not silently omit the feature or stall without explanation.
+
+Full minimal working example — use this shape as the template for any table:
+
+```tsx
+import { AllCommunityModule, ModuleRegistry, themeQuartz, type ColDef } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
+
+// Register only the Community module — do not register Enterprise modules without a license.
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+type Product = { readonly name: string; readonly price: number };
+
+const rowData: Product[] = [
+    { name: "Trail Runner Jacket", price: 129 },
+    { name: "Insulated Water Bottle", price: 32 },
+];
+
+const columnDefs: ColDef<Product>[] = [{ field: "name", filter: true }, { field: "price" }];
+
+function ProductTable() {
+    return (
+        <div style={{ height: 360 }}>
+            <AgGridReact<Product> theme={themeQuartz} rowData={rowData} columnDefs={columnDefs} pagination />
+        </div>
+    );
+}
+```
+
+Import reference:
 
 ```tsx
 import { AllCommunityModule, ModuleRegistry, themeQuartz } from "ag-grid-community";
@@ -167,7 +222,7 @@ Usage:
 
 - Only the **free Community feature set** is used/showcased in this repo: client-side sorting, filtering, pagination, row selection, cell rendering/formatting, quick filter, and CSV export.
 - AG Grid also sells **Enterprise-only** features (row grouping, pivoting, master/detail, server-side row model, Excel export, and others). These require registering separate Enterprise modules and a commercial license key. Do not enable or suggest Enterprise modules unless the consumer confirms they hold an AG Grid Enterprise license — it is the consumer's responsibility to obtain and configure that license.
-- See `src/stories/organisms/Tables.stories.tsx` in this repo for worked Community-only examples.
+- Storybook story files are **not published in the npm package** (excluded from the build to reduce package size) — do not look for them in `node_modules/@stamcat/craftsman`. If you are working inside the craftsman source repo itself, `src/stories/organisms/Tables.stories.tsx` has worked Community-only examples. If you are in a consuming application, follow the steps and minimal example above directly instead.
 
 ## Code Generation Patterns to Prefer
 
