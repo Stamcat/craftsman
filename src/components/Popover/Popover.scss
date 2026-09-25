@@ -1,0 +1,15 @@
+@use "../../styles/utilities/_functions" as u;
+
+@layer cf-component {
+    .popover {
+        --popover-bg: #{u.color("white")};
+
+        &__floating {
+            background-color: var(--popover-bg);
+            color: #{u.color("gray800")};
+            padding: #{u.width("gutter", 0.75)};
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+    }
+}

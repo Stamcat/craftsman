@@ -34,6 +34,7 @@ import { TimePicker } from "@stamcat/craftsman/TimePicker";
 import { DateTimePicker } from "@stamcat/craftsman/DateTimePicker";
 import { Toggle } from "@stamcat/craftsman/Toggle";
 import { Tooltip } from "@stamcat/craftsman/Tooltip";
+import { Popover } from "@stamcat/craftsman/Popover";
 import { Notice } from "@stamcat/craftsman/Notice";
 import { SortableList } from "@stamcat/craftsman/SortableList";
 ```

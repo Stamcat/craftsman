@@ -165,6 +165,33 @@ const copyExtension = (filePath: string, arr: string[]) => {
     });
 };
 
+// top-level entries (relative to the copied dir's root) that are dev-only tooling,
+// never imported at runtime, and shouldn't bloat the published dist output
+const COPY_DIR_EXCLUDES = [
+    "src/stories",
+    "package-lock.json",
+    ".storybook",
+    ".github",
+    ".vscode",
+    ".githooks",
+    ".editorconfig",
+    ".eslintrc.json",
+    "eslint.config.js",
+    ".gitignore",
+    ".npmrc",
+    ".prettierrc",
+    "socket.yml",
+    "tsconfig.json",
+    "tsconfig-build.json",
+    "tsconfig-storybook.json",
+    "vite.config.ts",
+    "vitest.shims.d.ts",
+    "scripts",
+    "buildPackage.ts",
+    "CHANGELOG.md",
+    "public",
+];
+
 const copyDir = (srcRelPath: string, destRelPath: string) => {
     const srcDir = path.join(process.cwd(), srcRelPath);
 
@@ -175,7 +202,12 @@ const copyDir = (srcRelPath: string, destRelPath: string) => {
 
     const destDir = path.join(process.cwd(), "dist", destRelPath);
     console.log(`copying ${srcDir} to ${destDir}`);
-    fse.copySync(srcDir, destDir);
+    fse.copySync(srcDir, destDir, {
+        filter: (src) => {
+            const rel = path.relative(srcDir, src).split(path.sep).join("/");
+            return !COPY_DIR_EXCLUDES.some((excluded) => rel === excluded || rel.startsWith(`${excluded}/`));
+        },
+    });
 };
 
 export class PackageBuilder {

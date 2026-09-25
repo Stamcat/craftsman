@@ -33,6 +33,7 @@ import { TimePicker } from "@stamcat/craftsman/TimePicker";
 import { DateTimePicker } from "@stamcat/craftsman/DateTimePicker";
 import { Toggle } from "@stamcat/craftsman/Toggle";
 import { Tooltip } from "@stamcat/craftsman/Tooltip";
+import { Popover } from "@stamcat/craftsman/Popover";
 import { Notice } from "@stamcat/craftsman/Notice";
 import { SortableList } from "@stamcat/craftsman/SortableList";
 ```
@@ -72,6 +73,7 @@ Each entry links to the `AGENTS.md` co-located with that component's source for 
 | Text | [../../src/components/Text/AGENTS.md](../../src/components/Text/AGENTS.md) |
 | DateTimePicker | [../../src/components/DateTimePicker/AGENTS.md](../../src/components/DateTimePicker/AGENTS.md) |
 | Tooltip | [../../src/components/Tooltip/AGENTS.md](../../src/components/Tooltip/AGENTS.md) |
+| Popover | [../../src/components/Popover/AGENTS.md](../../src/components/Popover/AGENTS.md) |
 | Toggle | [../../src/components/Toggle/AGENTS.md](../../src/components/Toggle/AGENTS.md) |
 | Notice | [../../src/components/Notice/AGENTS.md](../../src/components/Notice/AGENTS.md) |
 | SortableList | [../../src/components/SortableList/AGENTS.md](../../src/components/SortableList/AGENTS.md) |
