@@ -127,6 +127,7 @@ Valid keys: `text` · `gutter` · `column` · `tablet` · `desktop` · `extDeskt
 
 - The `column` key automatically accounts for gutters between columns.
 - Never use hard-coded `px` values for spacing or layout widths. Always use `width()`.
+- The multiplier must be a whole, half, or quarter number a human can read at a glance (`0.25`, `0.5`, `0.75`, `1`, `1.5`, `2`, `-0.5`, etc.). Do not use obscure multipliers like `0.1`, `0.45`, or `-0.1` — if the design doesn't reduce to a clean fraction of the gutter, use the literal `px` value instead of forcing it through `width()`.
 
 ### breakpoint()
 

@@ -96,6 +96,7 @@ Each component has its own package entry point, e.g. `@stamcat/craftsman/Button`
 | TimePicker | `@stamcat/craftsman/TimePicker` |
 | Toggle | `@stamcat/craftsman/Toggle` |
 | Tooltip | `@stamcat/craftsman/Tooltip` |
+| Popover | `@stamcat/craftsman/Popover` |
 
 ## Styling notes
 
