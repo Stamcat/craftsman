@@ -30,6 +30,7 @@ const meta: Meta<typeof DatePicker> = {
         error: { control: "text" },
         value: { control: false },
         onChange: { control: false },
+        width: { control: "text" },
         locale: {
             control: "select",
             options: ["en-US", "en-GB", "fr-FR", "de-DE", "ja-JP", "ar-EG", "zh-CN", "es-MX", "hi-IN", "ko-KR"],
@@ -90,6 +91,21 @@ export const Disabled: Story = {
         value: new Date("2026-01-15"),
         disabled: true,
     },
+};
+
+export const CustomWidth: Story = {
+    args: {
+        label: "Width prop",
+        width: "50%",
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "The `width` prop accepts any CSS length (`\"50%\"`, `\"320px\"`) and sets it via the `--input-width` CSS variable.",
+            },
+        },
+    },
+    render: (args) => <WithValueStory {...args} />,
 };
 
 

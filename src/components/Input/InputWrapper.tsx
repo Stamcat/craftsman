@@ -17,11 +17,19 @@ export type LabeledInput = {
     required?: boolean;
     /** Optional - This targets input field styles directly */
     inputStyle?: React.CSSProperties;
+    /** Optional - Adds a className to the input/textarea/select element itself, alongside the base "input" class */
+    inputClassName?: string;
     /** Optional trailing element rendered inside the input field wrapper. This can be a button, icon, etc */
     endAdornment?: React.ReactNode;
     preAdornment?: React.ReactNode;
     /** Fires on click of the wrapping <label> element. Use to override the browser's default behavior of forwarding the click to the first focusable child. */
     onLabelClick?: React.MouseEventHandler<HTMLLabelElement>;
+    /** Optional - This targets the wrapping <label> element directly, e.g. to set width: 100% */
+    labelStyle?: React.CSSProperties;
+    /** Optional - Adds a className to the wrapping <label> element */
+    labelClassName?: string;
+    /** Optional - Sets the field's width, accepts any CSS length e.g. "50%" or "50px" */
+    width?: string;
 };
 
 export type InputWrapperProps = React.ComponentProps<"input" | "textarea" | "select"> & LabeledInput;
@@ -40,7 +48,10 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
     children,
     value,
     defaultValue,
-    onLabelClick
+    onLabelClick,
+    labelStyle,
+    labelClassName,
+    width
 }) => {
     const isControlled = value !== undefined;
     const [uncontrolledHasInput, setUncontrolledHasInput] = useState(!isEmpty(defaultValue));
@@ -59,12 +70,12 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
             data-required={required}
             data-has-input={hasInput}
             className={clsx("input-wrapper", className)}
-            style={style}
+            style={{ ...style, ...(width ? { "--input-width": width } as React.CSSProperties : undefined) }}
             onInput={handleFieldInput}
             onChange={handleFieldInput}
         >
 
-            <label onClick={onLabelClick}>
+            <label onClick={onLabelClick} className={labelClassName} style={labelStyle}>
                 {!isEmpty(label) && labelPosition !== "hidden" && <div className="input-label">{label}</div>}
                 {children}
             </label>

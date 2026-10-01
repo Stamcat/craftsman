@@ -19,6 +19,7 @@ Props:
 - `endAdornment?: ReactNode`
 - `style?: React.CSSProperties` — targets the wrapper element.
 - `inputStyle?: React.CSSProperties` — targets the underlying phone `<input>` field directly.
+- `width?: string` — sets the field's width, accepts any CSS length e.g. `"50%"` or `"320px"`. Sets it via the `--input-width` CSS variable; omit for the default intrinsic/auto width.
 
 Behavior notes:
 

@@ -32,6 +32,7 @@ const meta: Meta<typeof InputPhone> = {
         error: { control: "text" },
         defaultCountry: { control: "text" },
         endAdornment: { control: false },
+        width: { control: "text" },
     },
 };
 
@@ -51,6 +52,20 @@ export const FullWidth: Story = {
     args: {
         inputStyle: { width: "100%" }
     }
+};
+
+export const CustomWidth: Story = {
+    args: {
+        label: "Width prop",
+        width: "50%",
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "The `width` prop accepts any CSS length (`\"50%\"`, `\"320px\"`) and sets it via the `--input-width` CSS variable.",
+            },
+        },
+    },
 };
 
 export const WithErrorMessage: Story = {

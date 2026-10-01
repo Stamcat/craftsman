@@ -15,6 +15,10 @@ Props:
 - `required?: boolean`
 - `style?: React.CSSProperties` — targets the wrapper element.
 - `inputStyle?: React.CSSProperties` — targets the `<input>` field directly.
+- `inputClassName?: string` — adds a className to the `<input>` field directly (alongside the base `"input"` class).
+- `labelStyle?: React.CSSProperties` — targets the wrapping `<label>` element.
+- `labelClassName?: string` — adds a className to the wrapping `<label>` element.
+- `width?: string` — sets the field's width, accepts any CSS length e.g. `"50%"` or `"320px"`. Sets it via the `--input-width` CSS variable; omit for the default intrinsic/auto width.
 - `type?: TextInputType` (checkbox/radio excluded)
 
 Behavior notes:
@@ -29,4 +33,8 @@ Example:
 
 ```tsx
 <Input type="email" placeholder="you@company.com" required />
+```
+
+```tsx
+<Input label="Name" width="50%" labelStyle={{ width: "100%" }} />
 ```

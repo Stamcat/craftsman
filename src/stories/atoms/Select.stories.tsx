@@ -42,6 +42,7 @@ const meta: Meta<typeof Select> = {
         required: { control: "boolean" },
         error: { control: "text" },
         options: { control: false },
+        width: { control: "text" },
     },
 };
 
@@ -97,6 +98,20 @@ export const FullWidth: Story = {
     args: {
         inputStyle: { width: "100%" }
     }
+};
+
+export const CustomWidth: Story = {
+    args: {
+        label: "Width prop",
+        width: "50%",
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "The `width` prop accepts any CSS length (`\"50%\"`, `\"320px\"`) and sets it via the `--input-width` CSS variable.",
+            },
+        },
+    },
 };
 
 const ControlledSelect = (args: React.ComponentProps<typeof Select>) => {

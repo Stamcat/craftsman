@@ -24,6 +24,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     error,
     style,
     className,
+    width,
     ...props
 }) => {
     const generatedId = useId();
@@ -37,6 +38,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             error={error}
             required={required}
             style={style}
+            width={width}
             value={props.value?.toString()}
         >
             <ReactDatePicker

@@ -11,6 +11,7 @@ Props:
 - Extends `react-datetime-picker`'s `DateTimePickerProps` plus `LabeledInput` (`label`, `labelPosition`, `error`, `required`).
 - `id?: string`
 - `style?: React.CSSProperties`
+- `width?: string` — sets the field's width, accepts any CSS length e.g. `"50%"` or `"320px"`. Sets it via the `--input-width` CSS variable; omit for the default intrinsic/auto width.
 - `format?: 24 | 12` — hour format used by the custom time wheel display.
 - `labels?: { hour?: string; minute?: string }` — labels passed through to the time wheel.
 - `value` / `onChange` — standard `Date` value and change callback.

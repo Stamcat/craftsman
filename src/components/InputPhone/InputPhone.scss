@@ -229,6 +229,7 @@
 
         .react-international-phone-input-container {
             display: flex;
+            width: var(--input-width, auto);
 
             .react-international-phone-country-selector-button {
                 border-radius: var(--react-international-phone-border-radius, 4px);
@@ -239,6 +240,8 @@
 
             .react-international-phone-input {
                 overflow: visible;
+                flex: 1 1 0%;
+                min-width: 0;
                 height: var(--react-international-phone-height, 36px);
                 box-sizing: border-box;
                 padding: 0 8px;
