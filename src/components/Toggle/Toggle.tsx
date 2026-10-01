@@ -4,7 +4,8 @@ import clsx from "clsx";
 import { Input, type InputProps } from "../Input/Input";
 import "./Toggle.scss";
 
-export type ToggleProps = Omit<InputProps, "type" | "preAdornment" | "endAdornment"> & {
+export type ToggleProps = Omit<InputProps, "type" | "preAdornment" | "endAdornment" | "width"> & {
+    /** Width in pixels is the only way we can decalre here */
     width?: number;
 };
 
