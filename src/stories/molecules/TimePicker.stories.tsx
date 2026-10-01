@@ -69,6 +69,9 @@ const meta: Meta<typeof TimePicker> = {
         value: {
             control: "text",
         },
+        width: {
+            control: "text",
+        },
     },
     parameters: {
         // height (not iframeHeight) applies to inline stories too, keeping theme propagation from the Docs page
@@ -135,4 +138,16 @@ export const WithError: Story = {
 
 export const SideBySide: Story = {
     render: () => <SideBySideDemo />,
+};
+
+export const CustomWidth: Story = {
+    args: { value: "09:30", width: "50%" },
+    parameters: {
+        docs: {
+            description: {
+                story: "The `width` prop accepts any CSS length (`\"50%\"`, `\"320px\"`) and sets it via the `--input-width` CSS variable.",
+            },
+        },
+    },
+    render: (args) => <ControlledDemo {...args} />,
 };

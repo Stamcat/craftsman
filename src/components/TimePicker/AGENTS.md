@@ -16,6 +16,7 @@ Props:
 - `locale?: Intl.LocalesArgument`
 - `format?: 24 | 12`
 - `labels?: { hour?: string; minute?: string }`
+- `width?: string` — sets the field's width, accepts any CSS length e.g. `"50%"` or `"320px"`. Sets it via the `--input-width` CSS variable; omit for the default intrinsic/auto width.
 
 Behavior notes:
 

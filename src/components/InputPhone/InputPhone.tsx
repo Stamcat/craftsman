@@ -23,6 +23,7 @@ export const InputPhone: React.FC<InputProps> = ({
     style,
     className,
     inputStyle,
+    width,
     ...props
 }) => {
     const generatedId = useId();
@@ -41,7 +42,7 @@ export const InputPhone: React.FC<InputProps> = ({
     };
 
     return (
-        <InputWrapper id={inputId} className={clsx("inputPhone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style} onLabelClick={handleLabelClick}>
+        <InputWrapper id={inputId} className={clsx("inputPhone", className)} label={label} labelPosition={labelPosition} error={error} required={required} style={style} width={width} onLabelClick={handleLabelClick}>
             <PhoneInput
                 defaultCountry={defaultCountry}
                 inputStyle={inputStyle}

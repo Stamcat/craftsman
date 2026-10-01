@@ -11,6 +11,12 @@
 @layer cf-base, cf-component, cf-theme;
 
 @layer cf-base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
     :root {
         color-scheme: light dark;
         font-synthesis: none;
@@ -36,6 +42,7 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
+
     body,
     ul {
         margin: 0;

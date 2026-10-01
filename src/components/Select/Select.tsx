@@ -27,13 +27,14 @@ export const Select: React.FC<SelectProps> = ({
     style,
     inputStyle,
     preAdornment,
+    width,
     ...props
 }) => {
     const generatedId = useId();
     const inputId = id || generatedId;
 
     return (
-        <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} className={clsx("select", className)} style={style}>
+        <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} className={clsx("select", className)} style={style} width={width}>
             <span className="input-field" data-has-pre-adornment={!isEmpty(preAdornment)}>
                 {!isEmpty(preAdornment) && <span className="input-pre-adornment">{preAdornment}</span>}
                 <select id={inputId} className="input" style={inputStyle} {...props}>

@@ -28,7 +28,7 @@ type TimePickerProps = Omit<ReactTimePickerProps, "locale" | "format"> & Labeled
  * 
  */
 export const TimePicker: React.FC<TimePickerProps> = (props) => {
-    const { labels, locale, format, value, onChange, label, labelPosition, error, required, name, disableClock, ...rest } = props;
+    const { labels, locale, format, value, onChange, label, labelPosition, error, required, name, disableClock, width, ...rest } = props;
 
     // hooks
     const [referenceEl, setReferenceEl] = useState<Element | null>(null);
@@ -74,7 +74,7 @@ export const TimePicker: React.FC<TimePickerProps> = (props) => {
     return (
         <div className="timePicker" ref={setReferenceEl} onFocus={onFocusTime} onKeyDown={onKeyDownTime}>
             {name && <input type="hidden" name={name} value={typeof value === "string" ? value : ""} readOnly />}
-            <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required}>
+            <InputWrapper label={label} labelPosition={labelPosition} error={error} required={required} width={width}>
                 <div className="timePicker__field">
                     <ReactTimePicker
                         value={value}

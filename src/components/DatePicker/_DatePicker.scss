@@ -6,6 +6,7 @@
     %date-picker-styles {
         display: inline-flex;
         position: relative;
+        width: var(--input-width, auto);
     }
     %date-picker-disabled {
         background-color: #f0f0f0;
@@ -16,6 +17,7 @@
         flex-grow: 1;
         flex-shrink: 0;
         @extend %input-base;
+        width: auto;
         padding: 6px 8px;
     }
     %date-picker-input-group {

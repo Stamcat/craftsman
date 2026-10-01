@@ -30,6 +30,10 @@ export const Input: React.FC<InputProps> = (props) => {
         value,
         defaultValue,
         inputStyle,
+        inputClassName,
+        labelStyle,
+        labelClassName,
+        width,
         ...rest
     } = props;
     const generatedId = useId();
@@ -44,6 +48,9 @@ export const Input: React.FC<InputProps> = (props) => {
             style={style}
             value={value}
             defaultValue={defaultValue}
+            labelStyle={labelStyle}
+            labelClassName={labelClassName}
+            width={width}
         >
             <span
                 className="input-field"
@@ -54,7 +61,7 @@ export const Input: React.FC<InputProps> = (props) => {
                 <input
                     id={inputId}
                     type={type}
-                    className={clsx("input", type)}
+                    className={clsx("input", type, inputClassName)}
                     value={value}
                     defaultValue={defaultValue}
                     style={inputStyle}

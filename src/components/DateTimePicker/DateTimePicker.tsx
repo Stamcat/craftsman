@@ -37,6 +37,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
     format,
     value,
     onChange,
+    width,
     ...props
 }) => {
     const generatedId = useId();
@@ -115,6 +116,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
                 error={error}
                 required={required}
                 style={style}
+                width={width}
                 value={value instanceof Date ? value.toISOString() : undefined}
             >
                 <ReactDateTimePicker

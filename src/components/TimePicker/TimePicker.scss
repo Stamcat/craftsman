@@ -95,7 +95,12 @@
 
         .timePicker__field {
             position: relative;
-            width: fit-content;
+            width: var(--input-width, fit-content);
+
+            // .react-time-picker reads --input-width itself via %date-picker-styles; force it to fill this already-sized wrapper instead of re-resolving the variable
+            .react-time-picker {
+                width: 100%;
+            }
 
             &:has(.input-view-toggle) {
                 .react-time-picker__wrapper {

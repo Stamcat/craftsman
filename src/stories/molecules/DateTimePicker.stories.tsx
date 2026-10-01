@@ -41,6 +41,7 @@ const meta: Meta<typeof DateTimePicker> = {
         error: { control: "text" },
         value: { control: false },
         onChange: { control: false },
+        width: { control: "text" },
     },
 };
 
@@ -111,4 +112,18 @@ export const WithError: Story = {
 
 export const Disabled: Story = {
     render: (args) => <DateTimePicker {...args} label="Locked Date" value={new Date("2026-06-01T14:00:00")} onChange={() => {}} disabled />,
+};
+
+export const CustomWidth: Story = {
+    args: {
+        width: "50%",
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "The `width` prop accepts any CSS length (`\"50%\"`, `\"320px\"`) and sets it via the `--input-width` CSS variable.",
+            },
+        },
+    },
+    render: (args) => <WithValueStory {...args} />,
 };
