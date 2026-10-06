@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.9](https://github.com/Stamcat/craftsman/compare/v0.1.8...v0.1.9) (2026-10-06)
+
 ## [0.1.8](https://github.com/Stamcat/craftsman/compare/v0.1.8-alpha.0...v0.1.8) (2026-10-01)
 
 ## [0.1.8-alpha.0](https://github.com/Stamcat/craftsman/compare/v0.1.7...v0.1.8-alpha.0) (2026-10-01)
