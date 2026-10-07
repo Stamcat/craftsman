@@ -51,6 +51,19 @@ Also exported from `@stamcat/craftsman/utilities` (all from `src/utilities/valid
 
 These back the `TimePicker`/`DateTimePicker` locale-aware formatting — prefer them over hand-rolled `Intl` calls in those contexts.
 
+## Logging
+
+The package exports a backend-agnostic `log` utility — use it instead of `console.*`. See [src/utilities/logging/AGENTS.md](../../src/utilities/logging/AGENTS.md) for the full contract (redaction, destination routing, wiring up a backend).
+
+```ts
+import { log } from "@stamcat/craftsman/utilities";
+
+log.debug("message", context?);
+log.info("message", context?);
+log.warn("message", context?, error?);
+log.error("message", error?, context?);
+```
+
 ## Style utilities parity (`color`, `width`, `breakpoint`)
 
 These utility patterns exist in both TypeScript and Sass. See the [craftsman-style-utilities skill](../craftsman-style-utilities/SKILL.md) for full usage details.
