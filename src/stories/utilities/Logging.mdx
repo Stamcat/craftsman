@@ -1,0 +1,46 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Utilities/Logging" />
+
+# Logging
+
+A backend-agnostic logging utility, exported from `@stamcat/craftsman/utilities`. Use it instead of `console.*` — it normalizes events into a standard shape, redacts PII automatically, and routes to whatever destinations (console and/or a host app's own backend) are configured for that level.
+
+```tsx
+import { log } from "@stamcat/craftsman/utilities";
+
+log.debug("message", context?);
+log.info("message", context?);
+log.warn("message", context?, error?);
+log.error("message", error?, context?);
+log.send(endpoint, { level, message, context?, error?, tags? }); // fire-and-forget POST to a remote endpoint
+```
+
+`"console"` is the only built-in destination, active for every level by default. Every event is redacted for PII (email, phone, SSN, credit card, and common sensitive context keys like `token`/`ssn`) before it reaches any destination — callers don't need to redact anything themselves.
+
+## Wiring up a backend
+
+A logging backend (Splunk or otherwise) is not part of this library — it lives in the consuming app and plugs in via `setLogHandler`/`setLogOutput`:
+
+```tsx
+import { setLogHandler, setLogOutput, DestinationsByLevelSchema } from "@stamcat/craftsman/utilities";
+
+// Register a destination handler (e.g. POST to your own backend).
+setLogHandler("myBackend", (event) => sendToMyBackend(event));
+
+// Route levels to destinations — omitted levels keep the built-in default (console).
+setLogOutput({ debug: [], info: [], warn: ["console", "myBackend"], error: ["console", "myBackend"] });
+```
+
+`DestinationsByLevelSchema` is also exported so a host app can validate remote config (e.g. a feature flag payload) before passing it to `setLogOutput`.
+
+## Suppressing console output per level
+
+Omit `"console"` from a level's array to silence it for that level while keeping others:
+
+```tsx
+import { setLogOutput } from "@stamcat/craftsman/utilities";
+
+// Suppress console for debug/info in production; warn/error keep their default (console).
+setLogOutput({ debug: [], info: [] });
+```
