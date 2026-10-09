@@ -1,0 +1,18 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/select" as *;
+@use "./mixins" as m;
+
+.select {
+    select,
+    ::picker(select) {
+        appearance: base-select;
+          
+    }
+    select {
+        @include m.input-theme-styles;
+        @extend %select-styles;
+        // room for the picker chevron; must stay in sync with %select-styles' picker-icon offset
+        padding-right: 40px;
+    }
+}
+

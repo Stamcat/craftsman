@@ -1,0 +1,22 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/input" as *;
+@use "../../../src/styles/global/components/typography" as t;
+@use "./mixins";
+
+.input {
+    @extend %input-base;
+    @include t.body-typography; 
+}
+input.input {
+    @include mixins.input-theme-styles;
+}
+// re-declaring it because this other block blows out the styles
+.input-field[data-has-pre-adornment=true]>.input {
+    padding-left: calc(var(--w-gutter) * 2.25);
+}
+.input-wrapper {
+    .input-label {
+        @include t.body-typography;
+    }
+
+}

@@ -1,0 +1,18 @@
+@use "../../../src/styles/utilities/functions" as u;
+
+.datePicker {
+    border-color: #{u.color("teal800", rgba, 0.18)};
+    border-radius: 14px;
+    transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+
+    &:focus-within {
+        border-color: #{u.color("teal800")};
+        // box-shadow: 0 0 0 4px #{u.color("teal800", rgba, 0.12)};
+        outline: none;
+    }
+    .react-date-picker__wrapper {
+        padding: 10px 14px;
+    }
+}

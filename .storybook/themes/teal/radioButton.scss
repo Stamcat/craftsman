@@ -1,0 +1,15 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/radioButton" as *;
+
+.input[type="radio"] {
+    --radio-size: 1.3;
+    border-color: #{u.color("teal800")};
+
+    &::before {
+        background-color: #{u.color("teal800")};;
+    }
+
+    &:checked {
+        border-color: #{u.color("gray500")};;
+    }
+}

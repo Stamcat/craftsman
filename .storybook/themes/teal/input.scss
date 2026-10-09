@@ -1,0 +1,36 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/input" as *;
+@use "../../../src/styles/global/components/typography" as t;
+
+
+.input {
+
+    &::placeholder {
+        color: #aaa;
+    }
+}
+.input-wrapper {
+    &[data-label-position="inside"] {
+        .input-label {
+            top: #{u.width(gutter, 0.75)};
+            color: #{u.color("gray600")};
+        }
+        &[data-has-input="true"], 
+        &.select {
+            .input-label {
+                top: -0.5rem;
+                color: #{u.color("text")};
+
+            }
+        }
+        :focus-within {
+            .input-label {
+                top: -.5rem;
+                color: #{u.color("teal800")};
+            }
+            .input {
+                border-color: #{u.color("teal800")};
+            }
+        }
+    }
+}

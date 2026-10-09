@@ -1,0 +1,22 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/select" as *;
+
+.select {
+    select::picker(select) {
+        margin-top: 8px;
+        border: 1px solid #ececec;
+    }
+    select:open::picker-icon {
+        margin-top: 6px;
+    }
+    option:focus {
+        background: #fff;
+    }
+    option:hover {
+        background: #{u.color("gray200")};
+    }
+    select:disabled {
+        opacity: 0.5;
+    }
+}
+

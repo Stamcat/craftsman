@@ -1,0 +1,41 @@
+@use "../../../src/styles/utilities/functions" as u;
+
+.modal {
+    .content.dialog {
+        border: 1px solid #{u.color("black", rgba, 0.14)};
+        box-shadow: 0 28px 80px #{u.color("black", rgba, 0.2)};
+        padding: unset;
+    }
+
+    .content > header {
+        border-bottom: 1px solid #{u.color("teal800", rgba, 0.12)};
+        background-color: var(--color-neutral-100);
+        border-color: var(--color-gray-300);
+        padding: #{u.width("gutter", 1.5)} #{u.width("gutter")};
+        margin-bottom: 0;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 28px;
+        align-items: baseline;
+        button {
+            box-shadow: unset;
+            border: 1px solid #272727;
+            color: #272727;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: white;
+            &:hover {
+                background-color: var(--color-gray-50);
+                border-color: #{u.color("teal900")};
+            }
+            svg {
+                fill: #272727;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+    
+}

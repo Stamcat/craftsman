@@ -1,0 +1,10 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/checkbox" as *;
+
+.input[type="checkbox"] {
+    --checkbox-size: 1.2;
+    margin-right: #{u.width("gutter", 0.25)};
+    &:checked::before {
+        background-color: #{u.color("teal800")};
+    }
+}

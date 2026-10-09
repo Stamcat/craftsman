@@ -1,0 +1,14 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/input" as *;
+@use "../../../src/styles/global/components/typography" as t;
+
+@mixin input-theme-styles {
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 10px 14px;
+    border: 1px solid #c0c0c0ff;
+    border-radius: 8px;
+    transition: border-color 0.2s ease;
+    background-color: #{u.color("white")};
+}

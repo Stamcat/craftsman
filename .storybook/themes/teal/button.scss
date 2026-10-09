@@ -1,0 +1,35 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/typography" as t;
+@use "../../../src/styles/global/components/button" as *;
+
+.button {
+    &.default {
+        color: #{u.color("teal800")};
+        border-color: #{u.color("teal800")};
+        &:hover {
+            background-color: #{u.color("gray150")};
+        }
+    }
+
+    &.primary {
+        background-color: #{u.color("teal800")};
+        color: #{u.color("white")};
+        font-weight: 500;
+
+        &:hover {
+            background-color: #{u.color("teal900")};
+            border-color: #{u.color("teal900")};
+        }
+    }
+    &.secondary {
+        border-color: transparent;
+        color: #{u.color("white")};
+        background-color: #{u.color("gray600")};
+        &:hover {
+            background-color: #{u.color("teal900")}; 
+        }
+    }
+    &.text {
+        color: #{u.color("teal800")};
+    }
+}

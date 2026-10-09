@@ -1,0 +1,6 @@
+@use "../../../src/styles/utilities/functions" as u;
+
+.inputPhone {
+    --react-international-phone-height: 50px;
+    --react-international-phone-border-radius: 8px;
+}

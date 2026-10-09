@@ -1,7 +1,57 @@
 import { color } from "../../src/styles";
-import type { AppTheme } from "../../src/styles/theme/types";
+import type { AppTheme, Theme } from "../../src/styles/theme/types";
 import greenRoot from "./green.scss?inline";
 import greenButton from "./green.button.scss?inline"; // these aren't errors.
+
+import button from "./teal/button.scss?inline";
+import buttonBase from "./teal/button-base.scss?inline";
+import input from "./teal/input.scss?inline";
+import inputBase from "./teal/input-base.scss?inline";
+import inputPhone from "./teal/inputPhone.scss?inline";
+import select from "./teal/select.scss?inline";
+import selectBase from "./teal/select-base.scss?inline";
+import checkbox from "./teal/checkbox.scss?inline";
+import checkboxBase from "./teal/checkbox-base.scss?inline";
+import toggle from "./teal/toggle.scss?inline";
+import datePicker from "./teal/datePicker.scss?inline";
+import modal from "./teal/modal.scss?inline";
+import radioButton from "./teal/radioButton.scss?inline";
+import radioButtonBase from "./teal/radioButton-base.scss?inline";
+
+export const tealTheme: Theme = {
+    colors: {
+        "--teal900": "#1f5c55",
+        "--teal800": "#235e57",
+        "--teal700": "#0d9488",
+        "--teal600": "#14b8a6",
+        "--teal500": "#86c5b8",
+        "--gray600": "#818181ff",
+        "--text": "#151515",
+    },
+    root: {},
+    // this is really helpful if your app can't use a global styles object
+    base: `
+        ${buttonBase}
+        ${inputBase}
+        ${checkboxBase}
+        ${radioButtonBase}
+        ${selectBase}
+    `,
+    components: {
+        datePicker,
+        button,
+        input,
+        inputPhone,
+        //     carousel: carouselStyles,
+        modal,
+        select,
+        checkbox,
+        toggle,
+        radioButton,
+    },
+};
+
+
 
 export const appThemes: AppTheme = {
     default: {
@@ -9,6 +59,7 @@ export const appThemes: AppTheme = {
             "--w-gutter": "14px",
         },
     },
+    teal: tealTheme,
     green: {
         root: greenRoot,
         components: {
