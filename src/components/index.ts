@@ -9,6 +9,7 @@ export { Textarea } from "./Textarea/Textarea";
 export { Text } from "./Text/Text";
 export { Modal } from "./Modal/Modal";
 export { Select } from "./Select/Select";
+export { SelectWheel } from "./SelectWheel/SelectWheel";
 export { DatePicker } from "./DatePicker/DatePicker";
 export { DateRangePicker } from "./DateRangePicker/DateRangePicker";
 export { InputPhone } from "./InputPhone/InputPhone";

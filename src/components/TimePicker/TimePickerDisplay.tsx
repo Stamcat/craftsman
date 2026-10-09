@@ -1,6 +1,6 @@
 import React from "react";
 import { getAmPmLabels, getUnitLabel, is24HourFormat, isEmpty } from "../../utilities/validations";
-import { IosPickerItem } from "./TimePickerWheel";
+import { IosPickerItem } from "../SelectWheel/IosPickerItem";
 import { padTime, parseTimeString, resolveLocale, resolveTimeFormat, to24Hour } from "./utilities";
 
 type TimePickerDisplayProps = {
