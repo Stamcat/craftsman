@@ -1,0 +1,9 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/input" as *;
+
+.input[type=checkbox]:checked {
+    border-color: #{u.color("teal800")};
+}
+.input-wrapper.toggle .input.checkbox:checked+.input-end-adornment .toggle-slider {
+    background-color: #{u.color("teal800")};
+}

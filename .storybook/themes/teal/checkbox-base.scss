@@ -1,0 +1,6 @@
+@use "../../../src/styles/utilities/functions" as u;
+@use "../../../src/styles/global/components/checkbox" as *;
+
+.input[type="checkbox"] {
+    @extend %checkbox;
+}
