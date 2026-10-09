@@ -28,6 +28,7 @@ import { Modal } from "@stamcat/craftsman/Modal";
 import { Pagination } from "@stamcat/craftsman/Pagination";
 import { RadioButton } from "@stamcat/craftsman/RadioButton";
 import { Select } from "@stamcat/craftsman/Select";
+import { SelectWheel } from "@stamcat/craftsman/SelectWheel";
 import { Text } from "@stamcat/craftsman/Text";
 import { Textarea } from "@stamcat/craftsman/Textarea";
 import { TimePicker } from "@stamcat/craftsman/TimePicker";

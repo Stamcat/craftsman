@@ -1,0 +1,52 @@
+@use "../../styles/utilities/_functions" as u;
+@use "./_iosPickerDisplay";
+
+@layer cf-component {
+    .selectWheel {
+        position: relative;
+        display: inline-flex;
+        width: var(--input-width, fit-content);
+
+        &__field {
+            position: relative;
+            width: 100%;
+
+            .input {
+                width: 100%;
+                cursor: pointer;
+                caret-color: transparent;
+            }
+
+            &:has(.input-view-toggle) .input {
+                padding-right: 34px;
+            }
+
+            .input-view-toggle {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 4px;
+                line-height: 1;
+            }
+        }
+
+        &__display {
+            @extend %ios-picker-display;
+        }
+
+        &:not([data-value-suffix]) &__display .ios-picker__scene {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 50% 0 auto 0;
+                height: 32px;
+                transform: translateY(-50%);
+                background-color: #{u.color("gray200")};
+                border-radius: 6px;
+            }
+        }
+    }
+}

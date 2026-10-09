@@ -3,8 +3,12 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import clsx from "clsx";
 import { type EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import { WHEEL_ITEM_RADIUS } from "./constants";
+import { WHEEL_ITEM_RADIUS, WHEEL_ITEM_SIZE, WHEEL_RADIUS } from "./constants";
 import { inactivateEmblaTransform, setContainerStyles, setSlideStyles, snapOnPointerUp } from "./utilities";
+
+const PERSPECTIVE = 1000;
+const WHEEL_SCALE = PERSPECTIVE / (PERSPECTIVE - WHEEL_RADIUS * 2);
+const SCENE_PADDING = 6;
 
 export type IosPickerItemProps = {
     loop?: boolean;
@@ -73,6 +77,51 @@ export const IosPickerItem = (props: IosPickerItemProps) => {
         if (emblaApi.selectedScrollSnap() === selectedIndex) { return; }
         emblaApi.scrollTo(selectedIndex);
     }, [emblaApi, selectedIndex]);
+
+    useEffect(() => {
+        if (!emblaApi || disabled) { return () => { }; }
+        const node = emblaApi.rootNode();
+        let accumulated = 0;
+
+        const handleWheel = (event: WheelEvent) => {
+            event.preventDefault();
+            accumulated += event.deltaY;
+            while (Math.abs(accumulated) >= WHEEL_ITEM_SIZE) {
+                if (accumulated > 0) {
+                    emblaApi.scrollNext();
+                    accumulated -= WHEEL_ITEM_SIZE;
+                } else {
+                    emblaApi.scrollPrev();
+                    accumulated += WHEEL_ITEM_SIZE;
+                }
+            }
+        };
+
+        node.addEventListener("wheel", handleWheel, { passive: false });
+        return () => node.removeEventListener("wheel", handleWheel);
+    }, [emblaApi, disabled]);
+
+    useLayoutEffect(() => {
+        const scene = rootNodeRef.current;
+        const viewport = scene?.querySelector<HTMLDivElement>(".ios-picker__viewport");
+        const sampleSlide = scene?.querySelector<HTMLDivElement>(".ios-picker__slide");
+        if (!scene || !viewport || !sampleSlide) { return; }
+
+        const measurer = document.createElement("span");
+        measurer.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;";
+        measurer.style.font = window.getComputedStyle(sampleSlide).font;
+        document.body.appendChild(measurer);
+
+        let maxWidth = 0;
+        for (let index = 0; index < slideCount; index += 1) {
+            measurer.textContent = String(slides ? slides[index] : index + offset);
+            maxWidth = Math.max(maxWidth, measurer.offsetWidth);
+        }
+        document.body.removeChild(measurer);
+
+        viewport.style.width = `${Math.ceil(maxWidth)}px`;
+        scene.style.width = `${Math.ceil(maxWidth * WHEEL_SCALE) + SCENE_PADDING * 2}px`;
+    }, [slideCount, slides, offset]);
 
     return (
         <div className={clsx("ios-picker", { "ios-picker--disabled": disabled })} aria-disabled={disabled}>
