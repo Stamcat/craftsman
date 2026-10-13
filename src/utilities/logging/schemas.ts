@@ -27,8 +27,8 @@ export const LogDestinationSchema = z.string().min(1);
 // Shape of the remote config (e.g. a feature flag) that overrides which destinations
 // each log level forwards to, on top of whatever defaults the host app configured.
 export const DestinationsByLevelSchema = z.object({
-    debug: z.array(LogDestinationSchema).optional(),
-    info: z.array(LogDestinationSchema).optional(),
-    warn: z.array(LogDestinationSchema).optional(),
-    error: z.array(LogDestinationSchema).optional(),
+    debug: z.array(LogDestinationSchema).default([]),
+    info: z.array(LogDestinationSchema).default([]),
+    warn: z.array(LogDestinationSchema).default([]),
+    error: z.array(LogDestinationSchema).default([]),
 });
