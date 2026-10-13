@@ -30,15 +30,22 @@ const buildEvent = (input: LogEventInput): LogEvent => {
 };
 
 const emit = (event: LogEvent): void => {
-    // This is the one sanctioned console boundary; every other module should go through `logger`.
-    // eslint-disable-next-line no-console -- logger.ts is the sanctioned console boundary for the whole app
-    console[CONSOLE_METHOD[event.level]](`[${event.level.toUpperCase()}] ${event.message}`, {
-        context: event.context,
-        error: event.error,
-        tags: event.tags,
-    });
+    const destinations = getLogDestinationsByLevel()[event.level];
 
-    for (const destination of getLogDestinationsByLevel()[event.level]) {
+    if (destinations.includes("console")) {
+        // This is the one sanctioned console boundary; every other module should go through `logger`.
+        // eslint-disable-next-line no-console -- logger.ts is the sanctioned console boundary for the whole app
+        console[CONSOLE_METHOD[event.level]](`[${event.level.toUpperCase()}] ${event.message}`, {
+            context: event.context,
+            error: event.error,
+            tags: event.tags,
+        });
+    }
+
+    for (const destination of destinations) {
+        if (destination === "console") {
+            continue;
+        }
         getLogDestination(destination)?.(event);
     }
 };
