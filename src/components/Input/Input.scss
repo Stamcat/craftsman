@@ -160,13 +160,12 @@
         display: inline-flex;
         align-items: center;
         width: var(--input-width, auto);
-
-        // flex-grow (not a percentage) so sizing resolves against the already-sized .input-field above, avoiding a circular percentage calc
-        > .input {
-            width: auto;
-            min-width: 0;
-            flex: 1 1 0%;
-        }
+        // this is ai slop that caused bugs with radio button and checkbox
+        // > .input {
+            // width: auto;
+            // min-width: 0;
+            // flex: 1 1 0%;
+        // }
 
         &[data-has-end-adornment="true"] {
             > .input {
