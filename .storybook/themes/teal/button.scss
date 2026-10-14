@@ -9,6 +9,11 @@
         &:hover {
             background-color: #{u.color("gray150")};
         }
+        &:disabled {
+            background-color: transparent;
+            border-color: #{u.color("gray500")};
+            color: #{u.color("gray500")};
+        }
     }
 
     &.primary {
@@ -20,6 +25,10 @@
             background-color: #{u.color("teal900")};
             border-color: #{u.color("teal900")};
         }
+        &:disabled {
+            background-color: #{u.color("gray500")};
+            border-color: transparent;
+        }
     }
     &.secondary {
         border-color: transparent;
@@ -28,8 +37,15 @@
         &:hover {
             background-color: #{u.color("teal900")}; 
         }
+        &:disabled {
+            background-color: #{u.color("gray500")};
+            border-color: transparent;
+        }
     }
     &.text {
         color: #{u.color("teal800")};
+        &:disabled {
+            color: #{u.color("gray500")};
+        }
     }
 }

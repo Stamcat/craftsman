@@ -2,12 +2,17 @@
 @use "../../../src/styles/global/components/typography" as t;
 @use "../../../src/styles/global/components/button" as *;
 
-%btnStyles {
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-weight: 500;
-}
+@layer cf-base {
+    .button {
+        padding: 10px 14px;
+    }
 
+    %btnStyles {
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+}
 .button {
     @extend %button-styles;
     @include t.p;
