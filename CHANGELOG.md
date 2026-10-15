@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.15](https://github.com/Stamcat/craftsman/compare/v0.1.14...v0.1.15) (2026-10-15)
+
+
+### Bug Fixes
+
+* fixl ayering ([fc9602d](https://github.com/Stamcat/craftsman/commit/fc9602dac1e67c90a7ef9ea0e1893b6fa602fc2c))
+
 ## [0.1.14](https://github.com/Stamcat/craftsman/compare/v0.1.13...v0.1.14) (2026-10-14)
 
 ## [0.1.13](https://github.com/Stamcat/craftsman/compare/v0.1.12...v0.1.13) (2026-10-13)
