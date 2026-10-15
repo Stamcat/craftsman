@@ -64,7 +64,15 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
         return [`@layer cf-base {`, baseRules, `}`, "@layer cf-theme {", themeRules, "}"].filter(Boolean).join("\n");
     }
 
-    return ["@layer cf-base, cf-theme;", "@layer cf-base {", baseRules, "}", "@layer cf-theme {", themeRules, "}"]
+    return [
+        "@layer cf-base, cf-component; cf-theme;",
+        "@layer cf-base {",
+        baseRules,
+        "}",
+        "@layer cf-theme {",
+        themeRules,
+        "}",
+    ]
         .filter(Boolean)
         .join("\n");
 }
