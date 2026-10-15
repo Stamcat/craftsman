@@ -65,7 +65,7 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
     }
 
     return [
-        "@layer cf-base, cf-component; cf-theme;",
+        "@layer cf-base, cf-component, cf-theme;",
         "@layer cf-base {",
         baseRules,
         "}",
