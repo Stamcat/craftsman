@@ -129,6 +129,13 @@ Valid keys: `text` · `gutter` · `column` · `tablet` · `desktop` · `extDeskt
 - Never use hard-coded `px` values for spacing or layout widths. Always use `width()`.
 - The multiplier must be a whole, half, or quarter number a human can read at a glance (`0.25`, `0.5`, `0.75`, `1`, `1.5`, `2`, `-0.5`, etc.). Do not use obscure multipliers like `0.1`, `0.45`, or `-0.1` — if the design doesn't reduce to a clean fraction of the gutter, use the literal `px` value instead of forcing it through `width()`.
 
+#### `gutter` vs `column` — when to use which
+
+- `gutter` describes spacing *between* elements (margin, padding, gap), or an element sized as a fraction/multiple of the gutter value itself (gutter is `16px`). For example, an `8px` element height is `width("gutter", 0.5)`, not a column.
+- Never use `gutter` to describe a page layout column — even if a column happens to be gutter-sized at some breakpoint.
+- `column` describes large, layout-level containers — elements that occupy a substantial portion of the screen (grid containers, major sections). Typical column counts by breakpoint: mobile = 4, tablet = 8, desktop = 12, extDesktop = 16.
+- `width("column", n)` automatically adds `(n - 1)` gutters between the `n` columns. For example, with a `60px` column and `16px` gutter: `width("column", 2)` → `60 + 60 + 16`, and `width("column", 3)` → `60 + 60 + 60 + 16 + 16`. Do not manually add gutter math to a column width — the function already does it.
+
 ### breakpoint()
 
 **TypeScript** — returns a full `@media` rule string for CSS-in-JS:

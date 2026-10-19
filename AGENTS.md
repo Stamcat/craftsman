@@ -38,6 +38,7 @@ import { Tooltip } from "@stamcat/craftsman/Tooltip";
 import { Popover } from "@stamcat/craftsman/Popover";
 import { Notice } from "@stamcat/craftsman/Notice";
 import { SortableList } from "@stamcat/craftsman/SortableList";
+import { Skeleton } from "@stamcat/craftsman/Skeleton";
 ```
 
 Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
