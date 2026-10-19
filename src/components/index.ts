@@ -23,4 +23,5 @@ export { Tooltip } from "./Tooltip/Tooltip";
 export { Popover } from "./Popover/Popover";
 export { Notice } from "./Notice/Notice";
 export { SortableList } from "./SortableList/SortableList";
+export { Skeleton } from "./Skeleton/Skeleton";
 export * from "./Icons";
