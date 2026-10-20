@@ -29,7 +29,7 @@ Behavior notes:
 - Uncontrolled by default: pass no `open` prop and the component manages its own visibility state.
 - Controlled mode: pass `open` and handle `onOpenChange` to drive visibility from parent state.
 - Closes on outside `pointerdown` and on `Escape` key while open.
-- Keyboard-operable: the anchor responds to `Enter`/`Space` in addition to click, and carries `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls`.
+- Keyboard-operable: the anchor wrapper carries `role="button"`, `tabIndex={0}`, and responds to `Enter`/`Space` in addition to click, alongside `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls` — these attributes are only valid on an element with an interactive role, which is why the wrapper declares `role="button"` rather than leaving it a bare `<div>`.
 - Floating content has `role="dialog"` with `aria-modal="false"` (non-modal — background stays interactive) and is only rendered in the DOM while open (not just hidden via CSS).
 - Focus moves into the floating content when it opens and returns to whatever was focused beforehand when it closes.
 - Current `placement` is exposed via `data-placement` on the floating element for style targeting.
@@ -38,7 +38,7 @@ Example (uncontrolled):
 
 ```tsx
 <Popover
-  anchor={<Button variant="default">More info</Button>}
+  anchor={<span>More info</span>}
   content={<div>Rich, interactive content goes here.</div>}
   placement="bottom-start"
 />
@@ -50,7 +50,7 @@ Example (controlled):
 const [open, setOpen] = useState(false);
 
 <Popover
-  anchor={<Button variant="default">Settings</Button>}
+  anchor={<span>Settings</span>}
   content={<SettingsForm onSave={() => setOpen(false)} />}
   open={open}
   onOpenChange={setOpen}
@@ -60,3 +60,4 @@ const [open, setOpen] = useState(false);
 Implementation caution:
 
 - No dedicated theme entry currently in `theme.components`; style via `anchorStyles`/`contentStyles` or global selectors targeting `.popover__anchor` / `.popover__floating`.
+- Pass non-interactive content (text, icons, `<span>`/`<div>`) as `anchor` — the `.popover__anchor` wrapper is already the interactive control (`role="button"`, focusable, click/keyboard handled). Passing a `<Button>` or other focusable element as `anchor` nests an interactive element inside another, which is invalid per the ARIA spec and confuses screen readers/keyboard navigation.

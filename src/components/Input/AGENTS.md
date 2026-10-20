@@ -25,6 +25,7 @@ Behavior notes:
 
 - `id` is preserved; if omitted, a stable React `useId` value is used.
 - Floating-label behavior is supported when `labelPosition="inside"`.
+- `labelPosition="hidden"` keeps the label text in the DOM and the accessibility tree (visually-hidden/clip technique) so the field still has an accessible name — it does not remove the label via `aria-hidden`/`display: none`. Use it when a visual label would be redundant (e.g. an icon-only adornment communicates purpose) but an accessible name is still required.
 - When `labelPosition="inside"`, `placeholder` is still rendered to the DOM (kept for screen readers) but visually hidden via CSS (`opacity: 0`) until the field is focused, since the floating label occupies that space at rest.
 - `endAdornment` exists as an internal extension point used by `InputPassword`; consumer apps should prefer `InputPassword` rather than wiring password toggles on `Input`.
 - `preAdornment` is an internal extension point used by `InputNumber` for its decrement button; consumer apps should prefer `InputNumber` rather than wiring stepper buttons on `Input` directly.

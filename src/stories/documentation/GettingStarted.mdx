@@ -65,6 +65,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 	</ThemeProvider>,
 );`} />
 
+Import note: `${PACKAGE_NAME}/Button` (and the other component subpaths) are individually tree-shakeable. A root `${PACKAGE_NAME}` barrel import also exists as a convenience, but pulls in every component and can increase your bundle size — prefer the individual component imports shown here.
+
 ## 2 (b). Setup In Next.js App Router
 
 Import global styles once in root layout, then render `ThemeProvider` with your theme:

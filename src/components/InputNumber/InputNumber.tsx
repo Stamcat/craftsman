@@ -54,8 +54,8 @@ export const InputNumber: React.FC<InputNumberProps> = ({
         <Input
             ref={inputRef}
             className={clsx("inputNumber", className)}
-            preAdornment={<Button variant="text" onClick={onPressDown}>{iconIncrement || <IoRemoveCircleOutline size="26" />}</Button>}
-            endAdornment={<Button variant="text" onClick={onPressUp}>{iconDecrement || <IoAddCircleOutline size="26" />}</Button>}
+            preAdornment={<Button variant="text" onClick={onPressDown} aria-label="Decrease value">{iconIncrement || <IoRemoveCircleOutline size="26" aria-hidden="true" />}</Button>}
+            endAdornment={<Button variant="text" onClick={onPressUp} aria-label="Increase value">{iconDecrement || <IoAddCircleOutline size="26" aria-hidden="true" />}</Button>}
             role={"spinbutton"}
             {...props}
             type={type}

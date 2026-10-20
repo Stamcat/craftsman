@@ -76,7 +76,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
         >
 
             <label onClick={onLabelClick} className={labelClassName} style={labelStyle}>
-                {!isEmpty(label) && labelPosition !== "hidden" && <div className="input-label">{label}</div>}
+                {!isEmpty(label) && <div className={clsx("input-label", labelPosition === "hidden" && "input-label--visually-hidden")}>{label}</div>}
                 {children}
             </label>
             {!isEmpty(error) && <div className="input-error">{error}</div>}

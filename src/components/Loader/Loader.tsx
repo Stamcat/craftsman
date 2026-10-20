@@ -24,6 +24,8 @@ export const Loader: React.FC<LoaderProps> = (props) => {
         <div
             className={clsx("loader", type, className)}
             style={{ ...loaderStyleVars, ...style }}
+            role="status"
+            aria-label="Loading"
             {...rest}
         />
     );

@@ -1,7 +1,7 @@
 "use client";
 import { useFloating, autoUpdate, offset, flip, shift, type Placement, type Strategy } from "@floating-ui/react-dom";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import "./Tooltip.scss";
 
 export type TooltipProps = {
@@ -21,6 +21,7 @@ export type TooltipProps = {
  */
 export const Tooltip: React.FC<TooltipProps> = (props) => {
     const { showContent = "hover" } = props;
+    const contentId = useId();
     const [referenceEl, setReferenceEl] = useState<Element | null>(null);
     const [floatingEl, setFloatingEl] = useState<HTMLElement | null>(null);
     const { floatingStyles, placement } = useFloating({
@@ -45,16 +46,38 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
 
     const handleMouseEnter = () => { if (showContent === "hover") { setVisible(true); } };
     const handleMouseLeave = () => { if (showContent === "hover") { setVisible(false); } };
+    const handleFocus = () => { setVisible(true); };
+    const handleBlur = () => { setVisible(false); };
     const handleClick = () => { if (showContent === "click") { setVisible((v) => !v); } };
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Escape") { setVisible(false); }
+        if (showContent === "click" && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            setVisible((v) => !v);
+        }
+    };
 
     return (
         <div className={clsx("tooltip")}>
-            <div className={clsx("tooltip__anchor")} ref={setReferenceEl} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick} style={props.anchorStyles}>{props.anchor}</div>
+            <div
+                className={clsx("tooltip__anchor")}
+                ref={setReferenceEl}
+                tabIndex={0}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
+                aria-describedby={visible ? contentId : undefined}
+                style={props.anchorStyles}
+            >{props.anchor}</div>
             {visible && (
-                <div className={clsx("tooltip__floating")} ref={setFloatingEl} data-placement={placement} style={{ ...floatingStyles, ...props.contentStyles }}>
+                <div id={contentId} role="tooltip" className={clsx("tooltip__floating")} ref={setFloatingEl} data-placement={placement} style={{ ...floatingStyles, ...props.contentStyles }}>
                     {props.content}
                 </div>
             )}
         </div>
     )
 }
+
