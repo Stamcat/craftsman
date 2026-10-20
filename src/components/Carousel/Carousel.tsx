@@ -78,11 +78,11 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
             <div className="carousel__controls">
                 {buttons && (
                     <div className="carousel__buttons">
-                        <Button variant="text" onClick={onPressPrev} disabled={!canPrev} name="prev">
-                            <FaAngleLeft size={24} aria-label="prev" />
+                        <Button variant="text" onClick={onPressPrev} disabled={!canPrev} name="prev" aria-label="Previous slide">
+                            <FaAngleLeft size={24} aria-hidden="true" />
                         </Button>
-                        <Button variant="text" onClick={onPressNext} disabled={!canNext} name="next">
-                            <FaAngleRight size={24} aria-label="next" />
+                        <Button variant="text" onClick={onPressNext} disabled={!canNext} name="next" aria-label="Next slide">
+                            <FaAngleRight size={24} aria-hidden="true" />
                         </Button>
                     </div>
                 )}
@@ -90,8 +90,15 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
                     <div className="carousel__dots">
                         {slides.map((_, idx) => {
                             return (
-                                <Button variant="text" value={idx} onClick={onPressIdx} key={`dot-${idx}`}>
-                                    {currentIndex === idx ? <FaCircle size={16} /> : <FaRegCircle size={16} />}
+                                <Button
+                                    variant="text"
+                                    value={idx}
+                                    onClick={onPressIdx}
+                                    key={`dot-${idx}`}
+                                    aria-label={`Go to slide ${idx + 1}`}
+                                    aria-current={currentIndex === idx ? "true" : undefined}
+                                >
+                                    {currentIndex === idx ? <FaCircle size={16} aria-hidden="true" /> : <FaRegCircle size={16} aria-hidden="true" />}
                                 </Button>
                             );
                         })}

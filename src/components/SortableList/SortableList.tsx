@@ -94,7 +94,7 @@ export const SortableList = <T,>({ items, getKey, renderItem, onReorder, disable
     return (
         <ul className={clsx("sortable-list", className)} style={style}>
             {items.map((item, index) => (
-                <SortableListItem key={getKey(item, index)} item={item} index={index} getKey={getKey} renderItem={renderItem} disabled={disabled} listId={resolvedListId} />
+                <SortableListItem key={getKey(item, index)} item={item} index={index} total={items.length} getKey={getKey} renderItem={renderItem} disabled={disabled} listId={resolvedListId} />
             ))}
         </ul>
     );

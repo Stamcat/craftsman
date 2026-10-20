@@ -91,6 +91,8 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}
                 onKeyDown={handleAnchorKeyDown}
+                role="button"
+                tabIndex={0}
                 aria-haspopup="dialog"
                 aria-expanded={open}
                 aria-controls={open ? contentId : undefined}

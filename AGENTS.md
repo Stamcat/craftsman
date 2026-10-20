@@ -41,7 +41,7 @@ import { SortableList } from "@stamcat/craftsman/SortableList";
 import { Skeleton } from "@stamcat/craftsman/Skeleton";
 ```
 
-Do not assume a root export like `@stamcat/craftsman` unless that export is explicitly added to package `exports`.
+The root `@stamcat/craftsman` export is a barrel re-exporting every component. It is a valid, optional convenience, but importing from it pulls the whole component set into a consuming app's module graph and can hurt tree shaking, increasing bundle size. Prefer the individual `@stamcat/craftsman/{Component}` subpaths shown above for both AI-generated and hand-written code.
 
 ## Hard Rules for Agents
 
@@ -49,5 +49,6 @@ Do not assume a root export like `@stamcat/craftsman` unless that export is expl
 2. Only use documented component entry points.
 3. Do not import storybook files from consuming applications. Style utilities are fine to import, but only via their published subpaths (`@stamcat/craftsman/styles/utilities/functions`, `/mixins`, `/placeholders`) — never via a `/src/...` path.
 4. Prefer standard React props first; use custom props only when required.
+5. Prefer individual component imports (`@stamcat/craftsman/Button`) over the root barrel import (`@stamcat/craftsman`) to improve tree shaking and keep consuming app bundles small.
 
 

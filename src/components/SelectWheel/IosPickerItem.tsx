@@ -123,8 +123,32 @@ export const IosPickerItem = (props: IosPickerItemProps) => {
         scene.style.width = `${Math.ceil(maxWidth * WHEEL_SCALE) + SCENE_PADDING * 2}px`;
     }, [slideCount, slides, offset]);
 
+    const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (disabled || !emblaApi) { return; }
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            emblaApi.scrollPrev();
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            emblaApi.scrollNext();
+        }
+    };
+    const currentIndex = selectedIndex ?? 0;
+    const currentValueText = String(slides ? slides[currentIndex] : currentIndex + offset);
+
     return (
-        <div className={clsx("ios-picker", { "ios-picker--disabled": disabled })} aria-disabled={disabled}>
+        <div
+            className={clsx("ios-picker", { "ios-picker--disabled": disabled })}
+            role="spinbutton"
+            aria-label={label}
+            aria-disabled={disabled}
+            aria-valuemin={0}
+            aria-valuemax={slideCount - 1}
+            aria-valuenow={currentIndex}
+            aria-valuetext={currentValueText}
+            tabIndex={disabled ? -1 : 0}
+            onKeyDown={onKeyDown}
+        >
             <div className="ios-picker__scene" ref={rootNodeRef}>
                 <div
                     className={`ios-picker__viewport ios-picker__viewport--perspective-${perspective}`}

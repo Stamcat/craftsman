@@ -59,11 +59,14 @@ export const Notice: React.FC<NoticeProps> = ({
     const onPressDismiss = () => {
         onDismiss?.(id);
     }
+    const isAssertive = type === "error" || type === "success";
     return (
         <div
             id={id}
             className={clsx("notice", type, className)}
             style={style}
+            role={type === "none" ? undefined : isAssertive ? "alert" : "status"}
+            aria-live={type === "none" ? undefined : isAssertive ? "assertive" : "polite"}
             {...rest}
         >
             <div className="notice-contents">
@@ -74,8 +77,8 @@ export const Notice: React.FC<NoticeProps> = ({
                     {children}
                 </div>
                 {dismissible && (
-                    <Button variant="text" className="notice-dismiss" onClick={onPressDismiss}>
-                        <IoCloseOutline size={16} />
+                    <Button variant="text" className="notice-dismiss" onClick={onPressDismiss} aria-label="Dismiss notice">
+                        <IoCloseOutline size={16} aria-hidden="true" />
                     </Button>
                 )}
             </div>

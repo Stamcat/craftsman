@@ -12,6 +12,7 @@ export type DropEdge = "top" | "bottom";
 export function SortableListItem<T>({
     item,
     index,
+    total,
     getKey,
     renderItem,
     disabled,
@@ -19,6 +20,7 @@ export function SortableListItem<T>({
 }: {
     item: T;
     index: number;
+        total: number;
     getKey: (item: T, index: number) => string;
     renderItem: (args: SortableListRenderArgs<T>) => React.ReactNode;
     disabled?: boolean;
@@ -80,7 +82,13 @@ export function SortableListItem<T>({
     }, [element, dragHandle, key, index, disabled, listId, item]);
 
     return (
-        <li key={key} ref={setElement} className={clsx("sortable-list-item", isDragging && "dragging", dropEdge && `drop-${dropEdge}`)}>
+        <li
+            key={key}
+            ref={setElement}
+            className={clsx("sortable-list-item", isDragging && "dragging", dropEdge && `drop-${dropEdge}`)}
+            aria-roledescription="sortable item"
+            aria-label={`Item ${index + 1} of ${total}`}
+        >
             {renderItem({ item, index, isDragging, dropEdge, dragHandleRef: setDragHandle })}
         </li>
     );
