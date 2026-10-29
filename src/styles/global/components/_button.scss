@@ -56,10 +56,11 @@
 
     &.secondary {
       color: var(--white);
-      background-color: var(--blue500);
+      background-color: var(--purple700);
+      border-color: var(--purple700);
 
       &:hover {
-        background-color: var(--blue700);
+        background-color: var(--purple500);
       }
     }
 

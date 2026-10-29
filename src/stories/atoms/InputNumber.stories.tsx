@@ -10,6 +10,10 @@ const meta: Meta<typeof InputNumber> = {
 	tags: ["autodocs"],
     parameters: {
         layout: "padded",
+        design: {
+            type: "figma",
+            url: "https://www.figma.com/design/2PzMyf40EctUIlY8UyN4Ue/Craftsman-Design-System?node-id=73-6",
+        },
     },
 	args: {
 		type: "number",

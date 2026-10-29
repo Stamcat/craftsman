@@ -8,6 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+scripts/figmaSync/tokens.json
+scripts/figmaSync/fingerprints.json
+scripts/figmaSync/recommendations/
 dist
 dist-ssr
 *.local
@@ -25,3 +28,4 @@ dist-ssr
 
 *storybook.log
 storybook-static
+.codebase-memory

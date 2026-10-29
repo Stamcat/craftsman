@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { Button } from "../../components/Button/Button";
 import { ButtonType } from "../../styles";
 import { Loader } from "../../components";
@@ -24,6 +25,13 @@ const meta: Meta<typeof Button> = {
     title: "Atoms/Button",
     component: Button,
     tags: ["autodocs"],
+    parameters: {
+        layout: "padded",
+        design: {
+            type: "figma",
+            url: "https://www.figma.com/design/2PzMyf40EctUIlY8UyN4Ue/Craftsman-Design-System?node-id=3-2",
+        },
+    },
     args: {
         children: "Click me",
         variant: "default",
@@ -62,16 +70,25 @@ const meta: Meta<typeof Button> = {
         styles: {
             control: false,
         },
-    },
-    parameters: {
-        layout: "padded",
-    },
+    }
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+    args: {
+        onClick: fn(),
+    },
+    play: async ({ args, canvasElement }) => {
+        const canvas = within(canvasElement);
+        const button = canvas.getByRole("button", { name: "Click me" });
+
+        await userEvent.click(button);
+
+        expect(args.onClick).toHaveBeenCalledOnce();
+    },
+};
 
 export const Primary: Story = {
     args: {
@@ -213,7 +230,17 @@ export const FullyDisabled: Story = {
     args: {
         children: "Fully Disabled",
         disabled: true,
-        onClick: () => alert("Disabled button is not clickable, you'll never see this")
+        onClick: fn(),
+    },
+    play: async ({ args, canvasElement }) => {
+        const canvas = within(canvasElement);
+        const button = canvas.getByRole("button", { name: "Fully Disabled" });
+
+        await expect(button).toBeDisabled();
+
+        await userEvent.click(button);
+
+        expect(args.onClick).not.toHaveBeenCalled();
     },
 };
 
