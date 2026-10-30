@@ -1,4 +1,4 @@
-import type { LayoutWidthsType } from "../../utilities/types";
+import type { BuiltInWidthKey } from "../../utilities/types";
 
 export const defaultColors = {
     red990: "#2A0D09",
@@ -182,7 +182,7 @@ export const defaultColors = {
     text: "#101921",
 };
 
-export const defaultWidths: Record<LayoutWidthsType, number> = {
+export const defaultWidths: Record<BuiltInWidthKey, number> = {
     text: 14,
     gutter: 16,
     column: 60,
@@ -193,3 +193,6 @@ export const defaultWidths: Record<LayoutWidthsType, number> = {
     desktopMax: 1320 - 0.00001,
     extDesktop: 1320,
 };
+
+// Assumed root <html> font-size in px, used to convert width()'s px values into rem/em.
+export const rootFontSize = 16;

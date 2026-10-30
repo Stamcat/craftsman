@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { LayoutWidthsSchema, type LayoutWidthsType } from "../../utilities/types";
-import { width, breakpoint, media } from "../../styles/utilities/layout";
+import { width, breakpoint, media, type WidthUnit } from "../../styles/utilities/layout";
 import { color } from "../../styles";
 import { PACKAGE_NAME } from "../utilities/packageName";
 
 type SpacingProps = {
     type: LayoutWidthsType;
     multiplier?: number;
+    unit?: WidthUnit;
 };
 const thStyle: React.CSSProperties = { textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #e5e7eb", fontSize: "13px" };
 const tdStyle: React.CSSProperties = { padding: "4px 8px", fontSize: "13px" };
@@ -16,40 +17,45 @@ const sectionStyle: React.CSSProperties = { border: "1px solid #d1d5db", borderR
 type BreakpointKey = keyof typeof media;
 const breakpointKeys = ["tablet", "tabletMax", "tabletOnly", "desktop", "desktopMax", "desktopOnly", "extDesktop", "mobileMax", "mobileOnly", "mobileTablet"] as BreakpointKey[];
 
-const Example = ({ type, multiplier }: SpacingProps) => (
+const Example = ({ type, multiplier, unit }: SpacingProps) => (
     <div
         style={{
             marginTop: width("gutter"),
             height: "50px",
             backgroundColor: color("purple300"),
-            width: width(type, multiplier),
+            width: width(type, multiplier, unit),
         }}
     />
 );
 
 
-const Spacing = ({ type, multiplier }: SpacingProps) => {
+const Spacing = ({ type, multiplier, unit }: SpacingProps) => {
+    const tsArgParts = [type, multiplier === undefined ? undefined : `${multiplier}`, unit === undefined ? undefined : `"${unit}"`].filter((part) => part !== undefined);
+    const scssArgParts = [type, multiplier === undefined ? undefined : `${multiplier}`, unit].filter((part) => part !== undefined);
+    const tsArgs = tsArgParts.join(", ");
+    const scssArgs = scssArgParts.join(", ");
+
     return (
         <>
             <code>
                 <pre>
                     // CSS-in-JS Using TS Width Utility <br />
                     {"const Container = styled.div`"}<br />
-                    {`     gap: \${width(${type}${multiplier === undefined ? "" : `, ${multiplier}`})};`}<br />
+                    {`     gap: \${width(${tsArgs})};`}<br />
                     {"`;"}<br /><br />
                     // Using SCSS width function<br />
                     {".container {"}<br />
-                    {"     gap: #{u.width(gutter)};"}
+                    {`     gap: #{u.width(${scssArgs})};`}<br />
                     {"}"}<br /><br />
 
                     // Using CSS <br />
                     {".container {"}<br />
-                    {`     gap: ${width(type, multiplier)};`} <br />
+                    {`     gap: ${width(type, multiplier, unit)};`} <br />
                     {"}"}<br /><br />
                 </pre>
 
             </code>
-            <Example type={type} multiplier={multiplier} />
+            <Example type={type} multiplier={multiplier} unit={unit} />
         </>
     )
 
@@ -62,6 +68,7 @@ const meta: Meta<typeof Spacing> = {
     args: {
         type: "gutter",
         multiplier: undefined,
+        unit: undefined,
     },
     argTypes: {
         type: {
@@ -71,7 +78,11 @@ const meta: Meta<typeof Spacing> = {
         },
         multiplier: {
             control: "number"
-        }
+        },
+        unit: {
+            control: "select",
+            options: ["px", "rem", "em", "number"],
+        },
     },
     parameters: {
         layout: "padded",
@@ -80,11 +91,13 @@ const meta: Meta<typeof Spacing> = {
                 component: "Craftsman comes out of the box with spacing declarations that have been time-tested over decades of building enterprise-grade applications. We offer CSS variables (prefixed with --w-), SASS Mixins AND Typescript utilities to make your implementation code easy to use.<br /><br /> As you can see in the example, CSS is very doable, but the Typescript utility makes implementation very simple.",
             },
             source: {
-                transform: (_src: string, context: { args?: { type?: LayoutWidthsType; multiplier?: number } }) => {
-                    const { type = "gutter", multiplier } = context.args ?? {};
+                transform: (_src: string, context: { args?: { type?: LayoutWidthsType; multiplier?: number; unit?: WidthUnit } }) => {
+                    const { type = "gutter", multiplier, unit } = context.args ?? {};
+                    const argParts = [`"${type}"`, multiplier === undefined ? undefined : `${multiplier}`, unit === undefined ? undefined : `"${unit}"`].filter((part) => part !== undefined);
+                    const args = argParts.join(", ");
                     return `import { width } from "${PACKAGE_NAME}/styles";
 
-const space = ${multiplier ? `width("${type}", ${multiplier});` : `width("${type}");`}
+const space = width(${args});
 `;
                 },
             },

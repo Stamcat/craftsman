@@ -20,6 +20,9 @@ $w-text: 14 !default;
 $w-gutter: 16 !default;
 $w-column: 60 !default;
 
+// Assumed root <html> font-size in px, used to convert width()'s px values into rem/em.
+$root-font-size: 16 !default;
+
 // Breakpoint values used in @media queries.
 // CSS custom properties cannot be used in @media conditions — these must be static values.
 $bp-mobileMax: 659.99999 !default;

@@ -44,6 +44,19 @@ function buildWidthOverrides(widths?: Theme["widths"]): string | undefined {
     return `:root { ${vars} }`;
 }
 
+function buildScaleOverrides(scales?: Theme["scales"]): string | undefined {
+    if (!scales) {
+        return undefined;
+    }
+    const entries = Object.entries(scales) as Array<[string, Record<string, string> | undefined]>;
+    const vars = entries
+        .flatMap(([scaleName, keys]) =>
+            Object.entries(keys ?? {}).map(([key, value]) => `--${scaleName}-${key}: ${value};`),
+        )
+        .join(" ");
+    return vars ? `:root { ${vars} }` : undefined;
+}
+
 export type ThemeBuilderOptions = {
     layered?: boolean;
 };
@@ -54,6 +67,7 @@ export function themeBuilder(theme: Theme, options?: ThemeBuilderOptions) {
     const themeRules = [
         cssObjectToCssText(":root", { ...(theme.colors || {}) }),
         buildWidthOverrides(theme.widths),
+        buildScaleOverrides(theme.scales),
         buildRootStyle(theme.root),
         ...buildComponentThemeOverrides(theme.components),
     ]

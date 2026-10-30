@@ -4,9 +4,12 @@ import type { ColorType } from "../../utilities/types";
 export const colors = { ...defaultColors };
 
 /**
- * Type representing all available color keys in the colors object
+ * Type representing all known color keys, plus any string for custom/registered CSS variable
+ * names — `color()` never validates at runtime, so an unrecognized key still resolves to
+ * `var(--name)`. The known-key union is kept for autocomplete; register real palette additions
+ * in `defaultColors` or supply the `--name` variable yourself via `theme.root`.
  */
-export type ColorKey = keyof typeof colors;
+export type ColorKey = keyof typeof colors | (string & {});
 /**
  * Converts a hex color value to rgba format
  * @param hex The hex color string (e.g., "#RRGGBB" or "#RRGGBBAA")
