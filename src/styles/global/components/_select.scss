@@ -1,8 +1,9 @@
 @use "../../utilities/functions" as u;
 @use "./input";
+@use "../../utilities/mixins" as m;
 @layer cf-base {
     %select-styles {
-        padding-right: 40px;
+        padding-inline-end: 40px;
         position: relative;
         &:focus-visible {
             outline: none;
@@ -21,9 +22,10 @@
             border-style: solid;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
-            margin: 0px 2px 0 12px;
+            @include m.margin-block(0);
+            @include m.margin-inline(12px, 2px);
             position: absolute;
-            right: 14px;
+            inset-inline-end: 14px;
             top: 14px;
         }
         &:open::picker-icon {

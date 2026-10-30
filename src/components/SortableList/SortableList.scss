@@ -1,4 +1,5 @@
 @use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/mixins" as m;
 
 @layer cf-component {
     .sortable-list {
@@ -23,8 +24,7 @@
         &.drop-bottom::after {
             content: "";
             position: absolute;
-            left: 0;
-            right: 0;
+            @include m.inset-inline(0);
             height: 2px;
             border-radius: 1px;
             background-color: #{u.color("blue500")};

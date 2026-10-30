@@ -1,6 +1,7 @@
 export * from "./utilities/color";
 export * from "./utilities/constants";
 export * from "./utilities/layout";
+export * from "./utilities/scale";
 export * from "../utilities/types";
 export * from "./theme/theme";
 export type {
@@ -13,6 +14,7 @@ export type {
     Theme,
     ThemeProviderProps,
     WidthOverrides,
+    ScaleOverrides,
     Colors as ThemeColors,
 } from "./theme/types";
 export { type RegisteredComponentName, componentSelectors } from "./theme/components";

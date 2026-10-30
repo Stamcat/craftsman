@@ -1,6 +1,6 @@
 ---
 name: craftsman-style-utilities
-description: 'Styling conventions for @stamcat/craftsman — color()/width()/breakpoint() TypeScript and Sass helpers, styling expectations, and theme authoring (theme.root, theme.components, theme.widths). Use when writing styles, CSS-in-JS, Sass, or ThemeProvider theme objects for @stamcat/craftsman.'
+description: 'Styling conventions for @stamcat/craftsman — color()/width()/breakpoint()/scale() TypeScript and Sass helpers, styling expectations, theme authoring (theme.root, theme.components, theme.widths, theme.scales), and registering custom width()/color() keys and brand-new scale() utility functions. Use when writing styles, CSS-in-JS, Sass, or ThemeProvider theme objects for @stamcat/craftsman.'
 ---
 
 # Craftsman Style Utilities
@@ -106,9 +106,11 @@ hexToRgba(colors.blue500, 0.5)
 ```ts
 import { width } from "@stamcat/craftsman/styles";
 
-width("gutter")        // var(--w-gutter, 16px)
-width("gutter", 0.5)   // calc(var(--w-gutter, 16px) * 0.5)
-width("column", 3)     // calc((var(--w-column) * 3) + (var(--w-gutter) * 2))
+width("gutter")              // var(--w-gutter, 16px)
+width("gutter", 0.5)         // calc(var(--w-gutter, 16px) * 0.5)
+width("column", 3)           // calc((var(--w-column) * 3) + (var(--w-gutter) * 2))
+width("gutter", 1, "rem")    // calc((var(--w-gutter, 16px) / 1px) / 16 * 1rem)
+width("gutter", 1, "number") // calc(var(--w-gutter, 16px) / 1px)
 ```
 
 **Sass** — import `functions` as `u`:
@@ -117,17 +119,36 @@ width("column", 3)     // calc((var(--w-column) * 3) + (var(--w-gutter) * 2))
 @use "@stamcat/craftsman/styles/utilities/functions" as u;
 
 .card {
-  padding:   #{u.width(gutter)};
-  gap:       #{u.width(gutter, 0.5)};
-  max-width: #{u.width(column, 4)};
+  padding:     #{u.width(gutter)};
+  gap:         #{u.width(gutter, 0.5)};
+  max-width:   #{u.width(column, 4)};
+  line-height: #{u.width(gutter, 1, rem)};
 }
 ```
 
-Valid keys: `text` · `gutter` · `column` · `tablet` · `desktop` · `extDesktop` · `mobileMax` · `tabletMax` · `desktopMax`
+Valid keys: `text` · `gutter` · `column` · `tablet` · `desktop` · `extDesktop` · `mobileMax` · `tabletMax` · `desktopMax` — plus any custom key registered via `$extra-widths`/`CraftsmanCustomWidths` (see [Registering Custom width()/color() Keys](#registering-custom-width-color-keys) below).
 
 - The `column` key automatically accounts for gutters between columns.
 - Never use hard-coded `px` values for spacing or layout widths. Always use `width()`.
 - The multiplier must be a whole, half, or quarter number a human can read at a glance (`0.25`, `0.5`, `0.75`, `1`, `1.5`, `2`, `-0.5`, etc.). Do not use obscure multipliers like `0.1`, `0.45`, or `-0.1` — if the design doesn't reduce to a clean fraction of the gutter, use the literal `px` value instead of forcing it through `width()`.
+
+#### Third parameter: `unit` (TS) / `$unit` (Sass)
+
+The third `width()` argument controls the returned CSS value's unit — it is a string (`"px" | "rem" | "em" | "number"`), not the old boolean:
+
+- `"px"` (default) — returns the stored px value as-is, e.g. `var(--w-gutter, 16px)`.
+- `"number"` — strips the unit entirely via CSS's length-division trick (`calc(value / 1px)`), for contexts that need a raw number (`line-height`, a `--my-count` variable consumed elsewhere, etc.).
+- `"rem"` / `"em"` — converts the stored px value into `rem`/`em`, assuming a `rootFontSize` (TS) / `$root-font-size` (Sass) of `16` by default.
+
+**Migrating from the old boolean third parameter** (breaking change): `width(name, multiplier, true)` → drop the third argument (or pass `"px"` explicitly); `width(name, multiplier, false)` → `width(name, multiplier, "number")`.
+
+Override the root font-size assumption in Sass via config:
+
+```scss
+@use "@stamcat/craftsman/styles/config" with ($root-font-size: 10);
+```
+
+In TypeScript, `rootFontSize` is exported from `@stamcat/craftsman/styles` — there is no runtime override mechanism for it; if your app's root font-size differs from `16`, account for it manually at the call site.
 
 #### `gutter` vs `column` — when to use which
 
@@ -173,6 +194,145 @@ Available breakpoint keys: `tablet` · `tabletMax` · `tabletOnly` · `desktop` 
 - Responsive styling should be mobile-first (`min-width` breakpoints) whenever possible. Use `mobileOnly`/`mobileMax` only for outlier cases that require a mobile-specific exception.
 - In apps using SCSS, use the `breakpoint` mixin (`@include u.breakpoint(key)`). In apps using JS styling, use the `breakpoint` function (`breakpoint(key, styles)` or `media.key` for raw queries).
 
+### Registering Custom width()/color() Keys
+
+Consuming apps can register their own `width()`/`color()` keys without forking package source.
+
+`color()` never validates its key at all — both the Sass and TypeScript implementations always resolve to `var(--name)` regardless of whether `name` is a known palette key. Any string already works: `color("brandAccent")` → `var(--brandAccent)`. Just make sure the matching `--brandAccent` CSS variable is actually set somewhere (`theme.root`, a global stylesheet, etc.). No registration step is needed for colors.
+
+`width()` is the one closed authoring function — both the Sass `width-var()` map and the TS `LayoutWidthsType` union only recognize the built-in keys. Registering a new key is two additive steps, one per language, plus setting the real value at runtime:
+
+```scss
+// 1. Sass — merge a new key into the width map before any other craftsman import
+@use "@stamcat/craftsman/styles/utilities/functions" as u with (
+  $extra-widths: (sidebar: 280)
+);
+
+.layout {
+  grid-template-columns: #{u.width(sidebar)} 1fr; // => var(--w-sidebar)
+}
+```
+
+```ts
+// 2. TypeScript — declaration-merge the key onto CraftsmanCustomWidths
+declare module "@stamcat/craftsman/styles" {
+  interface CraftsmanCustomWidths {
+    sidebar: true;
+  }
+}
+
+width("sidebar"); // now type-checks, resolves to var(--w-sidebar)
+```
+
+```tsx
+// 3. Runtime — set the actual px value the same way as any other width override
+<ThemeProvider theme={{ widths: { sidebar: 280 } }} />
+```
+
+Important nuance: the value given to `$extra-widths` only satisfies Sass's `map.has-key()` existence check — it is **not** read back out as a CSS fallback value. `width("sidebar")` always compiles to a bare `var(--w-sidebar)` with no fallback, so step 3 (or a manual `:root { --w-sidebar: 280px; }`) is required for the key to resolve to anything at runtime.
+
+### `scale()` — Registering Brand-New Utility Functions
+
+`width()` and `color()` are the two utility functions craftsman ships out of the box. `scale()` is the general plugin point for registering an entirely new one — shadow, radius, z-index, or anything else a consuming app needs — without forking package source or waiting on a dedicated craftsman function.
+
+Unlike `width()`'s single fixed scale, `scale()` takes a scale name as its first argument, so one function covers any number of independently-registered scales. Like `color()`, the TypeScript side never validates at runtime — it just builds the `var()` reference; the Sass side does validate, exactly like `width()`, erroring on both an unregistered scale name and an unregistered key within a known scale.
+
+```scss
+// 1. Sass — register a new scale and its keys before any other craftsman import
+@use "@stamcat/craftsman/styles/utilities/functions" as u with (
+  $extra-scales: (shadow: (sm: true, md: true))
+);
+
+.card {
+  box-shadow: #{u.scale(shadow, sm)}; // => var(--shadow-sm)
+}
+```
+
+```ts
+// 2. TypeScript — declaration-merge the scale and its keys onto CraftsmanScales
+declare module "@stamcat/craftsman/styles" {
+  interface CraftsmanScales {
+    shadow: "sm" | "md";
+  }
+}
+
+scale("shadow", "sm"); // now type-checks, resolves to var(--shadow-sm)
+```
+
+```tsx
+// 3. Runtime — set the actual CSS values via theme.scales
+<ThemeProvider theme={{ scales: { shadow: { sm: "0 1px 2px rgb(0 0 0 / 0.1)", md: "0 4px 8px rgb(0 0 0 / 0.15)" } } }} />
+```
+
+Same nuance as `$extra-widths`: the values in `$extra-scales` only satisfy the Sass existence check — they're never emitted as a CSS fallback. `scale("shadow", "sm")` always compiles to a bare `var(--shadow-sm)`, so step 3 (or a manual `:root { --shadow-sm: ...; }`) is required for the key to resolve to anything at runtime.
+
+### Shared Mixins
+
+**Sass** — import `mixins` as `m`:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/mixins" as m;
+```
+
+#### `state()` — only for composing multiple pseudo-classes
+
+`@include m.state($names...)` chains pseudo-classes onto `&` (`state(checked, disabled)` → `&:checked:disabled`).
+
+- Use it **only** when chaining two or more pseudo-classes together. A single state (`&:hover`, `&:focus`, `&:disabled`) should stay a plain native selector — wrapping one pseudo-class in `@include m.state(hover) { }` adds indirection with no benefit and makes the selector harder to find with a plain-text search for `:hover`.
+- Good: `@include m.state(checked, disabled) { ... }`
+- Avoid: `@include m.state(hover) { ... }` — write `&:hover { ... }` instead.
+- Production example: `_checkbox.scss`'s `&:checked:disabled` state uses `@include m.state(checked, disabled)`.
+
+#### Logical-property mixins — prefer over physical shorthand
+
+`m.margin-inline($start, $end: $start)`, `m.margin-block()`, `m.padding-inline()`, `m.padding-block()`, `m.inset-inline()`, `m.inset-block()` set the paired logical start/end properties instead of physical top/bottom/left/right.
+
+Prefer these over physical shorthand (`padding: V H`, `margin: V H`) so layout flips correctly for RTL and vertical writing modes:
+
+```scss
+// Preferred — correct in RTL
+@include m.padding-block(#{u.width(gutter, 0.5)});
+@include m.padding-inline(#{u.width(gutter, 0.75)});
+
+// Avoid — doesn't flip for RTL
+padding: #{u.width(gutter, 0.5)} #{u.width(gutter, 0.75)};
+```
+
+**Only use the mixin when both sides of an axis are being set.** If the original declaration only sets one physical side (`left`, `right`, `margin-right`, `padding-left`, etc.), convert it directly to the matching single-side native logical property instead — the mixins always set both start and end, so using one here would introduce a side that wasn't there before:
+
+```scss
+// Preferred — single-side physical property converts to single-side logical property
+left: 40px;              → inset-inline-start: 40px;
+margin-right: 8px;       → margin-inline-end: 8px;
+padding-left: 12px;      → padding-inline-start: 12px;
+
+// Avoid — @include m.inset-inline(40px) sets BOTH start and end, changing behavior
+@include m.inset-inline(40px);
+```
+
+Use the mixin only when the original shorthand already implies both sides of an axis (`padding: V H`, `margin: 0 H`, etc.), even if the two axes differ from each other — as long as each axis's own start/end share one value (or an explicit asymmetric pair, e.g. `m.padding-inline(7px, 4px)` for `padding: 4px 4px 4px 7px`).
+
+#### `dark()` — OS preference + explicit override
+
+`@include m.dark { ... }` wraps `@content` in both `@media (prefers-color-scheme: dark)` and `[data-theme="dark"] &`, so one block covers OS-level dark mode and an explicit theme override together.
+
+#### `group-state()` / `peer-state()` — relational state variants
+
+- `@include m.group-state($name, $group-class: ".group")` → `.group:$name &` (style based on an ancestor's state).
+- `@include m.peer-state($name, $peer-class: ".peer")` → `.peer:$name ~ &` (style based on a preceding sibling's state).
+
+#### `data()` / `aria()` — attribute-based variants
+
+- `@include m.data($attr, $value: null)` → `&[data-$attr]` or `&[data-$attr="$value"]` when a value is given.
+- `@include m.aria($attr, $value: true)` → `&[aria-$attr="$value"]`.
+- `$value` is checked with `@if $value`, which is falsy for both `null` and the boolean `false` in Sass. To match a literal `data-*="false"` attribute value, pass the quoted string `"false"`, not the boolean `false` — `@include m.data(has-input, false)` silently falls through to the presence-only selector (`&[data-has-input]`) instead of `&[data-has-input="false"]`.
+- Only compose multiple `m.data()`/`m.aria()` calls (nested, each appending onto `&`) when the original selector already chains two or more attributes together (e.g. `&[data-label-position="inside"][data-has-input="false"]`). A single attribute selector should stay a plain `&[data-foo="bar"]` — same rationale as `state()`.
+
+#### `container-type()` / `container()` — container queries
+
+- `@include m.container-type($type: inline-size, $name: null)` sets `container-type` (and `container-name` if provided) on the containment root.
+- `@include m.container($condition, $name: null) { ... }` wraps `@content` in `@container`, scoped to `$name` when given.
+
 ## Styling Expectations
 
 - Components are built with SCSS modules and class-based variant hooks.
@@ -209,7 +369,7 @@ Do not compute `calc()` strings per-property in JS/TS (for example building a `p
 - String component styles are applied to the mapped target selector (for example `button`, `input[type='checkbox']`).
 - For multi-file Sass workflows with syntax highlighting and mixins, import compiled CSS text via `*.scss?inline`.
 
-Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" | "extDesktop" | "mobileMax" | "tabletMax" | "desktopMax"`
+Valid `theme.widths` keys: `"text" | "gutter" | "column" | "tablet" | "desktop" | "extDesktop" | "mobileMax" | "tabletMax" | "desktopMax"`, plus any custom key registered via declaration merging — see [Registering Custom width()/color() Keys](#registering-custom-width-color-keys).
 
 ### Cascade Layers and `ThemeProvider`'s `layered`/`hoist` Options
 

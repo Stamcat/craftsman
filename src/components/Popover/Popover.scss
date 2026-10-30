@@ -1,4 +1,5 @@
 @use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/mixins" as m;
 
 @layer cf-component {
     .popover {
@@ -7,7 +8,8 @@
         &__floating {
             background-color: var(--popover-bg);
             color: #{u.color("gray800")};
-            padding: #{u.width("gutter", 0.75)};
+            @include m.padding-block(#{u.width("gutter", 0.75)});
+            @include m.padding-inline(#{u.width("gutter", 0.75)});
             border-radius: 8px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
             z-index: 1;

@@ -22,9 +22,31 @@ export type BaseWidth = z.infer<typeof BaseWidthSchema>;
 export type ScreenWidth = z.infer<typeof ScreenWidthSchema>;
 export type MaxScreenWidth = z.infer<typeof MaxScreenWidthSchema>;
 export type Breakpoint = z.infer<typeof BreakpointSchema>;
-export type LayoutWidthsType = z.infer<typeof LayoutWidthsSchema>;
+export type BuiltInWidthKey = z.infer<typeof LayoutWidthsSchema>;
 
-export type Width = Record<LayoutWidthsType, number>;
+/**
+ * Augment via declaration merging to register custom `width()`/`theme.widths` keys with full
+ * type safety, e.g. `declare module "@stamcat/craftsman/styles" { interface CraftsmanCustomWidths { sidebar: true } }`.
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CraftsmanCustomWidths {}
+
+export type LayoutWidthsType = BuiltInWidthKey | keyof CraftsmanCustomWidths;
+
+/**
+ * Augment via declaration merging to register a brand-new named `scale()` utility function with
+ * full type safety, e.g.
+ * `declare module "@stamcat/craftsman/styles" { interface CraftsmanScales { shadow: "sm" | "md" } }`.
+ * Unlike `CraftsmanCustomWidths` (new keys on the built-in `width()` scale), this registers an
+ * entirely new scale — the general plugin point for utility functions craftsman doesn't ship
+ * out of the box (shadow, radius, z-index, etc).
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CraftsmanScales {}
+
+export type ScaleName = keyof CraftsmanScales;
+
+export type Width = Record<BuiltInWidthKey, number>;
 
 export type Colors = Record<string, string>;
 export type ColorType = "rgba" | "hex";

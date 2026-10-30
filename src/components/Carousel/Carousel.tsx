@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useSyncExternalStore } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { type EmblaOptionsType } from "embla-carousel";
 
@@ -22,9 +22,20 @@ export type CarouselProps = Omit<EmblaOptionsType, "slides"> & {
  * to include some built-in support to make your life easier without compromising Embla's lightweight hands-off approach.
  * Please don't use Embla's code examples directly. The code in their codepen is really bad.
  */
+// Embla doesn't read the DOM's dir/direction itself, so read the document's ambient direction synchronously as a best-effort initial default.
+const getAmbientDirection = (): "ltr" | "rtl" => {
+    if (typeof document === "undefined") {
+        return "ltr";
+    }
+    return getComputedStyle(document.documentElement).direction === "rtl" ? "rtl" : "ltr";
+};
+
 export const Carousel: React.FC<CarouselProps> = (props) => {
-    const { slides = [], className, style, buttons = true, pagination = "dots", ...opts } = props;
+    const { slides = [], className, style, buttons = true, pagination = "dots", direction, ...restOpts } = props;
     // Hooks
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [detectedDirection, setDetectedDirection] = useState<"ltr" | "rtl">(getAmbientDirection);
+    const opts = { ...restOpts, direction: direction ?? detectedDirection };
     const [emblaRef, emblaApi] = useEmblaCarousel(opts);
 
     const scrollEvent = useCallback(
@@ -40,6 +51,14 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
         },
         [emblaApi],
     );
+    // Correct against the container's own ancestor (may differ from the document root); Embla's hook reinitializes itself when its options change, so this only needs to update state.
+    useLayoutEffect(() => {
+        if (direction || !containerRef.current) {
+            return;
+        }
+        const measuredDirection = getComputedStyle(containerRef.current).direction === "rtl" ? "rtl" : "ltr";
+        setDetectedDirection((prev) => (prev === measuredDirection ? prev : measuredDirection));
+    }, [direction]);
     // State
     const canPrev = useSyncExternalStore(
         scrollEvent,
@@ -64,7 +83,7 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
         emblaApi?.scrollTo(index);
     };
     return (
-        <div className={clsx("carousel", className)} style={style}>
+        <div className={clsx("carousel", className)} style={style} ref={containerRef}>
             <div className="carousel__viewport" ref={emblaRef}>
                 <div className="carousel__container">
                     {slides.map((slide, index) => (
@@ -79,10 +98,10 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
                 {buttons && (
                     <div className="carousel__buttons">
                         <Button variant="text" onClick={onPressPrev} disabled={!canPrev} name="prev" aria-label="Previous slide">
-                            <FaAngleLeft size={24} aria-hidden="true" />
+                            <FaAngleLeft size={24} aria-hidden="true" className="carousel__chevron" />
                         </Button>
                         <Button variant="text" onClick={onPressNext} disabled={!canNext} name="next" aria-label="Next slide">
-                            <FaAngleRight size={24} aria-hidden="true" />
+                            <FaAngleRight size={24} aria-hidden="true" className="carousel__chevron" />
                         </Button>
                     </div>
                 )}

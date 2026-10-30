@@ -1,4 +1,5 @@
 @use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/mixins" as m;
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_placeholders";
 @use "../DatePicker/_DatePicker";
@@ -19,7 +20,8 @@
         }   
         &__wrapper {
             @extend %date-picker-wrapper;
-            padding: 6px 8px;
+            @include m.padding-block(6px);
+            @include m.padding-inline(8px);
         }  
         &__inputGroup {
             @extend %date-picker-input-group;
@@ -105,13 +107,13 @@
 
             &:has(.input-view-toggle) {
                 .react-time-picker__wrapper {
-                    padding-right: 34px;
+                    padding-inline-end: 34px;
                 }
             }
 
             .input-view-toggle {
                 position: absolute;
-                right: 10px;
+                inset-inline-end: 10px;
                 top: 50%;
                 transform: translateY(-50%);
                 padding: 4px;

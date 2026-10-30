@@ -86,7 +86,7 @@
             &.panel {
                 position: fixed;
                 top: 0;
-                right: 0;
+                inset-inline-end: 0;
                 height: 100%;
             }
 
@@ -101,7 +101,7 @@
                 margin-bottom: #{u.width("gutter", 0.5)};
 
                 > button:only-child {
-                margin-left: auto;
+                margin-inline-start: auto;
                 }
             }
         }

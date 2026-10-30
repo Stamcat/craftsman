@@ -267,7 +267,7 @@ const style = {
         },
     },
     render: ({ variable, alpha }) => {
-        const hexValue = colors[variable];
+        const hexValue = colors[variable as keyof typeof colors];
         const result = hexToRgba(hexValue, alpha);
 
         return (

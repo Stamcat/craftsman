@@ -2,16 +2,23 @@
 @use "sass:string";
 @use "../config" as cfg;
 
-$width-defaults: (
-	text: cfg.$w-text,
-	gutter: cfg.$w-gutter,
-	column: cfg.$w-column,
-	mobileMax: cfg.$bp-mobileMax,
-	tablet: cfg.$bp-tablet,
-	tabletMax: cfg.$bp-tabletMax,
-	desktop: cfg.$bp-desktop,
-	desktopMax: cfg.$bp-desktopMax,
-	extDesktop: cfg.$bp-extDesktop,
+// Register custom width/spacing keys via `@use ... with ($extra-widths: (sidebar: 280))` before
+// any other craftsman import — merged into $width-defaults below so width(sidebar) stops erroring.
+$extra-widths: () !default;
+
+$width-defaults: map.merge(
+	(
+		text: cfg.$w-text,
+		gutter: cfg.$w-gutter,
+		column: cfg.$w-column,
+		mobileMax: cfg.$bp-mobileMax,
+		tablet: cfg.$bp-tablet,
+		tabletMax: cfg.$bp-tabletMax,
+		desktop: cfg.$bp-desktop,
+		desktopMax: cfg.$bp-desktopMax,
+		extDesktop: cfg.$bp-extDesktop,
+	),
+	$extra-widths
 );
 
 @function color($name, $type: hex, $alpha: 1) {
@@ -21,40 +28,66 @@ $width-defaults: (
 
 	@return string.unquote("var(--#{$name})");
 }
+
+// Register brand-new utility scales (shadow, radius, z-index, etc.) via
+// `@use ... with ($extra-scales: (shadow: (sm: true, md: true)))` before any other craftsman
+// import. This is the general plugin point for utility functions craftsman doesn't ship out of
+// the box — unlike `$extra-widths`, `scale()` has no built-in scale of its own to merge into.
+// As with `$extra-widths`, the registered value is only used for the map.has-key() existence
+// check, not emitted as a fallback — the real value still comes from theme.scales or a manual
+// `:root { --name-key: ...; }` declaration.
+$extra-scales: () !default;
+
+@function scale($scale-name, $key) {
+	@if not map.has-key($extra-scales, $scale-name) {
+		@error "Unknown scale `#{$scale-name}`. Register it via `$extra-scales` (see the craftsman-style-utilities skill).";
+	}
+
+	$registered: map.get($extra-scales, $scale-name);
+
+	@if not map.has-key($registered, $key) {
+		@error "Unknown key `#{$key}` in scale `#{$scale-name}`. Registered keys: #{map.keys($registered)}.";
+	}
+
+	@return string.unquote("var(--#{$scale-name}-#{$key})");
+}
 // internal function
 @function width-var($name) {
 	@if not map.has-key($width-defaults, $name) {
-		@error "Unknown width key `#{$name}`.";
+		@error "Unknown width key `#{$name}`. Register it via `$extra-widths` (see the craftsman-style-utilities skill) or use the key directly in CSS with `var(--w-#{$name})`.";
 	}
 	@return string.unquote("var(--w-#{$name})");
     // $fallback: map.get($width-defaults, $name);
 	// @return string.unquote("var(--w-#{$name}, #{$fallback}px)");
 }
 
-@function width($name, $multiplier: 1, $px: true) {
+@function width($name, $multiplier: 1, $unit: px) {
 	$value: width-var($name);
+	$gutter: width-var(gutter);
+	$gutter-steps: $multiplier - 1;
+
+	$number-expr: "#{$value} / 1px";
 
 	@if $name == column {
-		$gutter-steps: $multiplier - 1;
-		$gutter: width-var(gutter);
+		$number-expr: "((#{$value} / 1px) * #{$multiplier}) + ((#{$gutter} / 1px) * #{$gutter-steps})";
+	} @else if $multiplier != 1 {
+		$number-expr: "(#{$value} / 1px) * #{$multiplier}";
+	}
 
-		@if $px {
-			@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
-		}
+	@if $unit == number {
+		@return string.unquote("calc(#{$number-expr})");
+	}
 
+	@if $unit == rem or $unit == em {
+		@return string.unquote("calc((#{$number-expr}) / #{cfg.$root-font-size} * 1#{$unit})");
+	}
+
+	@if $name == column {
 		@return string.unquote("calc((#{$value} * #{$multiplier}) + (#{$gutter} * #{$gutter-steps}))");
 	}
 
-	@if $px {
-		@if $multiplier == 1 {
-			@return $value;
-		}
-
-		@return string.unquote("calc(#{$value} * #{$multiplier})");
-	}
-
 	@if $multiplier == 1 {
-		@return string.unquote("#{$value}");
+		@return $value;
 	}
 
 	@return string.unquote("calc(#{$value} * #{$multiplier})");

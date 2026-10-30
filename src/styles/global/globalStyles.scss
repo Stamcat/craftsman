@@ -10,6 +10,51 @@
 
 @layer cf-base, cf-component, cf-theme;
 
+@layer cf-theme {
+    // Minimal neutral-scale inversion for a real dark-mode demo — brand/accent colors are untouched.
+    // Literal hex values (not var()): swapping each pair via var() creates a CSS custom-property cycle
+    // (e.g. --gray10: var(--gray999); --gray999: var(--gray10);), which spec requires to resolve to nothing.
+    @mixin dark-palette {
+        --white: #0D0C0C; // gray999
+        --black: #FCFDFD; // gray50
+        --text: #FCFDFD; // gray50
+        --gray10: #0D0C0C; // gray999
+        --gray50: #1B1918; // gray980
+        --gray100: #212829; // gray950
+        --gray150: #2A2A2A; // gray900
+        --gray200: #343E40; // gray850
+        --gray250: #404040; // gray800
+        --gray300: #495457; // gray750
+        --gray350: #6B6361; // gray700
+        --gray400: #6C787D; // gray650
+        --gray450: #837976; // gray600
+        --gray500: #9E9694; // gray550
+        --gray550: #B6B0AF; // gray500
+        --gray600: #ADB9BD; // gray450
+        --gray650: #CFCBC9; // gray400
+        --gray700: #CED8DA; // gray350
+        --gray750: #DEE5E6; // gray300
+        --gray800: #E7E5E4; // gray250
+        --gray850: #F0F4F4; // gray200
+        --gray900: #F3F2F2; // gray150
+        --gray950: #F7F9F9; // gray100
+        --gray980: #FCFDFD; // gray50
+        --gray999: #FFFFFF; // gray10
+    }
+
+    // Automatic: follows the OS/browser color-scheme preference, unless the app opts out via data-theme="light".
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+            @include dark-palette;
+        }
+    }
+
+    // Manual override: works regardless of OS preference, so a dark-OS user can still opt into light via data-theme="light".
+    [data-theme="dark"] {
+        @include dark-palette;
+    }
+}
+
 @layer cf-base {
     *,
     *::before,
@@ -53,7 +98,7 @@
     }
     body {
         @include t.body-typography;
-        background-color: #fff;
+        background-color: var(--white);
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
     }

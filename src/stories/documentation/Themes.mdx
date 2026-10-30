@@ -221,7 +221,8 @@ const overlay = color("green500", "rgba", 0.24);`} />
 
 const text = width("text");
 const cols = width("column", 3);
-const numeric = width("column", 3, false);`} />
+const numeric = width("column", 3, "number");
+const remValue = width("column", 3, "rem");`} />
 
 ```scss
 @use "../../styles/utilities/_functions" as u;
@@ -229,7 +230,8 @@ const numeric = width("column", 3, false);`} />
 .example {
     font-size: #{u.width(text)};
     max-width: #{u.width(column, 3)};
-    --column-count: #{u.width(column, 3, false)};
+    --column-count: #{u.width(column, 3, number)};
+    --column-count-rem: #{u.width(column, 3, rem)};
 }
 ```
 

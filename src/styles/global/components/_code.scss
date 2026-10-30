@@ -1,13 +1,18 @@
 @use "../../utilities/functions" as u;
+@use "../../utilities/mixins" as m;
 
 @layer cf-base {
     %code {
         background-color: var(--gray200);
         color: var(--gray800);
-        padding: #{u.width(gutter, 0.125)} #{u.width(gutter, 0.25)};
+        @include m.padding-block(#{u.width(gutter, 0.125)});
+        @include m.padding-inline(#{u.width(gutter, 0.25)});
         margin: #{u.width(gutter, 0.125)};
         display: inline-block;
         font-size: var(--w-text, 14px);
+        // source code is never locale text — force LTR so bidi reordering can't scramble punctuation
+        direction: ltr;
+        text-align: start;
 
         &:has(pre) {
         padding: #{u.width(gutter)};

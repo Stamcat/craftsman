@@ -1,5 +1,6 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/mixins" as m;
 @use "../../styles/utilities/_placeholders";
 @use "../DatePicker/_DatePicker";
 @layer cf-component {
@@ -10,10 +11,14 @@
         @extend %border-box;
     }
     .dateTimePicker__wrapper {
-        &[data-label-position="inside"][data-has-input="false"]:not(:focus-within) {
-            .react-datetime-picker__inputGroup {
-                &__divider, &__amPm {
-                    color: transparent;
+        @include m.data(label-position, inside) {
+            @include m.data(has-input, "false") {
+                &:not(:focus-within) {
+                    .react-datetime-picker__inputGroup {
+                        &__divider, &__amPm {
+                            color: transparent;
+                        }
+                    }
                 }
             }
         }

@@ -1,4 +1,5 @@
 @use "../../utilities/functions" as u;
+@use "../../utilities/mixins" as m;
 
 @layer cf-base {
     %checkbox {
@@ -67,7 +68,7 @@
             }
         }
 
-        &:checked:disabled {
+        @include m.state(checked, disabled) {
             border-color: var(--gray400);
 
             &::before {

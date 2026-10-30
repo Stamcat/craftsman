@@ -79,6 +79,20 @@ export const Sized: Story = {
     },
 };
 
+export const CheckedDisabled: Story = {
+    args: {
+        checked: true,
+        disabled: true,
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "Demonstrates the `&:checked:disabled` compound state, styled via the `m.state(checked, disabled)` Sass mixin instead of a hand-written chained pseudo-class selector.",
+            },
+        },
+    },
+};
+
 export const ThreeOptions: Story = {
     args: {
         name: "notification-preferences",
