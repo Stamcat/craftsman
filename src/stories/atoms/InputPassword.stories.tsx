@@ -9,6 +9,10 @@ const meta: Meta<typeof InputPassword> = {
     tags: ["autodocs"],
     parameters: {
         layout: "padded",
+        design: {
+            type: "figma",
+            url: "https://www.figma.com/design/2PzMyf40EctUIlY8UyN4Ue/Craftsman-Design-System?node-id=81-39",
+        },
         docs: {
             description: {
                 component:

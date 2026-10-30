@@ -9,6 +9,10 @@ const meta: Meta<typeof InputPhone> = {
     tags: ["autodocs"],
     parameters: {
         layout: "padded",
+        design: {
+            type: "figma",
+            url: "https://www.figma.com/design/2PzMyf40EctUIlY8UyN4Ue/Craftsman-Design-System?node-id=83-49",
+        },
         docs: {
             story: {
                 iframeHeight: 350,

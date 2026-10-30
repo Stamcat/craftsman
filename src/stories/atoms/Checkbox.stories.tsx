@@ -46,6 +46,12 @@ const meta: Meta<typeof Checkbox> = {
     title: "Atoms/Input/Checkbox",
 	component: Checkbox,
     tags: ["autodocs"],
+    parameters: {
+        design: {
+            type: "figma",
+            url: "https://www.figma.com/design/2PzMyf40EctUIlY8UyN4Ue/Craftsman-Design-System?node-id=70-2",
+        },
+    },
 	args: {
         label: "Accept terms",
 	},
