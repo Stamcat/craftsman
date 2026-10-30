@@ -1,0 +1,117 @@
+// State variants — compose any number of pseudo-classes onto the current selector.
+// @include state(checked) { ... }         -> &:checked
+// @include state(checked, disabled) { ... } -> &:checked:disabled
+@mixin state($names...) {
+    $selector: "&";
+
+    @each $name in $names {
+        $selector: "#{$selector}:#{$name}";
+    }
+
+    #{$selector} {
+        @content;
+    }
+}
+
+// Dark mode — matches both OS-level preference and an explicit `data-theme="dark"` override.
+@mixin dark {
+    @media (prefers-color-scheme: dark) {
+        @content;
+    }
+
+    $selector: '[data-theme="dark"] &';
+
+    #{$selector} {
+        @content;
+    }
+}
+
+// Relational state variants — style an element based on an ancestor/sibling's state.
+// @include group-state(hover) { ... } -> .group:hover &
+// @include peer-state(checked) { ... } -> .peer:checked ~ &
+@mixin group-state($name, $group-class: ".group") {
+    #{$group-class}:#{$name} & {
+        @content;
+    }
+}
+
+@mixin peer-state($name, $peer-class: ".peer") {
+    #{$peer-class}:#{$name} ~ & {
+        @content;
+    }
+}
+
+// Attribute-based state variants.
+// @include data(open) { ... }            -> &[data-open]
+// @include data(state, "active") { ... }  -> &[data-state="active"]
+// @include aria(disabled) { ... }         -> &[aria-disabled="true"]
+@mixin data($attr, $value: null) {
+    @if $value {
+        &[data-#{$attr}="#{$value}"] {
+            @content;
+        }
+    } @else {
+        &[data-#{$attr}] {
+            @content;
+        }
+    }
+}
+
+@mixin aria($attr, $value: true) {
+    &[aria-#{$attr}="#{$value}"] {
+        @content;
+    }
+}
+
+// Logical-property shorthands — write inline/block start+end in one declaration.
+@mixin margin-inline($start, $end: $start) {
+    margin-inline-start: $start;
+    margin-inline-end: $end;
+}
+
+@mixin margin-block($start, $end: $start) {
+    margin-block-start: $start;
+    margin-block-end: $end;
+}
+
+@mixin padding-inline($start, $end: $start) {
+    padding-inline-start: $start;
+    padding-inline-end: $end;
+}
+
+@mixin padding-block($start, $end: $start) {
+    padding-block-start: $start;
+    padding-block-end: $end;
+}
+
+@mixin inset-inline($start, $end: $start) {
+    inset-inline-start: $start;
+    inset-inline-end: $end;
+}
+
+@mixin inset-block($start, $end: $start) {
+    inset-block-start: $start;
+    inset-block-end: $end;
+}
+
+// Container queries.
+// @include container-type; then @include container("(min-width: 320px)") { ... }
+@mixin container-type($type: inline-size, $name: null) {
+    container-type: $type;
+
+    @if $name {
+        container-name: $name;
+    }
+}
+
+@mixin container($condition, $name: null) {
+    $prelude: $condition;
+
+    @if $name {
+        $prelude: "#{$name} #{$condition}";
+    }
+
+    @container #{$prelude} {
+        @content;
+    }
+}

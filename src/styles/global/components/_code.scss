@@ -8,6 +8,9 @@
         margin: #{u.width(gutter, 0.125)};
         display: inline-block;
         font-size: var(--w-text, 14px);
+        // source code is never locale text — force LTR so bidi reordering can't scramble punctuation
+        direction: ltr;
+        text-align: start;
 
         &:has(pre) {
         padding: #{u.width(gutter)};

@@ -45,7 +45,7 @@
             &::before {
                 position: absolute;
                 content: "";
-                left: calc(var(--toggle-width, 60px) * 0.065);
+                inset-inline-start: calc(var(--toggle-width, 60px) * 0.065);
                 bottom: calc(var(--toggle-width, 60px) * 0.065);
                 height: calc(var(--toggle-width, 60px) * 0.43);
                 width: calc(var(--toggle-width, 60px) * 0.43);
@@ -60,6 +60,11 @@
 
             &::before {
                 transform: translateX(calc(var(--toggle-width, 60px) * 0.43));
+
+                // the knob travels from inset-inline-start toward inline-end; translateX itself isn't direction-aware, so flip it for RTL
+                :dir(rtl) & {
+                    transform: translateX(calc(var(--toggle-width, 60px) * -0.43));
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
+@use "../../styles/utilities/mixins" as m;
 
 @layer cf-component {
     .react-calendar,
@@ -146,12 +147,14 @@
     .react-calendar {
         button {
             border-radius: unset;
-            padding: 12px 0px;
+            @include m.padding-block(12px);
+            @include m.padding-inline(0px);
         }
     }
     .react-calendar__year-view, .react-calendar__decade-view, .react-calendar__century-view {
         button {
-            padding: 18px 0px;
+            @include m.padding-block(18px);
+            @include m.padding-inline(0px);
         }
     }
 

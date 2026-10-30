@@ -1,11 +1,12 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
+@use "../../styles/utilities/mixins" as m;
 @layer cf-component {
     .inputPhone {
         &[data-label-position="inside"] {
             .input-label {
                 top: 15px;
-                left: 50px;
+                inset-inline-start: 50px;
             }
         }
 
@@ -76,7 +77,8 @@
             }
 
             &__flag-emoji {
-                margin: 0 4px;
+                @include m.margin-block(0);
+                @include m.margin-inline(4px);
 
                 &--disabled {
                     opacity: 0.75;
@@ -88,7 +90,7 @@
                     var(--react-international-phone-country-selector-arrow-color, #777);
                 border-right: var(--react-international-phone-country-selector-arrow-size, 4px) solid transparent;
                 border-left: var(--react-international-phone-country-selector-arrow-size, 4px) solid transparent;
-                margin-right: 4px;
+                margin-inline-end: 4px;
                 transition: all 0.1s ease-out;
 
                 &--active {
@@ -105,12 +107,13 @@
             position: absolute;
             z-index: 1000;
             top: var(--react-international-phone-dropdown-top, 44px);
-            left: var(--react-international-phone-dropdown-left, 0);
+            inset-inline-start: var(--react-international-phone-dropdown-left, 0);
             display: flex;
             width: 300px;
             max-height: 200px;
             flex-direction: column;
-            padding: 4px 0;
+            @include m.padding-block(4px);
+            @include m.padding-inline(0);
             margin: 0;
             background-color: var(
                 --react-international-phone-dropdown-item-background-color,
@@ -139,7 +142,8 @@
                 min-height: var(--react-international-phone-dropdown-item-height, 28px);
                 box-sizing: border-box;
                 align-items: center;
-                padding: 2px 8px;
+                @include m.padding-block(2px);
+                @include m.padding-inline(8px);
 
                 &:hover {
                     background-color: var(
@@ -173,12 +177,12 @@
                 }
 
                 &-flag-emoji {
-                    margin-right: 8px;
+                    margin-inline-end: 8px;
                 }
 
                 &-country-name {
                     overflow: hidden;
-                    margin-right: 8px;
+                    margin-inline-end: 8px;
                     font-size: var(--react-international-phone-dropdown-item-font-size, 14px);
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -195,13 +199,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 8px;
+            @include m.padding-block(0);
+            @include m.padding-inline(8px);
             border: 1px solid
                 var(
                     --react-international-phone-dial-code-preview-border-color,
                     var(--react-international-phone-border-color, gainsboro)
                 );
-            margin-right: -1px;
+            margin-inline-end: -1px;
             background-color: var(
                 --react-international-phone-dial-code-preview-background-color,
                 var(--react-international-phone-background-color, white)
@@ -233,7 +238,7 @@
 
             .react-international-phone-country-selector-button {
                 border-radius: var(--react-international-phone-border-radius, 4px);
-                margin-right: -1px;
+                margin-inline-end: -1px;
                 border-bottom-right-radius: 0;
                 border-top-right-radius: 0;
             }
@@ -244,7 +249,8 @@
                 min-width: 0;
                 height: var(--react-international-phone-height, 36px);
                 box-sizing: border-box;
-                padding: 0 8px;
+                @include m.padding-block(0);
+                @include m.padding-inline(8px);
                 border: 1px solid var(--react-international-phone-border-color, gainsboro);
                 border-radius: var(--react-international-phone-border-radius, 4px);
                 margin: 0;

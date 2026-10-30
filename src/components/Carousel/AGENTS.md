@@ -23,6 +23,7 @@ Behavior notes:
 - Pagination can render dots or the shared `Pagination` component in number mode.
 - Number pagination uses zero-based indexes internally, consistent with `Pagination`.
 - The component manages its own selected index from the Embla instance; there is no separate controlled index prop.
+- For RTL layouts, pass Embla's `direction: "rtl"` option (and set `dir="rtl"` on an ancestor so the browser mirrors scrolling/flex layout). The component swaps the prev/next chevron icons automatically when `direction === "rtl"` — don't hardcode `FaAngleLeft`/`FaAngleRight` for prev/next if touching this logic again.
 
 Example:
 

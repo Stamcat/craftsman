@@ -24,7 +24,6 @@ const meta: Meta<typeof Carousel> = {
         slides: SLIDES,
         loop: false,
         align: "center",
-        direction: "ltr",
         dragFree: false,
         dragThreshold: 10,
         slidesToScroll: 1,

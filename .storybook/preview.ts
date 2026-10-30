@@ -1,10 +1,33 @@
-import type { Preview } from "@storybook/react-vite";
-import { withThemeFromJSXProvider } from '@storybook/addon-themes';
+import React from "react";
+import type { Decorator, Preview } from "@storybook/react-vite";
+import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { ThemeProvider } from "../src/styles/components/ThemeProvider";
 import { appThemes } from "./themes/themes";
 import "../src/styles/global/globalStyles.scss"; // these aren't errors.
 
+const withDirection: Decorator = (Story, context) => {
+    const direction = context.globals.direction === "rtl" ? "rtl" : "ltr";
+    return React.createElement("div", { dir: direction }, React.createElement(Story));
+};
+
 const preview: Preview = {
+    globalTypes: {
+        direction: {
+            name: "Direction",
+            description: "Text direction",
+            toolbar: {
+                icon: "mirror",
+                items: [
+                    { value: "ltr", title: "LTR" },
+                    { value: "rtl", title: "RTL" },
+                ],
+                dynamicTitle: true,
+            },
+        },
+    },
+    initialGlobals: {
+        direction: "ltr",
+    },
     parameters: {
         options: {
             storySort: {
@@ -40,6 +63,7 @@ const preview: Preview = {
         },
     },
     decorators: [
+        withDirection,
         withThemeFromJSXProvider({
             themes: appThemes,
             defaultTheme: "default",

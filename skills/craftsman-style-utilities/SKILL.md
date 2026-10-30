@@ -173,6 +173,70 @@ Available breakpoint keys: `tablet` · `tabletMax` · `tabletOnly` · `desktop` 
 - Responsive styling should be mobile-first (`min-width` breakpoints) whenever possible. Use `mobileOnly`/`mobileMax` only for outlier cases that require a mobile-specific exception.
 - In apps using SCSS, use the `breakpoint` mixin (`@include u.breakpoint(key)`). In apps using JS styling, use the `breakpoint` function (`breakpoint(key, styles)` or `media.key` for raw queries).
 
+### Shared Mixins
+
+**Sass** — import `mixins` as `m`:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/mixins" as m;
+```
+
+#### `state()` — only for composing multiple pseudo-classes
+
+`@include m.state($names...)` chains pseudo-classes onto `&` (`state(checked, disabled)` → `&:checked:disabled`).
+
+- Use it **only** when chaining two or more pseudo-classes together. A single state (`&:hover`, `&:focus`, `&:disabled`) should stay a plain native selector — wrapping one pseudo-class in `@include m.state(hover) { }` adds indirection with no benefit and makes the selector harder to find with a plain-text search for `:hover`.
+- Good: `@include m.state(checked, disabled) { ... }`
+- Avoid: `@include m.state(hover) { ... }` — write `&:hover { ... }` instead.
+
+#### Logical-property mixins — prefer over physical shorthand
+
+`m.margin-inline($start, $end: $start)`, `m.margin-block()`, `m.padding-inline()`, `m.padding-block()`, `m.inset-inline()`, `m.inset-block()` set the paired logical start/end properties instead of physical top/bottom/left/right.
+
+Prefer these over physical shorthand (`padding: V H`, `margin: V H`) so layout flips correctly for RTL and vertical writing modes:
+
+```scss
+// Preferred — correct in RTL
+@include m.padding-block(#{u.width(gutter, 0.5)});
+@include m.padding-inline(#{u.width(gutter, 0.75)});
+
+// Avoid — doesn't flip for RTL
+padding: #{u.width(gutter, 0.5)} #{u.width(gutter, 0.75)};
+```
+
+**Only use the mixin when both sides of an axis are being set.** If the original declaration only sets one physical side (`left`, `right`, `margin-right`, `padding-left`, etc.), convert it directly to the matching single-side native logical property instead — the mixins always set both start and end, so using one here would introduce a side that wasn't there before:
+
+```scss
+// Preferred — single-side physical property converts to single-side logical property
+left: 40px;              → inset-inline-start: 40px;
+margin-right: 8px;       → margin-inline-end: 8px;
+padding-left: 12px;      → padding-inline-start: 12px;
+
+// Avoid — @include m.inset-inline(40px) sets BOTH start and end, changing behavior
+@include m.inset-inline(40px);
+```
+
+Use the mixin only when the original shorthand already implies both sides of an axis (`padding: V H`, `margin: 0 H`, etc.), even if the two axes differ from each other — as long as each axis's own start/end share one value (or an explicit asymmetric pair, e.g. `m.padding-inline(7px, 4px)` for `padding: 4px 4px 4px 7px`).
+
+#### `dark()` — OS preference + explicit override
+
+`@include m.dark { ... }` wraps `@content` in both `@media (prefers-color-scheme: dark)` and `[data-theme="dark"] &`, so one block covers OS-level dark mode and an explicit theme override together.
+
+#### `group-state()` / `peer-state()` — relational state variants
+
+- `@include m.group-state($name, $group-class: ".group")` → `.group:$name &` (style based on an ancestor's state).
+- `@include m.peer-state($name, $peer-class: ".peer")` → `.peer:$name ~ &` (style based on a preceding sibling's state).
+
+#### `data()` / `aria()` — attribute-based variants
+
+- `@include m.data($attr, $value: null)` → `&[data-$attr]` or `&[data-$attr="$value"]` when a value is given.
+- `@include m.aria($attr, $value: true)` → `&[aria-$attr="$value"]`.
+
+#### `container-type()` / `container()` — container queries
+
+- `@include m.container-type($type: inline-size, $name: null)` sets `container-type` (and `container-name` if provided) on the containment root.
+- `@include m.container($condition, $name: null) { ... }` wraps `@content` in `@container`, scoped to `$name` when given.
+
 ## Styling Expectations
 
 - Components are built with SCSS modules and class-based variant hooks.

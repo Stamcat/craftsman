@@ -3,7 +3,7 @@
 
 @mixin inside-input-label-floating {
     top: -0.5rem;
-    left: #{u.width("gutter", 0.125)};
+    inset-inline-start: #{u.width("gutter", 0.125)};
     font-size: #{u.width("text", 0.75)};
 }
 // This is in base layer because many components implement it.
@@ -59,7 +59,7 @@
 
                 .input-label {
                     width: fit-content;
-                    margin-right: #{u.width("gutter", 0.75)};
+                    margin-inline-end: #{u.width("gutter", 0.75)};
                 }
             }
             &.textarea {
@@ -89,7 +89,7 @@
                 align-items: baseline;
 
                 .input-label {
-                    margin-left: #{u.width("gutter", 0.5)};
+                    margin-inline-start: #{u.width("gutter", 0.5)};
                     margin-bottom: 0;
                 }
             }
@@ -108,11 +108,11 @@
                 width: fit-content;
                 padding: 0 5px;
                 top: #{u.width(gutter, 0.45)};
-                left: #{u.width(gutter, 0.25)};
+                inset-inline-start: #{u.width(gutter, 0.25)};
                 pointer-events: none;
                 transition:
                     top 150ms ease,
-                    left 150ms ease,
+                    inset-inline-start 150ms ease,
                     font-size 150ms ease,
                     color 150ms ease;
             }
@@ -124,7 +124,7 @@
 
             &:has(.input-field[data-has-pre-adornment="true"]) {
                 .input-label {
-                    left: #{u.width("gutter", 1.75)};
+                    inset-inline-start: #{u.width("gutter", 1.75)};
                 }
             }
 
@@ -180,12 +180,12 @@
 
         &[data-has-end-adornment="true"] {
             > .input {
-                padding-right: #{u.width("gutter", 1.5)};
+                padding-inline-end: #{u.width("gutter", 1.5)};
             }
         }
         &[data-has-pre-adornment="true"] {
             > .input {
-                padding-left: #{u.width("gutter", 1.75)};
+                padding-inline-start: #{u.width("gutter", 1.75)};
             }
         }
     }
@@ -193,11 +193,11 @@
 
     .input-end-adornment {
         @extend %input-adornment;
-        right: #{u.width("gutter", 0.5)};
+        inset-inline-end: #{u.width("gutter", 0.5)};
     }
     .input-pre-adornment {
         @extend %input-adornment;
-        left: #{u.width("gutter", 0.5)};
+        inset-inline-start: #{u.width("gutter", 0.5)};
     }
 
     .input-error {

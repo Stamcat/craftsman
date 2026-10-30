@@ -1,3 +1,5 @@
+@use "../../styles/utilities/mixins" as m;
+
 @layer cf-component {
     @keyframes l5 {
         0% {
@@ -94,7 +96,8 @@
             border-radius: 50%;
             animation: l5 1s infinite linear alternate;
             width: var(--_l5w);
-            margin: 0 var(--_l5w2);
+            @include m.margin-block(0);
+            @include m.margin-inline(var(--_l5w2));
         }
 
         &.dots-trace {

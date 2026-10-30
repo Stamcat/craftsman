@@ -105,13 +105,13 @@
 
             &:has(.input-view-toggle) {
                 .react-time-picker__wrapper {
-                    padding-right: 34px;
+                    padding-inline-end: 34px;
                 }
             }
 
             .input-view-toggle {
                 position: absolute;
-                right: 10px;
+                inset-inline-end: 10px;
                 top: 50%;
                 transform: translateY(-50%);
                 padding: 4px;

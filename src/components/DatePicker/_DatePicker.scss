@@ -1,6 +1,7 @@
 @use "../../styles/global/components/input";
 @use "../../styles/utilities/_functions" as u;
 @use "../../styles/utilities/_placeholders";
+@use "../../styles/utilities/mixins" as m;
 
 @layer cf-component {
     %date-picker-styles {
@@ -18,16 +19,19 @@
         flex-shrink: 0;
         @extend %input-base;
         width: auto;
-        padding: 6px 8px;
+        @include m.padding-block(6px);
+        @include m.padding-inline(8px);
     }
     %date-picker-input-group {
         // min-width: calc((4px * 3) + 0.54em * 8 + 0.217em * 2);
         flex-grow: 1;
-        padding: 0 2px;
+        @include m.padding-block(0);
+        @include m.padding-inline(2px);
         box-sizing: content-box;
     }
     %date-picker-divider {
-        padding: 1px 0;
+        @include m.padding-block(1px);
+        @include m.padding-inline(0);
         white-space: pre;
     }
     %date-picker-leading-zero-divider {
@@ -62,12 +66,13 @@
         margin: 0;
     }
     %date-picker-input-leading-zero {
-        margin-left: -0.54em;
-        padding-left: calc(1px + 0.54em);
+        margin-inline-start: -0.54em;
+        padding-inline-start: calc(1px + 0.54em);
     }
     %date-picker-button {
         border: 0;
-        padding: 4px 4px 4px 7px;
+        @include m.padding-block(4px);
+        @include m.padding-inline(7px, 4px);
         &:hover {
             background: transparent;
         }
