@@ -147,6 +147,9 @@
     "arraybuffer.prototype.slice": "npm:@socketregistry/arraybuffer.prototype.slice@^1",
     "available-typed-arrays": "npm:@socketregistry/available-typed-arrays@^1",
     "define-properties": "npm:@socketregistry/define-properties@^1",
+    "dotgitignore": {
+      "minimatch": "3.1.5"
+    },
     "es-define-property": "npm:@socketregistry/es-define-property@^1",
     "es-set-tostringtag": "npm:@socketregistry/es-set-tostringtag@^1",
     "for-each": "npm:@socketregistry/for-each@^1",
@@ -226,6 +229,7 @@
     "arraybuffer.prototype.slice": "npm:@socketregistry/arraybuffer.prototype.slice@^1",
     "available-typed-arrays": "npm:@socketregistry/available-typed-arrays@^1",
     "define-properties": "npm:@socketregistry/define-properties@^1",
+    "dotgitignore/minimatch": "3.1.5",
     "es-define-property": "npm:@socketregistry/es-define-property@^1",
     "es-set-tostringtag": "npm:@socketregistry/es-set-tostringtag@^1",
     "for-each": "npm:@socketregistry/for-each@^1",
