@@ -83,3 +83,39 @@ if (staleReferences.length > 0) {
     );
     process.exit(1);
 }
+
+// Walks the "exports" map and collects every file path referenced by a "default"/"types"
+// condition (or a bare string export target), so each one can be checked against what the
+// build actually emitted. This is what catches an exports map pointing at files that don't exist
+// (e.g. ".esm.js" entries when the bundler emitted ".es.js") before it ever reaches npm.
+const collectExportPaths = (exportsMap) => {
+    const paths = [];
+
+    const visit = (node) => {
+        if (typeof node === "string") {
+            paths.push(node);
+        } else if (node && typeof node === "object") {
+            for (const value of Object.values(node)) {
+                visit(value);
+            }
+        }
+    };
+
+    visit(exportsMap);
+    return paths;
+};
+
+if (pkg.exports) {
+    const missingExports = collectExportPaths(pkg.exports)
+        .filter((exportPath) => exportPath.startsWith("."))
+        .filter((exportPath) => !existsSync(join(process.cwd(), exportPath)));
+
+    if (missingExports.length > 0) {
+        console.error(
+            "\x1b[31mERROR: package.json's \"exports\" map references files that don't exist in the " +
+            `published package:\x1b[0m\n${missingExports.join("\n")}\n` +
+            "Check that the build output's file naming matches exports.ts/buildPackage.ts."
+        );
+        process.exit(1);
+    }
+}

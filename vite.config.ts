@@ -75,9 +75,11 @@ export default defineConfig({
                 // resolves to the same chunk name as Accordion/Accordion.tsx. Give style-derived chunks
                 // a distinct suffix so Rollup never has to dedupe-rename the real component chunk
                 // (previously silently emitted as e.g. Accordion2.esm.js).
+                // Literal "esm" (not rollup's [format] placeholder, which resolves to "es") so emitted
+                // filenames match the ".esm.js" paths hardcoded in exports.ts/buildPackage.ts's exports map.
                 entryFileNames: (chunkInfo) => {
                     const isStyleModule = /\.(scss|css)$/.test(chunkInfo.facadeModuleId ?? "");
-                    return isStyleModule ? "[name].style.[format].js" : "[name].[format].js";
+                    return isStyleModule ? "[name].style.esm.js" : "[name].esm.js";
                 },
                 preserveModules: true,
                 preserveModulesRoot: ".",
