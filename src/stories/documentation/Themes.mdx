@@ -249,3 +249,73 @@ const rules = breakpoint("mobileMax", "h4{font-size:14px;} p{font-size:12.25px;}
     :where(p) { font-size: calc(var(--w-text, 14px) * 0.875); }
 }
 ```
+
+---
+
+## Dark Mode
+
+`globalStyles.scss` ships a neutral-scale dark palette — a `dark-palette` mixin that swaps `--white`, `--black`, `--text`, and the full `--gray*` scale. Brand/accent colors are intentionally untouched, so themed accents look the same in light and dark.
+
+The palette applies in the `cf-theme` layer via two selectors:
+
+- **Automatic** — `@media (prefers-color-scheme: dark)` matched against `:root:not([data-theme="light"])`, so it follows the OS/browser preference unless the app opts out with `data-theme="light"`.
+- **Manual** — `[data-theme="dark"]`, which applies regardless of OS preference, letting a dark-OS user still opt into light (or vice versa) by setting `data-theme` on `<html>` (or another ancestor).
+
+```html
+<html data-theme="dark">   <!-- force dark regardless of OS preference -->
+<html data-theme="light">  <!-- force light regardless of OS preference -->
+<html>                      <!-- follow OS preference (default) -->
+```
+
+For your own component styles that need to react to the same conditions, use the `dark()` Sass mixin instead of duplicating both selectors:
+
+```scss
+@use "@stamcat/craftsman/styles/utilities/mixins" as m;
+
+.card {
+    @include m.dark {
+        border-color: #{u.color(gray700)};
+    }
+}
+```
+
+`@include m.dark { ... }` wraps `@content` in both the `prefers-color-scheme: dark` media query and a `[data-theme="dark"] &` selector, matching the same two conditions the global palette uses.
+
+---
+
+## Tailwind Consumers
+
+Craftsman and Tailwind can coexist in the same app — both use native CSS `@layer` ordering, so the two systems compose instead of fighting over specificity. The one thing you must do yourself is declare a single, merged `@layer` order statement before importing either library's CSS, so Tailwind's layers (`theme`, `base`, `components`, `utilities`) and Craftsman's layers (`cf-base`, `cf-component`, `cf-theme`) interleave in the priority you want.
+
+### 1. Declare the merged layer order
+
+<Source language="css" code={`/* globals.css — declare this before any @import */
+@layer theme, base, cf-base, cf-component, components, cf-theme, utilities;
+
+@import "tailwindcss";`} />
+
+This order lets Tailwind's own `utilities` layer win over everything (matching Tailwind's own design intent), while still letting Craftsman's `cf-theme` overrides win over Craftsman's own `cf-base`/`cf-component` defaults and Tailwind's `base`/`components` layers. Reorder the list if your app needs a different priority.
+
+### 2. Import both stylesheets, then render `ThemeProvider` with `hoist={false}`
+
+<Source language="tsx" code={`import "${PACKAGE_NAME}/styles/globalStyles.scss";
+import "./globals.css";
+import { ThemeProvider } from "${PACKAGE_NAME}/styles";
+import { appTheme } from "./theme";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+	return (
+		<html lang="en">
+			<body>
+				<ThemeProvider theme={appTheme} hoist={false}>{children}</ThemeProvider>
+			</body>
+		</html>
+	);
+}`} />
+
+`ThemeProvider` defaults to `hoist={true}`, which always inserts its `<style>` as the first stylesheet in `<head>` — that wins the `@layer` name-registration race regardless of your merged `globals.css` order. Setting `hoist={false}` renders the theme style in normal document order instead, so the order declared in step 1 is what actually controls priority.
+
+### 3. Next.js App Router
+
+Tailwind-based Next.js apps still need the same `transpilePackages: ["@stamcat/craftsman"]` entry as any other Next.js consumer (see [Getting Started](?path=/docs/getting-started--docs)) — Tailwind doesn't change that requirement.
+

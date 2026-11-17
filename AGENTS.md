@@ -43,6 +43,41 @@ import { Skeleton } from "@stamcat/craftsman/Skeleton";
 
 The root `@stamcat/craftsman` export is a barrel re-exporting every component. It is a valid, optional convenience, but importing from it pulls the whole component set into a consuming app's module graph and can hurt tree shaking, increasing bundle size. Prefer the individual `@stamcat/craftsman/{Component}` subpaths shown above for both AI-generated and hand-written code.
 
+## Next.js consumers
+
+Next.js skips its build pipeline for `node_modules` by default, but Craftsman ships untranspiled (raw `.scss` sources, no per-target down-leveling). Any Next.js app consuming this package must add it to `transpilePackages` in `next.config.ts`/`next.config.js`:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+    transpilePackages: ["@stamcat/craftsman"],
+};
+
+export default nextConfig;
+```
+
+## Tailwind consumers
+
+Craftsman's global reset/base styles are wrapped in the `cf-base` CSS cascade layer, individual component stylesheets are wrapped in `cf-component`, and `ThemeProvider` overrides are wrapped in `cf-theme` — all three are native CSS `@layer`s (declared in that order: `cf-base, cf-component, cf-theme`), so they compose with Tailwind's own `theme, base, components, utilities` layers instead of conflicting with them. To scaffold an app that uses both:
+
+1. Declare one merged `@layer` order statement before importing either library's CSS (for example in `globals.css`, before `@import "tailwindcss"`):
+
+```css
+@layer theme, base, cf-base, cf-component, components, cf-theme, utilities;
+@import "tailwindcss";
+```
+
+2. Render `ThemeProvider` with `hoist={false}` so its `<style>` element renders in normal document order and respects the merged order from step 1, instead of being hoisted ahead of it:
+
+```tsx
+<ThemeProvider theme={appTheme} hoist={false} />
+```
+
+3. Next.js App Router apps using Tailwind still need the `transpilePackages: ["@stamcat/craftsman"]` entry from the Next.js consumers section above.
+
+See the `craftsman-style-utilities` skill's "Cascade Layers and `ThemeProvider`'s `layered`/`hoist` Options" section for the full mechanics, and [docs/tailwind-comparison.md](docs/tailwind-comparison.md) for which Craftsman authoring capabilities (spacing/color scales, dark mode, logical properties, state variants) already cover common Tailwind utility patterns before reaching for a raw Tailwind class on a Craftsman component.
+
 ## Hard Rules for Agents
 
 1. Never deep-import from package internals (for example `@stamcat/craftsman/src/...`). This applies to Sass too — `@use "@stamcat/craftsman/src/styles/utilities/functions"` will fail to resolve; use the published subpath `@stamcat/craftsman/styles/utilities/functions` instead.
