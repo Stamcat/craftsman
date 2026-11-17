@@ -281,7 +281,7 @@ Same nuance as `$extra-widths`: the values in `$extra-scales` only satisfy the S
 - Use it **only** when chaining two or more pseudo-classes together. A single state (`&:hover`, `&:focus`, `&:disabled`) should stay a plain native selector — wrapping one pseudo-class in `@include m.state(hover) { }` adds indirection with no benefit and makes the selector harder to find with a plain-text search for `:hover`.
 - Good: `@include m.state(checked, disabled) { ... }`
 - Avoid: `@include m.state(hover) { ... }` — write `&:hover { ... }` instead.
-- Production example: `_checkbox.scss`'s `&:checked:disabled` state uses `@include m.state(checked, disabled)`.
+- **`state()` builds an AND chain (`&:checked:disabled` = both states at once), never an OR list.** Do not convert a comma-separated selector group like `&:disabled, &.disabled` or `&:hover, &:focus` to `m.state(disabled, hover)` — that silently changes the meaning to "both simultaneously" and breaks the selector. Only convert a selector that is already a single compound chain in the source (e.g. `&:checked:disabled`), never a comma list.
 
 #### Logical-property mixins — prefer over physical shorthand
 
@@ -316,6 +316,8 @@ Use the mixin only when the original shorthand already implies both sides of an 
 
 `@include m.dark { ... }` wraps `@content` in both `@media (prefers-color-scheme: dark)` and `[data-theme="dark"] &`, so one block covers OS-level dark mode and an explicit theme override together.
 
+This mixin is for authoring component-level dark-mode styles. The library-wide neutral-scale dark palette itself (`--white`/`--black`/`--text`/`--gray*` swap) is a separate, already-closed mechanism in `src/styles/global/globalStyles.scss` — a `dark-palette` mixin applied automatically via `@media (prefers-color-scheme: dark)` (`:root:not([data-theme="light"])`) and manually via `[data-theme="dark"]`. Don't reimplement that palette swap with `m.dark()`; only use `m.dark()` for one-off component styles that need to react to the same dark-mode conditions (e.g. a border color not covered by the swapped variables).
+
 #### `group-state()` / `peer-state()` — relational state variants
 
 - `@include m.group-state($name, $group-class: ".group")` → `.group:$name &` (style based on an ancestor's state).
@@ -332,6 +334,15 @@ Use the mixin only when the original shorthand already implies both sides of an 
 
 - `@include m.container-type($type: inline-size, $name: null)` sets `container-type` (and `container-name` if provided) on the containment root.
 - `@include m.container($condition, $name: null) { ... }` wraps `@content` in `@container`, scoped to `$name` when given.
+
+#### Don't force adoption of unused mixins
+
+`group-state()`, `peer-state()`, `aria()`, and the container-query mixins solve specific, less-common selector patterns. Don't reach for them unless the pattern genuinely applies to the code you're writing:
+
+- Only use `group-state()`/`peer-state()` when your markup already has (or genuinely needs) a `.group`/`.peer` class or sibling-combinator (`~`) relationship — don't add a `.group`/`.peer` class just to have a use case for the mixin.
+- Only use `aria()` when the selector already needs to match a hand-written `&[aria-*]` attribute — don't convert a `:disabled`/`:checked` native pseudo-class to an ARIA attribute selector just to adopt the mixin.
+- Only use `container-type()`/`container()` when sizing genuinely depends on a resizable **parent container**, not the viewport — plain media queries (or this package's `breakpoint()` mixin) remain correct for viewport-based sizing.
+- When one of these patterns genuinely applies, use the matching mixin instead of hand-rolling the equivalent selector by hand.
 
 ## Styling Expectations
 
@@ -395,6 +406,33 @@ themeBuilder(theme, { layered: false });
 ```
 
 With `layered: false`, the theme CSS still declares `@layer cf-theme` but does not join a Craftsman-owned layer order — the consuming app is responsible for declaring `cf-theme` in its own `@layer` order statement wherever it wants that priority to apply.
+
+### Scaffolding a Tailwind Consumer App
+
+Tailwind (v4) wraps its own generated CSS in `@layer theme, base, components, utilities;`. Craftsman's layers (`cf-base`, `cf-component`, `cf-theme`) don't collide with those names, so the two compose — but the *interleaved* priority between them is undefined until one merged `@layer` order statement establishes it. Do this once, up front, as part of app scaffolding:
+
+1. In your global CSS entry (for example `globals.css`), declare the merged order before any `@import`:
+
+```css
+/* globals.css */
+@layer theme, base, cf-base, cf-component, components, cf-theme, utilities;
+@import "tailwindcss";
+```
+
+This example lets Tailwind's `utilities` layer win over everything (matching Tailwind's own design intent) while keeping Craftsman's `cf-theme` overrides ahead of Craftsman's own `cf-base`/`cf-component` defaults and Tailwind's `base`/`components` layers. Reorder the list if the app needs a different priority.
+
+2. Import both stylesheets and render `ThemeProvider` with `hoist={false}`, so its `<style>` element renders in normal document order instead of being hoisted to the front of `<head>` (which would otherwise always win the layer-registration race ahead of step 1's order):
+
+```tsx
+import "@stamcat/craftsman/styles/globalStyles.scss";
+import "./globals.css";
+import { ThemeProvider } from "@stamcat/craftsman/styles";
+import { appTheme } from "./theme";
+
+<ThemeProvider theme={appTheme} hoist={false}>{children}</ThemeProvider>
+```
+
+3. Next.js App Router apps still need `transpilePackages: ["@stamcat/craftsman"]` regardless of Tailwind — see the `craftsman-component-usage` skill's Next.js consumers section.
 
 ### Theme Authoring Usage Parameters
 

@@ -14,6 +14,20 @@ A lightweight, themeable React component library and design-system toolkit. Craf
 npm install @stamcat/craftsman
 ```
 
+### Next.js
+
+Craftsman ships untranspiled (its `dist` output isn't down-leveled for every consumer's target, and components are published alongside raw `.scss` sources). Next.js only runs its build pipeline over your own app code by default, skipping `node_modules` — so add the package to `transpilePackages` in `next.config.ts`/`next.config.js`, or Next's bundler will fail to process it:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+    transpilePackages: ["@stamcat/craftsman"],
+};
+
+export default nextConfig;
+```
+
 ## Getting started
 
 1. Import the package's global styles once at the root of your app.
@@ -107,3 +121,4 @@ Each component has its own package entry point, e.g. `@stamcat/craftsman/Button`
 - `theme.components.input` targets only non-radio and non-checkbox inputs.
 - `theme.root` and `theme.components.*` support JS style objects and raw CSS/Sass strings.
 - For Sass file workflows, import compiled CSS text via `*.scss?inline` and pass that string into the theme object.
+- Global styles ship a neutral-scale dark palette (`--white`/`--black`/`--text`/`--gray*`) applied automatically via `@media (prefers-color-scheme: dark)`, or manually by setting `data-theme="dark"` / `data-theme="light"` on `<html>` (or an ancestor) to override the OS preference. Brand/accent colors are untouched.
